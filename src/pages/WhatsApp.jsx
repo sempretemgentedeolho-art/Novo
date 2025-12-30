@@ -181,6 +181,11 @@ export default function WhatsApp() {
   const [communityStep, setCommunityStep] = useState(1);
   const [communityName, setCommunityName] = useState("");
   const [communityMembers, setCommunityMembers] = useState([]);
+  const [broadcastList, setBroadcastList] = useState(false);
+  const [broadcastStep, setBroadcastStep] = useState(1);
+  const [broadcastContacts, setBroadcastContacts] = useState([]);
+  const [broadcastName, setBroadcastName] = useState("");
+  const [broadcastMessage, setBroadcastMessage] = useState("");
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -394,6 +399,92 @@ export default function WhatsApp() {
     }
   };
 
+  const handleBroadcastList = () => {
+    setShowMenu(false);
+    setBroadcastList(true);
+    setBroadcastStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Esta é a tela das listas de transmissão. Para criar uma nova lista, clique no botão verde, no canto inferior da tela."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleCreateBroadcast = () => {
+    setBroadcastStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Agora você vai escolher as pessoas que receberão suas mensagens. Toque nos nomes das pessoas que você deseja adicionar à lista. Depois de selecionar, clique na seta verde, no canto inferior direito."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const toggleBroadcastContact = (contactId) => {
+    if (broadcastContacts.includes(contactId)) {
+      setBroadcastContacts(broadcastContacts.filter(id => id !== contactId));
+    } else {
+      setBroadcastContacts([...broadcastContacts, contactId]);
+    }
+  };
+
+  const handleConfirmBroadcastContacts = () => {
+    setBroadcastStep(3);
+    setBroadcastName("Lista de transmissão");
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Pronto. A lista de transmissão foi criada. Esta tela parece uma conversa comum, mas a mensagem será enviada para todas as pessoas da lista."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleSendBroadcast = () => {
+    if (broadcastMessage.trim()) {
+      setBroadcastStep(4);
+      const synth = window.speechSynthesis;
+      if (synth) {
+        synth.cancel();
+        const utter = new SpeechSynthesisUtterance(
+          "Atenção. As pessoas só recebem a mensagem se tiverem o seu número salvo na agenda delas. Elas recebem a mensagem em conversa individual, e não sabem que foi enviada para outras pessoas."
+        );
+        utter.lang = "pt-BR";
+        utter.rate = 0.85;
+        synth.speak(utter);
+
+        setTimeout(() => {
+          const utter2 = new SpeechSynthesisUtterance(
+            "Lista de transmissão não é grupo. Ninguém conversa entre si. Você envia uma mensagem, e cada pessoa recebe separadamente. Lista de transmissão criada com sucesso. Agora você pode enviar avisos para várias pessoas ao mesmo tempo."
+          );
+          utter2.lang = "pt-BR";
+          utter2.rate = 0.85;
+          synth.speak(utter2);
+
+          setTimeout(() => {
+            setBroadcastList(false);
+            setBroadcastStep(1);
+            setBroadcastContacts([]);
+            setBroadcastName("");
+            setBroadcastMessage("");
+          }, 8000);
+        }, 6000);
+      }
+    }
+  };
+
   const toggleContactSelection = (contactId) => {
     if (selectedContacts.includes(contactId)) {
       setSelectedContacts(selectedContacts.filter(id => id !== contactId));
@@ -504,6 +595,254 @@ export default function WhatsApp() {
     if (chatsFilter === "groups") return chat.isGroup;
     return true;
   });
+
+  // Telas de lista de transmissão
+  if (broadcastList && broadcastStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setBroadcastList(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Listas de transmissão</h2>
+          </div>
+
+          {/* Conteúdo vazio */}
+          <div className="flex-1 flex flex-col items-center justify-center px-6">
+            <MessageSquare className="w-20 h-20 text-gray-300 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2 text-center">
+              Nenhuma lista de transmissão
+            </h3>
+            <p className="text-sm text-gray-600 text-center">
+              Envie mensagens para vários contatos ao mesmo tempo
+            </p>
+          </div>
+
+          {/* Info */}
+          <div className="p-4 bg-gray-50 border-t border-gray-200">
+            <p className="text-xs text-gray-600 text-center">
+              Somente contatos com seu número salvo receberão suas mensagens de transmissão
+            </p>
+          </div>
+
+          {/* Botão criar */}
+          <button
+            onClick={handleCreateBroadcast}
+            className="absolute bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center z-10"
+          >
+            <Plus className="w-6 h-6 text-white" />
+          </button>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (broadcastList && broadcastStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setBroadcastStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <div className="flex-1">
+              <h2 className="text-lg font-medium">Nova transmissão</h2>
+              <p className="text-sm text-white/80">
+                Selecionados: {broadcastContacts.length} de 256
+              </p>
+            </div>
+            <button>
+              <Search className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Barra de pesquisa */}
+          <div className="px-4 py-3 border-b border-gray-200">
+            <input
+              type="text"
+              placeholder="Pesquisar nome ou número..."
+              className="w-full bg-gray-100 rounded-lg px-4 py-2 outline-none text-sm"
+            />
+          </div>
+
+          {/* Contatos selecionados (horizontal) */}
+          {broadcastContacts.length > 0 && (
+            <div className="px-4 py-3 border-b border-gray-200">
+              <div className="flex gap-3 overflow-x-auto">
+                {broadcastContacts.map(contactId => {
+                  const contact = contactsList.find(c => c.id === contactId);
+                  return (
+                    <div key={contactId} className="flex flex-col items-center gap-1 flex-shrink-0">
+                      <div className="relative">
+                        <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+                          {contact.avatar}
+                        </div>
+                        <button
+                          onClick={() => toggleBroadcastContact(contactId)}
+                          className="absolute -top-1 -right-1 w-5 h-5 bg-gray-500 rounded-full flex items-center justify-center"
+                        >
+                          <X className="w-3 h-3 text-white" />
+                        </button>
+                      </div>
+                      <span className="text-xs text-gray-700 max-w-[60px] truncate">{contact.name.split(' ')[0]}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Lista de contatos */}
+          <div className="flex-1 overflow-y-auto">
+            <h3 className="px-4 py-2 text-sm text-gray-500 font-medium">Contatos frequentes</h3>
+            {contactsList.map(contact => (
+              <div
+                key={contact.id}
+                onClick={() => toggleBroadcastContact(contact.id)}
+                className="flex items-center gap-3 px-4 py-3 active:bg-gray-50"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {contact.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-gray-900 text-[16px]">{contact.name}</h3>
+                  {contact.status && (
+                    <p className="text-sm text-gray-600 truncate">{contact.status}</p>
+                  )}
+                </div>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                  broadcastContacts.includes(contact.id)
+                    ? "bg-[#25D366] border-[#25D366]"
+                    : "border-gray-300"
+                }`}>
+                  {broadcastContacts.includes(contact.id) && (
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Botão próximo */}
+          {broadcastContacts.length > 0 && (
+            <button
+              onClick={handleConfirmBroadcastContacts}
+              className="absolute bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center z-10"
+            >
+              <Check className="w-6 h-6 text-white" strokeWidth={3} />
+            </button>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (broadcastList && (broadcastStep === 3 || broadcastStep === 4)) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-[#ECE5DD] flex flex-col relative">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-3 py-2 flex items-center gap-3">
+            <button onClick={() => {
+              if (broadcastStep === 4) return;
+              setBroadcastList(false);
+              setBroadcastStep(1);
+              setBroadcastContacts([]);
+            }}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0">
+              <MessageSquare className="w-5 h-5 text-gray-600" />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-medium text-[17px]">{broadcastName}</h2>
+              <p className="text-xs text-white/80">
+                Lista de transmissão · {broadcastContacts.length} destinatários
+              </p>
+            </div>
+            <button>
+              <MoreVertical className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Fundo com padrão */}
+          <div 
+            className="flex-1 overflow-y-auto p-2"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d9d9d9' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundColor: '#ECE5DD'
+            }}
+          >
+            {broadcastStep === 3 && (
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                <p className="text-sm text-gray-800">
+                  💡 <strong>Dica:</strong> As mensagens serão enviadas individualmente para cada contato. Eles não verão os outros destinatários.
+                </p>
+              </div>
+            )}
+
+            {broadcastStep === 4 && broadcastMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-end"
+              >
+                <div className="max-w-[85%] bg-[#D9FDD3] rounded-lg px-3 py-2 shadow-sm rounded-br-none">
+                  <p className="text-[15px] text-gray-900 break-words">{broadcastMessage}</p>
+                  <div className="flex items-center justify-end gap-1 mt-1">
+                    <span className="text-[11px] text-gray-500">
+                      {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                    <Check className="w-4 h-4 text-gray-400" strokeWidth={2.5} />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Input de Mensagem */}
+          {broadcastStep === 3 && (
+            <div className="bg-[#F0F2F5] px-2 py-1.5 flex items-center gap-1">
+              <div className="flex-1 bg-white rounded-full px-4 py-2 flex items-center gap-2">
+                <button className="flex-shrink-0">
+                  <Smile className="w-6 h-6 text-gray-500" />
+                </button>
+                <input
+                  value={broadcastMessage}
+                  onChange={(e) => setBroadcastMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleSendBroadcast()}
+                  placeholder="Mensagem"
+                  className="flex-1 bg-transparent outline-none text-[15px]"
+                />
+              </div>
+              <button
+                onClick={handleSendBroadcast}
+                disabled={!broadcastMessage.trim()}
+                className={`w-12 h-12 rounded-full shadow-lg flex items-center justify-center flex-shrink-0 ${
+                  broadcastMessage.trim() ? "bg-[#25D366]" : "bg-gray-300"
+                }`}
+              >
+                {broadcastMessage.trim() ? (
+                  <Send className="w-5 h-5 text-white ml-1" />
+                ) : (
+                  <Mic className="w-5 h-5 text-white" />
+                )}
+              </button>
+            </div>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Telas de criação de comunidade
   if (creatingCommunity && communityStep === 1) {
@@ -1418,10 +1757,7 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Nova comunidade</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Listas de transmissão");
-                    setShowMenu(false);
-                  }}
+                  onClick={handleBroadcastList}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <MessageSquare className="w-5 h-5 text-gray-600" />
