@@ -143,6 +143,19 @@ const channelsList = [
   },
 ];
 
+const contactsList = [
+  { id: 1, name: "Alexandre Tadeu", status: "Disponível", avatar: "🏖️" },
+  { id: 2, name: "Susi", status: "🤗", avatar: "👩" },
+  { id: 3, name: "Manu", status: "Não posso falar, somente WhatsApp", avatar: "👩" },
+  { id: 4, name: "Mãe Novo", status: "", avatar: "👩" },
+  { id: 5, name: "Robinho Ar Condicionado", status: "", avatar: "🏢" },
+  { id: 6, name: "Cleiton Newats", status: "", avatar: "👨" },
+  { id: 7, name: "david Volei", status: "🏐", avatar: "👨" },
+  { id: 8, name: "Nilva", status: "Tu te tornas eternamente responsáv...", avatar: "❤️" },
+  { id: 9, name: "Camila Schumacher", status: "", avatar: "👩" },
+  { id: 10, name: "Pedro Santos", status: "Ocupado", avatar: "👨" },
+];
+
 export default function WhatsApp() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("chats");
@@ -160,6 +173,10 @@ export default function WhatsApp() {
   const [showChannelMenu, setShowChannelMenu] = useState(false);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedMessages, setSelectedMessages] = useState([]);
+  const [creatingGroup, setCreatingGroup] = useState(false);
+  const [groupStep, setGroupStep] = useState(1);
+  const [selectedContacts, setSelectedContacts] = useState([]);
+  const [groupName, setGroupName] = useState("");
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -193,6 +210,67 @@ export default function WhatsApp() {
       utter.rate = 0.85;
       synth.speak(utter);
     }
+  };
+
+  const handleMenuClick = () => {
+    setShowMenu(!showMenu);
+    if (!showMenu) {
+      const synth = window.speechSynthesis;
+      if (synth) {
+        synth.cancel();
+        const utter = new SpeechSynthesisUtterance("Clique em novo grupo para configurar.");
+        utter.lang = "pt-BR";
+        utter.rate = 0.85;
+        synth.speak(utter);
+      }
+    }
+  };
+
+  const handleNewGroup = () => {
+    setShowMenu(false);
+    setCreatingGroup(true);
+    setGroupStep(1);
+    setSelectedContacts([]);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Para criar um grupo selecione o número, clique na bolinha vai ficar verde, logo abaixo tem uma seta verde do seu lado direito clique nela."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const toggleContactSelection = (contactId) => {
+    if (selectedContacts.includes(contactId)) {
+      setSelectedContacts(selectedContacts.filter(id => id !== contactId));
+    } else {
+      setSelectedContacts([...selectedContacts, contactId]);
+    }
+  };
+
+  const handleNextStep = () => {
+    setGroupStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Coloque o nome no grupo, e clique em confirmar no botão verde à sua direita abaixo."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleCreateGroup = () => {
+    alert(`Grupo "${groupName}" criado com sucesso!`);
+    setCreatingGroup(false);
+    setGroupStep(1);
+    setSelectedContacts([]);
+    setGroupName("");
   };
 
   const handleChatClick = (chat) => {
@@ -260,6 +338,191 @@ export default function WhatsApp() {
     if (chatsFilter === "groups") return chat.isGroup;
     return true;
   });
+
+  // Tela de criação de grupo - Etapa 1: Seleção de contatos
+  if (creatingGroup && groupStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setCreatingGroup(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <div className="flex-1">
+              <h2 className="text-lg font-medium">Novo grupo</h2>
+              <p className="text-sm text-white/80">Adicionar participantes</p>
+            </div>
+            <button>
+              <Search className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Barra de pesquisa */}
+          <div className="px-4 py-3 border-b border-gray-200">
+            <input
+              type="text"
+              placeholder="Pesquisar nome ou número..."
+              className="w-full bg-gray-100 rounded-lg px-4 py-2 outline-none text-sm"
+            />
+          </div>
+
+          {/* Contatos selecionados (horizontal scroll) */}
+          {selectedContacts.length > 0 && (
+            <div className="px-4 py-3 border-b border-gray-200">
+              <div className="flex gap-3 overflow-x-auto">
+                {selectedContacts.map(contactId => {
+                  const contact = contactsList.find(c => c.id === contactId);
+                  return (
+                    <div key={contactId} className="flex flex-col items-center gap-1 flex-shrink-0">
+                      <div className="relative">
+                        <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+                          {contact.avatar}
+                        </div>
+                        <button
+                          onClick={() => toggleContactSelection(contactId)}
+                          className="absolute -top-1 -right-1 w-5 h-5 bg-gray-500 rounded-full flex items-center justify-center"
+                        >
+                          <X className="w-3 h-3 text-white" />
+                        </button>
+                      </div>
+                      <span className="text-xs text-gray-700 max-w-[60px] truncate">{contact.name.split(' ')[0]}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Lista de contatos */}
+          <div className="flex-1 overflow-y-auto">
+            <h3 className="px-4 py-2 text-sm text-gray-500 font-medium">Contatos frequentes</h3>
+            {contactsList.map(contact => (
+              <div
+                key={contact.id}
+                onClick={() => toggleContactSelection(contact.id)}
+                className="flex items-center gap-3 px-4 py-3 active:bg-gray-50"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {contact.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-gray-900 text-[16px]">{contact.name}</h3>
+                  {contact.status && (
+                    <p className="text-sm text-gray-600 truncate">{contact.status}</p>
+                  )}
+                </div>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                  selectedContacts.includes(contact.id)
+                    ? "bg-[#25D366] border-[#25D366]"
+                    : "border-gray-300"
+                }`}>
+                  {selectedContacts.includes(contact.id) && (
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Botão próximo */}
+          {selectedContacts.length > 0 && (
+            <button
+              onClick={handleNextStep}
+              className="absolute bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center z-10"
+            >
+              <ArrowLeft className="w-6 h-6 text-white transform rotate-180" />
+            </button>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  // Tela de criação de grupo - Etapa 2: Nome do grupo
+  if (creatingGroup && groupStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setGroupStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Novo grupo</h2>
+          </div>
+
+          {/* Foto e nome do grupo */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                <Camera className="w-6 h-6 text-gray-500" />
+              </div>
+              <input
+                type="text"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+                placeholder="Nome do grupo (opcional)"
+                className="flex-1 border-b-2 border-[#25D366] py-2 outline-none text-lg"
+              />
+              <button>
+                <Smile className="w-6 h-6 text-gray-500" />
+              </button>
+            </div>
+          </div>
+
+          {/* Opções do grupo */}
+          <div className="flex-1">
+            <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+              <div>
+                <h3 className="font-medium text-gray-900">Mensagens temporárias</h3>
+                <p className="text-sm text-gray-500">Desativadas</p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </div>
+
+            <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+              <h3 className="font-medium text-gray-900">Permissões do grupo</h3>
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </div>
+
+            {/* Membros selecionados */}
+            <div className="px-4 py-3">
+              <p className="text-sm text-gray-500 mb-3">Membros: {selectedContacts.length}</p>
+              <div className="flex gap-3 overflow-x-auto">
+                {selectedContacts.map(contactId => {
+                  const contact = contactsList.find(c => c.id === contactId);
+                  return (
+                    <div key={contactId} className="flex flex-col items-center gap-1 flex-shrink-0">
+                      <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+                        {contact.avatar}
+                      </div>
+                      <span className="text-xs text-gray-700 max-w-[60px] truncate">{contact.name.split(' ')[0]}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Botão criar */}
+          <button
+            onClick={handleCreateGroup}
+            disabled={!groupName.trim()}
+            className={`absolute bottom-6 right-6 w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-10 ${
+              groupName.trim() ? "bg-[#25D366]" : "bg-gray-300"
+            }`}
+          >
+            <Check className="w-6 h-6 text-white" strokeWidth={3} />
+          </button>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   if (selectedChat) {
     return (
@@ -583,42 +846,109 @@ export default function WhatsApp() {
           <Plus className="w-6 h-6" />
         </button>
 
-        {/* Menu do botão + dos Canais */}
+        {/* Menu Principal */}
         <AnimatePresence>
-          {showChannelMenu && (
+          {showMenu && (
             <>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
-                onClick={() => setShowChannelMenu(false)}
+                onClick={() => setShowMenu(false)}
                 className="absolute inset-0 bg-black z-40"
               />
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="absolute top-32 right-4 bg-white rounded-lg shadow-2xl z-50 py-2 min-w-[180px]"
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                className="absolute top-14 right-2 bg-white rounded-lg shadow-2xl z-50 py-2 min-w-[220px]"
               >
                 <button
-                  onClick={() => {
-                    alert("Criar canal");
-                    setShowChannelMenu(false);
-                  }}
+                  onClick={handleNewGroup}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
-                  <Plus className="w-5 h-5 text-gray-600" />
-                  <span className="text-[15px] text-gray-900">Criar canal</span>
+                  <Users className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Novo grupo</span>
                 </button>
                 <button
                   onClick={() => {
-                    alert("Encontrar canais");
-                    setShowChannelMenu(false);
+                    alert("Nova comunidade");
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <Users className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Nova comunidade</span>
+                </button>
+                <button
+                  onClick={() => {
+                    alert("Listas de transmissão");
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <MessageSquare className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Listas de transmissão</span>
+                </button>
+                <button
+                  onClick={() => {
+                    alert("Dispositivos conectados");
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <Phone className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Dispositivos conectados</span>
+                </button>
+                <button
+                  onClick={() => {
+                    alert("Favoritas");
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <Star className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Favoritas</span>
+                </button>
+                <button
+                  onClick={() => {
+                    alert("Encontrar empresas");
+                    setShowMenu(false);
                   }}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <Search className="w-5 h-5 text-gray-600" />
-                  <span className="text-[15px] text-gray-900">Encontrar canais</span>
+                  <span className="text-[15px] text-gray-900">Encontrar empresas</span>
+                </button>
+                <button
+                  onClick={() => {
+                    alert("Pagamentos");
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <DollarSign className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Pagamentos</span>
+                </button>
+                <button
+                  onClick={() => {
+                    alert("Marcar tudo como lido");
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <Check className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Marcar tudo como lido</span>
+                </button>
+                <button
+                  onClick={() => {
+                    navigate(createPageUrl("Configuracoes"));
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                >
+                  <Settings className="w-5 h-5 text-gray-600" />
+                  <span className="text-[15px] text-gray-900">Configurações</span>
                 </button>
               </motion.div>
             </>
