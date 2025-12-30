@@ -144,6 +144,45 @@ const channelsList = [
   },
 ];
 
+const businessList = [
+  { 
+    id: 1, 
+    name: "Farmácia São José", 
+    category: "Farmácia",
+    description: "Farmácia 24 horas com delivery",
+    hours: "Aberto 24 horas",
+    avatar: "💊",
+    verified: true
+  },
+  { 
+    id: 2, 
+    name: "Supermercado Bom Preço", 
+    category: "Mercado",
+    description: "Delivery de mercado em até 1 hora",
+    hours: "Seg-Sáb: 7h-22h | Dom: 8h-20h",
+    avatar: "🛒",
+    verified: true
+  },
+  { 
+    id: 3, 
+    name: "Padaria Pão Quente", 
+    category: "Padaria",
+    description: "Pães frescos e bolos artesanais",
+    hours: "Todos os dias: 6h-20h",
+    avatar: "🥖",
+    verified: true
+  },
+  { 
+    id: 4, 
+    name: "Pizzaria Bella Italia", 
+    category: "Restaurante",
+    description: "Pizzas artesanais com entrega grátis",
+    hours: "Ter-Dom: 18h-23h",
+    avatar: "🍕",
+    verified: true
+  },
+];
+
 const contactsList = [
   { id: 1, name: "Alexandre Tadeu", status: "Disponível", avatar: "🏖️" },
   { id: 2, name: "Susi", status: "🤗", avatar: "👩" },
@@ -193,6 +232,10 @@ export default function WhatsApp() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [favoriteStep, setFavoriteStep] = useState(1);
   const [favoriteContacts, setFavoriteContacts] = useState([]);
+  const [findBusiness, setFindBusiness] = useState(false);
+  const [businessStep, setBusinessStep] = useState(1);
+  const [businessSearch, setBusinessSearch] = useState("");
+  const [selectedBusiness, setSelectedBusiness] = useState(null);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -790,6 +833,340 @@ export default function WhatsApp() {
     if (chatsFilter === "favorites") return favoriteContacts.includes(chat.id);
     return true;
   });
+
+  // Telas de Encontrar empresas
+  if (findBusiness && businessStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setFindBusiness(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Encontrar empresas</h2>
+          </div>
+
+          {/* Campo de pesquisa */}
+          <div className="p-4">
+            <button
+              onClick={handleBusinessSearch}
+              className="w-full bg-gray-100 rounded-lg px-4 py-3 text-left text-gray-500 flex items-center gap-2"
+            >
+              <Search className="w-5 h-5" />
+              <span>Pesquisar empresas...</span>
+            </button>
+          </div>
+
+          {/* Conteúdo informativo */}
+          <div className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-32 h-32 bg-[#25D366]/10 rounded-full flex items-center justify-center mb-6">
+              <Search className="w-16 h-16 text-[#25D366]" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
+              Encontre empresas
+            </h3>
+            <p className="text-gray-600 text-center mb-6 leading-relaxed">
+              Procure lojas, farmácias, mercados e outros serviços que usam WhatsApp
+            </p>
+
+            <div className="w-full bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+              <p className="text-sm text-gray-800">
+                💡 <strong>Dica:</strong> Digite o tipo de serviço ou o nome da empresa
+              </p>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (findBusiness && businessStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setBusinessStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Pesquisar empresas</h2>
+          </div>
+
+          {/* Campo de pesquisa ativo */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2 border-2 border-[#25D366]">
+              <Search className="w-5 h-5 text-gray-500" />
+              <input
+                type="text"
+                value={businessSearch}
+                onChange={(e) => {
+                  setBusinessSearch(e.target.value);
+                  if (e.target.value.length > 2) {
+                    handleBusinessResults();
+                  }
+                }}
+                placeholder="Digite o nome ou tipo..."
+                className="flex-1 outline-none"
+                autoFocus
+              />
+            </div>
+          </div>
+
+          {/* Sugestões */}
+          <div className="p-4">
+            <h3 className="text-sm text-gray-500 font-medium mb-3">Categorias populares</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {["Farmácia", "Mercado", "Padaria", "Restaurante", "Loja", "Serviços"].map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setBusinessSearch(cat);
+                    handleBusinessResults();
+                  }}
+                  className="bg-gray-100 rounded-lg p-3 text-left hover:bg-gray-200"
+                >
+                  <p className="font-medium text-gray-900">{cat}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (findBusiness && businessStep === 3) {
+    const filteredBusinesses = businessList.filter(b => 
+      businessSearch.toLowerCase() ? 
+        b.name.toLowerCase().includes(businessSearch.toLowerCase()) ||
+        b.category.toLowerCase().includes(businessSearch.toLowerCase())
+      : true
+    );
+
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setBusinessStep(2)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Resultados</h2>
+          </div>
+
+          {/* Campo de pesquisa */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="bg-gray-100 rounded-lg px-4 py-2 flex items-center gap-2">
+              <Search className="w-5 h-5 text-gray-500" />
+              <span className="text-gray-700">{businessSearch}</span>
+            </div>
+          </div>
+
+          {/* Lista de empresas */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-4 py-2 bg-gray-50">
+              <p className="text-sm text-gray-600">
+                {filteredBusinesses.length} {filteredBusinesses.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}
+              </p>
+            </div>
+            {filteredBusinesses.map(business => (
+              <div
+                key={business.id}
+                onClick={() => handleSelectBusiness(business)}
+                className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 active:bg-gray-50"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-2xl">
+                  {business.avatar}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-medium text-gray-900">{business.name}</h3>
+                    {business.verified && (
+                      <Shield className="w-4 h-4 text-[#25D366]" />
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600">{business.category}</p>
+                  <p className="text-xs text-gray-500">{business.description}</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (findBusiness && businessStep === 4) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setBusinessStep(3)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Perfil da empresa</h2>
+            <button className="ml-auto">
+              <MoreVertical className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Perfil da empresa */}
+          <div className="flex-1 overflow-y-auto">
+            {/* Header do perfil */}
+            <div className="bg-[#008069] text-white px-4 pb-6 pt-2">
+              <div className="flex flex-col items-center">
+                <div className="w-32 h-32 rounded-full bg-white/20 flex items-center justify-center text-6xl mb-3">
+                  {selectedBusiness?.avatar}
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                  <h2 className="text-2xl font-semibold">{selectedBusiness?.name}</h2>
+                  {selectedBusiness?.verified && (
+                    <Shield className="w-6 h-6" />
+                  )}
+                </div>
+                <p className="text-white/80">{selectedBusiness?.category}</p>
+              </div>
+            </div>
+
+            {/* Informações */}
+            <div className="p-4 space-y-4">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="font-semibold text-gray-900 mb-2">Sobre</h3>
+                <p className="text-gray-700">{selectedBusiness?.description}</p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-gray-600" />
+                  Horário de funcionamento
+                </h3>
+                <p className="text-gray-700">{selectedBusiness?.hours}</p>
+              </div>
+
+              <div className="bg-green-50 border-l-4 border-green-500 p-4">
+                <div className="flex gap-2">
+                  <Shield className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-gray-800">
+                      <strong>Empresa verificada</strong> - Esta conta comercial foi verificada pelo WhatsApp
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <p className="text-sm text-gray-800">
+                  💡 <strong>Atenção:</strong> Sempre confirme se a empresa é verdadeira. Empresas confiáveis costumam ter perfil completo e informações claras.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Botão conversar */}
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={handleStartBusinessChat}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Conversar
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (findBusiness && businessStep === 5) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-[#ECE5DD] flex flex-col relative">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-3 py-2 flex items-center gap-3">
+            <button onClick={() => {
+              const synth = window.speechSynthesis;
+              if (synth) {
+                synth.cancel();
+                const utter = new SpeechSynthesisUtterance(
+                  "Para sair desta tela, clique na seta preta, no canto superior esquerdo. Você volta para o WhatsApp normalmente. Encontrar empresas facilita falar com lojas e serviços pelo WhatsApp."
+                );
+                utter.lang = "pt-BR";
+                utter.rate = 0.85;
+                synth.speak(utter);
+              }
+              setTimeout(() => {
+                setFindBusiness(false);
+                setBusinessStep(1);
+                setBusinessSearch("");
+                setSelectedBusiness(null);
+              }, 2000);
+            }}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 text-xl">
+              {selectedBusiness?.avatar}
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-1">
+                <h2 className="font-medium text-[17px]">{selectedBusiness?.name}</h2>
+                {selectedBusiness?.verified && (
+                  <Shield className="w-4 h-4" />
+                )}
+              </div>
+              <p className="text-xs text-white/80">{selectedBusiness?.category}</p>
+            </div>
+            <button>
+              <MoreVertical className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Fundo com padrão */}
+          <div 
+            className="flex-1 overflow-y-auto p-2"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d9d9d9' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundColor: '#ECE5DD'
+            }}
+          >
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+              <p className="text-sm text-gray-800">
+                Esta é uma conversa com uma empresa. Você pode fazer pedidos, tirar dúvidas e solicitar informações.
+              </p>
+            </div>
+          </div>
+
+          {/* Input de Mensagem */}
+          <div className="bg-[#F0F2F5] px-2 py-1.5 flex items-center gap-1">
+            <div className="flex-1 bg-white rounded-full px-4 py-2 flex items-center gap-2">
+              <button className="flex-shrink-0">
+                <Smile className="w-6 h-6 text-gray-500" />
+              </button>
+              <input
+                placeholder="Mensagem"
+                className="flex-1 bg-transparent outline-none text-[15px]"
+              />
+            </div>
+            <button className="w-12 h-12 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center flex-shrink-0">
+              <Mic className="w-5 h-5 text-white" />
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Telas de Favoritas
   if (showFavorites && favoriteStep === 1) {
@@ -2418,10 +2795,7 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Favoritas</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Encontrar empresas");
-                    setShowMenu(false);
-                  }}
+                  onClick={handleFindBusiness}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <Search className="w-5 h-5 text-gray-600" />
