@@ -15,110 +15,108 @@ import { motion, AnimatePresence } from "framer-motion";
 const initialChats = [
   { 
     id: 1, 
-    name: "Jane Cooper", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Vôlei da Galera", 
+    message: "Sandro: 🟢 Figurinha", 
+    time: "29/01/2025", 
     unread: 0,
-    avatar: "👩",
+    avatar: "🏐",
     messages: [
       { id: 1, text: "Bom dia!", sender: "other", time: "10:25" },
       { id: 2, text: "Bom dia! 😊", sender: "me", time: "10:27" },
-      { id: 3, text: "Eu vou fazer as compras!", sender: "other", time: "20:59" }
+      { id: 3, text: "Figurinha", sender: "other", time: "20:59" }
     ]
   },
   { 
     id: 2, 
-    name: "Albert Flores", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Vôlei Operário", 
+    message: "+55 51 9860-2942: Blzz", 
+    time: "28/01/2025", 
     unread: 0,
-    avatar: "👨",
+    avatar: "🏐",
     messages: [
-      { id: 1, text: "Não, eu irei com você assim como pratiquei Rasengan com Jiraya sensei semana passada!", sender: "other", time: "10:12" },
-      { id: 2, text: "Eu vou sozinho.", sender: "me", time: "10:16" },
-      { id: 3, text: "Não, eu irei com você assim como pratiquei Rasengan com Jiraya sensei semana passada!", sender: "other", time: "10:12" },
-      { id: 4, text: "Eu vou sozinho.", sender: "me", time: "10:16" }
+      { id: 1, text: "Boa tarde!", sender: "other", time: "14:30" },
+      { id: 2, text: "Blzz", sender: "other", time: "14:35" }
     ]
   },
   { 
     id: 3, 
-    name: "Darlene Robertson", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "+55 51 9535-8008", 
+    message: "✓ 👍", 
+    time: "24/01/2025", 
     unread: 0,
-    avatar: "👩‍🦰",
+    avatar: "M",
     messages: []
   },
   { 
     id: 4, 
-    name: "Kristin Watson", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "+55 51 9673-4754", 
+    message: "+55 51 9673-4754 usa uma duração padrã...", 
+    time: "13/08/2024", 
     unread: 0,
-    avatar: "👩‍🦱",
+    avatar: "📞",
     messages: []
   },
   { 
     id: 5, 
-    name: "Ronald Richards", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Sebrae Apoia", 
+    message: "Olá! 😊 Tudo bem? Não esqueça que hoje...", 
+    time: "20/01/2025", 
     unread: 0,
-    avatar: "👨‍🦲",
+    avatar: "🏢",
     messages: []
   },
   { 
     id: 6, 
-    name: "Wade Warren", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "+55 51 9765-3263", 
+    message: "Bm dia Eu tenho O carro dai fica ruim dx...", 
+    time: "17/01/2025", 
     unread: 0,
-    avatar: "👨‍🦱",
+    avatar: "R",
     messages: []
   },
   { 
     id: 7, 
-    name: "Darrell Steward", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Sebrae Facilita", 
+    message: "👏 Olá! Precificar corretamente é esser", 
+    time: "16/01/2025", 
     unread: 0,
-    avatar: "👨‍💼",
+    avatar: "🏢",
     messages: []
   },
   { 
     id: 8, 
-    name: "Guy Hawkins", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Lisiane", 
+    message: "✓ ok", 
+    time: "15/01/2025", 
     unread: 0,
-    avatar: "👨‍🎓",
+    avatar: "👩",
     messages: []
   },
   { 
     id: 9, 
-    name: "Savannah Nguyen", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Maria Silva", 
+    message: "Boa tarde! Como você está?", 
+    time: "14/01/2025", 
     unread: 0,
-    avatar: "👩‍💼",
+    avatar: "👩",
     messages: []
   },
   { 
     id: 10, 
-    name: "Bessie Cooper", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "João Pedro", 
+    message: "Obrigado pela ajuda!", 
+    time: "13/01/2025", 
     unread: 0,
-    avatar: "👩‍🎨",
+    avatar: "👨",
     messages: []
   },
   { 
     id: 11, 
-    name: "Robert Fox", 
-    message: "Eu vou fazer as compras!", 
-    time: "20:59", 
+    name: "Ana Costa", 
+    message: "Até logo! 👋", 
+    time: "12/01/2025", 
     unread: 0,
-    avatar: "👨‍🔧",
+    avatar: "👩",
     messages: []
   },
 ];
@@ -162,6 +160,20 @@ export default function WhatsApp() {
   const [showChannelMenu, setShowChannelMenu] = useState(false);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedMessages, setSelectedMessages] = useState([]);
+
+  useEffect(() => {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Bem vindo ao WhatsApp, clique nos três pontinhos à sua direita no topo."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+    return () => window.speechSynthesis.cancel();
+  }, []);
 
   const handleHelp = () => {
     const synth = window.speechSynthesis;
@@ -474,213 +486,101 @@ export default function WhatsApp() {
         <StatusBar variant="light" />
 
         {/* Header */}
-        <div className="bg-[#008069] text-white px-4 py-3">
-          <div className="flex justify-between items-center mb-4">
-            <button onClick={() => navigate(createPageUrl("Home"))}>
-              <ArrowLeft className="w-6 h-6" />
-            </button>
-            <h1 className="text-xl font-medium flex-1 ml-4">WhatsApp</h1>
-            <div className="flex gap-5">
-              <button onClick={handleHelp} className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <span className="text-sm font-bold">?</span>
+        <div className="bg-white px-4 py-3">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
+            <div className="flex gap-5 items-center">
+              <button onClick={handleHelp} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                <span className="text-sm font-bold text-gray-700">?</span>
               </button>
               <button onClick={() => alert("Câmera")}>
-                <Camera className="w-5 h-5" />
-              </button>
-              <button onClick={() => alert("Pesquisar")}>
-                <Search className="w-5 h-5" />
+                <Camera className="w-6 h-6 text-gray-700" />
               </button>
               <button onClick={() => setShowMenu(!showMenu)}>
-                <MoreVertical className="w-5 h-5" />
+                <MoreVertical className="w-6 h-6 text-gray-700" />
               </button>
             </div>
           </div>
+          
+          {/* Barra de Pesquisa */}
+          <div className="mt-3 bg-gray-100 rounded-lg px-4 py-2 flex items-center gap-2">
+            <Search className="w-5 h-5 text-gray-500" />
+            <input 
+              type="text" 
+              placeholder="Pergunte à Meta AI ou pesquise"
+              className="flex-1 bg-transparent outline-none text-sm text-gray-700"
+            />
+          </div>
         </div>
 
-        {/* Tabs */}
-        <div className="bg-[#008069] text-white flex items-center">
+
+
+        {/* Lista de Conversas */}
+        <div className="flex-1 overflow-y-auto bg-white">
+          {filteredChats.map((chat) => (
+            <div
+              key={chat.id}
+              onClick={() => handleChatClick(chat)}
+              className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 active:bg-gray-50"
+            >
+              <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                {chat.avatar}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-start mb-0.5">
+                  <h3 className="font-medium text-gray-900 text-[16px] truncate">
+                    {chat.name}
+                  </h3>
+                  <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
+                    {chat.time}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-gray-600 truncate flex-1">
+                    {chat.message}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+
+        {/* Bottom Navigation */}
+        <div className="bg-white border-t border-gray-200 flex justify-around py-2">
+          <button 
+            onClick={() => setActiveTab("chats")}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "chats" ? "text-[#008069]" : "text-gray-500"}`}
+          >
+            <MessageCircle className="w-6 h-6" />
+            <span className="text-xs font-medium">Conversas</span>
+          </button>
+          <button 
+            onClick={() => setActiveTab("updates")}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "updates" ? "text-[#008069]" : "text-gray-500"}`}
+          >
+            <Bell className="w-6 h-6" />
+            <span className="text-xs font-medium">Atualizações</span>
+          </button>
           <button 
             onClick={() => setActiveTab("communities")}
-            className={`px-4 py-3 ${activeTab === "communities" ? "border-b-2 border-white" : ""}`}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "communities" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Users className="w-6 h-6" />
+            <span className="text-xs font-medium">Comunidades</span>
           </button>
-          <button
-            onClick={() => setActiveTab("chats")}
-            className={`flex-1 py-3 text-center font-medium text-sm ${
-              activeTab === "chats" ? "border-b-2 border-white" : ""
-            }`}
-          >
-            Conversas
-          </button>
-          <button
-            onClick={() => setActiveTab("updates")}
-            className={`flex-1 py-3 text-center font-medium text-sm ${
-              activeTab === "updates" ? "border-b-2 border-white" : ""
-            }`}
-          >
-            Atualizações
-          </button>
-          <button
+          <button 
             onClick={() => setActiveTab("calls")}
-            className={`flex-1 py-3 text-center font-medium text-sm ${
-              activeTab === "calls" ? "border-b-2 border-white" : ""
-            }`}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "calls" ? "text-[#008069]" : "text-gray-500"}`}
           >
-            Chamadas
+            <Phone className="w-6 h-6" />
+            <span className="text-xs font-medium">Ligações</span>
           </button>
-        </div>
-
-        {/* Conteúdo das Tabs */}
-        <div className="flex-1 overflow-y-auto">
-          {activeTab === "chats" && (
-            <div>
-              {filteredChats.map((chat) => (
-                <div
-                  key={chat.id}
-                  onClick={() => handleChatClick(chat)}
-                  className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 active:bg-gray-50"
-                >
-                  <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
-                    {chat.avatar}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start mb-0.5">
-                      <h3 className="font-medium text-gray-900 text-[16px] truncate">
-                        {chat.name}
-                      </h3>
-                      <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
-                        {chat.time}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-[#53BDEB] flex-shrink-0" strokeWidth={2.5} />
-                      <p className="text-sm text-gray-600 truncate flex-1">
-                        {chat.message}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === "updates" && (
-            <div>
-              {/* Abas Status e Canais */}
-              <div className="flex border-b border-gray-200">
-                <button 
-                  onClick={() => setStatusTab("status")}
-                  className={`flex-1 py-3 text-center font-medium ${
-                    statusTab === "status" 
-                      ? "text-gray-900 bg-[#D5F7DC]" 
-                      : "text-gray-600"
-                  }`}
-                >
-                  Status
-                </button>
-                <button 
-                  onClick={() => setStatusTab("channels")}
-                  className={`flex-1 py-3 text-center font-medium ${
-                    statusTab === "channels" 
-                      ? "text-gray-900 bg-[#D5F7DC]" 
-                      : "text-gray-600"
-                  }`}
-                >
-                  Canais
-                </button>
-              </div>
-
-              {statusTab === "status" ? (
-                <div className="p-4">
-                  {/* Meu Status */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="relative">
-                      <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-2xl">
-                        😊
-                      </div>
-                      <div className="absolute bottom-0 right-0 w-6 h-6 bg-[#25D366] rounded-full flex items-center justify-center border-2 border-white">
-                        <Plus className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 text-[16px]">Meu status</h3>
-                      <p className="text-sm text-gray-500">Toque para adicionar atualização de status</p>
-                    </div>
-                  </div>
-
-                  <h4 className="text-sm text-gray-500 font-medium mb-3">Atualizações recentes</h4>
-                  
-                  {statusList.map((status) => (
-                    <div key={status.id} className="flex items-center gap-3 px-0 py-3">
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#25D366] to-[#008069] p-0.5">
-                        <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-2xl">
-                          {status.avatar}
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-gray-900 text-[16px]">{status.name}</h3>
-                        <p className="text-sm text-gray-500">{status.time}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="p-4">
-                  {/* Header Canais */}
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-[15px] text-gray-600">Adicionar canais</h3>
-                    <button 
-                      onClick={() => setShowChannelMenu(!showChannelMenu)}
-                      className="relative"
-                    >
-                      <Plus className="w-5 h-5 text-gray-900" />
-                    </button>
-                  </div>
-
-                  {/* Lista de Canais */}
-                  {channelsList.map((channel) => (
-                    <div key={channel.id} className="flex items-start gap-3 py-3 border-b border-gray-100">
-                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
-                        {channel.avatar}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900 text-[16px] mb-1">
-                          {channel.name}
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2 mb-1">
-                          {channel.message}
-                        </p>
-                        <span className="text-xs text-gray-500">{channel.date}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === "calls" && (
-            <div className="p-6 text-center text-gray-500">
-              <Phone className="w-16 h-16 mx-auto mb-3 opacity-20" />
-              <p className="text-sm">Suas chamadas aparecerão aqui</p>
-            </div>
-          )}
-
-          {activeTab === "communities" && (
-            <div className="p-6 text-center text-gray-500">
-              <Users className="w-16 h-16 mx-auto mb-3 opacity-20" />
-              <p className="text-sm">Comunidades em breve</p>
-            </div>
-          )}
         </div>
 
         {/* Botão Flutuante */}
-        <button className="absolute bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center text-white z-10">
-          {activeTab === "chats" && <MessageCircle className="w-6 h-6" />}
-          {activeTab === "updates" && statusTab === "status" && <Camera className="w-6 h-6" />}
-          {activeTab === "updates" && statusTab === "channels" && <Plus className="w-6 h-6" />}
-          {activeTab === "calls" && <Plus className="w-6 h-6" />}
+        <button className="absolute bottom-20 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center text-white z-10">
+          <Plus className="w-6 h-6" />
         </button>
 
         {/* Menu do botão + dos Canais */}
