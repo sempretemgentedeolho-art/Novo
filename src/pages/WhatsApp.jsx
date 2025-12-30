@@ -266,11 +266,21 @@ export default function WhatsApp() {
   };
 
   const handleCreateGroup = () => {
-    alert(`Grupo "${groupName}" criado com sucesso!`);
-    setCreatingGroup(false);
-    setGroupStep(1);
-    setSelectedContacts([]);
-    setGroupName("");
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance("Grupo criado com sucesso");
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+    
+    setTimeout(() => {
+      setCreatingGroup(false);
+      setGroupStep(1);
+      setSelectedContacts([]);
+      setGroupName("");
+    }, 2000);
   };
 
   const handleChatClick = (chat) => {
