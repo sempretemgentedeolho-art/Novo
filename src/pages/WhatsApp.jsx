@@ -489,6 +489,117 @@ export default function WhatsApp() {
     }
   };
 
+  const handleConnectedDevices = () => {
+    setShowMenu(false);
+    setConnectedDevices(true);
+    setDeviceStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Você está na tela Dispositivos conectados. Esta tela mostra quais computadores ou aparelhos estão usando o seu WhatsApp neste momento. Aqui você pode ver e desconectar dispositivos."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Atenção. Esta tela não conecta sozinha o WhatsApp no computador. Para conectar, precisamos primeiro usar o computador."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 8000);
+    }
+  };
+
+  const handleConnectDevice = () => {
+    setDeviceStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Agora vamos usar esta tela para finalizar a conexão com o computador. Primeiro, vá até o computador. No computador, abra o navegador de internet. Digite: web ponto whatsapp ponto com. Na tela, vai aparecer um quadrado com pontinhos, chamado Código QR. Deixe esta tela aberta."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleScanQR = () => {
+    setDeviceStep(3);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Agora volte para o celular. Você continua na tela Dispositivos conectados. Observe o botão escrito Conectar um dispositivo. Toque neste botão."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleCameraOpen = () => {
+    setDeviceStep(4);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "A câmera do celular será aberta. Aponte a câmera para o Código QR que está no computador."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      // Simular conexão após 3 segundos
+      setTimeout(() => {
+        const newDevice = {
+          id: Date.now(),
+          name: "Google Chrome (Windows)",
+          lastActive: "Ativo agora",
+          icon: "💻"
+        };
+        setDevices([...devices, newDevice]);
+        setDeviceStep(5);
+
+        const utter2 = new SpeechSynthesisUtterance(
+          "Pronto. O computador agora aparece na lista como Ativo agora. Isso confirma que a conexão foi realizada."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+
+        setTimeout(() => {
+          const utter3 = new SpeechSynthesisUtterance(
+            "Sempre que quiser ver quem está conectado, desconectar um computador, ou conferir segurança, use esta mesma tela: Dispositivos conectados. Conexão concluída com segurança. Quando terminar de usar no computador, volte aqui e desconecte."
+          );
+          utter3.lang = "pt-BR";
+          utter3.rate = 0.85;
+          synth.speak(utter3);
+
+          setTimeout(() => {
+            setDeviceStep(1);
+          }, 12000);
+        }, 6000);
+      }, 3000);
+    }
+  };
+
+  const handleDisconnectDevice = (deviceId) => {
+    setDevices(devices.filter(d => d.id !== deviceId));
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance("Dispositivo desconectado com sucesso");
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
   const toggleContactSelection = (contactId) => {
     if (selectedContacts.includes(contactId)) {
       setSelectedContacts(selectedContacts.filter(id => id !== contactId));
