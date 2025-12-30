@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -21,7 +22,7 @@ const apps = [
   { id: 'contacts', name: 'Contatos', icon: Phone, page: 'Contatos', bgColor: 'bg-gradient-to-br from-orange-400 to-orange-600', iconColor: 'text-white' },
   { id: 'clock', name: 'Relógio', icon: Clock, page: 'Relogio', bgColor: 'bg-gradient-to-br from-blue-500 to-indigo-600', iconColor: 'text-white' },
   { id: 'settings', name: 'Configurações', icon: Settings, page: 'Configuracoes', bgColor: 'bg-gradient-to-br from-gray-600 to-gray-800', iconColor: 'text-white' },
-  { id: 'whatsapp', name: 'WhatsApp', icon: MessageCircle, page: 'IntroWhatsApp', bgColor: 'bg-gradient-to-br from-green-400 to-green-600', iconColor: 'text-white' },
+  { id: 'whatsapp', name: 'WhatsApp', icon: MessageCircle, page: 'WhatsApp', bgColor: 'bg-gradient-to-br from-green-400 to-green-600', iconColor: 'text-white' },
   { id: 'facebook', name: 'Facebook', icon: Facebook, page: 'Facebook', bgColor: 'bg-gradient-to-br from-blue-600 to-blue-800', iconColor: 'text-white' },
   { id: 'instagram', name: 'Instagram', icon: Instagram, page: 'Instagram', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500', iconColor: 'text-white' },
   { id: 'calculator', name: 'Calculadora', icon: Calculator, page: 'Calculadora', bgColor: 'bg-gradient-to-br from-orange-400 to-red-500', iconColor: 'text-white' },

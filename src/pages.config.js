@@ -64,7 +64,6 @@ import AppEmail from './pages/AppEmail';
 import AppCalendar from './pages/AppCalendar';
 import BluetoothConfig from './pages/BluetoothConfig';
 import PlayStore from './pages/PlayStore';
-import IntroWhatsApp from './pages/IntroWhatsApp';
 import __Layout from './Layout.jsx';
 
 
@@ -135,7 +134,6 @@ export const PAGES = {
     "AppCalendar": AppCalendar,
     "BluetoothConfig": BluetoothConfig,
     "PlayStore": PlayStore,
-    "IntroWhatsApp": IntroWhatsApp,
 }
 
 export const pagesConfig = {
