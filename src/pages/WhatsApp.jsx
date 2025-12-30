@@ -9,7 +9,7 @@ import {
   Reply, Trash2, Share2, Info as InfoIcon, Edit, Pin, Check,
   FileText, Image as ImageIcon, Music, DollarSign, MapPin, User,
   BarChart3, List, Bell, MessageSquare, Wallpaper, ChevronRight, Settings, X,
-  Smartphone, Monitor, QrCode, Shield, AlertCircle, Clock
+  Smartphone, Monitor, QrCode, Shield, AlertCircle, Clock, CreditCard, History
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -236,6 +236,11 @@ export default function WhatsApp() {
   const [businessStep, setBusinessStep] = useState(1);
   const [businessSearch, setBusinessSearch] = useState("");
   const [selectedBusiness, setSelectedBusiness] = useState(null);
+  const [showPayments, setShowPayments] = useState(false);
+  const [paymentStep, setPaymentStep] = useState(1);
+  const [paymentConfigured, setPaymentConfigured] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState("");
+  const [selectedPaymentContact, setSelectedPaymentContact] = useState(null);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -822,6 +827,120 @@ export default function WhatsApp() {
     }
   };
 
+  const handlePayments = () => {
+    setShowMenu(false);
+    setShowPayments(true);
+    setPaymentStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Você está na tela Pagamentos do WhatsApp. Aqui você pode enviar e receber dinheiro usando o WhatsApp, de forma simples e segura."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Se esta for a primeira vez, o WhatsApp pode pedir para confirmar seus dados. Isso é normal e serve para sua segurança."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 7000);
+    }
+  };
+
+  const handleConfigurePayment = () => {
+    setPaymentStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Para usar os pagamentos, é necessário cadastrar um cartão ou conta bancária. Siga as instruções que aparecem na tela com calma."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "O WhatsApp não guarda seu dinheiro, ele apenas faz a transferência entre as pessoas."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 7000);
+    }
+  };
+
+  const handlePaymentConfigured = () => {
+    setPaymentConfigured(true);
+    setPaymentStep(3);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Depois de configurado, você verá as opções para Enviar ou Receber dinheiro."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleSendMoney = () => {
+    setPaymentStep(4);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Para enviar dinheiro, escolha a pessoa da conversa e toque em Pagamento. Digite o valor e confirme."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleConfirmPayment = () => {
+    setPaymentStep(5);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Antes de finalizar, o WhatsApp pede uma confirmação. Confira o valor com atenção e confirme o pagamento."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handlePaymentSent = () => {
+    setPaymentStep(7);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Pronto. O pagamento foi enviado com sucesso. Você verá a confirmação na conversa."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Atenção. Só envie dinheiro para pessoas que você conhece. Se tiver dúvida, não confirme o pagamento."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 5000);
+    }
+  };
+
   const toggleContactSelection = (contactId) => {
     if (selectedContacts.includes(contactId)) {
       setSelectedContacts(selectedContacts.filter(id => id !== contactId));
@@ -933,6 +1052,485 @@ export default function WhatsApp() {
     if (chatsFilter === "favorites") return favoriteContacts.includes(chat.id);
     return true;
   });
+
+  // Telas de Pagamentos
+  if (showPayments && paymentStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setShowPayments(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Pagamentos</h2>
+          </div>
+
+          {/* Conteúdo */}
+          <div className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-32 h-32 bg-[#25D366]/10 rounded-full flex items-center justify-center mb-6">
+              <DollarSign className="w-16 h-16 text-[#25D366]" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
+              Pagamentos do WhatsApp
+            </h3>
+            <p className="text-gray-600 text-center mb-6 leading-relaxed">
+              Envie e receba dinheiro usando o WhatsApp, de forma simples e segura
+            </p>
+
+            <div className="w-full bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+              <p className="text-sm text-gray-800">
+                💡 <strong>Atenção:</strong> O WhatsApp não guarda seu dinheiro, ele apenas faz a transferência entre as pessoas.
+              </p>
+            </div>
+
+            <button
+              onClick={handleConfigurePayment}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium mb-3"
+            >
+              Configurar pagamentos
+            </button>
+
+            <p className="text-xs text-gray-500 text-center">
+              Você precisará adicionar um cartão ou conta bancária
+            </p>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showPayments && paymentStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setPaymentStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Configurar pagamentos</h2>
+          </div>
+
+          {/* Conteúdo */}
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+              <div className="flex gap-2">
+                <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-blue-900 mb-2">Como funciona</h3>
+                  <p className="text-sm text-blue-800">
+                    O WhatsApp não guarda seu dinheiro. Ele apenas faz a transferência entre as pessoas de forma segura.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <CreditCard className="w-6 h-6 text-[#25D366]" />
+                  <h4 className="font-semibold text-gray-900">Adicionar cartão</h4>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Cadastre seu cartão de crédito ou débito para fazer pagamentos
+                </p>
+                <button className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium">
+                  Adicionar cartão
+                </button>
+              </div>
+
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <Shield className="w-6 h-6 text-[#25D366]" />
+                  <h4 className="font-semibold text-gray-900">Conta bancária</h4>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Conecte sua conta bancária para transferências
+                </p>
+                <button className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium">
+                  Adicionar conta
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+              <p className="text-sm text-gray-800">
+                ⚠️ Siga as instruções com calma. Seus dados estarão protegidos.
+              </p>
+            </div>
+          </div>
+
+          {/* Botão pular (simular configuração) */}
+          <div className="p-4">
+            <button
+              onClick={handlePaymentConfigured}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Continuar (simulação)
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showPayments && paymentStep === 3) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => {
+              const synth = window.speechSynthesis;
+              if (synth) {
+                synth.cancel();
+                const utter = new SpeechSynthesisUtterance(
+                  "Para sair da área de pagamentos, clique na seta preta, no canto superior esquerdo. Você volta ao WhatsApp normalmente. Pagamentos no WhatsApp facilitam enviar e receber dinheiro sem sair do aplicativo."
+                );
+                utter.lang = "pt-BR";
+                utter.rate = 0.85;
+                synth.speak(utter);
+              }
+              setTimeout(() => {
+                setShowPayments(false);
+                setPaymentStep(1);
+              }, 2000);
+            }}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Pagamentos</h2>
+            <button className="ml-auto">
+              <History className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Ações principais */}
+          <div className="p-4 space-y-4">
+            <button
+              onClick={handleSendMoney}
+              className="w-full bg-[#25D366] text-white py-4 rounded-lg font-medium flex items-center justify-center gap-3"
+            >
+              <Send className="w-5 h-5" />
+              Enviar dinheiro
+            </button>
+
+            <button
+              className="w-full bg-white border-2 border-[#25D366] text-[#25D366] py-4 rounded-lg font-medium flex items-center justify-center gap-3"
+            >
+              <DollarSign className="w-5 h-5" />
+              Receber dinheiro
+            </button>
+          </div>
+
+          {/* Informações */}
+          <div className="px-4 py-3 bg-gray-50">
+            <h3 className="font-semibold text-gray-900 mb-2">Como funciona</h3>
+            <div className="space-y-2 text-sm text-gray-600">
+              <p>• Envie dinheiro diretamente nas conversas</p>
+              <p>• Receba pagamentos de forma rápida</p>
+              <p>• Tudo protegido com criptografia</p>
+            </div>
+          </div>
+
+          {/* Segurança */}
+          <div className="p-4">
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+              <p className="text-sm text-gray-800">
+                ⚠️ <strong>Importante:</strong> Só envie dinheiro para pessoas que você conhece. Se tiver dúvida, não confirme o pagamento.
+              </p>
+            </div>
+          </div>
+
+          {/* Histórico (link) */}
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={() => {
+                const synth = window.speechSynthesis;
+                if (synth) {
+                  synth.cancel();
+                  const utter = new SpeechSynthesisUtterance(
+                    "Nesta tela, você também pode ver o histórico dos pagamentos realizados e recebidos."
+                  );
+                  utter.lang = "pt-BR";
+                  utter.rate = 0.85;
+                  synth.speak(utter);
+                }
+              }}
+              className="w-full text-[#00a884] font-medium py-2"
+            >
+              Ver histórico de pagamentos
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showPayments && paymentStep === 4) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setPaymentStep(3)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Escolher contato</h2>
+            <button>
+              <Search className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Lista de contatos */}
+          <div className="flex-1 overflow-y-auto">
+            <h3 className="px-4 py-2 text-sm text-gray-500 font-medium">Recentes</h3>
+            {contactsList.slice(0, 5).map(contact => (
+              <div
+                key={contact.id}
+                onClick={() => {
+                  setSelectedPaymentContact(contact);
+                  setPaymentStep(5);
+                }}
+                className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 active:bg-gray-50"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+                  {contact.avatar}
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium text-gray-900">{contact.name}</h3>
+                  {contact.status && (
+                    <p className="text-sm text-gray-600 truncate">{contact.status}</p>
+                  )}
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showPayments && paymentStep === 5) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setPaymentStep(4)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Enviar pagamento</h2>
+          </div>
+
+          {/* Contato selecionado */}
+          <div className="p-6 flex flex-col items-center border-b border-gray-200">
+            <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-3xl mb-3">
+              {selectedPaymentContact?.avatar || "👤"}
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900">
+              {selectedPaymentContact?.name || "Contato"}
+            </h3>
+          </div>
+
+          {/* Valor */}
+          <div className="p-6 flex-1">
+            <label className="text-sm text-gray-600 mb-2 block">Valor a enviar</label>
+            <div className="flex items-center gap-2 mb-6">
+              <span className="text-2xl font-semibold text-gray-900">R$</span>
+              <input
+                type="number"
+                value={paymentAmount}
+                onChange={(e) => setPaymentAmount(e.target.value)}
+                placeholder="0,00"
+                className="flex-1 text-4xl font-bold outline-none border-b-2 border-[#25D366] py-2"
+                autoFocus
+              />
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+              <p className="text-sm text-gray-800">
+                💡 Confira o valor com atenção antes de confirmar
+              </p>
+            </div>
+          </div>
+
+          {/* Botão próximo */}
+          {paymentAmount && parseFloat(paymentAmount) > 0 && (
+            <div className="p-4">
+              <button
+                onClick={handleConfirmPayment}
+                className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+              >
+                Continuar
+              </button>
+            </div>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showPayments && paymentStep === 7) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setPaymentStep(5)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Confirmar pagamento</h2>
+          </div>
+
+          {/* Detalhes do pagamento */}
+          <div className="flex-1 p-6">
+            <div className="bg-gray-50 rounded-lg p-6 mb-6">
+              <div className="flex flex-col items-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-2xl mb-3">
+                  {selectedPaymentContact?.avatar}
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  {selectedPaymentContact?.name}
+                </h3>
+                <p className="text-3xl font-bold text-[#25D366] mb-4">
+                  R$ {parseFloat(paymentAmount).toFixed(2)}
+                </p>
+              </div>
+
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Método de pagamento</span>
+                  <span className="font-medium text-gray-900">Cartão •••• 1234</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Taxa</span>
+                  <span className="font-medium text-gray-900">R$ 0,00</span>
+                </div>
+                <div className="border-t border-gray-200 pt-3 flex justify-between">
+                  <span className="text-gray-900 font-semibold">Total</span>
+                  <span className="font-bold text-gray-900">R$ {parseFloat(paymentAmount).toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+              <p className="text-sm text-gray-800">
+                ⚠️ Confira todas as informações antes de confirmar. O pagamento não poderá ser cancelado.
+              </p>
+            </div>
+
+            <div className="bg-red-50 border-l-4 border-red-500 p-4">
+              <p className="text-sm text-gray-800">
+                🚨 <strong>Segurança:</strong> Só envie dinheiro para pessoas que você conhece e confia.
+              </p>
+            </div>
+          </div>
+
+          {/* Botões */}
+          <div className="p-4 space-y-3">
+            <button
+              onClick={handlePaymentSent}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Confirmar pagamento
+            </button>
+            <button
+              onClick={() => setPaymentStep(5)}
+              className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-medium"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showPayments && paymentStep === 7) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setPaymentStep(3)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Pagamento enviado</h2>
+          </div>
+
+          {/* Sucesso */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6">
+            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
+              <Check className="w-16 h-16 text-green-600" strokeWidth={3} />
+            </div>
+
+            <h3 className="text-2xl font-bold text-gray-900 mb-3 text-center">
+              Pronto!
+            </h3>
+
+            <p className="text-center text-gray-600 mb-2">
+              Pagamento enviado com sucesso
+            </p>
+
+            <p className="text-3xl font-bold text-[#25D366] mb-6">
+              R$ {parseFloat(paymentAmount).toFixed(2)}
+            </p>
+
+            <div className="bg-gray-50 rounded-lg p-4 w-full mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-gray-600">Para</span>
+                <span className="font-medium text-gray-900">{selectedPaymentContact?.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Data</span>
+                <span className="font-medium text-gray-900">
+                  {new Date().toLocaleDateString('pt-BR')}
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-green-50 border-l-4 border-green-500 p-4 w-full mb-4">
+              <p className="text-sm text-gray-800">
+                ✓ Você verá a confirmação na conversa com {selectedPaymentContact?.name}
+              </p>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 w-full">
+              <p className="text-sm text-gray-800">
+                💡 Para ver todos os pagamentos, acesse o histórico no canto superior da tela de pagamentos
+              </p>
+            </div>
+          </div>
+
+          {/* Botão */}
+          <div className="p-4">
+            <button
+              onClick={() => setPaymentStep(3)}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Fazer outro pagamento
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Telas de Encontrar empresas
   if (findBusiness && businessStep === 1) {
@@ -2902,10 +3500,7 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Encontrar empresas</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Pagamentos");
-                    setShowMenu(false);
-                  }}
+                  onClick={handlePayments}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <DollarSign className="w-5 h-5 text-gray-600" />
