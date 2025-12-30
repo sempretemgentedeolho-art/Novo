@@ -65,6 +65,7 @@ import UHQUpscaler from './pages/UHQUpscaler';
 import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
+import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import __Layout from './Layout.jsx';
 
 
@@ -136,6 +137,7 @@ export const PAGES = {
     "VolumeControl": VolumeControl,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
+    "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
 }
 
 export const pagesConfig = {

@@ -3888,7 +3888,7 @@ export default function WhatsApp() {
                 </button>
                 <button
                   onClick={() => {
-                    navigate(createPageUrl("Configuracoes"));
+                    navigate(createPageUrl("ConfiguracoesWhatsApp"));
                     setShowMenu(false);
                   }}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
