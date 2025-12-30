@@ -722,6 +722,106 @@ export default function WhatsApp() {
     }
   };
 
+  const handleFindBusiness = () => {
+    setShowMenu(false);
+    setFindBusiness(true);
+    setBusinessStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Você está na tela Encontrar empresas. Aqui você pode procurar lojas, farmácias, mercados e outros serviços que usam WhatsApp."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Observe a parte de cima da tela. Existe um campo para pesquisar empresas. Toque neste campo para digitar o que você procura."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 7000);
+    }
+  };
+
+  const handleBusinessSearch = () => {
+    setBusinessStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Agora digite o nome da empresa ou o tipo de serviço. Por exemplo: farmácia, mercado, padaria ou o nome da loja."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleBusinessResults = () => {
+    setBusinessStep(3);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Abaixo aparecem empresas relacionadas com o que você digitou. Toque no nome da empresa que você deseja conhecer."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleSelectBusiness = (business) => {
+    setSelectedBusiness(business);
+    setBusinessStep(4);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Esta é a tela da empresa. Aqui você pode ver: o nome, a foto, informações e horário de atendimento."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Para falar com a empresa, toque em Conversar ou Enviar mensagem."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 6000);
+    }
+  };
+
+  const handleStartBusinessChat = () => {
+    setBusinessStep(5);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Pronto. Agora você pode escrever e conversar diretamente com a empresa, como em qualquer conversa do WhatsApp."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Atenção. Sempre confirme se a empresa é verdadeira. Empresas confiáveis costumam ter perfil completo e informações claras."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 5000);
+    }
+  };
+
   const toggleContactSelection = (contactId) => {
     if (selectedContacts.includes(contactId)) {
       setSelectedContacts(selectedContacts.filter(id => id !== contactId));
