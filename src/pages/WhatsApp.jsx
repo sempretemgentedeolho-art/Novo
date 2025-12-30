@@ -8,7 +8,8 @@ import {
   Smile, Phone, Video, Plus, Users, MessageCircle, Star,
   Reply, Trash2, Share2, Info as InfoIcon, Edit, Pin, Check,
   FileText, Image as ImageIcon, Music, DollarSign, MapPin, User,
-  BarChart3, List, Bell, MessageSquare, Wallpaper, ChevronRight, Settings, X
+  BarChart3, List, Bell, MessageSquare, Wallpaper, ChevronRight, Settings, X,
+  Smartphone, Monitor, QrCode, Shield, AlertCircle
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -186,6 +187,9 @@ export default function WhatsApp() {
   const [broadcastContacts, setBroadcastContacts] = useState([]);
   const [broadcastName, setBroadcastName] = useState("");
   const [broadcastMessage, setBroadcastMessage] = useState("");
+  const [connectedDevices, setConnectedDevices] = useState(false);
+  const [deviceStep, setDeviceStep] = useState(1);
+  const [devices, setDevices] = useState([]);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -595,6 +599,303 @@ export default function WhatsApp() {
     if (chatsFilter === "groups") return chat.isGroup;
     return true;
   });
+
+  // Telas de dispositivos conectados
+  if (connectedDevices && deviceStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setConnectedDevices(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Dispositivos conectados</h2>
+          </div>
+
+          {/* Ilustração */}
+          <div className="p-6 flex flex-col items-center">
+            <div className="relative mb-4">
+              <Smartphone className="w-20 h-20 text-[#25D366]" />
+              <Monitor className="w-20 h-20 text-[#25D366] absolute -right-8 top-4" />
+              <div className="absolute top-8 left-8 w-8 h-8 bg-[#25D366] rounded-full flex items-center justify-center">
+                <Check className="w-5 h-5 text-white" strokeWidth={3} />
+              </div>
+            </div>
+            <p className="text-center text-gray-600 text-sm">
+              Use o WhatsApp no WhatsApp Web, WhatsApp para computador ou em outros dispositivos.{" "}
+              <span className="text-[#00a884]">Saiba mais</span>
+            </p>
+          </div>
+
+          {/* Botão conectar */}
+          <div className="px-4 mb-4">
+            <button
+              onClick={handleConnectDevice}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Conectar dispositivo
+            </button>
+          </div>
+
+          {/* Lista de dispositivos */}
+          {devices.length > 0 && (
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-4 py-2 bg-gray-50">
+                <h3 className="text-sm text-gray-600 font-medium">Status do dispositivo</h3>
+                <p className="text-xs text-gray-500 mt-1">
+                  Toque em um dispositivo para desconectá-lo
+                </p>
+              </div>
+              {devices.map(device => (
+                <div
+                  key={device.id}
+                  onClick={() => {
+                    if (window.confirm(`Desconectar ${device.name}?`)) {
+                      handleDisconnectDevice(device.id);
+                    }
+                  }}
+                  className="flex items-center gap-3 px-4 py-4 border-b border-gray-100 active:bg-gray-50"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#25D366]/10 flex items-center justify-center text-2xl">
+                    {device.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-medium text-gray-900">{device.name}</h3>
+                    <p className="text-sm text-gray-600">{device.lastActive}</p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Info segurança */}
+          <div className="p-4 bg-gray-50 border-t border-gray-200">
+            <div className="flex gap-2">
+              <Shield className="w-4 h-4 text-gray-600 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-gray-600">
+                Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta em todos os seus dispositivos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (connectedDevices && deviceStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setDeviceStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Instruções</h2>
+          </div>
+
+          {/* Conteúdo */}
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+              <div className="flex gap-2">
+                <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-blue-900 mb-2">Passo a passo</h3>
+                  <ol className="space-y-3 text-sm text-blue-800">
+                    <li>1. Vá até o computador</li>
+                    <li>2. Abra o navegador de internet</li>
+                    <li>3. Digite: <strong>web.whatsapp.com</strong></li>
+                    <li>4. Aguarde o Código QR aparecer</li>
+                    <li>5. Deixe a tela aberta</li>
+                    <li>6. Volte para este celular</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center mb-6">
+              <Monitor className="w-32 h-32 text-gray-300" />
+            </div>
+
+            <p className="text-center text-gray-600 mb-4">
+              Você verá um código QR no computador
+            </p>
+          </div>
+
+          {/* Botão continuar */}
+          <div className="p-4">
+            <button
+              onClick={handleScanQR}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Já abri no computador
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (connectedDevices && deviceStep === 3) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setDeviceStep(2)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Escanear código</h2>
+          </div>
+
+          {/* Conteúdo */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6">
+            <div className="w-32 h-32 border-4 border-[#25D366] rounded-2xl flex items-center justify-center mb-6 animate-pulse">
+              <QrCode className="w-20 h-20 text-[#25D366]" />
+            </div>
+
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
+              Pronto para escanear
+            </h3>
+
+            <p className="text-center text-gray-600 mb-6">
+              Toque no botão abaixo para abrir a câmera e escanear o código QR que está no computador
+            </p>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 w-full">
+              <p className="text-sm text-gray-800">
+                💡 <strong>Dica:</strong> Certifique-se de que o código QR está visível na tela do computador
+              </p>
+            </div>
+          </div>
+
+          {/* Botão escanear */}
+          <div className="p-4">
+            <button
+              onClick={handleCameraOpen}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+            >
+              <Camera className="w-5 h-5" />
+              Abrir câmera
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (connectedDevices && deviceStep === 4) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-black flex flex-col relative">
+          <StatusBar variant="dark" />
+
+          {/* Simulação de câmera */}
+          <div className="flex-1 flex items-center justify-center relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
+
+            {/* Frame de escaneamento */}
+            <div className="relative">
+              <div className="w-64 h-64 border-4 border-[#25D366] rounded-3xl relative animate-pulse">
+                {/* Cantos do frame */}
+                <div className="absolute -top-1 -left-1 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-lg" />
+                <div className="absolute -top-1 -right-1 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-lg" />
+                <div className="absolute -bottom-1 -left-1 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-lg" />
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg" />
+
+                {/* Linha de scan */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#25D366] animate-scan" />
+              </div>
+
+              <p className="text-white text-center mt-6 text-lg font-medium">
+                Escaneando...
+              </p>
+            </div>
+          </div>
+
+          {/* Instruções */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
+            <p className="text-white text-center text-sm">
+              Aponte a câmera para o código QR
+            </p>
+          </div>
+
+          <style>{`
+            @keyframes scan {
+              0%, 100% { top: 0; }
+              50% { top: 100%; }
+            }
+            .animate-scan {
+              animation: scan 2s ease-in-out infinite;
+            }
+          `}</style>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (connectedDevices && deviceStep === 5) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setDeviceStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Conexão realizada</h2>
+          </div>
+
+          {/* Sucesso */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6">
+            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
+              <Check className="w-16 h-16 text-green-600" strokeWidth={3} />
+            </div>
+
+            <h3 className="text-2xl font-bold text-gray-900 mb-3 text-center">
+              Pronto!
+            </h3>
+
+            <p className="text-center text-gray-600 mb-6">
+              O dispositivo foi conectado com sucesso
+            </p>
+
+            <div className="bg-green-50 border-l-4 border-green-500 p-4 w-full mb-6">
+              <p className="text-sm text-gray-800">
+                ✓ Agora você pode usar o WhatsApp no computador
+              </p>
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 w-full">
+              <p className="text-sm text-gray-800">
+                💡 <strong>Lembre-se:</strong> Para desconectar, volte nesta tela e toque no dispositivo
+              </p>
+            </div>
+          </div>
+
+          {/* Botão voltar */}
+          <div className="p-4">
+            <button
+              onClick={() => setDeviceStep(1)}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Ver dispositivos conectados
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Telas de lista de transmissão
   if (broadcastList && broadcastStep === 1) {
@@ -1764,13 +2065,10 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Listas de transmissão</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Dispositivos conectados");
-                    setShowMenu(false);
-                  }}
+                  onClick={handleConnectedDevices}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
-                  <Phone className="w-5 h-5 text-gray-600" />
+                  <Smartphone className="w-5 h-5 text-gray-600" />
                   <span className="text-[15px] text-gray-900">Dispositivos conectados</span>
                 </button>
                 <button
