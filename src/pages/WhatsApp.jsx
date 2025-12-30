@@ -177,6 +177,10 @@ export default function WhatsApp() {
   const [groupStep, setGroupStep] = useState(1);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [groupName, setGroupName] = useState("");
+  const [creatingCommunity, setCreatingCommunity] = useState(false);
+  const [communityStep, setCommunityStep] = useState(1);
+  const [communityName, setCommunityName] = useState("");
+  const [communityMembers, setCommunityMembers] = useState([]);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -240,6 +244,153 @@ export default function WhatsApp() {
       utter.lang = "pt-BR";
       utter.rate = 0.85;
       synth.speak(utter);
+    }
+  };
+
+  const handleNewCommunity = () => {
+    setShowMenu(false);
+    setCreatingCommunity(true);
+    setCommunityStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Vamos criar uma comunidade no WhatsApp. Observe a tela. Logo abaixo do texto, existe um link escrito Exemplos de comunidades. Clique em Exemplos de comunidades."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleCommunityExamples = () => {
+    setCommunityStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Nesta tela, o WhatsApp mostra exemplos de como as comunidades podem ser usadas, como condomínio, clube ou bairro. Esta tela é apenas para explicação. Agora, clique na seta para a esquerda, no canto superior, para voltar."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleBackFromExamples = () => {
+    setCommunityStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Você voltou para a tela Criar comunidade. Agora, clique no botão verde, escrito Começar, bem embaixo da tela."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleStartCommunity = () => {
+    setCommunityStep(3);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Agora vamos dar um nome à comunidade. Toque no campo Nome da comunidade e digite o nome desejado. Depois de digitar o nome, clique na seta verde, no canto inferior direito."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleConfirmCommunityName = () => {
+    setCommunityStep(4);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Pronto. A comunidade foi criada. Nesta tela, você vê dois grupos: Avisos e Geral. Agora, vamos adicionar pessoas à comunidade. Clique em Adicionar membros."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleAddCommunityMembers = () => {
+    setCommunityStep(5);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Esta é a lista de contatos do seu WhatsApp. Toque nos nomes das pessoas que você deseja adicionar à comunidade. Depois de selecionar as pessoas, clique na seta verde, no canto inferior direito."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const toggleCommunityMember = (contactId) => {
+    if (communityMembers.includes(contactId)) {
+      setCommunityMembers(communityMembers.filter(id => id !== contactId));
+    } else {
+      setCommunityMembers([...communityMembers, contactId]);
+    }
+  };
+
+  const handleConfirmMembers = () => {
+    setCommunityStep(6);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Apareceu uma mensagem perguntando se você deseja adicionar as pessoas selecionadas. Para continuar, clique no botão Adicionar."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleAddMembersToCommunity = () => {
+    setCommunityStep(7);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Parabéns. A comunidade foi criada com sucesso. Esta é a tela Bem-vindo à comunidade. Aqui você pode enviar avisos importantes para todos os membros."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleFinishCommunity = () => {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Comunidade criada com sucesso. Agora é só usar o grupo de avisos para comunicar todos os membros."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        setCreatingCommunity(false);
+        setCommunityStep(1);
+        setCommunityName("");
+        setCommunityMembers([]);
+      }, 3000);
+    } else {
+      setCreatingCommunity(false);
+      setCommunityStep(1);
+      setCommunityName("");
+      setCommunityMembers([]);
     }
   };
 
@@ -353,6 +504,380 @@ export default function WhatsApp() {
     if (chatsFilter === "groups") return chat.isGroup;
     return true;
   });
+
+  // Telas de criação de comunidade
+  if (creatingCommunity && communityStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setCreatingCommunity(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Criar comunidade</h2>
+          </div>
+
+          {/* Conteúdo */}
+          <div className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-32 h-32 bg-[#25D366]/10 rounded-full flex items-center justify-center mb-6">
+              <Users className="w-16 h-16 text-[#25D366]" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
+              Criar comunidade
+            </h3>
+            <p className="text-gray-600 text-center mb-4 leading-relaxed">
+              Reúna pessoas do seu bairro, da sua escola e muito mais em um só lugar. Crie grupos para assuntos específicos e envie avisos a todos com facilidade.
+            </p>
+            <button
+              onClick={handleCommunityExamples}
+              className="text-[#00a884] font-medium mb-8"
+            >
+              Exemplos de comunidades →
+            </button>
+            <button
+              onClick={handleStartCommunity}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Começar
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (creatingCommunity && communityStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={handleBackFromExamples}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Exemplos de comunidades</h2>
+          </div>
+
+          {/* Conteúdo */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-4">
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <h4 className="font-semibold text-gray-900 mb-2">🏢 Condomínio</h4>
+                <p className="text-sm text-gray-600">
+                  Organize moradores, compartilhe avisos importantes e facilite a comunicação entre todos.
+                </p>
+              </div>
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <h4 className="font-semibold text-gray-900 mb-2">🏫 Escola</h4>
+                <p className="text-sm text-gray-600">
+                  Conecte pais, alunos e professores. Envie comunicados e organize eventos escolares.
+                </p>
+              </div>
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <h4 className="font-semibold text-gray-900 mb-2">🏘️ Bairro</h4>
+                <p className="text-sm text-gray-600">
+                  Una vizinhos, compartilhe informações locais e fortaleça a comunidade.
+                </p>
+              </div>
+              <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <h4 className="font-semibold text-gray-900 mb-2">⚽ Clube</h4>
+                <p className="text-sm text-gray-600">
+                  Reúna membros do clube, organize atividades e mantenha todos informados.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (creatingCommunity && communityStep === 3) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setCommunityStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Nova comunidade</h2>
+          </div>
+
+          {/* Foto e nome */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                <Camera className="w-6 h-6 text-gray-500" />
+              </div>
+              <input
+                type="text"
+                value={communityName}
+                onChange={(e) => setCommunityName(e.target.value)}
+                placeholder="Nome da comunidade"
+                className="flex-1 border-b-2 border-[#25D366] py-2 outline-none text-lg"
+              />
+              <button>
+                <Smile className="w-6 h-6 text-gray-500" />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1" />
+
+          {/* Botão próximo */}
+          {communityName.trim() && (
+            <button
+              onClick={handleConfirmCommunityName}
+              className="absolute bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center z-10"
+            >
+              <ArrowLeft className="w-6 h-6 text-white transform rotate-180" />
+            </button>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (creatingCommunity && communityStep === 4) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setCommunityStep(3)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                <Users className="w-5 h-5 text-gray-600" />
+              </div>
+              <div>
+                <h2 className="text-base font-medium">{communityName}</h2>
+                <p className="text-xs text-white/80">Comunidade · 3 grupos</p>
+              </div>
+            </div>
+            <button className="ml-auto">
+              <MoreVertical className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Bem-vindo */}
+          <div className="bg-green-50 p-4 border-b border-gray-200">
+            <div className="flex items-start gap-3">
+              <Users className="w-5 h-5 text-[#25D366] flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Bem-vindo(a) à comunidade!</h3>
+                <p className="text-sm text-gray-600">
+                  Envie avisos importantes a todos os membros de uma só vez.
+                </p>
+                <button
+                  onClick={handleAddCommunityMembers}
+                  className="text-[#00a884] font-medium text-sm mt-2"
+                >
+                  Adicionar membros
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Grupos */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                <Bell className="w-6 h-6 text-[#25D366]" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-gray-900">Avisos</h3>
+                <p className="text-sm text-gray-500">Você removeu</p>
+              </div>
+            </div>
+
+            <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                <MessageCircle className="w-6 h-6 text-gray-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-gray-900">Geral</h3>
+                <p className="text-sm text-gray-500">Você mudou as configurações do grupo para...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (creatingCommunity && communityStep === 5) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setCommunityStep(4)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Adicionar membros</h2>
+            <button className="ml-auto">
+              <Search className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Pesquisa */}
+          <div className="px-4 py-3 border-b border-gray-200">
+            <input
+              type="text"
+              placeholder="Pesquisar nome ou número..."
+              className="w-full bg-gray-100 rounded-lg px-4 py-2 outline-none text-sm"
+            />
+          </div>
+
+          {/* Lista de contatos */}
+          <div className="flex-1 overflow-y-auto">
+            <h3 className="px-4 py-2 text-sm text-gray-500 font-medium">Contatos frequentes</h3>
+            {contactsList.map(contact => (
+              <div
+                key={contact.id}
+                onClick={() => toggleCommunityMember(contact.id)}
+                className="flex items-center gap-3 px-4 py-3 active:bg-gray-50"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {contact.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-gray-900 text-[16px]">{contact.name}</h3>
+                  {contact.status && (
+                    <p className="text-sm text-gray-600 truncate">{contact.status}</p>
+                  )}
+                </div>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                  communityMembers.includes(contact.id)
+                    ? "bg-[#25D366] border-[#25D366]"
+                    : "border-gray-300"
+                }`}>
+                  {communityMembers.includes(contact.id) && (
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Botão próximo */}
+          {communityMembers.length > 0 && (
+            <button
+              onClick={handleConfirmMembers}
+              className="absolute bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center z-10"
+            >
+              <ArrowLeft className="w-6 h-6 text-white transform rotate-180" />
+            </button>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (creatingCommunity && communityStep === 6) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-black/50 flex items-center justify-center p-6">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3 text-center">
+              Adicionar membros
+            </h3>
+            <p className="text-sm text-gray-600 text-center mb-6">
+              Adicionar {communityMembers.length} {communityMembers.length === 1 ? 'pessoa' : 'pessoas'} à comunidade?
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setCommunityStep(5)}
+                className="flex-1 py-3 border border-gray-300 rounded-lg font-medium text-gray-700"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleAddMembersToCommunity}
+                className="flex-1 py-3 bg-[#25D366] text-white rounded-lg font-medium"
+              >
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (creatingCommunity && communityStep === 7) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-[#0B141A] flex flex-col relative">
+          <StatusBar variant="dark" />
+
+          {/* Header */}
+          <div className="bg-[#202C33] text-white px-3 py-2 flex items-center gap-3">
+            <button onClick={handleFinishCommunity}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-xl">
+              <Users className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-medium text-[17px]">Avisos</h2>
+              <p className="text-xs text-gray-400">Comunidade {communityName}</p>
+            </div>
+          </div>
+
+          {/* Mensagens */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <div className="bg-[#202C33] rounded-lg p-4 mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="w-4 h-4 text-yellow-500" />
+                <p className="text-xs text-gray-400">Ontem</p>
+              </div>
+              <p className="text-sm text-gray-300 leading-relaxed mb-2">
+                🔒 As mensagens e as ligações são protegidas com a criptografia de ponta a ponta e ficam somente entre você e os participantes desta conversa. Nem mesmo o WhatsApp pode ler ou ouvi-las.
+              </p>
+            </div>
+
+            <div className="bg-[#005C4B] rounded-lg p-4">
+              <div className="flex flex-col items-center text-center mb-3">
+                <Users className="w-12 h-12 text-white mb-2" />
+                <h3 className="text-white font-medium">Bem-vindo(a) à comunidade!</h3>
+                <p className="text-sm text-gray-300 mt-1">
+                  Envie avisos importantes a todos os membros de uma só vez.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Input */}
+          <div className="bg-[#202C33] px-2 py-1.5 flex items-center gap-1">
+            <div className="flex-1 bg-[#2A3942] rounded-full px-4 py-2 flex items-center gap-2">
+              <input
+                placeholder="Mensagem"
+                className="flex-1 bg-transparent outline-none text-[15px] text-white"
+              />
+            </div>
+            <button className="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center">
+              <Mic className="w-5 h-5 text-white" />
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Tela de criação de grupo - Etapa 1: Seleção de contatos
   if (creatingGroup && groupStep === 1) {
@@ -886,10 +1411,7 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Novo grupo</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Nova comunidade");
-                    setShowMenu(false);
-                  }}
+                  onClick={handleNewCommunity}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <Users className="w-5 h-5 text-gray-600" />
