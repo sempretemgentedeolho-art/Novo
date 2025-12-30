@@ -4,6 +4,8 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import { ArrowLeft, Search, Bell, User, Home, Compass, Video, Library } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
 
 const videos = [

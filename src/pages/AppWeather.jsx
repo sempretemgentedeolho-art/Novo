@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
-import { ArrowLeft, Cloud, Sun, Wind, Droplets, Eye } from 'lucide-react';
+import { ArrowLeft, Cloud, CloudRain, Sun, Wind, Droplets, Eye } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 
 const forecast = [

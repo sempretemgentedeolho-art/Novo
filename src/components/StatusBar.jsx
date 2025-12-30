@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wifi, Signal, Battery } from 'lucide-react';
+import { Wifi, Signal, Battery, Clock } from 'lucide-react';
 import { cn } from '@/components/ui/utils';
 
 export function StatusBar({ variant = 'dark', hideTime = false }) {

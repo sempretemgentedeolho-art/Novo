@@ -5,7 +5,7 @@ import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import { 
   ArrowLeft, MessageCircle, Phone, Video, Users, Shield, 
-  Lock, Clock, Eye, Camera, Mic, FileText, HelpCircle
+  Lock, Clock, Eye, Camera, Mic, Image, FileText, HelpCircle
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -31,8 +31,8 @@ const features = [
     title: 'Ligações de voz',
     icon: Phone,
     color: 'bg-orange-500',
-    description: 'Ligue pelo WhatsApp',
-    audio: 'Faça ligações de voz. Toque no ícone de telefone no topo da conversa para ligar. Funciona com internet Wi-Fi ou dados móveis.'
+    description: 'Ligue gratuitamente',
+    audio: 'Faça ligações de voz gratuitas. Toque no ícone de telefone no topo da conversa para ligar. Funciona com internet Wi-Fi ou dados móveis.'
   },
   {
     id: 'video',
@@ -121,7 +121,9 @@ export default function IntroWhatsApp() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Seja bem-vindo ao tutorial da Forja da Consciência, feito com carinho para você. Toque na tela para começar."
+        "Bem-vindo ao WhatsApp! Vou te ensinar a usar todos os recursos. " +
+        "Toque em cada cartão colorido abaixo para aprender sobre uma funcionalidade. " +
+        "Você pode tocar quantas vezes quiser para ouvir novamente."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.85;
@@ -174,7 +176,7 @@ export default function IntroWhatsApp() {
             </div>
             <div className="flex-1">
               <h2 className="text-lg font-semibold text-gray-900 mb-1">
-                Tutorial Gratuito da Forja da Consciência
+                Bem-vindo ao WhatsApp!
               </h2>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Toque em cada cartão abaixo para aprender sobre os recursos. 

@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, Sun, Volume2, Wifi, Bluetooth, Settings as SettingsIcon, MessageCircle, Mail, Calendar, Heart, ShoppingBag, Bell, Reply, ThumbsUp, Check, Phone as PhoneIcon, Calendar as CalendarIcon, Activity, Flashlight, Plane, Signal } from 'lucide-react';
+import { ChevronDown, X, Sun, Volume2, Wifi, Bluetooth, Settings as SettingsIcon, MessageCircle, Mail, Calendar, Heart, ShoppingBag, Music, Bell, Reply, ThumbsUp, Check, Phone as PhoneIcon, Calendar as CalendarIcon, Activity, Flashlight, Plane, Signal } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import {
   Phone, MessageSquare, Camera, Image, Settings,

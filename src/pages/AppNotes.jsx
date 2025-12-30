@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
-import { ArrowLeft, Plus, Search, Sparkles } from 'lucide-react';
+import { ArrowLeft, Plus, Search, Sparkles, Trash2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';

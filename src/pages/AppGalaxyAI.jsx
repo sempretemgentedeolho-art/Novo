@@ -6,12 +6,13 @@ import { StatusBar } from '@/components/StatusBar';
 import { cn } from '@/components/ui/utils';
 import { 
   ArrowLeft, Sparkles, Mic, Image as ImageIcon, Languages, 
-  FileText, Wand2, Brain, MessageSquare, Zap
+  FileText, Wand2, Brain, MessageSquare, Camera, Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { base44 } from '@/api/base44Client';
 
 const aiFeatures = [

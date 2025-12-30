@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import { cn } from '@/components/ui/utils';
-import { ArrowLeft, Gamepad2, Zap, Target, Trophy, Star } from 'lucide-react';
+import { ArrowLeft, Gamepad2, Zap, Target, Trophy, Clock, Star } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

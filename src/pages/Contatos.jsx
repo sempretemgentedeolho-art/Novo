@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, Search, Phone, MessageSquare, Plus, MoreVertical, Edit, Trash2, Star, Camera } from "lucide-react";
+import { ArrowLeft, Search, Phone, MessageSquare, Plus, MoreVertical, Edit, Trash2, Star, User, Camera } from "lucide-react";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import {

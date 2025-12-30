@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Delete } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export default function Calculadora() {

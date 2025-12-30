@@ -4,13 +4,14 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import {
-  ArrowLeft, Shield, Lock, Fingerprint, Eye,
-  FolderLock, MapPin, CheckCircle2, Key
+  ArrowLeft, Shield, Lock, Fingerprint, Eye, Smartphone,
+  FolderLock, MapPin, AlertTriangle, CheckCircle2, Key
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { motion } from 'framer-motion';
 
 export default function AppSecurity() {
   const navigate = useNavigate();

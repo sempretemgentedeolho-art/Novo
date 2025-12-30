@@ -7,6 +7,7 @@ import {
   ArrowLeft, Play, Pause, SkipBack, SkipForward,
   Heart, Share2, MoreVertical, Shuffle, Repeat, Music
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';

@@ -7,6 +7,7 @@ import { cn } from '@/components/ui/utils';
 import { ArrowLeft, Calendar as CalendarIcon, Plus, Clock, MapPin } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 

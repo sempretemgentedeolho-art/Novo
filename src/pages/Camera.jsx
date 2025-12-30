@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, Camera, FlipHorizontal, Zap, Settings } from "lucide-react";
+import { ArrowLeft, Camera, FlipHorizontal, Zap, Settings, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PhoneFrame } from "@/components/PhoneFrame";
 

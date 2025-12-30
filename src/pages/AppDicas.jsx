@@ -5,10 +5,10 @@ import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import {
   ArrowLeft, Lightbulb, Smartphone, Camera, Battery,
-  Wifi, Shield, BookOpen, ChevronRight
+  Wifi, Shield, BookOpen, ChevronRight, X
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const tutorials = {
   primeiros_passos: [

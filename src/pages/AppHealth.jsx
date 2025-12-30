@@ -5,7 +5,7 @@ import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import {
   ArrowLeft, Heart, Footprints, Flame, Moon, Droplets,
-  Activity, TrendingUp, Target, Award
+  Activity, TrendingUp, Target, Award, Calendar
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';

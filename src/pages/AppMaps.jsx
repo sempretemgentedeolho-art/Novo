@@ -5,12 +5,13 @@ import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import { cn } from '@/components/ui/utils';
 import { 
-  ArrowLeft, MapPin, Navigation, Search, Clock, 
-  Home, Briefcase, TrendingUp
+  ArrowLeft, MapPin, Navigation, Search, Star, Clock, 
+  Home, Briefcase, MapPinned, TrendingUp
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 const savedPlaces = [
   { name: 'Casa', address: 'Rua das Flores, 123', icon: Home, color: 'text-blue-500' },
