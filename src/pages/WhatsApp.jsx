@@ -190,6 +190,9 @@ export default function WhatsApp() {
   const [connectedDevices, setConnectedDevices] = useState(false);
   const [deviceStep, setDeviceStep] = useState(1);
   const [devices, setDevices] = useState([]);
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [favoriteStep, setFavoriteStep] = useState(1);
+  const [favoriteContacts, setFavoriteContacts] = useState([]);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -600,6 +603,82 @@ export default function WhatsApp() {
     }
   };
 
+  const handleFavorites = () => {
+    setShowMenu(false);
+    setShowFavorites(true);
+    setFavoriteStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Você está na tela Favoritas. Aqui ficam as conversas das pessoas mais importantes para você. As conversas favoritas aparecem sempre no topo."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      if (favoriteContacts.length === 0) {
+        setTimeout(() => {
+          const utter2 = new SpeechSynthesisUtterance(
+            "Se esta tela estiver vazia, não se preocupe. Vamos adicionar pessoas agora."
+          );
+          utter2.lang = "pt-BR";
+          utter2.rate = 0.85;
+          synth.speak(utter2);
+        }, 7000);
+      }
+    }
+  };
+
+  const handleAddToFavorites = () => {
+    setFavoriteStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Agora aparece a lista de contatos do seu WhatsApp. Toque no nome da pessoa que você quer colocar como favorita."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const toggleFavorite = (contactId) => {
+    if (favoriteContacts.includes(contactId)) {
+      setFavoriteContacts(favoriteContacts.filter(id => id !== contactId));
+      const synth = window.speechSynthesis;
+      if (synth) {
+        synth.cancel();
+        const utter = new SpeechSynthesisUtterance("Removido das favoritas");
+        utter.lang = "pt-BR";
+        utter.rate = 0.85;
+        synth.speak(utter);
+      }
+    } else {
+      setFavoriteContacts([...favoriteContacts, contactId]);
+      const synth = window.speechSynthesis;
+      if (synth) {
+        synth.cancel();
+        const utter = new SpeechSynthesisUtterance(
+          "Pronto. A pessoa foi adicionada às favoritas. A conversa dela ficará sempre em destaque."
+        );
+        utter.lang = "pt-BR";
+        utter.rate = 0.85;
+        synth.speak(utter);
+
+        setTimeout(() => {
+          const utter2 = new SpeechSynthesisUtterance(
+            "Favoritas servem para facilitar. Você encontra rapidamente filhos, netos, familiares ou pessoas importantes."
+          );
+          utter2.lang = "pt-BR";
+          utter2.rate = 0.85;
+          synth.speak(utter2);
+        }, 5000);
+      }
+    }
+  };
+
   const toggleContactSelection = (contactId) => {
     if (selectedContacts.includes(contactId)) {
       setSelectedContacts(selectedContacts.filter(id => id !== contactId));
@@ -708,8 +787,157 @@ export default function WhatsApp() {
     if (chatsFilter === "all") return true;
     if (chatsFilter === "unread") return chat.unread > 0;
     if (chatsFilter === "groups") return chat.isGroup;
+    if (chatsFilter === "favorites") return favoriteContacts.includes(chat.id);
     return true;
   });
+
+  // Telas de Favoritas
+  if (showFavorites && favoriteStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setShowFavorites(false)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Favoritas</h2>
+            <button onClick={handleAddToFavorites} className="ml-auto">
+              <Plus className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Conteúdo */}
+          {favoriteContacts.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center px-6">
+              <div className="w-32 h-32 bg-[#25D366]/10 rounded-full flex items-center justify-center mb-6">
+                <Star className="w-16 h-16 text-[#25D366]" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
+                Adicionar aos favoritos
+              </h3>
+              <p className="text-gray-600 text-center mb-6 leading-relaxed">
+                Encontre as pessoas e os grupos mais importantes para você com facilidade.
+              </p>
+              <button
+                onClick={handleAddToFavorites}
+                className="text-[#00a884] font-medium"
+              >
+                Adicionar aos favoritos
+              </button>
+            </div>
+          ) : (
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-4 py-2 bg-gray-50">
+                <p className="text-sm text-gray-600">
+                  Toque e segure para remover das favoritas
+                </p>
+              </div>
+              {favoriteContacts.map(contactId => {
+                const contact = contactsList.find(c => c.id === contactId);
+                if (!contact) return null;
+                return (
+                  <div
+                    key={contactId}
+                    onClick={() => {
+                      const synth = window.speechSynthesis;
+                      if (synth) {
+                        synth.cancel();
+                        const utter = new SpeechSynthesisUtterance(
+                          `Se quiser remover ${contact.name} das favoritas, toque e segure sobre o nome da pessoa e escolha Remover das favoritas.`
+                        );
+                        utter.lang = "pt-BR";
+                        utter.rate = 0.85;
+                        synth.speak(utter);
+                      }
+                    }}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      if (window.confirm(`Remover ${contact.name} das favoritas?`)) {
+                        toggleFavorite(contactId);
+                      }
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 active:bg-gray-50"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+                      {contact.avatar}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900">{contact.name}</h3>
+                      {contact.status && (
+                        <p className="text-sm text-gray-600 truncate">{contact.status}</p>
+                      )}
+                    </div>
+                    <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (showFavorites && favoriteStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-[#008069] text-white px-4 py-3 flex items-center gap-4">
+            <button onClick={() => setFavoriteStep(1)}>
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium">Adicionar aos favoritos</h2>
+            <button>
+              <Search className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Barra de pesquisa */}
+          <div className="px-4 py-3 border-b border-gray-200">
+            <input
+              type="text"
+              placeholder="Pesquisar nome ou número..."
+              className="w-full bg-gray-100 rounded-lg px-4 py-2 outline-none text-sm"
+            />
+          </div>
+
+          {/* Lista de contatos */}
+          <div className="flex-1 overflow-y-auto">
+            <h3 className="px-4 py-2 text-sm text-gray-500 font-medium">Contatos frequentes</h3>
+            {contactsList.map(contact => (
+              <div
+                key={contact.id}
+                onClick={() => {
+                  toggleFavorite(contact.id);
+                  setTimeout(() => setFavoriteStep(1), 2000);
+                }}
+                className="flex items-center gap-3 px-4 py-3 active:bg-gray-50"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {contact.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-gray-900 text-[16px]">{contact.name}</h3>
+                  {contact.status && (
+                    <p className="text-sm text-gray-600 truncate">{contact.status}</p>
+                  )}
+                </div>
+                {favoriteContacts.includes(contact.id) && (
+                  <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Telas de dispositivos conectados
   if (connectedDevices && deviceStep === 1) {
@@ -2183,10 +2411,7 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Dispositivos conectados</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Favoritas");
-                    setShowMenu(false);
-                  }}
+                  onClick={handleFavorites}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <Star className="w-5 h-5 text-gray-600" />
