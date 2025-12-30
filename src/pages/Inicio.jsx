@@ -13,7 +13,7 @@ export default function Inicio() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Seja bem-vindo ao tutorial gratuito da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. Toque na tela para começar."
+        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. Toque na tela para começar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
