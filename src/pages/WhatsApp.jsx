@@ -273,14 +273,19 @@ export default function WhatsApp() {
       utter.lang = "pt-BR";
       utter.rate = 0.85;
       synth.speak(utter);
-    }
-    
-    setTimeout(() => {
+      
+      setTimeout(() => {
+        setCreatingGroup(false);
+        setGroupStep(1);
+        setSelectedContacts([]);
+        setGroupName("");
+      }, 2000);
+    } else {
       setCreatingGroup(false);
       setGroupStep(1);
       setSelectedContacts([]);
       setGroupName("");
-    }, 2000);
+    }
   };
 
   const handleChatClick = (chat) => {
