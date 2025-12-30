@@ -157,7 +157,7 @@ export default function ConfiguracoesWhatsApp() {
               👤
             </div>
             <div className="flex-1">
-              <h2 className="font-semibold text-gray-900 text-lg">Belvan Forrati</h2>
+              <h2 className="font-semibold text-gray-900 text-lg">Forja da Consciência</h2>
               <p className="text-sm text-gray-600">Disponível</p>
             </div>
             <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
