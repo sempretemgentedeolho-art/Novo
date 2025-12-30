@@ -19,7 +19,7 @@ const initialChats = [
     name: "Vôlei da Galera", 
     message: "Sandro: 🟢 Figurinha", 
     time: "29/01/2025", 
-    unread: 0,
+    unread: 3,
     avatar: "🏐",
     messages: [
       { id: 1, text: "Bom dia!", sender: "other", time: "10:25" },
@@ -32,7 +32,7 @@ const initialChats = [
     name: "Vôlei Operário", 
     message: "+55 51 9860-2942: Blzz", 
     time: "28/01/2025", 
-    unread: 0,
+    unread: 1,
     avatar: "🏐",
     messages: [
       { id: 1, text: "Boa tarde!", sender: "other", time: "14:30" },
@@ -62,7 +62,7 @@ const initialChats = [
     name: "Sebrae Apoia", 
     message: "Olá! 😊 Tudo bem? Não esqueça que hoje...", 
     time: "20/01/2025", 
-    unread: 0,
+    unread: 2,
     avatar: "🏢",
     messages: []
   },
@@ -241,6 +241,8 @@ export default function WhatsApp() {
   const [paymentConfigured, setPaymentConfigured] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState("");
   const [selectedPaymentContact, setSelectedPaymentContact] = useState(null);
+  const [markAllRead, setMarkAllRead] = useState(false);
+  const [markAllReadStep, setMarkAllReadStep] = useState(1);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -941,6 +943,107 @@ export default function WhatsApp() {
     }
   };
 
+  const handleMarkAllRead = () => {
+    setShowMenu(false);
+    setMarkAllRead(true);
+    setMarkAllReadStep(1);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Você está na tela de Conversas do WhatsApp. Aqui aparecem todas as mensagens recebidas, lidas e não lidas."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Observe as conversas. As mensagens não lidas aparecem com um número ou com destaque em verde."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 7000);
+    }
+  };
+
+  const handleShowMarkOption = () => {
+    setMarkAllReadStep(2);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "No canto superior da tela, existe a opção Marcar tudo como lida. Essa opção serve para limpar todos os avisos de mensagens novas de uma só vez."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleConfirmMarkAllRead = () => {
+    setMarkAllReadStep(3);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Ao tocar nessa opção, o WhatsApp pode pedir uma confirmação. Para continuar, confirme a ação."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+  };
+
+  const handleExecuteMarkAllRead = () => {
+    // Marca todas as conversas como lidas
+    setChats(chats.map(chat => ({ ...chat, unread: 0 })));
+    setMarkAllReadStep(4);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Pronto. Todas as mensagens foram marcadas como lidas. Os números e avisos desapareceram da tela."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+
+      setTimeout(() => {
+        const utter2 = new SpeechSynthesisUtterance(
+          "Essa função é útil quando você recebeu muitas mensagens e quer organizar a tela rapidamente."
+        );
+        utter2.lang = "pt-BR";
+        utter2.rate = 0.85;
+        synth.speak(utter2);
+      }, 6000);
+
+      setTimeout(() => {
+        const utter3 = new SpeechSynthesisUtterance(
+          "Atenção. Marcar como lida não apaga as mensagens. Elas continuam guardadas normalmente."
+        );
+        utter3.lang = "pt-BR";
+        utter3.rate = 0.85;
+        synth.speak(utter3);
+      }, 11000);
+
+      setTimeout(() => {
+        const utter4 = new SpeechSynthesisUtterance(
+          "Pronto. Agora sua tela de conversas está organizada novamente. Marcar tudo como lida ajuda a manter o WhatsApp organizado."
+        );
+        utter4.lang = "pt-BR";
+        utter4.rate = 0.85;
+        synth.speak(utter4);
+
+        setTimeout(() => {
+          setMarkAllRead(false);
+          setMarkAllReadStep(1);
+        }, 8000);
+      }, 16000);
+    }
+  };
+
   const toggleContactSelection = (contactId) => {
     if (selectedContacts.includes(contactId)) {
       setSelectedContacts(selectedContacts.filter(id => id !== contactId));
@@ -1052,6 +1155,271 @@ export default function WhatsApp() {
     if (chatsFilter === "favorites") return favoriteContacts.includes(chat.id);
     return true;
   });
+
+  // Telas de Marcar tudo como lida
+  if (markAllRead && markAllReadStep === 1) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-white px-4 py-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
+              <div className="flex gap-5 items-center">
+                <button onClick={() => setMarkAllRead(false)}>
+                  <X className="w-6 h-6 text-gray-700" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Lista de Conversas com destaque nas não lidas */}
+          <div className="flex-1 overflow-y-auto bg-white">
+            <div className="p-4 bg-yellow-50 border-b-2 border-yellow-400">
+              <p className="text-sm text-gray-800 text-center">
+                👀 <strong>Observe:</strong> Mensagens não lidas aparecem com número verde
+              </p>
+            </div>
+
+            {chats.slice(0, 5).map((chat) => (
+              <div
+                key={chat.id}
+                className={`flex items-center gap-3 px-4 py-3 border-b border-gray-100 ${
+                  chat.unread > 0 ? 'bg-green-50' : ''
+                }`}
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {chat.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-start mb-0.5">
+                    <h3 className={`font-medium text-gray-900 text-[16px] truncate ${
+                      chat.unread > 0 ? 'font-bold' : ''
+                    }`}>
+                      {chat.name}
+                    </h3>
+                    <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
+                      {chat.time}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-gray-600 truncate flex-1">
+                      {chat.message}
+                    </p>
+                    {chat.unread > 0 && (
+                      <span className="bg-[#25D366] text-white text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                        {chat.unread}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Botão continuar */}
+          <div className="p-4">
+            <button
+              onClick={handleShowMarkOption}
+              className="w-full bg-[#25D366] text-white py-3 rounded-lg font-medium"
+            >
+              Continuar
+            </button>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (markAllRead && markAllReadStep === 2) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header com opção em destaque */}
+          <div className="bg-white px-4 py-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
+              <div className="flex gap-5 items-center">
+                <button onClick={() => setMarkAllRead(false)}>
+                  <X className="w-6 h-6 text-gray-700" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Indicador da opção */}
+          <div className="p-4 bg-blue-50 border-b-2 border-blue-500">
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-800">
+                👆 <strong>Esta é a opção:</strong>
+              </p>
+              <button
+                onClick={handleConfirmMarkAllRead}
+                className="px-4 py-2 bg-[#25D366] text-white rounded-lg font-medium text-sm"
+              >
+                Marcar tudo como lida
+              </button>
+            </div>
+          </div>
+
+          {/* Lista de Conversas */}
+          <div className="flex-1 overflow-y-auto bg-white">
+            {chats.slice(0, 5).map((chat) => (
+              <div
+                key={chat.id}
+                className={`flex items-center gap-3 px-4 py-3 border-b border-gray-100 ${
+                  chat.unread > 0 ? 'bg-green-50' : ''
+                }`}
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {chat.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-start mb-0.5">
+                    <h3 className={`font-medium text-gray-900 text-[16px] truncate ${
+                      chat.unread > 0 ? 'font-bold' : ''
+                    }`}>
+                      {chat.name}
+                    </h3>
+                    <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
+                      {chat.time}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-gray-600 truncate flex-1">
+                      {chat.message}
+                    </p>
+                    {chat.unread > 0 && (
+                      <span className="bg-[#25D366] text-white text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                        {chat.unread}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="p-4 bg-yellow-50 border-t-2 border-yellow-400">
+            <p className="text-sm text-gray-800 text-center">
+              💡 Essa opção limpa todos os avisos de mensagens novas de uma só vez
+            </p>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (markAllRead && markAllReadStep === 3) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-black/50 flex items-center justify-center p-6">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3 text-center">
+              Marcar todas como lidas?
+            </h3>
+            <p className="text-sm text-gray-600 text-center mb-6">
+              Isso irá remover os avisos de mensagens não lidas de todas as conversas. As mensagens não serão apagadas.
+            </p>
+            <div className="space-y-3">
+              <button
+                onClick={handleExecuteMarkAllRead}
+                className="w-full py-3 bg-[#25D366] text-white rounded-lg font-medium"
+              >
+                Confirmar
+              </button>
+              <button
+                onClick={() => setMarkAllReadStep(2)}
+                className="w-full py-3 border border-gray-300 rounded-lg font-medium text-gray-700"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (markAllRead && markAllReadStep === 4) {
+    return (
+      <PhoneFrame>
+        <div className="h-full bg-white flex flex-col">
+          <StatusBar variant="light" />
+
+          {/* Header */}
+          <div className="bg-white px-4 py-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
+            </div>
+          </div>
+
+          {/* Sucesso */}
+          <div className="p-6 flex flex-col items-center justify-center bg-green-50">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <Check className="w-12 h-12 text-green-600" strokeWidth={3} />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">
+              Pronto!
+            </h3>
+            <p className="text-gray-600 text-center mb-4">
+              Todas as mensagens foram marcadas como lidas
+            </p>
+          </div>
+
+          {/* Lista de Conversas sem avisos */}
+          <div className="flex-1 overflow-y-auto bg-white">
+            <div className="p-4 bg-blue-50 border-b border-blue-200">
+              <p className="text-sm text-gray-800 text-center">
+                ✓ Os números e avisos desapareceram da tela
+              </p>
+            </div>
+
+            {chats.slice(0, 5).map((chat) => (
+              <div
+                key={chat.id}
+                className="flex items-center gap-3 px-4 py-3 border-b border-gray-100"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-xl flex-shrink-0">
+                  {chat.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-start mb-0.5">
+                    <h3 className="font-medium text-gray-900 text-[16px] truncate">
+                      {chat.name}
+                    </h3>
+                    <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
+                      {chat.time}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 truncate">
+                    {chat.message}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="p-4 space-y-3">
+            <div className="bg-green-50 border-l-4 border-green-500 p-4">
+              <p className="text-sm text-gray-800">
+                ✓ <strong>Útil quando:</strong> Você recebeu muitas mensagens e quer organizar rapidamente
+              </p>
+            </div>
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+              <p className="text-sm text-gray-800">
+                ⚠️ <strong>Lembre-se:</strong> Marcar como lida não apaga as mensagens. Elas continuam guardadas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   // Telas de Pagamentos
   if (showPayments && paymentStep === 1) {
@@ -3396,6 +3764,11 @@ export default function WhatsApp() {
                   <p className="text-sm text-gray-600 truncate flex-1">
                     {chat.message}
                   </p>
+                  {chat.unread > 0 && (
+                    <span className="bg-[#25D366] text-white text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                      {chat.unread}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -3507,10 +3880,7 @@ export default function WhatsApp() {
                   <span className="text-[15px] text-gray-900">Pagamentos</span>
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Marcar tudo como lido");
-                    setShowMenu(false);
-                  }}
+                  onClick={handleMarkAllRead}
                   className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                 >
                   <Check className="w-5 h-5 text-gray-600" />
