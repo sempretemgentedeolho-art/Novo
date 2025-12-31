@@ -130,10 +130,14 @@ export default function ConfiguracoesWhatsApp() {
       synth.speak(utter);
     }
     
-    // Navegar para a página específica se for "Conta"
+    // Navegar para a página específica
     if (option.id === "account") {
       setTimeout(() => {
         navigate(createPageUrl("ContaWhatsApp"));
+      }, 500);
+    } else if (option.id === "privacy") {
+      setTimeout(() => {
+        navigate(createPageUrl("Privacidade"));
       }, 500);
     }
   };
