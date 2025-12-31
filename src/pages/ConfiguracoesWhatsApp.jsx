@@ -129,6 +129,13 @@ export default function ConfiguracoesWhatsApp() {
       utter.rate = 0.85;
       synth.speak(utter);
     }
+    
+    // Navegar para a página específica se for "Conta"
+    if (option.id === "account") {
+      setTimeout(() => {
+        navigate(createPageUrl("ContaWhatsApp"));
+      }, 500);
+    }
   };
 
   return (

@@ -66,6 +66,7 @@ import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
+import ContaWhatsApp from './pages/ContaWhatsApp';
 import __Layout from './Layout.jsx';
 
 
@@ -138,6 +139,7 @@ export const PAGES = {
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
+    "ContaWhatsApp": ContaWhatsApp,
 }
 
 export const pagesConfig = {
