@@ -108,6 +108,9 @@ import EscolherTomPele from './pages/EscolherTomPele';
 import FormatoRosto from './pages/FormatoRosto';
 import TipoCorpo from './pages/TipoCorpo';
 import EditarCabelo from './pages/EditarCabelo';
+import Listas from './pages/Listas';
+import Conversas from './pages/Conversas';
+import ListasTransmissao from './pages/ListasTransmissao';
 import __Layout from './Layout.jsx';
 
 
@@ -222,6 +225,9 @@ export const PAGES = {
     "FormatoRosto": FormatoRosto,
     "TipoCorpo": TipoCorpo,
     "EditarCabelo": EditarCabelo,
+    "Listas": Listas,
+    "Conversas": Conversas,
+    "ListasTransmissao": ListasTransmissao,
 }
 
 export const pagesConfig = {

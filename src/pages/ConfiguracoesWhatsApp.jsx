@@ -143,6 +143,18 @@ export default function ConfiguracoesWhatsApp() {
       setTimeout(() => {
         navigate(createPageUrl("AvatarInicial"));
       }, 500);
+    } else if (option.id === "lists") {
+      setTimeout(() => {
+        navigate(createPageUrl("Listas"));
+      }, 500);
+    } else if (option.id === "chats") {
+      setTimeout(() => {
+        navigate(createPageUrl("Conversas"));
+      }, 500);
+    } else if (option.id === "broadcast") {
+      setTimeout(() => {
+        navigate(createPageUrl("ListasTransmissao"));
+      }, 500);
     }
   };
 
