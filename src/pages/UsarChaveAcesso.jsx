@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
-import { X } from "lucide-react";
+import { X, ArrowLeft } from "lucide-react";
 
 export default function UsarChaveAcesso() {
   const navigate = useNavigate();

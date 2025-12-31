@@ -8,6 +8,8 @@ import { ArrowLeft } from "lucide-react";
 export default function DuracaoPadrao() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("desativada");
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromCheckup = urlParams.get('from') === 'checkup';
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -29,7 +31,7 @@ export default function DuracaoPadrao() {
         <StatusBar variant="light" />
 
         <div className="bg-white px-4 py-3 border-b border-gray-200 flex items-center">
-          <button onClick={() => navigate(createPageUrl("Privacidade"))}>
+          <button onClick={() => navigate(fromCheckup ? createPageUrl("CheckupAdicionePrivacidade") : createPageUrl("Privacidade"))}>
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
           <h1 className="text-xl font-semibold text-gray-900 ml-4">Duração padrão</h1>
