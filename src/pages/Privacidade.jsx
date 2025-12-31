@@ -1,0 +1,257 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { PhoneFrame } from "@/components/PhoneFrame";
+import { StatusBar } from "@/components/StatusBar";
+import { ArrowLeft, Lock, X, ChevronRight } from "lucide-react";
+
+export default function Privacidade() {
+  const navigate = useNavigate();
+  const [showBanner, setShowBanner] = useState(true);
+  const [readReceipts, setReadReceipts] = useState(true);
+  const [cameraEffects, setCameraEffects] = useState(false);
+
+  useEffect(() => {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      const utter = new SpeechSynthesisUtterance(
+        "Privacidade. Nesta tela você controla quem pode ver suas informações e como suas mensagens funcionam. Você pode configurar quem vê seu visto por último, sua foto de perfil, seu recado, seus links, seu status e seu Pix. Também pode ativar ou desativar as confirmações de leitura, configurar mensagens temporárias, controlar sua localização em tempo real, bloquear contatos e muito mais. Role a tela para baixo para ver todas as opções. Clique na seta à sua esquerda acima para voltar."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.85;
+      synth.speak(utter);
+    }
+    return () => window.speechSynthesis.cancel();
+  }, []);
+
+  return (
+    <PhoneFrame>
+      <div className="h-full bg-white flex flex-col">
+        <StatusBar variant="light" />
+
+        <div className="bg-white px-4 py-3 border-b border-gray-200 flex items-center">
+          <button onClick={() => navigate(createPageUrl("ConfiguracoesWhatsApp"))}>
+            <ArrowLeft className="w-6 h-6 text-gray-700" />
+          </button>
+          <h1 className="text-xl font-semibold text-gray-900 ml-4">Privacidade</h1>
+        </div>
+
+        <div className="flex-1 overflow-y-auto">
+          {/* Banner de Checkup */}
+          {showBanner && (
+            <div className="bg-green-100 p-4 mx-4 mt-4 rounded-lg flex items-start gap-3">
+              <Lock className="w-5 h-5 text-green-700 flex-shrink-0 mt-1" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 mb-1">Checkup de Privacidade</h3>
+                <p className="text-sm text-gray-700 mb-2">
+                  Você está no controle da sua privacidade e define as configurações da maneira que desejar.
+                </p>
+                <button className="text-green-700 font-medium text-sm">Configurar</button>
+              </div>
+              <button onClick={() => setShowBanner(false)}>
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+          )}
+
+          {/* Seção: Quem pode ver meus dados pessoais */}
+          <div className="px-4 py-3 border-b-8 border-gray-100">
+            <h3 className="text-sm text-gray-500 mb-3">Quem pode ver meus dados pessoais</h3>
+
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Visto por último e online</h4>
+                  <p className="text-sm text-gray-500">Ninguém, Todos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Foto do perfil</h4>
+                  <p className="text-sm text-gray-500">Todos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Recado</h4>
+                  <p className="text-sm text-gray-500">Todos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Links</h4>
+                  <p className="text-sm text-gray-500">Meus contatos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Status</h4>
+                  <p className="text-sm text-gray-500">Meus contatos, compartilhando no Facebook</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Pix</h4>
+                  <p className="text-sm text-gray-500">Meus contatos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Confirmações de leitura */}
+          <div className="px-4 py-4 border-b border-gray-100">
+            <div className="flex items-start justify-between">
+              <div className="flex-1 pr-4">
+                <h4 className="text-gray-900 mb-1">Confirmações de leitura</h4>
+                <p className="text-sm text-gray-600">
+                  Se essa opção estiver desativada, você não poderá ver nem exibir confirmações de leitura. As confirmações de leitura sempre são exibidas em conversas em grupo.
+                </p>
+              </div>
+              <div className="relative inline-block w-12 h-7 flex-shrink-0">
+                <input
+                  type="checkbox"
+                  checked={readReceipts}
+                  onChange={(e) => setReadReceipts(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className={`w-12 h-7 rounded-full ${readReceipts ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all ${readReceipts ? 'after:translate-x-5' : ''}`}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mensagens temporárias */}
+          <div className="px-4 py-3 border-b-8 border-gray-100">
+            <h3 className="text-sm text-gray-500 mb-3">Mensagens temporárias</h3>
+
+            <div className="space-y-4">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <h4 className="text-gray-900 mb-1">Duração padrão</h4>
+                  <p className="text-sm text-gray-600">
+                    Inicie conversas com mensagens temporárias que desaparecerão após a duração que você definir.
+                  </p>
+                  <p className="text-sm text-gray-500 mt-1">Desativada</p>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Grupos</h4>
+                  <p className="text-sm text-gray-500">Todos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Outras opções */}
+          <div className="px-4 py-3 border-b-8 border-gray-100">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Figurinhas de avatar</h4>
+                  <p className="text-sm text-gray-500">Meus contatos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <button className="w-full flex justify-between items-center">
+                <h4 className="text-gray-900">Localização em tempo real</h4>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </button>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Ligações</h4>
+                  <p className="text-sm text-gray-500">Silenciar números desconhecidos</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Contatos</h4>
+                  <p className="text-sm text-gray-500">Bloquear contatos, contatos do WhatsApp</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-gray-900">Bloqueio do app</h4>
+                  <p className="text-sm text-gray-500">Desativado</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <button className="w-full flex justify-between items-center">
+                <h4 className="text-gray-900">Conversas trancadas</h4>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+          </div>
+
+          {/* Permitir efeitos da câmera */}
+          <div className="px-4 py-4 border-b-8 border-gray-100">
+            <div className="flex items-start justify-between">
+              <div className="flex-1 pr-4">
+                <h4 className="text-gray-900 mb-1">Permitir efeitos da câmera</h4>
+                <p className="text-sm text-gray-600">
+                  Use efeitos na câmera e nas ligações de vídeo.{" "}
+                  <span className="text-[#00a884]">Saiba mais</span>
+                </p>
+              </div>
+              <div className="relative inline-block w-12 h-7 flex-shrink-0">
+                <input
+                  type="checkbox"
+                  checked={cameraEffects}
+                  onChange={(e) => setCameraEffects(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className={`w-12 h-7 rounded-full ${cameraEffects ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all ${cameraEffects ? 'after:translate-x-5' : ''}`}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Configurações avançadas */}
+          <div className="px-4 py-4 border-b-8 border-gray-100">
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <h4 className="text-gray-900 mb-1">Configurações avançadas</h4>
+                <p className="text-sm text-gray-600">
+                  Proteger endereço IP nas ligações, desativar prévia de links
+                </p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" />
+            </div>
+          </div>
+
+          {/* Checkup de Privacidade (final) */}
+          <div className="px-4 py-4">
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <h4 className="text-gray-900 mb-1">Checkup de Privacidade</h4>
+                <p className="text-sm text-gray-600">
+                  Você está no controle da sua privacidade e define as configurações da maneira que desejar.
+                </p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </PhoneFrame>
+  );
+}

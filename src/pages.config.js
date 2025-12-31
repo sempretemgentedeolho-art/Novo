@@ -1,4 +1,7 @@
 import AdaptSound from './pages/AdaptSound';
+import AdicionarConta from './pages/AdicionarConta';
+import AdicionarContaNumero from './pages/AdicionarContaNumero';
+import ApagarConta from './pages/ApagarConta';
 import AppCalculadora from './pages/AppCalculadora';
 import AppCalendar from './pages/AppCalendar';
 import AppCamera from './pages/AppCamera';
@@ -29,6 +32,7 @@ import BluetoothConfig from './pages/BluetoothConfig';
 import Calculadora from './pages/Calculadora';
 import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
+import ChavesAcesso from './pages/ChavesAcesso';
 import Configuracoes from './pages/Configuracoes';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import ContaWhatsApp from './pages/ContaWhatsApp';
@@ -36,6 +40,7 @@ import Contatos from './pages/Contatos';
 import DolbyAtmos from './pages/DolbyAtmos';
 import DolbyAtmosJogos from './pages/DolbyAtmosJogos';
 import EmergencyCall from './pages/EmergencyCall';
+import EnderecoEmail from './pages/EnderecoEmail';
 import Equalizador from './pages/Equalizador';
 import Facebook from './pages/Facebook';
 import Galeria from './pages/Galeria';
@@ -53,7 +58,10 @@ import ManualLigarDesligar from './pages/ManualLigarDesligar';
 import ManualTeclas from './pages/ManualTeclas';
 import ManualUsuario from './pages/ManualUsuario';
 import Mensagens from './pages/Mensagens';
+import MudarNumero from './pages/MudarNumero';
 import Navegador from './pages/Navegador';
+import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
+import PedirDadosConta from './pages/PedirDadosConta';
 import PlayStore from './pages/PlayStore';
 import QualidadeSom from './pages/QualidadeSom';
 import Relogio from './pages/Relogio';
@@ -67,19 +75,15 @@ import UHQUpscaler from './pages/UHQUpscaler';
 import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
-import ChavesAcesso from './pages/ChavesAcesso';
-import AdicionarConta from './pages/AdicionarConta';
-import AdicionarContaNumero from './pages/AdicionarContaNumero';
-import EnderecoEmail from './pages/EnderecoEmail';
-import MudarNumero from './pages/MudarNumero';
-import PedirDadosConta from './pages/PedirDadosConta';
-import ApagarConta from './pages/ApagarConta';
+import Privacidade from './pages/Privacidade';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AdaptSound": AdaptSound,
+    "AdicionarConta": AdicionarConta,
+    "AdicionarContaNumero": AdicionarContaNumero,
+    "ApagarConta": ApagarConta,
     "AppCalculadora": AppCalculadora,
     "AppCalendar": AppCalendar,
     "AppCamera": AppCamera,
@@ -110,6 +114,7 @@ export const PAGES = {
     "Calculadora": Calculadora,
     "Camera": Camera,
     "CameraConfig": CameraConfig,
+    "ChavesAcesso": ChavesAcesso,
     "Configuracoes": Configuracoes,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
     "ContaWhatsApp": ContaWhatsApp,
@@ -117,6 +122,7 @@ export const PAGES = {
     "DolbyAtmos": DolbyAtmos,
     "DolbyAtmosJogos": DolbyAtmosJogos,
     "EmergencyCall": EmergencyCall,
+    "EnderecoEmail": EnderecoEmail,
     "Equalizador": Equalizador,
     "Facebook": Facebook,
     "Galeria": Galeria,
@@ -134,7 +140,10 @@ export const PAGES = {
     "ManualTeclas": ManualTeclas,
     "ManualUsuario": ManualUsuario,
     "Mensagens": Mensagens,
+    "MudarNumero": MudarNumero,
     "Navegador": Navegador,
+    "NotificacoesSeguranca": NotificacoesSeguranca,
+    "PedirDadosConta": PedirDadosConta,
     "PlayStore": PlayStore,
     "QualidadeSom": QualidadeSom,
     "Relogio": Relogio,
@@ -148,14 +157,7 @@ export const PAGES = {
     "VolumeControl": VolumeControl,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "NotificacoesSeguranca": NotificacoesSeguranca,
-    "ChavesAcesso": ChavesAcesso,
-    "AdicionarConta": AdicionarConta,
-    "AdicionarContaNumero": AdicionarContaNumero,
-    "EnderecoEmail": EnderecoEmail,
-    "MudarNumero": MudarNumero,
-    "PedirDadosConta": PedirDadosConta,
-    "ApagarConta": ApagarConta,
+    "Privacidade": Privacidade,
 }
 
 export const pagesConfig = {
