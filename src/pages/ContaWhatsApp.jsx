@@ -69,6 +69,8 @@ const accountOptions = [
 
 export default function ContaWhatsApp() {
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromCheckup = urlParams.get('from') === 'checkup';
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -126,7 +128,7 @@ export default function ContaWhatsApp() {
 
         {/* Header */}
         <div className="bg-white px-4 py-3 border-b border-gray-200 flex items-center">
-          <button onClick={() => navigate(createPageUrl("ConfiguracoesWhatsApp"))}>
+          <button onClick={() => navigate(fromCheckup ? createPageUrl("CheckupProtecaoConta") : createPageUrl("ConfiguracoesWhatsApp"))}>
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
           <h1 className="text-xl font-semibold text-gray-900 ml-4">Conta</h1>

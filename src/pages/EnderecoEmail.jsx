@@ -8,6 +8,8 @@ import { ArrowLeft } from "lucide-react";
 export default function EnderecoEmail() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromCheckup = urlParams.get('from') === 'checkup';
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -29,7 +31,7 @@ export default function EnderecoEmail() {
         <StatusBar variant="light" />
 
         <div className="bg-white px-4 py-3 border-b border-gray-200 flex items-center">
-          <button onClick={() => navigate(createPageUrl("ContaWhatsApp"))}>
+          <button onClick={() => navigate(fromCheckup ? createPageUrl("CheckupProtecaoConta") : createPageUrl("ContaWhatsApp"))}>
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
           <h1 className="text-xl font-semibold text-gray-900 ml-4">Adicione seu e-mail</h1>
