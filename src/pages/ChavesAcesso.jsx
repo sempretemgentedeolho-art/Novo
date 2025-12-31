@@ -29,11 +29,19 @@ export default function ChavesAcesso() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Gerenciador de senhas do Google. Criar chave de acesso para fazer login no aplicativo WhatsApp. A chave de acesso será salva no gerenciador de senhas do Google. Você pode usá-la em outros dispositivos. O bloqueio de tela será usado para criptografar seus dados. Clique na seta à sua esquerda acima para voltar."
+        "Gerenciador de senhas do Google. Criar chave de acesso para fazer login no aplicativo WhatsApp. A chave de acesso será salva no gerenciador de senhas do Google. Você pode usá-la em outros dispositivos. O bloqueio de tela será usado para criptografar seus dados. Clique no X acima à direita para voltar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.85;
       synth.speak(utter);
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
     }
   };
 
@@ -132,7 +140,7 @@ export default function ChavesAcesso() {
                   </svg>
                   <span className="font-medium text-gray-700">Gerenciador de Senhas do Google</span>
                 </div>
-                <button onClick={() => setShowDialog(false)} className="text-gray-400">
+                <button onClick={handleCloseDialog} className="text-gray-400 hover:text-gray-600">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -144,7 +152,7 @@ export default function ChavesAcesso() {
               </h3>
 
               <p className="text-gray-600 text-center mb-6 text-sm">
-                A chave de acesso será salva no Gerenciador de senhas do Google da conta belvanforrati@gmail.com. Você pode usá-la em outros dispositivos. O bloqueio de tela será usado para criptografar seus dados.
+                A chave de acesso será salva no Gerenciador de senhas do Google. Você pode usá-la em outros dispositivos. O bloqueio de tela será usado para criptografar seus dados.
               </p>
 
               <div className="bg-blue-50 rounded-lg p-4 mb-6 flex items-center gap-3">
@@ -157,13 +165,13 @@ export default function ChavesAcesso() {
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => setShowDialog(false)}
+                  onClick={handleCloseDialog}
                   className="flex-1 py-3 text-[#1a73e8] font-medium"
                 >
                   Salvar de outra forma
                 </button>
                 <button
-                  onClick={() => setShowDialog(false)}
+                  onClick={handleCloseDialog}
                   className="flex-1 py-3 bg-[#1a73e8] text-white rounded-lg font-medium"
                 >
                   Continuar
