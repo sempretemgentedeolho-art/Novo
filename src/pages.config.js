@@ -1,4 +1,5 @@
 import AdaptSound from './pages/AdaptSound';
+import AdicionarCamadaSeguranca from './pages/AdicionarCamadaSeguranca';
 import AdicionarConta from './pages/AdicionarConta';
 import AdicionarContaNumero from './pages/AdicionarContaNumero';
 import ApagarConta from './pages/ApagarConta';
@@ -34,9 +35,15 @@ import Calculadora from './pages/Calculadora';
 import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
 import ChavesAcesso from './pages/ChavesAcesso';
+import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
+import CheckupControleDados from './pages/CheckupControleDados';
+import CheckupDefinaQuem from './pages/CheckupDefinaQuem';
+import CheckupPrivacidade from './pages/CheckupPrivacidade';
+import CheckupProtecaoConta from './pages/CheckupProtecaoConta';
 import Configuracoes from './pages/Configuracoes';
 import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
+import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
 import ContaWhatsApp from './pages/ContaWhatsApp';
 import Contatos from './pages/Contatos';
 import ContatosPrivacidade from './pages/ContatosPrivacidade';
@@ -87,23 +94,26 @@ import TelaInicial from './pages/TelaInicial';
 import Telefone from './pages/Telefone';
 import TikTok from './pages/TikTok';
 import UHQUpscaler from './pages/UHQUpscaler';
+import UsarChaveAcesso from './pages/UsarChaveAcesso';
 import VistoUltimo from './pages/VistoUltimo';
 import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import CheckupPrivacidade from './pages/CheckupPrivacidade';
-import CheckupDefinaQuem from './pages/CheckupDefinaQuem';
-import CheckupControleDados from './pages/CheckupControleDados';
-import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
-import CheckupProtecaoConta from './pages/CheckupProtecaoConta';
-import AdicionarCamadaSeguranca from './pages/AdicionarCamadaSeguranca';
-import UsarChaveAcesso from './pages/UsarChaveAcesso';
-import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
+import UsarEfeitosCamera from './pages/UsarEfeitosCamera';
+import TudoProntoAvatar from './pages/TudoProntoAvatar';
+import AvatarInicial from './pages/AvatarInicial';
+import CriarAvatarOpcoes from './pages/CriarAvatarOpcoes';
+import MostreVibeAvatares from './pages/MostreVibeAvatares';
+import EscolherTomPele from './pages/EscolherTomPele';
+import FormatoRosto from './pages/FormatoRosto';
+import TipoCorpo from './pages/TipoCorpo';
+import EditarCabelo from './pages/EditarCabelo';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AdaptSound": AdaptSound,
+    "AdicionarCamadaSeguranca": AdicionarCamadaSeguranca,
     "AdicionarConta": AdicionarConta,
     "AdicionarContaNumero": AdicionarContaNumero,
     "ApagarConta": ApagarConta,
@@ -139,9 +149,15 @@ export const PAGES = {
     "Camera": Camera,
     "CameraConfig": CameraConfig,
     "ChavesAcesso": ChavesAcesso,
+    "CheckupAdicionePrivacidade": CheckupAdicionePrivacidade,
+    "CheckupControleDados": CheckupControleDados,
+    "CheckupDefinaQuem": CheckupDefinaQuem,
+    "CheckupPrivacidade": CheckupPrivacidade,
+    "CheckupProtecaoConta": CheckupProtecaoConta,
     "Configuracoes": Configuracoes,
     "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
+    "ConfirmacaoDuasEtapas": ConfirmacaoDuasEtapas,
     "ContaWhatsApp": ContaWhatsApp,
     "Contatos": Contatos,
     "ContatosPrivacidade": ContatosPrivacidade,
@@ -192,18 +208,20 @@ export const PAGES = {
     "Telefone": Telefone,
     "TikTok": TikTok,
     "UHQUpscaler": UHQUpscaler,
+    "UsarChaveAcesso": UsarChaveAcesso,
     "VistoUltimo": VistoUltimo,
     "VolumeControl": VolumeControl,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "CheckupPrivacidade": CheckupPrivacidade,
-    "CheckupDefinaQuem": CheckupDefinaQuem,
-    "CheckupControleDados": CheckupControleDados,
-    "CheckupAdicionePrivacidade": CheckupAdicionePrivacidade,
-    "CheckupProtecaoConta": CheckupProtecaoConta,
-    "AdicionarCamadaSeguranca": AdicionarCamadaSeguranca,
-    "UsarChaveAcesso": UsarChaveAcesso,
-    "ConfirmacaoDuasEtapas": ConfirmacaoDuasEtapas,
+    "UsarEfeitosCamera": UsarEfeitosCamera,
+    "TudoProntoAvatar": TudoProntoAvatar,
+    "AvatarInicial": AvatarInicial,
+    "CriarAvatarOpcoes": CriarAvatarOpcoes,
+    "MostreVibeAvatares": MostreVibeAvatares,
+    "EscolherTomPele": EscolherTomPele,
+    "FormatoRosto": FormatoRosto,
+    "TipoCorpo": TipoCorpo,
+    "EditarCabelo": EditarCabelo,
 }
 
 export const pagesConfig = {

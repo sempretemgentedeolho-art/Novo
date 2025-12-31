@@ -205,8 +205,11 @@ export default function Privacidade() {
 
           {/* Permitir efeitos da câmera */}
           <div className="px-4 py-4 border-b-8 border-gray-100">
-            <div className="flex items-start justify-between">
-              <div className="flex-1 pr-4">
+            <button
+              onClick={() => navigate(createPageUrl("UsarEfeitosCamera"))}
+              className="w-full flex items-start justify-between"
+            >
+              <div className="flex-1 pr-4 text-left">
                 <h4 className="text-gray-900 mb-1">Permitir efeitos da câmera</h4>
                 <p className="text-sm text-gray-600">
                   Use efeitos na câmera e nas ligações de vídeo.{" "}
@@ -222,7 +225,7 @@ export default function Privacidade() {
                 />
                 <div className={`w-12 h-7 rounded-full ${cameraEffects ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all ${cameraEffects ? 'after:translate-x-5' : ''}`}></div>
               </div>
-            </div>
+            </button>
           </div>
 
           {/* Configurações avançadas */}
