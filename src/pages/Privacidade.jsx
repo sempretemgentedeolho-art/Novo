@@ -240,15 +240,15 @@ export default function Privacidade() {
 
           {/* Checkup de Privacidade (final) */}
           <div className="px-4 py-4">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
+            <button onClick={() => navigate(createPageUrl("CheckupPrivacidade"))} className="w-full flex justify-between items-start">
+              <div className="flex-1 text-left">
                 <h4 className="text-gray-900 mb-1">Checkup de Privacidade</h4>
                 <p className="text-sm text-gray-600">
                   Você está no controle da sua privacidade e define as configurações da maneira que desejar.
                 </p>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" />
-            </div>
+            </button>
           </div>
         </div>
       </div>

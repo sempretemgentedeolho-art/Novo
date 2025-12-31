@@ -28,15 +28,19 @@ import AppWeather from './pages/AppWeather';
 import AppWhatsApp from './pages/AppWhatsApp';
 import AppYouTube from './pages/AppYouTube';
 import AudioDual from './pages/AudioDual';
+import BloqueioApp from './pages/BloqueioApp';
 import BluetoothConfig from './pages/BluetoothConfig';
 import Calculadora from './pages/Calculadora';
 import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
 import ChavesAcesso from './pages/ChavesAcesso';
 import Configuracoes from './pages/Configuracoes';
+import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import ContaWhatsApp from './pages/ContaWhatsApp';
 import Contatos from './pages/Contatos';
+import ContatosPrivacidade from './pages/ContatosPrivacidade';
+import ConversasTrancadas from './pages/ConversasTrancadas';
 import DolbyAtmos from './pages/DolbyAtmos';
 import DolbyAtmosJogos from './pages/DolbyAtmosJogos';
 import DuracaoPadrao from './pages/DuracaoPadrao';
@@ -55,6 +59,7 @@ import Inicio from './pages/Inicio';
 import Instagram from './pages/Instagram';
 import IntroWhatsApp from './pages/IntroWhatsApp';
 import Lanterna from './pages/Lanterna';
+import LigacoesPrivacidade from './pages/LigacoesPrivacidade';
 import LinksPrivacidade from './pages/LinksPrivacidade';
 import LocalizacaoTempoReal from './pages/LocalizacaoTempoReal';
 import ManualBateria from './pages/ManualBateria';
@@ -86,11 +91,13 @@ import VistoUltimo from './pages/VistoUltimo';
 import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import LigacoesPrivacidade from './pages/LigacoesPrivacidade';
-import ContatosPrivacidade from './pages/ContatosPrivacidade';
-import BloqueioApp from './pages/BloqueioApp';
-import ConversasTrancadas from './pages/ConversasTrancadas';
-import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
+import CheckupPrivacidade from './pages/CheckupPrivacidade';
+import CheckupDefinaQuem from './pages/CheckupDefinaQuem';
+import CheckupControleDados from './pages/CheckupControleDados';
+import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
+import CheckupProtecaoConta from './pages/CheckupProtecaoConta';
+import AdicionarCamadaSeguranca from './pages/AdicionarCamadaSeguranca';
+import UsarChaveAcesso from './pages/UsarChaveAcesso';
 import __Layout from './Layout.jsx';
 
 
@@ -125,15 +132,19 @@ export const PAGES = {
     "AppWhatsApp": AppWhatsApp,
     "AppYouTube": AppYouTube,
     "AudioDual": AudioDual,
+    "BloqueioApp": BloqueioApp,
     "BluetoothConfig": BluetoothConfig,
     "Calculadora": Calculadora,
     "Camera": Camera,
     "CameraConfig": CameraConfig,
     "ChavesAcesso": ChavesAcesso,
     "Configuracoes": Configuracoes,
+    "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
     "ContaWhatsApp": ContaWhatsApp,
     "Contatos": Contatos,
+    "ContatosPrivacidade": ContatosPrivacidade,
+    "ConversasTrancadas": ConversasTrancadas,
     "DolbyAtmos": DolbyAtmos,
     "DolbyAtmosJogos": DolbyAtmosJogos,
     "DuracaoPadrao": DuracaoPadrao,
@@ -152,6 +163,7 @@ export const PAGES = {
     "Instagram": Instagram,
     "IntroWhatsApp": IntroWhatsApp,
     "Lanterna": Lanterna,
+    "LigacoesPrivacidade": LigacoesPrivacidade,
     "LinksPrivacidade": LinksPrivacidade,
     "LocalizacaoTempoReal": LocalizacaoTempoReal,
     "ManualBateria": ManualBateria,
@@ -183,11 +195,13 @@ export const PAGES = {
     "VolumeControl": VolumeControl,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "LigacoesPrivacidade": LigacoesPrivacidade,
-    "ContatosPrivacidade": ContatosPrivacidade,
-    "BloqueioApp": BloqueioApp,
-    "ConversasTrancadas": ConversasTrancadas,
-    "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
+    "CheckupPrivacidade": CheckupPrivacidade,
+    "CheckupDefinaQuem": CheckupDefinaQuem,
+    "CheckupControleDados": CheckupControleDados,
+    "CheckupAdicionePrivacidade": CheckupAdicionePrivacidade,
+    "CheckupProtecaoConta": CheckupProtecaoConta,
+    "AdicionarCamadaSeguranca": AdicionarCamadaSeguranca,
+    "UsarChaveAcesso": UsarChaveAcesso,
 }
 
 export const pagesConfig = {
