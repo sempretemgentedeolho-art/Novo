@@ -57,7 +57,7 @@ export default function CheckupControleDados() {
 
           <div className="px-4 pb-6 space-y-3">
             <button
-              onClick={() => navigate(createPageUrl("FotoPerfil"))}
+              onClick={() => navigate(createPageUrl("FotoPerfil") + "?from=checkup")}
               className="w-full bg-white border border-gray-200 rounded-lg p-4 flex items-start gap-4 hover:bg-gray-50"
             >
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
@@ -73,7 +73,7 @@ export default function CheckupControleDados() {
             </button>
 
             <button
-              onClick={() => navigate(createPageUrl("VistoUltimo"))}
+              onClick={() => navigate(createPageUrl("VistoUltimo") + "?from=checkup")}
               className="w-full bg-white border border-gray-200 rounded-lg p-4 flex items-start gap-4 hover:bg-gray-50"
             >
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
@@ -89,7 +89,7 @@ export default function CheckupControleDados() {
             </button>
 
             <button
-              onClick={() => navigate(createPageUrl("Privacidade"))}
+              onClick={() => navigate(createPageUrl("CheckupPrivacidade"))}
               className="w-full bg-white border border-gray-200 rounded-lg p-4 flex items-start gap-4 hover:bg-gray-50"
             >
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
