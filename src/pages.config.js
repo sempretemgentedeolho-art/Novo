@@ -98,6 +98,7 @@ import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
 import CheckupProtecaoConta from './pages/CheckupProtecaoConta';
 import AdicionarCamadaSeguranca from './pages/AdicionarCamadaSeguranca';
 import UsarChaveAcesso from './pages/UsarChaveAcesso';
+import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
 import __Layout from './Layout.jsx';
 
 
@@ -202,6 +203,7 @@ export const PAGES = {
     "CheckupProtecaoConta": CheckupProtecaoConta,
     "AdicionarCamadaSeguranca": AdicionarCamadaSeguranca,
     "UsarChaveAcesso": UsarChaveAcesso,
+    "ConfirmacaoDuasEtapas": ConfirmacaoDuasEtapas,
 }
 
 export const pagesConfig = {
