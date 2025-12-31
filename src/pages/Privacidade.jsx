@@ -172,32 +172,32 @@ export default function Privacidade() {
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("LigacoesPrivacidade"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Ligações</h4>
-                  <p className="text-sm text-gray-500">Silenciar números desconhecidos</p>
+                  <h4 className="text-gray-900 text-left">Ligações</h4>
+                  <p className="text-sm text-gray-500 text-left">Silenciar números desconhecidos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("ContatosPrivacidade"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Contatos</h4>
-                  <p className="text-sm text-gray-500">Bloquear contatos, contatos do WhatsApp</p>
+                  <h4 className="text-gray-900 text-left">Contatos</h4>
+                  <p className="text-sm text-gray-500 text-left">Bloquear contatos, contatos do WhatsApp</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("BloqueioApp"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Bloqueio do app</h4>
-                  <p className="text-sm text-gray-500">Desativado</p>
+                  <h4 className="text-gray-900 text-left">Bloqueio do app</h4>
+                  <p className="text-sm text-gray-500 text-left">Desativado</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <button className="w-full flex justify-between items-center">
-                <h4 className="text-gray-900">Conversas trancadas</h4>
+              <button onClick={() => navigate(createPageUrl("ConversasTrancadas"))} className="w-full flex justify-between items-center">
+                <h4 className="text-gray-900 text-left">Conversas trancadas</h4>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
             </div>
@@ -227,15 +227,15 @@ export default function Privacidade() {
 
           {/* Configurações avançadas */}
           <div className="px-4 py-4 border-b-8 border-gray-100">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
+            <button onClick={() => navigate(createPageUrl("ConfiguracoesAvancadas"))} className="w-full flex justify-between items-start">
+              <div className="flex-1 text-left">
                 <h4 className="text-gray-900 mb-1">Configurações avançadas</h4>
                 <p className="text-sm text-gray-600">
                   Proteger endereço IP nas ligações, desativar prévia de links
                 </p>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" />
-            </div>
+            </button>
           </div>
 
           {/* Checkup de Privacidade (final) */}

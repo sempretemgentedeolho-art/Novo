@@ -39,18 +39,24 @@ import ContaWhatsApp from './pages/ContaWhatsApp';
 import Contatos from './pages/Contatos';
 import DolbyAtmos from './pages/DolbyAtmos';
 import DolbyAtmosJogos from './pages/DolbyAtmosJogos';
+import DuracaoPadrao from './pages/DuracaoPadrao';
 import EmergencyCall from './pages/EmergencyCall';
 import EnderecoEmail from './pages/EnderecoEmail';
 import Equalizador from './pages/Equalizador';
 import Facebook from './pages/Facebook';
+import FigurinhasAvatar from './pages/FigurinhasAvatar';
+import FotoPerfil from './pages/FotoPerfil';
 import Galeria from './pages/Galeria';
 import GerenciarApps from './pages/GerenciarApps';
+import GruposPrivacidade from './pages/GruposPrivacidade';
 import Home from './pages/Home';
 import InfoMedicas from './pages/InfoMedicas';
 import Inicio from './pages/Inicio';
 import Instagram from './pages/Instagram';
 import IntroWhatsApp from './pages/IntroWhatsApp';
 import Lanterna from './pages/Lanterna';
+import LinksPrivacidade from './pages/LinksPrivacidade';
+import LocalizacaoTempoReal from './pages/LocalizacaoTempoReal';
 import ManualBateria from './pages/ManualBateria';
 import ManualChips from './pages/ManualChips';
 import ManualConhecendo from './pages/ManualConhecendo';
@@ -62,30 +68,29 @@ import MudarNumero from './pages/MudarNumero';
 import Navegador from './pages/Navegador';
 import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
 import PedirDadosConta from './pages/PedirDadosConta';
+import PixPrivacidade from './pages/PixPrivacidade';
 import PlayStore from './pages/PlayStore';
+import Privacidade from './pages/Privacidade';
 import QualidadeSom from './pages/QualidadeSom';
+import Recado from './pages/Recado';
 import Relogio from './pages/Relogio';
 import Seguranca from './pages/Seguranca';
 import SomAplicativoSeparado from './pages/SomAplicativoSeparado';
+import StatusPrivacidade from './pages/StatusPrivacidade';
 import TelaBloqueio from './pages/TelaBloqueio';
 import TelaInicial from './pages/TelaInicial';
 import Telefone from './pages/Telefone';
 import TikTok from './pages/TikTok';
 import UHQUpscaler from './pages/UHQUpscaler';
+import VistoUltimo from './pages/VistoUltimo';
 import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import Privacidade from './pages/Privacidade';
-import VistoUltimo from './pages/VistoUltimo';
-import FotoPerfil from './pages/FotoPerfil';
-import Recado from './pages/Recado';
-import LinksPrivacidade from './pages/LinksPrivacidade';
-import StatusPrivacidade from './pages/StatusPrivacidade';
-import PixPrivacidade from './pages/PixPrivacidade';
-import DuracaoPadrao from './pages/DuracaoPadrao';
-import GruposPrivacidade from './pages/GruposPrivacidade';
-import FigurinhasAvatar from './pages/FigurinhasAvatar';
-import LocalizacaoTempoReal from './pages/LocalizacaoTempoReal';
+import LigacoesPrivacidade from './pages/LigacoesPrivacidade';
+import ContatosPrivacidade from './pages/ContatosPrivacidade';
+import BloqueioApp from './pages/BloqueioApp';
+import ConversasTrancadas from './pages/ConversasTrancadas';
+import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
 import __Layout from './Layout.jsx';
 
 
@@ -131,18 +136,24 @@ export const PAGES = {
     "Contatos": Contatos,
     "DolbyAtmos": DolbyAtmos,
     "DolbyAtmosJogos": DolbyAtmosJogos,
+    "DuracaoPadrao": DuracaoPadrao,
     "EmergencyCall": EmergencyCall,
     "EnderecoEmail": EnderecoEmail,
     "Equalizador": Equalizador,
     "Facebook": Facebook,
+    "FigurinhasAvatar": FigurinhasAvatar,
+    "FotoPerfil": FotoPerfil,
     "Galeria": Galeria,
     "GerenciarApps": GerenciarApps,
+    "GruposPrivacidade": GruposPrivacidade,
     "Home": Home,
     "InfoMedicas": InfoMedicas,
     "Inicio": Inicio,
     "Instagram": Instagram,
     "IntroWhatsApp": IntroWhatsApp,
     "Lanterna": Lanterna,
+    "LinksPrivacidade": LinksPrivacidade,
+    "LocalizacaoTempoReal": LocalizacaoTempoReal,
     "ManualBateria": ManualBateria,
     "ManualChips": ManualChips,
     "ManualConhecendo": ManualConhecendo,
@@ -154,30 +165,29 @@ export const PAGES = {
     "Navegador": Navegador,
     "NotificacoesSeguranca": NotificacoesSeguranca,
     "PedirDadosConta": PedirDadosConta,
+    "PixPrivacidade": PixPrivacidade,
     "PlayStore": PlayStore,
+    "Privacidade": Privacidade,
     "QualidadeSom": QualidadeSom,
+    "Recado": Recado,
     "Relogio": Relogio,
     "Seguranca": Seguranca,
     "SomAplicativoSeparado": SomAplicativoSeparado,
+    "StatusPrivacidade": StatusPrivacidade,
     "TelaBloqueio": TelaBloqueio,
     "TelaInicial": TelaInicial,
     "Telefone": Telefone,
     "TikTok": TikTok,
     "UHQUpscaler": UHQUpscaler,
+    "VistoUltimo": VistoUltimo,
     "VolumeControl": VolumeControl,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "Privacidade": Privacidade,
-    "VistoUltimo": VistoUltimo,
-    "FotoPerfil": FotoPerfil,
-    "Recado": Recado,
-    "LinksPrivacidade": LinksPrivacidade,
-    "StatusPrivacidade": StatusPrivacidade,
-    "PixPrivacidade": PixPrivacidade,
-    "DuracaoPadrao": DuracaoPadrao,
-    "GruposPrivacidade": GruposPrivacidade,
-    "FigurinhasAvatar": FigurinhasAvatar,
-    "LocalizacaoTempoReal": LocalizacaoTempoReal,
+    "LigacoesPrivacidade": LigacoesPrivacidade,
+    "ContatosPrivacidade": ContatosPrivacidade,
+    "BloqueioApp": BloqueioApp,
+    "ConversasTrancadas": ConversasTrancadas,
+    "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
 }
 
 export const pagesConfig = {
