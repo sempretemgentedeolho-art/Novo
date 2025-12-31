@@ -139,6 +139,10 @@ export default function ConfiguracoesWhatsApp() {
       setTimeout(() => {
         navigate(createPageUrl("Privacidade"));
       }, 500);
+    } else if (option.id === "avatar") {
+      setTimeout(() => {
+        navigate(createPageUrl("AvatarInicial"));
+      }, 500);
     }
   };
 
