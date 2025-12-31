@@ -60,53 +60,53 @@ export default function Privacidade() {
             <h3 className="text-sm text-gray-500 mb-3">Quem pode ver meus dados pessoais</h3>
 
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("VistoUltimo"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Visto por último e online</h4>
-                  <p className="text-sm text-gray-500">Ninguém, Todos</p>
+                  <h4 className="text-gray-900 text-left">Visto por último e online</h4>
+                  <p className="text-sm text-gray-500 text-left">Ninguém, Todos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("FotoPerfil"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Foto do perfil</h4>
-                  <p className="text-sm text-gray-500">Todos</p>
+                  <h4 className="text-gray-900 text-left">Foto do perfil</h4>
+                  <p className="text-sm text-gray-500 text-left">Todos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("Recado"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Recado</h4>
-                  <p className="text-sm text-gray-500">Todos</p>
+                  <h4 className="text-gray-900 text-left">Recado</h4>
+                  <p className="text-sm text-gray-500 text-left">Todos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("LinksPrivacidade"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Links</h4>
-                  <p className="text-sm text-gray-500">Meus contatos</p>
+                  <h4 className="text-gray-900 text-left">Links</h4>
+                  <p className="text-sm text-gray-500 text-left">Meus contatos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("StatusPrivacidade"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Status</h4>
-                  <p className="text-sm text-gray-500">Meus contatos, compartilhando no Facebook</p>
+                  <h4 className="text-gray-900 text-left">Status</h4>
+                  <p className="text-sm text-gray-500 text-left">Meus contatos, compartilhando no Facebook</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("PixPrivacidade"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Pix</h4>
-                  <p className="text-sm text-gray-500">Meus contatos</p>
+                  <h4 className="text-gray-900 text-left">Pix</h4>
+                  <p className="text-sm text-gray-500 text-left">Meus contatos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
             </div>
           </div>
 
@@ -136,39 +136,39 @@ export default function Privacidade() {
             <h3 className="text-sm text-gray-500 mb-3">Mensagens temporárias</h3>
 
             <div className="space-y-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
+              <button onClick={() => navigate(createPageUrl("DuracaoPadrao"))} className="w-full flex justify-between items-start">
+                <div className="flex-1 text-left">
                   <h4 className="text-gray-900 mb-1">Duração padrão</h4>
                   <p className="text-sm text-gray-600">
                     Inicie conversas com mensagens temporárias que desaparecerão após a duração que você definir.
                   </p>
                   <p className="text-sm text-gray-500 mt-1">Desativada</p>
                 </div>
-              </div>
+              </button>
 
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("GruposPrivacidade"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Grupos</h4>
-                  <p className="text-sm text-gray-500">Todos</p>
+                  <h4 className="text-gray-900 text-left">Grupos</h4>
+                  <p className="text-sm text-gray-500 text-left">Todos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
             </div>
           </div>
 
           {/* Outras opções */}
           <div className="px-4 py-3 border-b-8 border-gray-100">
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
+              <button onClick={() => navigate(createPageUrl("FigurinhasAvatar"))} className="w-full flex justify-between items-center">
                 <div>
-                  <h4 className="text-gray-900">Figurinhas de avatar</h4>
-                  <p className="text-sm text-gray-500">Meus contatos</p>
+                  <h4 className="text-gray-900 text-left">Figurinhas de avatar</h4>
+                  <p className="text-sm text-gray-500 text-left">Meus contatos</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
+              </button>
 
-              <button className="w-full flex justify-between items-center">
-                <h4 className="text-gray-900">Localização em tempo real</h4>
+              <button onClick={() => navigate(createPageUrl("LocalizacaoTempoReal"))} className="w-full flex justify-between items-center">
+                <h4 className="text-gray-900 text-left">Localização em tempo real</h4>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
 

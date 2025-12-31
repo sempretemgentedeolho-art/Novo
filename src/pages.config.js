@@ -76,6 +76,16 @@ import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
 import Privacidade from './pages/Privacidade';
+import VistoUltimo from './pages/VistoUltimo';
+import FotoPerfil from './pages/FotoPerfil';
+import Recado from './pages/Recado';
+import LinksPrivacidade from './pages/LinksPrivacidade';
+import StatusPrivacidade from './pages/StatusPrivacidade';
+import PixPrivacidade from './pages/PixPrivacidade';
+import DuracaoPadrao from './pages/DuracaoPadrao';
+import GruposPrivacidade from './pages/GruposPrivacidade';
+import FigurinhasAvatar from './pages/FigurinhasAvatar';
+import LocalizacaoTempoReal from './pages/LocalizacaoTempoReal';
 import __Layout from './Layout.jsx';
 
 
@@ -158,6 +168,16 @@ export const PAGES = {
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
     "Privacidade": Privacidade,
+    "VistoUltimo": VistoUltimo,
+    "FotoPerfil": FotoPerfil,
+    "Recado": Recado,
+    "LinksPrivacidade": LinksPrivacidade,
+    "StatusPrivacidade": StatusPrivacidade,
+    "PixPrivacidade": PixPrivacidade,
+    "DuracaoPadrao": DuracaoPadrao,
+    "GruposPrivacidade": GruposPrivacidade,
+    "FigurinhasAvatar": FigurinhasAvatar,
+    "LocalizacaoTempoReal": LocalizacaoTempoReal,
 }
 
 export const pagesConfig = {
