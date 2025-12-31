@@ -48,7 +48,7 @@ export default function Acessibilidade() {
           <div className="px-4 py-3 border-b-8 border-gray-100">
             <h3 className="text-sm text-gray-500 mb-3">👁️ Ajustes visuais</h3>
 
-            <button className="w-full flex justify-between items-center mb-4">
+            <button onClick={() => navigate(createPageUrl("TamanhoTexto"))} className="w-full flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
                 <Type className="w-6 h-6 text-gray-600" />
                 <div>
@@ -62,7 +62,7 @@ export default function Acessibilidade() {
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </button>
 
-            <button className="w-full flex justify-between items-center mb-4">
+            <button onClick={() => navigate(createPageUrl("ContrasteElevado"))} className="w-full flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
                 <Eye className="w-6 h-6 text-gray-600" />
                 <div>
@@ -75,7 +75,7 @@ export default function Acessibilidade() {
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </button>
 
-            <button className="w-full flex justify-between items-center">
+            <button onClick={() => navigate(createPageUrl("ReduzirAnimacoes"))} className="w-full flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <Sparkles className="w-6 h-6 text-gray-600" />
                 <div>
@@ -93,7 +93,7 @@ export default function Acessibilidade() {
           <div className="px-4 py-3 border-b-8 border-gray-100">
             <h3 className="text-sm text-gray-500 mb-3">🔊 Som e feedback</h3>
 
-            <button className="w-full flex justify-between items-center mb-4">
+            <button onClick={() => navigate(createPageUrl("VolumeNotificacoes"))} className="w-full flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
                 <Volume2 className="w-6 h-6 text-gray-600" />
                 <div>
@@ -106,7 +106,7 @@ export default function Acessibilidade() {
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </button>
 
-            <button className="w-full flex justify-between items-center">
+            <button onClick={() => navigate(createPageUrl("ForcaVibracao"))} className="w-full flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 flex items-center justify-center">
                   <div className="w-5 h-5 rounded-full border-2 border-gray-600"></div>
@@ -126,7 +126,7 @@ export default function Acessibilidade() {
           <div className="px-4 py-3 border-b-8 border-gray-100">
             <h3 className="text-sm text-gray-500 mb-3">👆 Interação e toque</h3>
 
-            <button className="w-full flex justify-between items-center mb-4">
+            <button onClick={() => navigate(createPageUrl("TempoToque"))} className="w-full flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
                 <Hand className="w-6 h-6 text-gray-600" />
                 <div>
@@ -139,7 +139,7 @@ export default function Acessibilidade() {
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </button>
 
-            <button className="w-full flex justify-between items-center">
+            <button onClick={() => navigate(createPageUrl("AtrasoToque"))} className="w-full flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 flex items-center justify-center text-xl">
                   ⌚
@@ -159,7 +159,7 @@ export default function Acessibilidade() {
           <div className="px-4 py-3 border-b-8 border-gray-100">
             <h3 className="text-sm text-gray-500 mb-3">🎙️ Leitura de tela</h3>
 
-            <button className="w-full flex justify-between items-start">
+            <button onClick={() => navigate(createPageUrl("TalkBack"))} className="w-full flex justify-between items-start">
               <div className="flex items-start gap-3">
                 <Ear className="w-6 h-6 text-gray-600 mt-1" />
                 <div>
@@ -170,6 +170,7 @@ export default function Acessibilidade() {
                   <p className="text-sm text-[#25D366] text-left mt-2">Ativar nas configurações do celular</p>
                 </div>
               </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 mt-1" />
             </button>
           </div>
 
@@ -177,7 +178,7 @@ export default function Acessibilidade() {
           <div className="px-4 py-4">
             <h3 className="text-sm text-gray-500 mb-3">📝 Legendas</h3>
 
-            <button className="w-full flex justify-between items-start">
+            <button onClick={() => navigate(createPageUrl("LegendasVideos"))} className="w-full flex justify-between items-start">
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 flex items-center justify-center text-xl mt-1">
                   CC
