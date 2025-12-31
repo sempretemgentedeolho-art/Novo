@@ -97,7 +97,7 @@ export default function UsarChaveAcesso() {
               </h3>
 
               <p className="text-sm text-gray-600 text-center mb-8">
-                A chave de acesso será salva no Gerenciador de senhas do Google da conta belvanforrati@gmail.com. Você pode usá-la em outros dispositivos. O bloqueio de tela será usado para criptografar seus dados.
+                A chave de acesso será salva no Gerenciador de senhas do Google. Você pode usá-la em outros dispositivos. O bloqueio de tela será usado para criptografar seus dados.
               </p>
 
               <div className="bg-blue-50 rounded-lg p-4 w-full mb-8 flex items-center gap-3">
