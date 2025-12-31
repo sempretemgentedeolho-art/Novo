@@ -111,6 +111,9 @@ import EditarCabelo from './pages/EditarCabelo';
 import Listas from './pages/Listas';
 import Conversas from './pages/Conversas';
 import ListasTransmissao from './pages/ListasTransmissao';
+import Notificacoes from './pages/Notificacoes';
+import ArmazenamentoDados from './pages/ArmazenamentoDados';
+import Acessibilidade from './pages/Acessibilidade';
 import __Layout from './Layout.jsx';
 
 
@@ -228,6 +231,9 @@ export const PAGES = {
     "Listas": Listas,
     "Conversas": Conversas,
     "ListasTransmissao": ListasTransmissao,
+    "Notificacoes": Notificacoes,
+    "ArmazenamentoDados": ArmazenamentoDados,
+    "Acessibilidade": Acessibilidade,
 }
 
 export const pagesConfig = {

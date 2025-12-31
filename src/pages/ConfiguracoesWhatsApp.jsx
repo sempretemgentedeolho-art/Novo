@@ -155,6 +155,18 @@ export default function ConfiguracoesWhatsApp() {
       setTimeout(() => {
         navigate(createPageUrl("ListasTransmissao"));
       }, 500);
+    } else if (option.id === "notifications") {
+      setTimeout(() => {
+        navigate(createPageUrl("Notificacoes"));
+      }, 500);
+    } else if (option.id === "storage") {
+      setTimeout(() => {
+        navigate(createPageUrl("ArmazenamentoDados"));
+      }, 500);
+    } else if (option.id === "accessibility") {
+      setTimeout(() => {
+        navigate(createPageUrl("Acessibilidade"));
+      }, 500);
     }
   };
 
