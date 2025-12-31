@@ -30,6 +30,8 @@ import Calculadora from './pages/Calculadora';
 import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
 import Configuracoes from './pages/Configuracoes';
+import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
+import ContaWhatsApp from './pages/ContaWhatsApp';
 import Contatos from './pages/Contatos';
 import DolbyAtmos from './pages/DolbyAtmos';
 import DolbyAtmosJogos from './pages/DolbyAtmosJogos';
@@ -65,8 +67,10 @@ import UHQUpscaler from './pages/UHQUpscaler';
 import VolumeControl from './pages/VolumeControl';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
-import ContaWhatsApp from './pages/ContaWhatsApp';
+import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
+import ChavesAcesso from './pages/ChavesAcesso';
+import AdicionarConta from './pages/AdicionarConta';
+import AdicionarContaNumero from './pages/AdicionarContaNumero';
 import __Layout from './Layout.jsx';
 
 
@@ -103,6 +107,8 @@ export const PAGES = {
     "Camera": Camera,
     "CameraConfig": CameraConfig,
     "Configuracoes": Configuracoes,
+    "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
+    "ContaWhatsApp": ContaWhatsApp,
     "Contatos": Contatos,
     "DolbyAtmos": DolbyAtmos,
     "DolbyAtmosJogos": DolbyAtmosJogos,
@@ -138,8 +144,10 @@ export const PAGES = {
     "VolumeControl": VolumeControl,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
-    "ContaWhatsApp": ContaWhatsApp,
+    "NotificacoesSeguranca": NotificacoesSeguranca,
+    "ChavesAcesso": ChavesAcesso,
+    "AdicionarConta": AdicionarConta,
+    "AdicionarContaNumero": AdicionarContaNumero,
 }
 
 export const pagesConfig = {

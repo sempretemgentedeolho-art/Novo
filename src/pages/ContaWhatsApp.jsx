@@ -85,42 +85,43 @@ export default function ContaWhatsApp() {
   }, []);
 
   const handleOptionClick = (option) => {
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      
-      let message = "";
-      switch(option.id) {
-        case "security-notifications":
-          message = "Notificações de segurança. Aqui você recebe avisos importantes sobre a segurança da sua conta.";
-          break;
-        case "access-keys":
-          message = "Chaves de acesso. Crie uma chave de acesso para ter um jeito fácil e seguro de entrar na sua conta novamente.";
-          break;
-        case "email":
-          message = "Endereço de e-mail. Com um email, podemos verificar sua conta ou entrar em contato com você sobre problemas de segurança ou de suporte.";
-          break;
-        case "two-step":
-          message = "Confirmação em duas etapas. Aqui você cria um código de segurança. Esse código protege seu WhatsApp se alguém tentar usar seu número em outro celular. É muito importante ativar essa opção.";
-          break;
-        case "change-number":
-          message = "Mudança de número. Você usa essa opção quando troca de chip ou de telefone, mas quer continuar com o mesmo WhatsApp.";
-          break;
-        case "request-data":
-          message = "Solicitar informações da conta. Aqui você pode pedir um relatório com informações da sua conta do WhatsApp.";
-          break;
-        case "add-account":
-          message = "Adicionar conta. Use esta opção para adicionar outra conta do WhatsApp no mesmo aparelho.";
-          break;
-        case "delete-account":
-          message = "Excluir minha conta. Esta opção apaga o WhatsApp do seu número. Atenção: use somente se tiver certeza. Se apagar, perde conversas e grupos.";
-          break;
+    // Navegar para páginas específicas
+    if (option.id === "security-notifications") {
+      navigate(createPageUrl("NotificacoesSeguranca"));
+    } else if (option.id === "access-keys") {
+      navigate(createPageUrl("ChavesAcesso"));
+    } else if (option.id === "add-account") {
+      navigate(createPageUrl("AdicionarConta"));
+    } else {
+      // Para outras opções, apenas falar
+      const synth = window.speechSynthesis;
+      if (synth) {
+        synth.cancel();
+        
+        let message = "";
+        switch(option.id) {
+          case "email":
+            message = "Endereço de e-mail. Com um email, podemos verificar sua conta ou entrar em contato com você sobre problemas de segurança ou de suporte.";
+            break;
+          case "two-step":
+            message = "Confirmação em duas etapas. Aqui você cria um código de segurança. Esse código protege seu WhatsApp se alguém tentar usar seu número em outro celular. É muito importante ativar essa opção.";
+            break;
+          case "change-number":
+            message = "Mudança de número. Você usa essa opção quando troca de chip ou de telefone, mas quer continuar com o mesmo WhatsApp.";
+            break;
+          case "request-data":
+            message = "Solicitar informações da conta. Aqui você pode pedir um relatório com informações da sua conta do WhatsApp.";
+            break;
+          case "delete-account":
+            message = "Excluir minha conta. Esta opção apaga o WhatsApp do seu número. Atenção: use somente se tiver certeza. Se apagar, perde conversas e grupos.";
+            break;
+        }
+        
+        const utter = new SpeechSynthesisUtterance(message);
+        utter.lang = "pt-BR";
+        utter.rate = 0.85;
+        synth.speak(utter);
       }
-      
-      const utter = new SpeechSynthesisUtterance(message);
-      utter.lang = "pt-BR";
-      utter.rate = 0.85;
-      synth.speak(utter);
     }
   };
 
