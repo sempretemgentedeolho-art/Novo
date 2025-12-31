@@ -110,7 +110,8 @@ export default function ContaWhatsApp() {
         
         let message = "";
         if (option.id === "two-step") {
-          message = "Confirmação em duas etapas. Aqui você cria um código de segurança. Esse código protege seu WhatsApp se alguém tentar usar seu número em outro celular. É muito importante ativar essa opção.";
+          navigate(createPageUrl("ConfirmacaoDuasEtapas"));
+          return;
         }
         
         const utter = new SpeechSynthesisUtterance(message);
