@@ -39,7 +39,7 @@ export default function FigurinhasAvatar() {
           <h3 className="text-sm text-gray-600 mb-4">Quem pode usar figurinhas com meu avatar</h3>
           
           <div className="space-y-3 mb-6">
-            <label className="flex items-center gap-3 cursor-pointer">
+            <label className="flex items-center gap-3 cursor-pointer" onClick={() => setSelected("contatos")}>
               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                 selected === "contatos" ? "border-[#25D366]" : "border-gray-400"
               }`}>
@@ -50,7 +50,7 @@ export default function FigurinhasAvatar() {
               <span className="text-gray-900 text-lg">Meus contatos</span>
             </label>
 
-            <label className="flex items-center gap-3 cursor-pointer">
+            <label className="flex items-center gap-3 cursor-pointer" onClick={() => setSelected("selecionados")}>
               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                 selected === "selecionados" ? "border-[#25D366]" : "border-gray-400"
               }`}>
@@ -61,7 +61,7 @@ export default function FigurinhasAvatar() {
               <span className="text-gray-900 text-lg">Contatos selecionados...</span>
             </label>
 
-            <label className="flex items-center gap-3 cursor-pointer">
+            <label className="flex items-center gap-3 cursor-pointer" onClick={() => setSelected("ninguem")}>
               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                 selected === "ninguem" ? "border-[#25D366]" : "border-gray-400"
               }`}>
@@ -73,9 +73,16 @@ export default function FigurinhasAvatar() {
             </label>
           </div>
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 mb-6">
             Se você e a outra pessoa ativarem essa opção, vocês poderão usar figurinhas dos seus avatares juntos na conversa.
           </p>
+
+          <button
+            onClick={() => navigate(createPageUrl("AvatarInicial"))}
+            className="w-full bg-[#25D366] text-white py-3 rounded-full font-medium text-lg"
+          >
+            Criar meu avatar
+          </button>
         </div>
       </div>
     </PhoneFrame>
