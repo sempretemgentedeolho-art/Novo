@@ -90,8 +90,16 @@ export default function ContaWhatsApp() {
       navigate(createPageUrl("NotificacoesSeguranca"));
     } else if (option.id === "access-keys") {
       navigate(createPageUrl("ChavesAcesso"));
+    } else if (option.id === "email") {
+      navigate(createPageUrl("EnderecoEmail"));
+    } else if (option.id === "change-number") {
+      navigate(createPageUrl("MudarNumero"));
+    } else if (option.id === "request-data") {
+      navigate(createPageUrl("PedirDadosConta"));
     } else if (option.id === "add-account") {
       navigate(createPageUrl("AdicionarConta"));
+    } else if (option.id === "delete-account") {
+      navigate(createPageUrl("ApagarConta"));
     } else {
       // Para outras opções, apenas falar
       const synth = window.speechSynthesis;
@@ -99,22 +107,8 @@ export default function ContaWhatsApp() {
         synth.cancel();
         
         let message = "";
-        switch(option.id) {
-          case "email":
-            message = "Endereço de e-mail. Com um email, podemos verificar sua conta ou entrar em contato com você sobre problemas de segurança ou de suporte.";
-            break;
-          case "two-step":
-            message = "Confirmação em duas etapas. Aqui você cria um código de segurança. Esse código protege seu WhatsApp se alguém tentar usar seu número em outro celular. É muito importante ativar essa opção.";
-            break;
-          case "change-number":
-            message = "Mudança de número. Você usa essa opção quando troca de chip ou de telefone, mas quer continuar com o mesmo WhatsApp.";
-            break;
-          case "request-data":
-            message = "Solicitar informações da conta. Aqui você pode pedir um relatório com informações da sua conta do WhatsApp.";
-            break;
-          case "delete-account":
-            message = "Excluir minha conta. Esta opção apaga o WhatsApp do seu número. Atenção: use somente se tiver certeza. Se apagar, perde conversas e grupos.";
-            break;
+        if (option.id === "two-step") {
+          message = "Confirmação em duas etapas. Aqui você cria um código de segurança. Esse código protege seu WhatsApp se alguém tentar usar seu número em outro celular. É muito importante ativar essa opção.";
         }
         
         const utter = new SpeechSynthesisUtterance(message);

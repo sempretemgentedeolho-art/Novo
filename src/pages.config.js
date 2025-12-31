@@ -71,6 +71,10 @@ import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
 import ChavesAcesso from './pages/ChavesAcesso';
 import AdicionarConta from './pages/AdicionarConta';
 import AdicionarContaNumero from './pages/AdicionarContaNumero';
+import EnderecoEmail from './pages/EnderecoEmail';
+import MudarNumero from './pages/MudarNumero';
+import PedirDadosConta from './pages/PedirDadosConta';
+import ApagarConta from './pages/ApagarConta';
 import __Layout from './Layout.jsx';
 
 
@@ -148,6 +152,10 @@ export const PAGES = {
     "ChavesAcesso": ChavesAcesso,
     "AdicionarConta": AdicionarConta,
     "AdicionarContaNumero": AdicionarContaNumero,
+    "EnderecoEmail": EnderecoEmail,
+    "MudarNumero": MudarNumero,
+    "PedirDadosConta": PedirDadosConta,
+    "ApagarConta": ApagarConta,
 }
 
 export const pagesConfig = {
