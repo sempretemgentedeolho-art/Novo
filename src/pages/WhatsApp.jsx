@@ -1140,15 +1140,15 @@ export default function WhatsApp() {
   };
 
   const attachmentOptions = [
-    { icon: FileText, label: "Documento", color: "bg-purple-500" },
-    { icon: Camera, label: "Câmera", color: "bg-pink-500" },
-    { icon: ImageIcon, label: "Galeria", color: "bg-purple-600" },
-    { icon: Music, label: "Áudio", color: "bg-orange-500" },
-    { icon: DollarSign, label: "Pagamento", color: "bg-teal-500" },
-    { icon: MapPin, label: "Localização", color: "bg-green-500" },
-    { icon: User, label: "Contato", color: "bg-blue-500" },
-    { icon: BarChart3, label: "Enquete", color: "bg-indigo-500" },
-    { icon: List, label: "Lista", color: "bg-yellow-600" },
+    { icon: FileText, label: "Documento", color: "bg-purple-500", page: "DocumentoAnexo" },
+    { icon: Camera, label: "Câmera", color: "bg-pink-500", page: "CameraConversaGuia" },
+    { icon: ImageIcon, label: "Galeria", color: "bg-purple-600", page: "GaleriaAnexo" },
+    { icon: Music, label: "Áudio", color: "bg-orange-500", page: "AudioAnexo" },
+    { icon: DollarSign, label: "Pagamento", color: "bg-teal-500", page: "PagamentoAnexo" },
+    { icon: MapPin, label: "Localização", color: "bg-green-500", page: "LocalizacaoAnexo" },
+    { icon: User, label: "Contato", color: "bg-blue-500", page: "ContatoAnexo" },
+    { icon: BarChart3, label: "Enquete", color: "bg-indigo-500", page: "EnqueteAnexo" },
+    { icon: List, label: "Lista", color: "bg-yellow-600", page: "ListaAnexo" },
   ];
 
   const chatMenuOptions = [
@@ -3664,8 +3664,10 @@ export default function WhatsApp() {
                         <button
                           key={idx}
                           onClick={() => {
-                            alert(option.label);
                             setShowAttachMenu(false);
+                            if (option.page) {
+                              navigate(createPageUrl(option.page));
+                            }
                           }}
                           className="flex flex-col items-center gap-2"
                         >
@@ -3737,7 +3739,10 @@ export default function WhatsApp() {
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
             <div className="flex gap-5 items-center">
-              <button onClick={handleHelp} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+              <button 
+                onClick={() => navigate(createPageUrl("AjudaWhatsApp"))}
+                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
+              >
                 <span className="text-sm font-bold text-gray-700">?</span>
               </button>
               <button onClick={() => navigate(createPageUrl("CameraWhatsApp"))}>
@@ -3750,14 +3755,13 @@ export default function WhatsApp() {
           </div>
           
           {/* Barra de Pesquisa */}
-          <div className="mt-3 bg-gray-100 rounded-lg px-4 py-2 flex items-center gap-2">
+          <button 
+            onClick={() => navigate(createPageUrl("PesquisaWhatsApp"))}
+            className="mt-3 bg-gray-100 rounded-lg px-4 py-2 flex items-center gap-2 w-full text-left"
+          >
             <Search className="w-5 h-5 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="Pergunte à Meta AI ou pesquise"
-              className="flex-1 bg-transparent outline-none text-sm text-gray-700"
-            />
-          </div>
+            <span className="flex-1 text-sm text-gray-500">Pergunte à Meta AI ou pesquise</span>
+          </button>
         </div>
 
 
