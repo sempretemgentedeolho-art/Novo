@@ -1138,14 +1138,14 @@ export default function WhatsApp() {
   ];
 
   const chatMenuOptions = [
-    { icon: InfoIcon, label: "Ver contato" },
-    { icon: ImageIcon, label: "Mídia, links e docs", hasChevron: true },
-    { icon: Search, label: "Pesquisar" },
-    { icon: Star, label: "Adicionar aos favoritos" },
-    { icon: Bell, label: "Silenciar notificações" },
-    { icon: MessageSquare, label: "Mensagens temporárias", hasChevron: true },
-    { icon: Wallpaper, label: "Papel de parede" },
-    { icon: MoreVertical, label: "Mais" },
+    { icon: InfoIcon, label: "Ver contato", page: "VerContatoGuia" },
+    { icon: ImageIcon, label: "Mídia, links e docs", hasChevron: true, page: "MidiaLinksDocsGuia" },
+    { icon: Search, label: "Pesquisar", page: "PesquisarConversaGuia" },
+    { icon: Star, label: "Adicionar aos favoritos", page: "AdicionarFavoritosGuia" },
+    { icon: Bell, label: "Silenciar notificações", page: "SilenciarNotificacoesGuia" },
+    { icon: MessageSquare, label: "Mensagens temporárias", hasChevron: true, page: "MensagensTemporariasGuia" },
+    { icon: Wallpaper, label: "Papel de parede", page: "PapelParedeGuia" },
+    { icon: MoreVertical, label: "Mais", page: "MenuConversaMais" },
   ];
 
   const filteredChats = chats.filter(chat => {
@@ -3685,8 +3685,10 @@ export default function WhatsApp() {
                       <button
                         key={idx}
                         onClick={() => {
-                          alert(option.label);
                           setShowChatMenu(false);
+                          if (option.page) {
+                            navigate(createPageUrl(option.page));
+                          }
                         }}
                         className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
                       >

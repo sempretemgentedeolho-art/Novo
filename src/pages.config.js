@@ -129,6 +129,14 @@ import ComunidadesGuia from './pages/ComunidadesGuia';
 import LigacoesGuia from './pages/LigacoesGuia';
 import BotaoMaisGuia from './pages/BotaoMaisGuia';
 import ConversasGuia from './pages/ConversasGuia';
+import VerContatoGuia from './pages/VerContatoGuia';
+import MidiaLinksDocsGuia from './pages/MidiaLinksDocsGuia';
+import PesquisarConversaGuia from './pages/PesquisarConversaGuia';
+import AdicionarFavoritosGuia from './pages/AdicionarFavoritosGuia';
+import SilenciarNotificacoesGuia from './pages/SilenciarNotificacoesGuia';
+import MensagensTemporariasGuia from './pages/MensagensTemporariasGuia';
+import PapelParedeGuia from './pages/PapelParedeGuia';
+import MenuConversaMais from './pages/MenuConversaMais';
 import __Layout from './Layout.jsx';
 
 
@@ -264,6 +272,14 @@ export const PAGES = {
     "LigacoesGuia": LigacoesGuia,
     "BotaoMaisGuia": BotaoMaisGuia,
     "ConversasGuia": ConversasGuia,
+    "VerContatoGuia": VerContatoGuia,
+    "MidiaLinksDocsGuia": MidiaLinksDocsGuia,
+    "PesquisarConversaGuia": PesquisarConversaGuia,
+    "AdicionarFavoritosGuia": AdicionarFavoritosGuia,
+    "SilenciarNotificacoesGuia": SilenciarNotificacoesGuia,
+    "MensagensTemporariasGuia": MensagensTemporariasGuia,
+    "PapelParedeGuia": PapelParedeGuia,
+    "MenuConversaMais": MenuConversaMais,
 }
 
 export const pagesConfig = {
