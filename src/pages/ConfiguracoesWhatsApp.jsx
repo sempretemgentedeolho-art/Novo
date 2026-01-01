@@ -167,6 +167,22 @@ export default function ConfiguracoesWhatsApp() {
       setTimeout(() => {
         navigate(createPageUrl("Acessibilidade"));
       }, 500);
+    } else if (option.id === "language") {
+      setTimeout(() => {
+        navigate(createPageUrl("IdiomaApp"));
+      }, 500);
+    } else if (option.id === "help") {
+      setTimeout(() => {
+        navigate(createPageUrl("AjudaAvaliacaoWhatsApp"));
+      }, 500);
+    } else if (option.id === "invite") {
+      setTimeout(() => {
+        navigate(createPageUrl("ConvidarAmigos"));
+      }, 500);
+    } else if (option.id === "updates") {
+      setTimeout(() => {
+        navigate(createPageUrl("AtualizacoesApp"));
+      }, 500);
     }
   };
 
@@ -234,7 +250,21 @@ export default function ConfiguracoesWhatsApp() {
 
           {/* Meta section */}
           <div className="p-4 bg-gray-50 mt-4">
-            <div className="mb-4">
+            <button
+              onClick={() => {
+                const synth = window.speechSynthesis;
+                if (synth) {
+                  synth.cancel();
+                  const utter = new SpeechSynthesisUtterance(
+                    "Meta é a empresa que criou o WhatsApp. Ela também é dona do Facebook, Instagram e outros aplicativos."
+                  );
+                  utter.lang = "pt-BR";
+                  utter.rate = 0.80;
+                  synth.speak(utter);
+                }
+              }}
+              className="mb-4 w-full text-left"
+            >
               <div className="flex items-center gap-2 mb-2">
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="#0081FB">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
@@ -245,11 +275,15 @@ export default function ConfiguracoesWhatsApp() {
               <p className="text-sm text-gray-600">
                 Controle sua experiência no WhatsApp, no Facebook, no Instagram e mais.
               </p>
-            </div>
+            </button>
 
             <div className="pt-4 border-t border-gray-200">
               <p className="text-sm text-gray-600 mb-4">Também da Meta</p>
-              <div className="grid grid-cols-4 gap-4">
+              <button
+                onClick={() => navigate(createPageUrl("MetaApps"))}
+                className="w-full"
+              >
+                <div className="grid grid-cols-4 gap-4">
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
                     <svg className="w-8 h-8" viewBox="0 0 24 24" fill="#0081FB">
@@ -293,6 +327,7 @@ export default function ConfiguracoesWhatsApp() {
                   <span className="text-xs text-gray-700 text-center">Threads</span>
                 </div>
               </div>
+              </button>
             </div>
           </div>
         </div>

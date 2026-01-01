@@ -154,6 +154,11 @@ import ContatoAnexo from './pages/ContatoAnexo';
 import EnqueteAnexo from './pages/EnqueteAnexo';
 import ListaAnexo from './pages/ListaAnexo';
 import PagamentoAnexo from './pages/PagamentoAnexo';
+import IdiomaApp from './pages/IdiomaApp';
+import AjudaAvaliacaoWhatsApp from './pages/AjudaAvaliacaoWhatsApp';
+import ConvidarAmigos from './pages/ConvidarAmigos';
+import AtualizacoesApp from './pages/AtualizacoesApp';
+import MetaApps from './pages/MetaApps';
 import __Layout from './Layout.jsx';
 
 
@@ -314,6 +319,11 @@ export const PAGES = {
     "EnqueteAnexo": EnqueteAnexo,
     "ListaAnexo": ListaAnexo,
     "PagamentoAnexo": PagamentoAnexo,
+    "IdiomaApp": IdiomaApp,
+    "AjudaAvaliacaoWhatsApp": AjudaAvaliacaoWhatsApp,
+    "ConvidarAmigos": ConvidarAmigos,
+    "AtualizacoesApp": AtualizacoesApp,
+    "MetaApps": MetaApps,
 }
 
 export const pagesConfig = {
