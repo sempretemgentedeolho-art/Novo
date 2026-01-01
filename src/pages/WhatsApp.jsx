@@ -1090,6 +1090,8 @@ export default function WhatsApp() {
   };
 
   const handleChatClick = (chat) => {
+    const synth = window.speechSynthesis;
+    if (synth) synth.cancel();
     navigate(createPageUrl("IntroConversa"));
   };
 
@@ -3484,7 +3486,8 @@ export default function WhatsApp() {
     );
   }
 
-  if (selectedChat) {
+  // Removido: tela de conversa - agora navega para IntroConversa
+  if (false && selectedChat) {
     return (
       <PhoneFrame>
         <div className="h-full bg-[#ECE5DD] flex flex-col relative">
