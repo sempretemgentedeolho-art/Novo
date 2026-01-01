@@ -137,6 +137,12 @@ import MensagensTemporariasGuia from './pages/MensagensTemporariasGuia';
 import PapelParedeGuia from './pages/PapelParedeGuia';
 import MenuConversaMais from './pages/MenuConversaMais';
 import VerContatoGuia from './pages/VerContatoGuia';
+import TelefoneConversaGuia from './pages/TelefoneConversaGuia';
+import VideoConversaGuia from './pages/VideoConversaGuia';
+import EmojiGuia from './pages/EmojiGuia';
+import ClipeAnexoGuia from './pages/ClipeAnexoGuia';
+import CameraConversaGuia from './pages/CameraConversaGuia';
+import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
 import __Layout from './Layout.jsx';
 
 
@@ -280,6 +286,12 @@ export const PAGES = {
     "PapelParedeGuia": PapelParedeGuia,
     "MenuConversaMais": MenuConversaMais,
     "VerContatoGuia": VerContatoGuia,
+    "TelefoneConversaGuia": TelefoneConversaGuia,
+    "VideoConversaGuia": VideoConversaGuia,
+    "EmojiGuia": EmojiGuia,
+    "ClipeAnexoGuia": ClipeAnexoGuia,
+    "CameraConversaGuia": CameraConversaGuia,
+    "MicrofoneAudioGuia": MicrofoneAudioGuia,
 }
 
 export const pagesConfig = {
