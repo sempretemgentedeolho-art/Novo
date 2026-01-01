@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
-import { ArrowLeft, User, Phone, Video, Bell, Shield, Heart, Ban } from "lucide-react";
+import { ArrowLeft, User, Phone, Video, Heart } from "lucide-react";
 
 export default function VerContatoGuia() {
   const navigate = useNavigate();
@@ -35,7 +35,6 @@ export default function VerContatoGuia() {
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          {/* Header do perfil */}
           <div className="bg-[#008069] text-white px-4 pb-6 pt-2">
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full bg-white/20 flex items-center justify-center text-6xl mb-3">
@@ -46,7 +45,6 @@ export default function VerContatoGuia() {
             </div>
           </div>
 
-          {/* Info card */}
           <div className="p-4">
             <div className="bg-blue-50 rounded-lg p-4 mb-6">
               <h3 className="font-semibold text-gray-900 mb-2">💡 O que é esta tela?</h3>
@@ -56,7 +54,6 @@ export default function VerContatoGuia() {
             </div>
           </div>
 
-          {/* O que você vê */}
           <div className="px-4 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">👁️ O que você vê nesta tela:</h3>
             
@@ -98,7 +95,6 @@ export default function VerContatoGuia() {
             </div>
           </div>
 
-          {/* Botões de ação */}
           <div className="px-4 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">🎯 Botões de Ação:</h3>
             
@@ -141,7 +137,6 @@ export default function VerContatoGuia() {
             </div>
           </div>
 
-          {/* Outras opções */}
           <div className="px-4 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">⚙️ Outras Opções Importantes:</h3>
             
@@ -173,7 +168,6 @@ export default function VerContatoGuia() {
             </div>
           </div>
 
-          {/* Quando usar */}
           <div className="px-4 mb-6">
             <div className="bg-green-50 rounded-lg p-4">
               <h3 className="font-semibold text-gray-900 mb-2">💚 Quando usar:</h3>
