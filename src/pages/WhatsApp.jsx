@@ -3736,50 +3736,6 @@ export default function WhatsApp() {
               className="flex-1 bg-transparent outline-none text-sm text-gray-700"
             />
           </div>
-
-          {/* Tabs de Navegação */}
-          <div className="flex items-center gap-1 mt-3 -mx-2">
-            <button 
-              onClick={() => setActiveTab("chats")}
-              className={`flex-1 py-2 px-3 text-sm font-medium rounded-full transition-colors ${
-                activeTab === "chats" 
-                  ? "bg-[#E7F8EE] text-[#008069]" 
-                  : "text-gray-600"
-              }`}
-            >
-              Conversas
-            </button>
-            <button 
-              onClick={() => setActiveTab("updates")}
-              className={`flex-1 py-2 px-3 text-sm font-medium rounded-full transition-colors ${
-                activeTab === "updates" 
-                  ? "bg-[#E7F8EE] text-[#008069]" 
-                  : "text-gray-600"
-              }`}
-            >
-              Atualizações
-            </button>
-            <button 
-              onClick={() => setActiveTab("communities")}
-              className={`flex-1 py-2 px-3 text-sm font-medium rounded-full transition-colors ${
-                activeTab === "communities" 
-                  ? "bg-[#E7F8EE] text-[#008069]" 
-                  : "text-gray-600"
-              }`}
-            >
-              Comunidades
-            </button>
-            <button 
-              onClick={() => setActiveTab("calls")}
-              className={`flex-1 py-2 px-3 text-sm font-medium rounded-full transition-colors ${
-                activeTab === "calls" 
-                  ? "bg-[#E7F8EE] text-[#008069]" 
-                  : "text-gray-600"
-              }`}
-            >
-              Ligações
-            </button>
-          </div>
         </div>
 
 
@@ -3818,6 +3774,38 @@ export default function WhatsApp() {
             </div>
           ))}
 
+        </div>
+
+        {/* Bottom Navigation */}
+        <div className="bg-white border-t border-gray-200 flex justify-around py-2">
+          <button 
+            onClick={() => setActiveTab("chats")}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "chats" ? "text-[#008069]" : "text-gray-500"}`}
+          >
+            <MessageCircle className="w-6 h-6" />
+            <span className="text-xs font-medium">Conversas</span>
+          </button>
+          <button 
+            onClick={() => setActiveTab("updates")}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "updates" ? "text-[#008069]" : "text-gray-500"}`}
+          >
+            <Bell className="w-6 h-6" />
+            <span className="text-xs font-medium">Atualizações</span>
+          </button>
+          <button 
+            onClick={() => setActiveTab("communities")}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "communities" ? "text-[#008069]" : "text-gray-500"}`}
+          >
+            <Users className="w-6 h-6" />
+            <span className="text-xs font-medium">Comunidades</span>
+          </button>
+          <button 
+            onClick={() => setActiveTab("calls")}
+            className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "calls" ? "text-[#008069]" : "text-gray-500"}`}
+          >
+            <Phone className="w-6 h-6" />
+            <span className="text-xs font-medium">Ligações</span>
+          </button>
         </div>
 
         {/* Botão Flutuante */}
