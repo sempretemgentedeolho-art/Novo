@@ -1090,9 +1090,23 @@ export default function WhatsApp() {
   };
 
   const handleChatClick = (chat) => {
-    const synth = window.speechSynthesis;
-    if (synth) synth.cancel();
-    navigate(createPageUrl("IntroConversa"));
+    setSelectedChat(chat);
+    setMessages(chat.messages);
+    setChats(chats.map(c => c.id === chat.id ? { ...c, unread: 0 } : c));
+    
+    // Áudio de introdução
+    setTimeout(() => {
+      const synth = window.speechSynthesis;
+      if (synth) {
+        synth.cancel();
+        const utter = new SpeechSynthesisUtterance(
+          "Aqui você manda mensagem para o grupo ou para uma pessoa, seu filho, seu neto ou amigos. Clique nos três pontinhos à sua direita acima para conhecer melhor."
+        );
+        utter.lang = "pt-BR";
+        utter.rate = 0.80;
+        synth.speak(utter);
+      }
+    }, 300);
   };
 
   const handleSendMessage = () => {
@@ -3486,8 +3500,7 @@ export default function WhatsApp() {
     );
   }
 
-  // Removido: tela de conversa - agora navega para IntroConversa
-  if (false && selectedChat) {
+  if (selectedChat) {
     return (
       <PhoneFrame>
         <div className="h-full bg-[#ECE5DD] flex flex-col relative">
@@ -3525,10 +3538,10 @@ export default function WhatsApp() {
                 <h2 className="font-medium text-[17px]">{selectedChat.name}</h2>
                 <p className="text-xs text-white/80">toque para mais informações</p>
               </div>
-              <button onClick={() => alert("Chamada de vídeo")}>
+              <button onClick={() => navigate(createPageUrl("VideoConversaGuia"))}>
                 <Video className="w-5 h-5 mx-2" />
               </button>
-              <button onClick={() => alert("Chamada de voz")}>
+              <button onClick={() => navigate(createPageUrl("TelefoneConversaGuia"))}>
                 <Phone className="w-5 h-5 mx-2" />
               </button>
               <button onClick={() => setShowChatMenu(!showChatMenu)}>
@@ -3598,19 +3611,22 @@ export default function WhatsApp() {
                 className="flex-1 bg-transparent outline-none text-[15px]"
               />
               <button 
-                onClick={() => setShowAttachMenu(!showAttachMenu)}
+                onClick={() => navigate(createPageUrl("ClipeAnexoGuia"))}
                 className="flex-shrink-0"
               >
                 <Paperclip className="w-5 h-5 text-gray-500" />
               </button>
               {!messageText && (
-                <button className="flex-shrink-0">
+                <button 
+                  onClick={() => navigate(createPageUrl("CameraConversaGuia"))}
+                  className="flex-shrink-0"
+                >
                   <Camera className="w-5 h-5 text-gray-500" />
                 </button>
               )}
             </div>
             <button
-              onClick={() => messageText ? handleSendMessage() : alert("Segure para gravar áudio")}
+              onClick={() => messageText ? handleSendMessage() : navigate(createPageUrl("MicrofoneAudioGuia"))}
               className="w-12 h-12 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center flex-shrink-0"
             >
               {messageText ? (
