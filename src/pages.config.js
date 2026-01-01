@@ -144,6 +144,16 @@ import ClipeAnexoGuia from './pages/ClipeAnexoGuia';
 import CameraConversaGuia from './pages/CameraConversaGuia';
 import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
 import IntroConversa from './pages/IntroConversa';
+import PesquisaWhatsApp from './pages/PesquisaWhatsApp';
+import AjudaWhatsApp from './pages/AjudaWhatsApp';
+import DocumentoAnexo from './pages/DocumentoAnexo';
+import GaleriaAnexo from './pages/GaleriaAnexo';
+import AudioAnexo from './pages/AudioAnexo';
+import LocalizacaoAnexo from './pages/LocalizacaoAnexo';
+import ContatoAnexo from './pages/ContatoAnexo';
+import EnqueteAnexo from './pages/EnqueteAnexo';
+import ListaAnexo from './pages/ListaAnexo';
+import PagamentoAnexo from './pages/PagamentoAnexo';
 import __Layout from './Layout.jsx';
 
 
@@ -294,6 +304,16 @@ export const PAGES = {
     "CameraConversaGuia": CameraConversaGuia,
     "MicrofoneAudioGuia": MicrofoneAudioGuia,
     "IntroConversa": IntroConversa,
+    "PesquisaWhatsApp": PesquisaWhatsApp,
+    "AjudaWhatsApp": AjudaWhatsApp,
+    "DocumentoAnexo": DocumentoAnexo,
+    "GaleriaAnexo": GaleriaAnexo,
+    "AudioAnexo": AudioAnexo,
+    "LocalizacaoAnexo": LocalizacaoAnexo,
+    "ContatoAnexo": ContatoAnexo,
+    "EnqueteAnexo": EnqueteAnexo,
+    "ListaAnexo": ListaAnexo,
+    "PagamentoAnexo": PagamentoAnexo,
 }
 
 export const pagesConfig = {
