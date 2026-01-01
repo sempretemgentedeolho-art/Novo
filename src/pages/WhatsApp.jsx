@@ -1090,9 +1090,7 @@ export default function WhatsApp() {
   };
 
   const handleChatClick = (chat) => {
-    setSelectedChat(chat);
-    setMessages(chat.messages);
-    setChats(chats.map(c => c.id === chat.id ? { ...c, unread: 0 } : c));
+    navigate(createPageUrl("IntroConversa"));
   };
 
   const handleSendMessage = () => {

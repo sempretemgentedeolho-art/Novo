@@ -3,6 +3,7 @@ import AdaptSound from './pages/AdaptSound';
 import AdicionarCamadaSeguranca from './pages/AdicionarCamadaSeguranca';
 import AdicionarConta from './pages/AdicionarConta';
 import AdicionarContaNumero from './pages/AdicionarContaNumero';
+import AdicionarFavoritosGuia from './pages/AdicionarFavoritosGuia';
 import ApagarConta from './pages/ApagarConta';
 import AppCalculadora from './pages/AppCalculadora';
 import AppCalendar from './pages/AppCalendar';
@@ -31,19 +32,23 @@ import AppWhatsApp from './pages/AppWhatsApp';
 import AppYouTube from './pages/AppYouTube';
 import ArmazenamentoDados from './pages/ArmazenamentoDados';
 import AtrasoToque from './pages/AtrasoToque';
+import AtualizacoesGuia from './pages/AtualizacoesGuia';
 import AudioDual from './pages/AudioDual';
 import AvatarInicial from './pages/AvatarInicial';
 import BloqueioApp from './pages/BloqueioApp';
 import BluetoothConfig from './pages/BluetoothConfig';
+import BotaoMaisGuia from './pages/BotaoMaisGuia';
 import Calculadora from './pages/Calculadora';
 import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
+import CameraWhatsApp from './pages/CameraWhatsApp';
 import ChavesAcesso from './pages/ChavesAcesso';
 import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
 import CheckupControleDados from './pages/CheckupControleDados';
 import CheckupDefinaQuem from './pages/CheckupDefinaQuem';
 import CheckupPrivacidade from './pages/CheckupPrivacidade';
 import CheckupProtecaoConta from './pages/CheckupProtecaoConta';
+import ComunidadesGuia from './pages/ComunidadesGuia';
 import Configuracoes from './pages/Configuracoes';
 import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
@@ -53,6 +58,7 @@ import Contatos from './pages/Contatos';
 import ContatosPrivacidade from './pages/ContatosPrivacidade';
 import ContrasteElevado from './pages/ContrasteElevado';
 import Conversas from './pages/Conversas';
+import ConversasGuia from './pages/ConversasGuia';
 import ConversasTrancadas from './pages/ConversasTrancadas';
 import CriarAvatarOpcoes from './pages/CriarAvatarOpcoes';
 import DolbyAtmos from './pages/DolbyAtmos';
@@ -78,6 +84,7 @@ import Instagram from './pages/Instagram';
 import IntroWhatsApp from './pages/IntroWhatsApp';
 import Lanterna from './pages/Lanterna';
 import LegendasVideos from './pages/LegendasVideos';
+import LigacoesGuia from './pages/LigacoesGuia';
 import LigacoesPrivacidade from './pages/LigacoesPrivacidade';
 import LinksPrivacidade from './pages/LinksPrivacidade';
 import Listas from './pages/Listas';
@@ -90,12 +97,17 @@ import ManualLigarDesligar from './pages/ManualLigarDesligar';
 import ManualTeclas from './pages/ManualTeclas';
 import ManualUsuario from './pages/ManualUsuario';
 import Mensagens from './pages/Mensagens';
+import MensagensTemporariasGuia from './pages/MensagensTemporariasGuia';
+import MenuConversaMais from './pages/MenuConversaMais';
+import MidiaLinksDocsGuia from './pages/MidiaLinksDocsGuia';
 import MostreVibeAvatares from './pages/MostreVibeAvatares';
 import MudarNumero from './pages/MudarNumero';
 import Navegador from './pages/Navegador';
 import Notificacoes from './pages/Notificacoes';
 import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
+import PapelParedeGuia from './pages/PapelParedeGuia';
 import PedirDadosConta from './pages/PedirDadosConta';
+import PesquisarConversaGuia from './pages/PesquisarConversaGuia';
 import PixPrivacidade from './pages/PixPrivacidade';
 import PlayStore from './pages/PlayStore';
 import Privacidade from './pages/Privacidade';
@@ -104,6 +116,7 @@ import Recado from './pages/Recado';
 import ReduzirAnimacoes from './pages/ReduzirAnimacoes';
 import Relogio from './pages/Relogio';
 import Seguranca from './pages/Seguranca';
+import SilenciarNotificacoesGuia from './pages/SilenciarNotificacoesGuia';
 import SomAplicativoSeparado from './pages/SomAplicativoSeparado';
 import StatusPrivacidade from './pages/StatusPrivacidade';
 import TalkBack from './pages/TalkBack';
@@ -118,31 +131,19 @@ import TudoProntoAvatar from './pages/TudoProntoAvatar';
 import UHQUpscaler from './pages/UHQUpscaler';
 import UsarChaveAcesso from './pages/UsarChaveAcesso';
 import UsarEfeitosCamera from './pages/UsarEfeitosCamera';
+import VerContatoGuia from './pages/VerContatoGuia';
 import VistoUltimo from './pages/VistoUltimo';
 import VolumeControl from './pages/VolumeControl';
 import VolumeNotificacoes from './pages/VolumeNotificacoes';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import CameraWhatsApp from './pages/CameraWhatsApp';
-import AtualizacoesGuia from './pages/AtualizacoesGuia';
-import ComunidadesGuia from './pages/ComunidadesGuia';
-import LigacoesGuia from './pages/LigacoesGuia';
-import BotaoMaisGuia from './pages/BotaoMaisGuia';
-import ConversasGuia from './pages/ConversasGuia';
-import MidiaLinksDocsGuia from './pages/MidiaLinksDocsGuia';
-import PesquisarConversaGuia from './pages/PesquisarConversaGuia';
-import AdicionarFavoritosGuia from './pages/AdicionarFavoritosGuia';
-import SilenciarNotificacoesGuia from './pages/SilenciarNotificacoesGuia';
-import MensagensTemporariasGuia from './pages/MensagensTemporariasGuia';
-import PapelParedeGuia from './pages/PapelParedeGuia';
-import MenuConversaMais from './pages/MenuConversaMais';
-import VerContatoGuia from './pages/VerContatoGuia';
 import TelefoneConversaGuia from './pages/TelefoneConversaGuia';
 import VideoConversaGuia from './pages/VideoConversaGuia';
 import EmojiGuia from './pages/EmojiGuia';
 import ClipeAnexoGuia from './pages/ClipeAnexoGuia';
 import CameraConversaGuia from './pages/CameraConversaGuia';
 import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
+import IntroConversa from './pages/IntroConversa';
 import __Layout from './Layout.jsx';
 
 
@@ -152,6 +153,7 @@ export const PAGES = {
     "AdicionarCamadaSeguranca": AdicionarCamadaSeguranca,
     "AdicionarConta": AdicionarConta,
     "AdicionarContaNumero": AdicionarContaNumero,
+    "AdicionarFavoritosGuia": AdicionarFavoritosGuia,
     "ApagarConta": ApagarConta,
     "AppCalculadora": AppCalculadora,
     "AppCalendar": AppCalendar,
@@ -180,19 +182,23 @@ export const PAGES = {
     "AppYouTube": AppYouTube,
     "ArmazenamentoDados": ArmazenamentoDados,
     "AtrasoToque": AtrasoToque,
+    "AtualizacoesGuia": AtualizacoesGuia,
     "AudioDual": AudioDual,
     "AvatarInicial": AvatarInicial,
     "BloqueioApp": BloqueioApp,
     "BluetoothConfig": BluetoothConfig,
+    "BotaoMaisGuia": BotaoMaisGuia,
     "Calculadora": Calculadora,
     "Camera": Camera,
     "CameraConfig": CameraConfig,
+    "CameraWhatsApp": CameraWhatsApp,
     "ChavesAcesso": ChavesAcesso,
     "CheckupAdicionePrivacidade": CheckupAdicionePrivacidade,
     "CheckupControleDados": CheckupControleDados,
     "CheckupDefinaQuem": CheckupDefinaQuem,
     "CheckupPrivacidade": CheckupPrivacidade,
     "CheckupProtecaoConta": CheckupProtecaoConta,
+    "ComunidadesGuia": ComunidadesGuia,
     "Configuracoes": Configuracoes,
     "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
@@ -202,6 +208,7 @@ export const PAGES = {
     "ContatosPrivacidade": ContatosPrivacidade,
     "ContrasteElevado": ContrasteElevado,
     "Conversas": Conversas,
+    "ConversasGuia": ConversasGuia,
     "ConversasTrancadas": ConversasTrancadas,
     "CriarAvatarOpcoes": CriarAvatarOpcoes,
     "DolbyAtmos": DolbyAtmos,
@@ -227,6 +234,7 @@ export const PAGES = {
     "IntroWhatsApp": IntroWhatsApp,
     "Lanterna": Lanterna,
     "LegendasVideos": LegendasVideos,
+    "LigacoesGuia": LigacoesGuia,
     "LigacoesPrivacidade": LigacoesPrivacidade,
     "LinksPrivacidade": LinksPrivacidade,
     "Listas": Listas,
@@ -239,12 +247,17 @@ export const PAGES = {
     "ManualTeclas": ManualTeclas,
     "ManualUsuario": ManualUsuario,
     "Mensagens": Mensagens,
+    "MensagensTemporariasGuia": MensagensTemporariasGuia,
+    "MenuConversaMais": MenuConversaMais,
+    "MidiaLinksDocsGuia": MidiaLinksDocsGuia,
     "MostreVibeAvatares": MostreVibeAvatares,
     "MudarNumero": MudarNumero,
     "Navegador": Navegador,
     "Notificacoes": Notificacoes,
     "NotificacoesSeguranca": NotificacoesSeguranca,
+    "PapelParedeGuia": PapelParedeGuia,
     "PedirDadosConta": PedirDadosConta,
+    "PesquisarConversaGuia": PesquisarConversaGuia,
     "PixPrivacidade": PixPrivacidade,
     "PlayStore": PlayStore,
     "Privacidade": Privacidade,
@@ -253,6 +266,7 @@ export const PAGES = {
     "ReduzirAnimacoes": ReduzirAnimacoes,
     "Relogio": Relogio,
     "Seguranca": Seguranca,
+    "SilenciarNotificacoesGuia": SilenciarNotificacoesGuia,
     "SomAplicativoSeparado": SomAplicativoSeparado,
     "StatusPrivacidade": StatusPrivacidade,
     "TalkBack": TalkBack,
@@ -267,31 +281,19 @@ export const PAGES = {
     "UHQUpscaler": UHQUpscaler,
     "UsarChaveAcesso": UsarChaveAcesso,
     "UsarEfeitosCamera": UsarEfeitosCamera,
+    "VerContatoGuia": VerContatoGuia,
     "VistoUltimo": VistoUltimo,
     "VolumeControl": VolumeControl,
     "VolumeNotificacoes": VolumeNotificacoes,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "CameraWhatsApp": CameraWhatsApp,
-    "AtualizacoesGuia": AtualizacoesGuia,
-    "ComunidadesGuia": ComunidadesGuia,
-    "LigacoesGuia": LigacoesGuia,
-    "BotaoMaisGuia": BotaoMaisGuia,
-    "ConversasGuia": ConversasGuia,
-    "MidiaLinksDocsGuia": MidiaLinksDocsGuia,
-    "PesquisarConversaGuia": PesquisarConversaGuia,
-    "AdicionarFavoritosGuia": AdicionarFavoritosGuia,
-    "SilenciarNotificacoesGuia": SilenciarNotificacoesGuia,
-    "MensagensTemporariasGuia": MensagensTemporariasGuia,
-    "PapelParedeGuia": PapelParedeGuia,
-    "MenuConversaMais": MenuConversaMais,
-    "VerContatoGuia": VerContatoGuia,
     "TelefoneConversaGuia": TelefoneConversaGuia,
     "VideoConversaGuia": VideoConversaGuia,
     "EmojiGuia": EmojiGuia,
     "ClipeAnexoGuia": ClipeAnexoGuia,
     "CameraConversaGuia": CameraConversaGuia,
     "MicrofoneAudioGuia": MicrofoneAudioGuia,
+    "IntroConversa": IntroConversa,
 }
 
 export const pagesConfig = {
