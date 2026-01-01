@@ -3779,32 +3779,28 @@ export default function WhatsApp() {
         {/* Bottom Navigation */}
         <div className="bg-white border-t border-gray-200 flex justify-around py-2">
           <button 
-            onClick={() => setActiveTab("chats")}
-            onDoubleClick={() => navigate(createPageUrl("ConversasGuia"))}
+            onClick={() => navigate(createPageUrl("ConversasGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "chats" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <MessageCircle className="w-6 h-6" />
             <span className="text-xs font-medium">Conversas</span>
           </button>
           <button 
-            onClick={() => setActiveTab("updates")}
-            onDoubleClick={() => navigate(createPageUrl("AtualizacoesGuia"))}
+            onClick={() => navigate(createPageUrl("AtualizacoesGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "updates" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Bell className="w-6 h-6" />
             <span className="text-xs font-medium">Atualizações</span>
           </button>
           <button 
-            onClick={() => setActiveTab("communities")}
-            onDoubleClick={() => navigate(createPageUrl("ComunidadesGuia"))}
+            onClick={() => navigate(createPageUrl("ComunidadesGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "communities" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Users className="w-6 h-6" />
             <span className="text-xs font-medium">Comunidades</span>
           </button>
           <button 
-            onClick={() => setActiveTab("calls")}
-            onDoubleClick={() => navigate(createPageUrl("LigacoesGuia"))}
+            onClick={() => navigate(createPageUrl("LigacoesGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "calls" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Phone className="w-6 h-6" />
