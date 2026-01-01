@@ -30,6 +30,7 @@ import AppWeather from './pages/AppWeather';
 import AppWhatsApp from './pages/AppWhatsApp';
 import AppYouTube from './pages/AppYouTube';
 import ArmazenamentoDados from './pages/ArmazenamentoDados';
+import AtrasoToque from './pages/AtrasoToque';
 import AudioDual from './pages/AudioDual';
 import AvatarInicial from './pages/AvatarInicial';
 import BloqueioApp from './pages/BloqueioApp';
@@ -50,6 +51,7 @@ import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
 import ContaWhatsApp from './pages/ContaWhatsApp';
 import Contatos from './pages/Contatos';
 import ContatosPrivacidade from './pages/ContatosPrivacidade';
+import ContrasteElevado from './pages/ContrasteElevado';
 import Conversas from './pages/Conversas';
 import ConversasTrancadas from './pages/ConversasTrancadas';
 import CriarAvatarOpcoes from './pages/CriarAvatarOpcoes';
@@ -63,6 +65,7 @@ import Equalizador from './pages/Equalizador';
 import EscolherTomPele from './pages/EscolherTomPele';
 import Facebook from './pages/Facebook';
 import FigurinhasAvatar from './pages/FigurinhasAvatar';
+import ForcaVibracao from './pages/ForcaVibracao';
 import FormatoRosto from './pages/FormatoRosto';
 import FotoPerfil from './pages/FotoPerfil';
 import Galeria from './pages/Galeria';
@@ -74,6 +77,7 @@ import Inicio from './pages/Inicio';
 import Instagram from './pages/Instagram';
 import IntroWhatsApp from './pages/IntroWhatsApp';
 import Lanterna from './pages/Lanterna';
+import LegendasVideos from './pages/LegendasVideos';
 import LigacoesPrivacidade from './pages/LigacoesPrivacidade';
 import LinksPrivacidade from './pages/LinksPrivacidade';
 import Listas from './pages/Listas';
@@ -97,13 +101,17 @@ import PlayStore from './pages/PlayStore';
 import Privacidade from './pages/Privacidade';
 import QualidadeSom from './pages/QualidadeSom';
 import Recado from './pages/Recado';
+import ReduzirAnimacoes from './pages/ReduzirAnimacoes';
 import Relogio from './pages/Relogio';
 import Seguranca from './pages/Seguranca';
 import SomAplicativoSeparado from './pages/SomAplicativoSeparado';
 import StatusPrivacidade from './pages/StatusPrivacidade';
+import TalkBack from './pages/TalkBack';
+import TamanhoTexto from './pages/TamanhoTexto';
 import TelaBloqueio from './pages/TelaBloqueio';
 import TelaInicial from './pages/TelaInicial';
 import Telefone from './pages/Telefone';
+import TempoToque from './pages/TempoToque';
 import TikTok from './pages/TikTok';
 import TipoCorpo from './pages/TipoCorpo';
 import TudoProntoAvatar from './pages/TudoProntoAvatar';
@@ -112,17 +120,15 @@ import UsarChaveAcesso from './pages/UsarChaveAcesso';
 import UsarEfeitosCamera from './pages/UsarEfeitosCamera';
 import VistoUltimo from './pages/VistoUltimo';
 import VolumeControl from './pages/VolumeControl';
+import VolumeNotificacoes from './pages/VolumeNotificacoes';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import TamanhoTexto from './pages/TamanhoTexto';
-import ContrasteElevado from './pages/ContrasteElevado';
-import ReduzirAnimacoes from './pages/ReduzirAnimacoes';
-import VolumeNotificacoes from './pages/VolumeNotificacoes';
-import ForcaVibracao from './pages/ForcaVibracao';
-import TempoToque from './pages/TempoToque';
-import AtrasoToque from './pages/AtrasoToque';
-import TalkBack from './pages/TalkBack';
-import LegendasVideos from './pages/LegendasVideos';
+import CameraWhatsApp from './pages/CameraWhatsApp';
+import AtualizacoesGuia from './pages/AtualizacoesGuia';
+import ComunidadesGuia from './pages/ComunidadesGuia';
+import LigacoesGuia from './pages/LigacoesGuia';
+import BotaoMaisGuia from './pages/BotaoMaisGuia';
+import ConversasGuia from './pages/ConversasGuia';
 import __Layout from './Layout.jsx';
 
 
@@ -159,6 +165,7 @@ export const PAGES = {
     "AppWhatsApp": AppWhatsApp,
     "AppYouTube": AppYouTube,
     "ArmazenamentoDados": ArmazenamentoDados,
+    "AtrasoToque": AtrasoToque,
     "AudioDual": AudioDual,
     "AvatarInicial": AvatarInicial,
     "BloqueioApp": BloqueioApp,
@@ -179,6 +186,7 @@ export const PAGES = {
     "ContaWhatsApp": ContaWhatsApp,
     "Contatos": Contatos,
     "ContatosPrivacidade": ContatosPrivacidade,
+    "ContrasteElevado": ContrasteElevado,
     "Conversas": Conversas,
     "ConversasTrancadas": ConversasTrancadas,
     "CriarAvatarOpcoes": CriarAvatarOpcoes,
@@ -192,6 +200,7 @@ export const PAGES = {
     "EscolherTomPele": EscolherTomPele,
     "Facebook": Facebook,
     "FigurinhasAvatar": FigurinhasAvatar,
+    "ForcaVibracao": ForcaVibracao,
     "FormatoRosto": FormatoRosto,
     "FotoPerfil": FotoPerfil,
     "Galeria": Galeria,
@@ -203,6 +212,7 @@ export const PAGES = {
     "Instagram": Instagram,
     "IntroWhatsApp": IntroWhatsApp,
     "Lanterna": Lanterna,
+    "LegendasVideos": LegendasVideos,
     "LigacoesPrivacidade": LigacoesPrivacidade,
     "LinksPrivacidade": LinksPrivacidade,
     "Listas": Listas,
@@ -226,13 +236,17 @@ export const PAGES = {
     "Privacidade": Privacidade,
     "QualidadeSom": QualidadeSom,
     "Recado": Recado,
+    "ReduzirAnimacoes": ReduzirAnimacoes,
     "Relogio": Relogio,
     "Seguranca": Seguranca,
     "SomAplicativoSeparado": SomAplicativoSeparado,
     "StatusPrivacidade": StatusPrivacidade,
+    "TalkBack": TalkBack,
+    "TamanhoTexto": TamanhoTexto,
     "TelaBloqueio": TelaBloqueio,
     "TelaInicial": TelaInicial,
     "Telefone": Telefone,
+    "TempoToque": TempoToque,
     "TikTok": TikTok,
     "TipoCorpo": TipoCorpo,
     "TudoProntoAvatar": TudoProntoAvatar,
@@ -241,17 +255,15 @@ export const PAGES = {
     "UsarEfeitosCamera": UsarEfeitosCamera,
     "VistoUltimo": VistoUltimo,
     "VolumeControl": VolumeControl,
+    "VolumeNotificacoes": VolumeNotificacoes,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "TamanhoTexto": TamanhoTexto,
-    "ContrasteElevado": ContrasteElevado,
-    "ReduzirAnimacoes": ReduzirAnimacoes,
-    "VolumeNotificacoes": VolumeNotificacoes,
-    "ForcaVibracao": ForcaVibracao,
-    "TempoToque": TempoToque,
-    "AtrasoToque": AtrasoToque,
-    "TalkBack": TalkBack,
-    "LegendasVideos": LegendasVideos,
+    "CameraWhatsApp": CameraWhatsApp,
+    "AtualizacoesGuia": AtualizacoesGuia,
+    "ComunidadesGuia": ComunidadesGuia,
+    "LigacoesGuia": LigacoesGuia,
+    "BotaoMaisGuia": BotaoMaisGuia,
+    "ConversasGuia": ConversasGuia,
 }
 
 export const pagesConfig = {

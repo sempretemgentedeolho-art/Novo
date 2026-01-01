@@ -3718,7 +3718,7 @@ export default function WhatsApp() {
               <button onClick={handleHelp} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
                 <span className="text-sm font-bold text-gray-700">?</span>
               </button>
-              <button onClick={() => alert("Câmera")}>
+              <button onClick={() => navigate(createPageUrl("CameraWhatsApp"))}>
                 <Camera className="w-6 h-6 text-gray-700" />
               </button>
               <button onClick={() => setShowMenu(!showMenu)}>
@@ -3780,6 +3780,7 @@ export default function WhatsApp() {
         <div className="bg-white border-t border-gray-200 flex justify-around py-2">
           <button 
             onClick={() => setActiveTab("chats")}
+            onDoubleClick={() => navigate(createPageUrl("ConversasGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "chats" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <MessageCircle className="w-6 h-6" />
@@ -3787,6 +3788,7 @@ export default function WhatsApp() {
           </button>
           <button 
             onClick={() => setActiveTab("updates")}
+            onDoubleClick={() => navigate(createPageUrl("AtualizacoesGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "updates" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Bell className="w-6 h-6" />
@@ -3794,6 +3796,7 @@ export default function WhatsApp() {
           </button>
           <button 
             onClick={() => setActiveTab("communities")}
+            onDoubleClick={() => navigate(createPageUrl("ComunidadesGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "communities" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Users className="w-6 h-6" />
@@ -3801,6 +3804,7 @@ export default function WhatsApp() {
           </button>
           <button 
             onClick={() => setActiveTab("calls")}
+            onDoubleClick={() => navigate(createPageUrl("LigacoesGuia"))}
             className={`flex flex-col items-center gap-1 py-1 px-4 ${activeTab === "calls" ? "text-[#008069]" : "text-gray-500"}`}
           >
             <Phone className="w-6 h-6" />
@@ -3809,7 +3813,10 @@ export default function WhatsApp() {
         </div>
 
         {/* Botão Flutuante */}
-        <button className="absolute bottom-20 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center text-white z-10">
+        <button 
+          onClick={() => navigate(createPageUrl("BotaoMaisGuia"))}
+          className="absolute bottom-20 right-6 w-14 h-14 bg-[#25D366] rounded-full shadow-lg flex items-center justify-center text-white z-10"
+        >
           <Plus className="w-6 h-6" />
         </button>
 
