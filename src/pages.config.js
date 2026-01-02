@@ -39,6 +39,7 @@ import AtualizacoesGuia from './pages/AtualizacoesGuia';
 import AudioAnexo from './pages/AudioAnexo';
 import AudioDual from './pages/AudioDual';
 import AvatarInicial from './pages/AvatarInicial';
+import BarraNotificacoes from './pages/BarraNotificacoes';
 import BloqueioApp from './pages/BloqueioApp';
 import BluetoothConfig from './pages/BluetoothConfig';
 import BotaoMaisGuia from './pages/BotaoMaisGuia';
@@ -47,6 +48,7 @@ import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
 import CameraConversaGuia from './pages/CameraConversaGuia';
 import CameraWhatsApp from './pages/CameraWhatsApp';
+import CapturarTela from './pages/CapturarTela';
 import ChavesAcesso from './pages/ChavesAcesso';
 import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
 import CheckupControleDados from './pages/CheckupControleDados';
@@ -57,6 +59,7 @@ import ClipeAnexoGuia from './pages/ClipeAnexoGuia';
 import ComunidadesGuia from './pages/ComunidadesGuia';
 import Configuracoes from './pages/Configuracoes';
 import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
+import ConfiguracoesRapidas from './pages/ConfiguracoesRapidas';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
 import ContaWhatsApp from './pages/ContaWhatsApp';
@@ -87,6 +90,7 @@ import FormatoRosto from './pages/FormatoRosto';
 import FotoPerfil from './pages/FotoPerfil';
 import Galeria from './pages/Galeria';
 import GaleriaAnexo from './pages/GaleriaAnexo';
+import GavetaApps from './pages/GavetaApps';
 import GerenciarApps from './pages/GerenciarApps';
 import GruposPrivacidade from './pages/GruposPrivacidade';
 import Home from './pages/Home';
@@ -120,12 +124,16 @@ import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
 import MidiaLinksDocsGuia from './pages/MidiaLinksDocsGuia';
 import MostreVibeAvatares from './pages/MostreVibeAvatares';
 import MudarNumero from './pages/MudarNumero';
+import MultiJanelas from './pages/MultiJanelas';
+import NavegacaoGestos from './pages/NavegacaoGestos';
 import Navegador from './pages/Navegador';
 import Notificacoes from './pages/Notificacoes';
 import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
+import OrganizarApps from './pages/OrganizarApps';
 import PagamentoAnexo from './pages/PagamentoAnexo';
 import PapelParedeGuia from './pages/PapelParedeGuia';
 import PedirDadosConta from './pages/PedirDadosConta';
+import PesquisaCelular from './pages/PesquisaCelular';
 import PesquisaWhatsApp from './pages/PesquisaWhatsApp';
 import PesquisarConversaGuia from './pages/PesquisarConversaGuia';
 import PixPrivacidade from './pages/PixPrivacidade';
@@ -143,6 +151,7 @@ import TalkBack from './pages/TalkBack';
 import TamanhoTexto from './pages/TamanhoTexto';
 import TelaBloqueio from './pages/TelaBloqueio';
 import TelaInicial from './pages/TelaInicial';
+import TelaInicialPersonalizar from './pages/TelaInicialPersonalizar';
 import Telefone from './pages/Telefone';
 import TelefoneConversaGuia from './pages/TelefoneConversaGuia';
 import TempoToque from './pages/TempoToque';
@@ -159,16 +168,12 @@ import VolumeControl from './pages/VolumeControl';
 import VolumeNotificacoes from './pages/VolumeNotificacoes';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import OrganizarApps from './pages/OrganizarApps';
-import BarraNotificacoes from './pages/BarraNotificacoes';
-import ConfiguracoesRapidas from './pages/ConfiguracoesRapidas';
-import PesquisaCelular from './pages/PesquisaCelular';
 import WidgetsTela from './pages/WidgetsTela';
-import CapturarTela from './pages/CapturarTela';
-import NavegacaoGestos from './pages/NavegacaoGestos';
-import TelaInicialPersonalizar from './pages/TelaInicialPersonalizar';
-import MultiJanelas from './pages/MultiJanelas';
-import GavetaApps from './pages/GavetaApps';
+import ModoNoturno from './pages/ModoNoturno';
+import TelaConfig from './pages/TelaConfig';
+import BloqueioTela from './pages/BloqueioTela';
+import ArmazenamentoConfig from './pages/ArmazenamentoConfig';
+import ContasConfig from './pages/ContasConfig';
 import __Layout from './Layout.jsx';
 
 
@@ -214,6 +219,7 @@ export const PAGES = {
     "AudioAnexo": AudioAnexo,
     "AudioDual": AudioDual,
     "AvatarInicial": AvatarInicial,
+    "BarraNotificacoes": BarraNotificacoes,
     "BloqueioApp": BloqueioApp,
     "BluetoothConfig": BluetoothConfig,
     "BotaoMaisGuia": BotaoMaisGuia,
@@ -222,6 +228,7 @@ export const PAGES = {
     "CameraConfig": CameraConfig,
     "CameraConversaGuia": CameraConversaGuia,
     "CameraWhatsApp": CameraWhatsApp,
+    "CapturarTela": CapturarTela,
     "ChavesAcesso": ChavesAcesso,
     "CheckupAdicionePrivacidade": CheckupAdicionePrivacidade,
     "CheckupControleDados": CheckupControleDados,
@@ -232,6 +239,7 @@ export const PAGES = {
     "ComunidadesGuia": ComunidadesGuia,
     "Configuracoes": Configuracoes,
     "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
+    "ConfiguracoesRapidas": ConfiguracoesRapidas,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
     "ConfirmacaoDuasEtapas": ConfirmacaoDuasEtapas,
     "ContaWhatsApp": ContaWhatsApp,
@@ -262,6 +270,7 @@ export const PAGES = {
     "FotoPerfil": FotoPerfil,
     "Galeria": Galeria,
     "GaleriaAnexo": GaleriaAnexo,
+    "GavetaApps": GavetaApps,
     "GerenciarApps": GerenciarApps,
     "GruposPrivacidade": GruposPrivacidade,
     "Home": Home,
@@ -295,12 +304,16 @@ export const PAGES = {
     "MidiaLinksDocsGuia": MidiaLinksDocsGuia,
     "MostreVibeAvatares": MostreVibeAvatares,
     "MudarNumero": MudarNumero,
+    "MultiJanelas": MultiJanelas,
+    "NavegacaoGestos": NavegacaoGestos,
     "Navegador": Navegador,
     "Notificacoes": Notificacoes,
     "NotificacoesSeguranca": NotificacoesSeguranca,
+    "OrganizarApps": OrganizarApps,
     "PagamentoAnexo": PagamentoAnexo,
     "PapelParedeGuia": PapelParedeGuia,
     "PedirDadosConta": PedirDadosConta,
+    "PesquisaCelular": PesquisaCelular,
     "PesquisaWhatsApp": PesquisaWhatsApp,
     "PesquisarConversaGuia": PesquisarConversaGuia,
     "PixPrivacidade": PixPrivacidade,
@@ -318,6 +331,7 @@ export const PAGES = {
     "TamanhoTexto": TamanhoTexto,
     "TelaBloqueio": TelaBloqueio,
     "TelaInicial": TelaInicial,
+    "TelaInicialPersonalizar": TelaInicialPersonalizar,
     "Telefone": Telefone,
     "TelefoneConversaGuia": TelefoneConversaGuia,
     "TempoToque": TempoToque,
@@ -334,16 +348,12 @@ export const PAGES = {
     "VolumeNotificacoes": VolumeNotificacoes,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "OrganizarApps": OrganizarApps,
-    "BarraNotificacoes": BarraNotificacoes,
-    "ConfiguracoesRapidas": ConfiguracoesRapidas,
-    "PesquisaCelular": PesquisaCelular,
     "WidgetsTela": WidgetsTela,
-    "CapturarTela": CapturarTela,
-    "NavegacaoGestos": NavegacaoGestos,
-    "TelaInicialPersonalizar": TelaInicialPersonalizar,
-    "MultiJanelas": MultiJanelas,
-    "GavetaApps": GavetaApps,
+    "ModoNoturno": ModoNoturno,
+    "TelaConfig": TelaConfig,
+    "BloqueioTela": BloqueioTela,
+    "ArmazenamentoConfig": ArmazenamentoConfig,
+    "ContasConfig": ContasConfig,
 }
 
 export const pagesConfig = {
