@@ -124,7 +124,6 @@ export default function Configuracoes() {
             className="w-full p-6 bg-gray-50 mt-4 text-left hover:bg-gray-100 transition-colors"
           >
             <h3 className="font-semibold text-gray-900 mb-2">Sobre o dispositivo</h3>
-            <p className="text-sm text-gray-600">Samsung Galaxy A54 · Android 14</p>
             <p className="text-xs text-gray-500 mt-1">Toque para ver detalhes e número do celular</p>
           </button>
         </div>
