@@ -10,19 +10,19 @@ import {
 
 const settings = [
   { icon: Wifi, label: "Wi-Fi", value: "Casa_WiFi", color: "text-blue-600", page: "WiFiConfig" },
-  { icon: Bluetooth, label: "Bluetooth", value: "Desligado", color: "text-blue-500" },
+  { icon: Bluetooth, label: "Bluetooth", value: "Desligado", color: "text-blue-500", page: "BluetoothConfig" },
   { icon: Volume2, label: "Som e vibração", color: "text-gray-700", page: "VolumeControl" },
-  { icon: Bell, label: "Notificações", color: "text-red-500" },
+  { icon: Bell, label: "Notificações", color: "text-red-500", page: "Notificacoes" },
   { icon: Clock, label: "Relógio", color: "text-indigo-600", page: "Relogio" },
-  { icon: Moon, label: "Modo noturno", value: "Desligado", color: "text-indigo-600" },
+  { icon: Moon, label: "Modo noturno", value: "Desligado", color: "text-indigo-600", page: "ModoNoturno" },
   { icon: Battery, label: "Bateria", value: "98%", color: "text-green-600" },
-  { icon: Smartphone, label: "Tela", color: "text-gray-600" },
-  { icon: Lock, label: "Bloqueio de tela", color: "text-gray-700" },
+  { icon: Smartphone, label: "Tela", color: "text-gray-600", page: "TelaConfig" },
+  { icon: Lock, label: "Bloqueio de tela", color: "text-gray-700", page: "BloqueioTela" },
   { icon: Shield, label: "Segurança", color: "text-teal-600", page: "Seguranca" },
   { icon: Heart, label: "Informações médicas", color: "text-red-600", page: "InfoMedicas" },
-  { icon: HardDrive, label: "Armazenamento", value: "128 GB", color: "text-gray-600" },
+  { icon: HardDrive, label: "Armazenamento", value: "128 GB", color: "text-gray-600", page: "ArmazenamentoConfig" },
   { icon: AppWindow, label: "Aplicativos", color: "text-blue-600", page: "GerenciarApps" },
-  { icon: User, label: "Contas", color: "text-gray-700" },
+  { icon: User, label: "Contas", color: "text-gray-700", page: "ContasConfig" },
 ];
 
 export default function Configuracoes() {
@@ -107,10 +107,26 @@ export default function Configuracoes() {
           </div>
 
           {/* Device Info */}
-          <div className="p-6 bg-gray-50 mt-4">
+          <button
+            onClick={() => {
+              const synth = window.speechSynthesis;
+              if (synth) {
+                synth.cancel();
+                const utter = new SpeechSynthesisUtterance(
+                  "Sobre o dispositivo. Informações do seu celular"
+                );
+                utter.lang = "pt-BR";
+                utter.rate = 0.80;
+                synth.speak(utter);
+              }
+              setTimeout(() => navigate(createPageUrl("SobreDispositivo")), 500);
+            }}
+            className="w-full p-6 bg-gray-50 mt-4 text-left hover:bg-gray-100 transition-colors"
+          >
             <h3 className="font-semibold text-gray-900 mb-2">Sobre o dispositivo</h3>
-            <p className="text-sm text-gray-600">Forja da Consciência</p>
-          </div>
+            <p className="text-sm text-gray-600">Samsung Galaxy A54 · Android 14</p>
+            <p className="text-xs text-gray-500 mt-1">Toque para ver detalhes e número do celular</p>
+          </button>
         </div>
       </div>
     </PhoneFrame>
