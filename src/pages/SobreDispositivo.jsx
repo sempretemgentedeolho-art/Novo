@@ -91,10 +91,7 @@ export default function SobreDispositivo() {
                   <Smartphone className="w-5 h-5 text-gray-600" />
                   <h4 className="font-medium text-gray-900">Modelo</h4>
                 </div>
-                <p className="text-sm text-gray-700">Samsung Galaxy A54 5G</p>
-                <p className="text-xs text-gray-500">SM-A546B</p>
-              </div>
-
+                
               <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-3 mb-1">
                   <span className="text-xl">🤖</span>
