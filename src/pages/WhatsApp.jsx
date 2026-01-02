@@ -3742,7 +3742,12 @@ export default function WhatsApp() {
         {/* Header */}
         <div className="bg-white px-4 py-3">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
+            <div className="flex items-center gap-3">
+              <button onClick={() => navigate(createPageUrl("Home"))}>
+                <ArrowLeft className="w-6 h-6 text-gray-700" />
+              </button>
+              <h1 className="text-2xl font-semibold text-[#008069]">WhatsApp</h1>
+            </div>
             <div className="flex gap-5 items-center">
               <button 
                 onClick={() => navigate(createPageUrl("AjudaWhatsApp"))}
