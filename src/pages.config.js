@@ -174,6 +174,7 @@ import TelaConfig from './pages/TelaConfig';
 import BloqueioTela from './pages/BloqueioTela';
 import ArmazenamentoConfig from './pages/ArmazenamentoConfig';
 import ContasConfig from './pages/ContasConfig';
+import SobreDispositivo from './pages/SobreDispositivo';
 import __Layout from './Layout.jsx';
 
 
@@ -354,6 +355,7 @@ export const PAGES = {
     "BloqueioTela": BloqueioTela,
     "ArmazenamentoConfig": ArmazenamentoConfig,
     "ContasConfig": ContasConfig,
+    "SobreDispositivo": SobreDispositivo,
 }
 
 export const pagesConfig = {
