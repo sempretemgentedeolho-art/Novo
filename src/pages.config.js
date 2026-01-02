@@ -4,6 +4,8 @@ import AdicionarCamadaSeguranca from './pages/AdicionarCamadaSeguranca';
 import AdicionarConta from './pages/AdicionarConta';
 import AdicionarContaNumero from './pages/AdicionarContaNumero';
 import AdicionarFavoritosGuia from './pages/AdicionarFavoritosGuia';
+import AjudaAvaliacaoWhatsApp from './pages/AjudaAvaliacaoWhatsApp';
+import AjudaWhatsApp from './pages/AjudaWhatsApp';
 import ApagarConta from './pages/ApagarConta';
 import AppCalculadora from './pages/AppCalculadora';
 import AppCalendar from './pages/AppCalendar';
@@ -32,7 +34,9 @@ import AppWhatsApp from './pages/AppWhatsApp';
 import AppYouTube from './pages/AppYouTube';
 import ArmazenamentoDados from './pages/ArmazenamentoDados';
 import AtrasoToque from './pages/AtrasoToque';
+import AtualizacoesApp from './pages/AtualizacoesApp';
 import AtualizacoesGuia from './pages/AtualizacoesGuia';
+import AudioAnexo from './pages/AudioAnexo';
 import AudioDual from './pages/AudioDual';
 import AvatarInicial from './pages/AvatarInicial';
 import BloqueioApp from './pages/BloqueioApp';
@@ -41,6 +45,7 @@ import BotaoMaisGuia from './pages/BotaoMaisGuia';
 import Calculadora from './pages/Calculadora';
 import Camera from './pages/Camera';
 import CameraConfig from './pages/CameraConfig';
+import CameraConversaGuia from './pages/CameraConversaGuia';
 import CameraWhatsApp from './pages/CameraWhatsApp';
 import ChavesAcesso from './pages/ChavesAcesso';
 import CheckupAdicionePrivacidade from './pages/CheckupAdicionePrivacidade';
@@ -48,25 +53,31 @@ import CheckupControleDados from './pages/CheckupControleDados';
 import CheckupDefinaQuem from './pages/CheckupDefinaQuem';
 import CheckupPrivacidade from './pages/CheckupPrivacidade';
 import CheckupProtecaoConta from './pages/CheckupProtecaoConta';
+import ClipeAnexoGuia from './pages/ClipeAnexoGuia';
 import ComunidadesGuia from './pages/ComunidadesGuia';
 import Configuracoes from './pages/Configuracoes';
 import ConfiguracoesAvancadas from './pages/ConfiguracoesAvancadas';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
 import ContaWhatsApp from './pages/ContaWhatsApp';
+import ContatoAnexo from './pages/ContatoAnexo';
 import Contatos from './pages/Contatos';
 import ContatosPrivacidade from './pages/ContatosPrivacidade';
 import ContrasteElevado from './pages/ContrasteElevado';
 import Conversas from './pages/Conversas';
 import ConversasGuia from './pages/ConversasGuia';
 import ConversasTrancadas from './pages/ConversasTrancadas';
+import ConvidarAmigos from './pages/ConvidarAmigos';
 import CriarAvatarOpcoes from './pages/CriarAvatarOpcoes';
+import DocumentoAnexo from './pages/DocumentoAnexo';
 import DolbyAtmos from './pages/DolbyAtmos';
 import DolbyAtmosJogos from './pages/DolbyAtmosJogos';
 import DuracaoPadrao from './pages/DuracaoPadrao';
 import EditarCabelo from './pages/EditarCabelo';
 import EmergencyCall from './pages/EmergencyCall';
+import EmojiGuia from './pages/EmojiGuia';
 import EnderecoEmail from './pages/EnderecoEmail';
+import EnqueteAnexo from './pages/EnqueteAnexo';
 import Equalizador from './pages/Equalizador';
 import EscolherTomPele from './pages/EscolherTomPele';
 import Facebook from './pages/Facebook';
@@ -75,20 +86,25 @@ import ForcaVibracao from './pages/ForcaVibracao';
 import FormatoRosto from './pages/FormatoRosto';
 import FotoPerfil from './pages/FotoPerfil';
 import Galeria from './pages/Galeria';
+import GaleriaAnexo from './pages/GaleriaAnexo';
 import GerenciarApps from './pages/GerenciarApps';
 import GruposPrivacidade from './pages/GruposPrivacidade';
 import Home from './pages/Home';
+import IdiomaApp from './pages/IdiomaApp';
 import InfoMedicas from './pages/InfoMedicas';
 import Inicio from './pages/Inicio';
 import Instagram from './pages/Instagram';
+import IntroConversa from './pages/IntroConversa';
 import IntroWhatsApp from './pages/IntroWhatsApp';
 import Lanterna from './pages/Lanterna';
 import LegendasVideos from './pages/LegendasVideos';
 import LigacoesGuia from './pages/LigacoesGuia';
 import LigacoesPrivacidade from './pages/LigacoesPrivacidade';
 import LinksPrivacidade from './pages/LinksPrivacidade';
+import ListaAnexo from './pages/ListaAnexo';
 import Listas from './pages/Listas';
 import ListasTransmissao from './pages/ListasTransmissao';
+import LocalizacaoAnexo from './pages/LocalizacaoAnexo';
 import LocalizacaoTempoReal from './pages/LocalizacaoTempoReal';
 import ManualBateria from './pages/ManualBateria';
 import ManualChips from './pages/ManualChips';
@@ -99,14 +115,18 @@ import ManualUsuario from './pages/ManualUsuario';
 import Mensagens from './pages/Mensagens';
 import MensagensTemporariasGuia from './pages/MensagensTemporariasGuia';
 import MenuConversaMais from './pages/MenuConversaMais';
+import MetaApps from './pages/MetaApps';
+import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
 import MidiaLinksDocsGuia from './pages/MidiaLinksDocsGuia';
 import MostreVibeAvatares from './pages/MostreVibeAvatares';
 import MudarNumero from './pages/MudarNumero';
 import Navegador from './pages/Navegador';
 import Notificacoes from './pages/Notificacoes';
 import NotificacoesSeguranca from './pages/NotificacoesSeguranca';
+import PagamentoAnexo from './pages/PagamentoAnexo';
 import PapelParedeGuia from './pages/PapelParedeGuia';
 import PedirDadosConta from './pages/PedirDadosConta';
+import PesquisaWhatsApp from './pages/PesquisaWhatsApp';
 import PesquisarConversaGuia from './pages/PesquisarConversaGuia';
 import PixPrivacidade from './pages/PixPrivacidade';
 import PlayStore from './pages/PlayStore';
@@ -124,6 +144,7 @@ import TamanhoTexto from './pages/TamanhoTexto';
 import TelaBloqueio from './pages/TelaBloqueio';
 import TelaInicial from './pages/TelaInicial';
 import Telefone from './pages/Telefone';
+import TelefoneConversaGuia from './pages/TelefoneConversaGuia';
 import TempoToque from './pages/TempoToque';
 import TikTok from './pages/TikTok';
 import TipoCorpo from './pages/TipoCorpo';
@@ -132,33 +153,18 @@ import UHQUpscaler from './pages/UHQUpscaler';
 import UsarChaveAcesso from './pages/UsarChaveAcesso';
 import UsarEfeitosCamera from './pages/UsarEfeitosCamera';
 import VerContatoGuia from './pages/VerContatoGuia';
+import VideoConversaGuia from './pages/VideoConversaGuia';
 import VistoUltimo from './pages/VistoUltimo';
 import VolumeControl from './pages/VolumeControl';
 import VolumeNotificacoes from './pages/VolumeNotificacoes';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
-import TelefoneConversaGuia from './pages/TelefoneConversaGuia';
-import VideoConversaGuia from './pages/VideoConversaGuia';
-import EmojiGuia from './pages/EmojiGuia';
-import ClipeAnexoGuia from './pages/ClipeAnexoGuia';
-import CameraConversaGuia from './pages/CameraConversaGuia';
-import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
-import IntroConversa from './pages/IntroConversa';
-import PesquisaWhatsApp from './pages/PesquisaWhatsApp';
-import AjudaWhatsApp from './pages/AjudaWhatsApp';
-import DocumentoAnexo from './pages/DocumentoAnexo';
-import GaleriaAnexo from './pages/GaleriaAnexo';
-import AudioAnexo from './pages/AudioAnexo';
-import LocalizacaoAnexo from './pages/LocalizacaoAnexo';
-import ContatoAnexo from './pages/ContatoAnexo';
-import EnqueteAnexo from './pages/EnqueteAnexo';
-import ListaAnexo from './pages/ListaAnexo';
-import PagamentoAnexo from './pages/PagamentoAnexo';
-import IdiomaApp from './pages/IdiomaApp';
-import AjudaAvaliacaoWhatsApp from './pages/AjudaAvaliacaoWhatsApp';
-import ConvidarAmigos from './pages/ConvidarAmigos';
-import AtualizacoesApp from './pages/AtualizacoesApp';
-import MetaApps from './pages/MetaApps';
+import OrganizarApps from './pages/OrganizarApps';
+import BarraNotificacoes from './pages/BarraNotificacoes';
+import ConfiguracoesRapidas from './pages/ConfiguracoesRapidas';
+import PesquisaCelular from './pages/PesquisaCelular';
+import WidgetsTela from './pages/WidgetsTela';
+import CapturarTela from './pages/CapturarTela';
 import __Layout from './Layout.jsx';
 
 
@@ -169,6 +175,8 @@ export const PAGES = {
     "AdicionarConta": AdicionarConta,
     "AdicionarContaNumero": AdicionarContaNumero,
     "AdicionarFavoritosGuia": AdicionarFavoritosGuia,
+    "AjudaAvaliacaoWhatsApp": AjudaAvaliacaoWhatsApp,
+    "AjudaWhatsApp": AjudaWhatsApp,
     "ApagarConta": ApagarConta,
     "AppCalculadora": AppCalculadora,
     "AppCalendar": AppCalendar,
@@ -197,7 +205,9 @@ export const PAGES = {
     "AppYouTube": AppYouTube,
     "ArmazenamentoDados": ArmazenamentoDados,
     "AtrasoToque": AtrasoToque,
+    "AtualizacoesApp": AtualizacoesApp,
     "AtualizacoesGuia": AtualizacoesGuia,
+    "AudioAnexo": AudioAnexo,
     "AudioDual": AudioDual,
     "AvatarInicial": AvatarInicial,
     "BloqueioApp": BloqueioApp,
@@ -206,6 +216,7 @@ export const PAGES = {
     "Calculadora": Calculadora,
     "Camera": Camera,
     "CameraConfig": CameraConfig,
+    "CameraConversaGuia": CameraConversaGuia,
     "CameraWhatsApp": CameraWhatsApp,
     "ChavesAcesso": ChavesAcesso,
     "CheckupAdicionePrivacidade": CheckupAdicionePrivacidade,
@@ -213,25 +224,31 @@ export const PAGES = {
     "CheckupDefinaQuem": CheckupDefinaQuem,
     "CheckupPrivacidade": CheckupPrivacidade,
     "CheckupProtecaoConta": CheckupProtecaoConta,
+    "ClipeAnexoGuia": ClipeAnexoGuia,
     "ComunidadesGuia": ComunidadesGuia,
     "Configuracoes": Configuracoes,
     "ConfiguracoesAvancadas": ConfiguracoesAvancadas,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
     "ConfirmacaoDuasEtapas": ConfirmacaoDuasEtapas,
     "ContaWhatsApp": ContaWhatsApp,
+    "ContatoAnexo": ContatoAnexo,
     "Contatos": Contatos,
     "ContatosPrivacidade": ContatosPrivacidade,
     "ContrasteElevado": ContrasteElevado,
     "Conversas": Conversas,
     "ConversasGuia": ConversasGuia,
     "ConversasTrancadas": ConversasTrancadas,
+    "ConvidarAmigos": ConvidarAmigos,
     "CriarAvatarOpcoes": CriarAvatarOpcoes,
+    "DocumentoAnexo": DocumentoAnexo,
     "DolbyAtmos": DolbyAtmos,
     "DolbyAtmosJogos": DolbyAtmosJogos,
     "DuracaoPadrao": DuracaoPadrao,
     "EditarCabelo": EditarCabelo,
     "EmergencyCall": EmergencyCall,
+    "EmojiGuia": EmojiGuia,
     "EnderecoEmail": EnderecoEmail,
+    "EnqueteAnexo": EnqueteAnexo,
     "Equalizador": Equalizador,
     "EscolherTomPele": EscolherTomPele,
     "Facebook": Facebook,
@@ -240,20 +257,25 @@ export const PAGES = {
     "FormatoRosto": FormatoRosto,
     "FotoPerfil": FotoPerfil,
     "Galeria": Galeria,
+    "GaleriaAnexo": GaleriaAnexo,
     "GerenciarApps": GerenciarApps,
     "GruposPrivacidade": GruposPrivacidade,
     "Home": Home,
+    "IdiomaApp": IdiomaApp,
     "InfoMedicas": InfoMedicas,
     "Inicio": Inicio,
     "Instagram": Instagram,
+    "IntroConversa": IntroConversa,
     "IntroWhatsApp": IntroWhatsApp,
     "Lanterna": Lanterna,
     "LegendasVideos": LegendasVideos,
     "LigacoesGuia": LigacoesGuia,
     "LigacoesPrivacidade": LigacoesPrivacidade,
     "LinksPrivacidade": LinksPrivacidade,
+    "ListaAnexo": ListaAnexo,
     "Listas": Listas,
     "ListasTransmissao": ListasTransmissao,
+    "LocalizacaoAnexo": LocalizacaoAnexo,
     "LocalizacaoTempoReal": LocalizacaoTempoReal,
     "ManualBateria": ManualBateria,
     "ManualChips": ManualChips,
@@ -264,14 +286,18 @@ export const PAGES = {
     "Mensagens": Mensagens,
     "MensagensTemporariasGuia": MensagensTemporariasGuia,
     "MenuConversaMais": MenuConversaMais,
+    "MetaApps": MetaApps,
+    "MicrofoneAudioGuia": MicrofoneAudioGuia,
     "MidiaLinksDocsGuia": MidiaLinksDocsGuia,
     "MostreVibeAvatares": MostreVibeAvatares,
     "MudarNumero": MudarNumero,
     "Navegador": Navegador,
     "Notificacoes": Notificacoes,
     "NotificacoesSeguranca": NotificacoesSeguranca,
+    "PagamentoAnexo": PagamentoAnexo,
     "PapelParedeGuia": PapelParedeGuia,
     "PedirDadosConta": PedirDadosConta,
+    "PesquisaWhatsApp": PesquisaWhatsApp,
     "PesquisarConversaGuia": PesquisarConversaGuia,
     "PixPrivacidade": PixPrivacidade,
     "PlayStore": PlayStore,
@@ -289,6 +315,7 @@ export const PAGES = {
     "TelaBloqueio": TelaBloqueio,
     "TelaInicial": TelaInicial,
     "Telefone": Telefone,
+    "TelefoneConversaGuia": TelefoneConversaGuia,
     "TempoToque": TempoToque,
     "TikTok": TikTok,
     "TipoCorpo": TipoCorpo,
@@ -297,33 +324,18 @@ export const PAGES = {
     "UsarChaveAcesso": UsarChaveAcesso,
     "UsarEfeitosCamera": UsarEfeitosCamera,
     "VerContatoGuia": VerContatoGuia,
+    "VideoConversaGuia": VideoConversaGuia,
     "VistoUltimo": VistoUltimo,
     "VolumeControl": VolumeControl,
     "VolumeNotificacoes": VolumeNotificacoes,
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
-    "TelefoneConversaGuia": TelefoneConversaGuia,
-    "VideoConversaGuia": VideoConversaGuia,
-    "EmojiGuia": EmojiGuia,
-    "ClipeAnexoGuia": ClipeAnexoGuia,
-    "CameraConversaGuia": CameraConversaGuia,
-    "MicrofoneAudioGuia": MicrofoneAudioGuia,
-    "IntroConversa": IntroConversa,
-    "PesquisaWhatsApp": PesquisaWhatsApp,
-    "AjudaWhatsApp": AjudaWhatsApp,
-    "DocumentoAnexo": DocumentoAnexo,
-    "GaleriaAnexo": GaleriaAnexo,
-    "AudioAnexo": AudioAnexo,
-    "LocalizacaoAnexo": LocalizacaoAnexo,
-    "ContatoAnexo": ContatoAnexo,
-    "EnqueteAnexo": EnqueteAnexo,
-    "ListaAnexo": ListaAnexo,
-    "PagamentoAnexo": PagamentoAnexo,
-    "IdiomaApp": IdiomaApp,
-    "AjudaAvaliacaoWhatsApp": AjudaAvaliacaoWhatsApp,
-    "ConvidarAmigos": ConvidarAmigos,
-    "AtualizacoesApp": AtualizacoesApp,
-    "MetaApps": MetaApps,
+    "OrganizarApps": OrganizarApps,
+    "BarraNotificacoes": BarraNotificacoes,
+    "ConfiguracoesRapidas": ConfiguracoesRapidas,
+    "PesquisaCelular": PesquisaCelular,
+    "WidgetsTela": WidgetsTela,
+    "CapturarTela": CapturarTela,
 }
 
 export const pagesConfig = {
