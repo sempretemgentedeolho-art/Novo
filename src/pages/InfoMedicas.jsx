@@ -230,15 +230,16 @@ export default function InfoMedicas() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Botão Salvar */}
-            <div className="p-4 border-t border-gray-200">
-              <Button onClick={handleSave} className="w-full bg-red-500 hover:bg-red-600 text-lg py-6">
-                Salvar Informações
-              </Button>
-            </div>
+          {/* Botão Salvar */}
+          <div className="p-4 border-t border-gray-200">
+            <Button onClick={handleSave} className="w-full bg-red-500 hover:bg-red-600 text-lg py-6">
+              Salvar Informações
+            </Button>
           </div>
         </div>
-      </PhoneFrame>
-    );
+      </div>
+    </PhoneFrame>
+  );
 }
