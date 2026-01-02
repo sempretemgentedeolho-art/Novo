@@ -165,6 +165,10 @@ import ConfiguracoesRapidas from './pages/ConfiguracoesRapidas';
 import PesquisaCelular from './pages/PesquisaCelular';
 import WidgetsTela from './pages/WidgetsTela';
 import CapturarTela from './pages/CapturarTela';
+import NavegacaoGestos from './pages/NavegacaoGestos';
+import TelaInicialPersonalizar from './pages/TelaInicialPersonalizar';
+import MultiJanelas from './pages/MultiJanelas';
+import GavetaApps from './pages/GavetaApps';
 import __Layout from './Layout.jsx';
 
 
@@ -336,6 +340,10 @@ export const PAGES = {
     "PesquisaCelular": PesquisaCelular,
     "WidgetsTela": WidgetsTela,
     "CapturarTela": CapturarTela,
+    "NavegacaoGestos": NavegacaoGestos,
+    "TelaInicialPersonalizar": TelaInicialPersonalizar,
+    "MultiJanelas": MultiJanelas,
+    "GavetaApps": GavetaApps,
 }
 
 export const pagesConfig = {
