@@ -32,6 +32,7 @@ import AppTikTok from './pages/AppTikTok';
 import AppWeather from './pages/AppWeather';
 import AppWhatsApp from './pages/AppWhatsApp';
 import AppYouTube from './pages/AppYouTube';
+import ArmazenamentoConfig from './pages/ArmazenamentoConfig';
 import ArmazenamentoDados from './pages/ArmazenamentoDados';
 import AtrasoToque from './pages/AtrasoToque';
 import AtualizacoesApp from './pages/AtualizacoesApp';
@@ -41,6 +42,7 @@ import AudioDual from './pages/AudioDual';
 import AvatarInicial from './pages/AvatarInicial';
 import BarraNotificacoes from './pages/BarraNotificacoes';
 import BloqueioApp from './pages/BloqueioApp';
+import BloqueioTela from './pages/BloqueioTela';
 import BluetoothConfig from './pages/BluetoothConfig';
 import BotaoMaisGuia from './pages/BotaoMaisGuia';
 import Calculadora from './pages/Calculadora';
@@ -63,6 +65,7 @@ import ConfiguracoesRapidas from './pages/ConfiguracoesRapidas';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import ConfirmacaoDuasEtapas from './pages/ConfirmacaoDuasEtapas';
 import ContaWhatsApp from './pages/ContaWhatsApp';
+import ContasConfig from './pages/ContasConfig';
 import ContatoAnexo from './pages/ContatoAnexo';
 import Contatos from './pages/Contatos';
 import ContatosPrivacidade from './pages/ContatosPrivacidade';
@@ -122,6 +125,7 @@ import MenuConversaMais from './pages/MenuConversaMais';
 import MetaApps from './pages/MetaApps';
 import MicrofoneAudioGuia from './pages/MicrofoneAudioGuia';
 import MidiaLinksDocsGuia from './pages/MidiaLinksDocsGuia';
+import ModoNoturno from './pages/ModoNoturno';
 import MostreVibeAvatares from './pages/MostreVibeAvatares';
 import MudarNumero from './pages/MudarNumero';
 import MultiJanelas from './pages/MultiJanelas';
@@ -145,11 +149,13 @@ import ReduzirAnimacoes from './pages/ReduzirAnimacoes';
 import Relogio from './pages/Relogio';
 import Seguranca from './pages/Seguranca';
 import SilenciarNotificacoesGuia from './pages/SilenciarNotificacoesGuia';
+import SobreDispositivo from './pages/SobreDispositivo';
 import SomAplicativoSeparado from './pages/SomAplicativoSeparado';
 import StatusPrivacidade from './pages/StatusPrivacidade';
 import TalkBack from './pages/TalkBack';
 import TamanhoTexto from './pages/TamanhoTexto';
 import TelaBloqueio from './pages/TelaBloqueio';
+import TelaConfig from './pages/TelaConfig';
 import TelaInicial from './pages/TelaInicial';
 import TelaInicialPersonalizar from './pages/TelaInicialPersonalizar';
 import Telefone from './pages/Telefone';
@@ -169,12 +175,6 @@ import VolumeNotificacoes from './pages/VolumeNotificacoes';
 import WhatsApp from './pages/WhatsApp';
 import WiFiConfig from './pages/WiFiConfig';
 import WidgetsTela from './pages/WidgetsTela';
-import ModoNoturno from './pages/ModoNoturno';
-import TelaConfig from './pages/TelaConfig';
-import BloqueioTela from './pages/BloqueioTela';
-import ArmazenamentoConfig from './pages/ArmazenamentoConfig';
-import ContasConfig from './pages/ContasConfig';
-import SobreDispositivo from './pages/SobreDispositivo';
 import __Layout from './Layout.jsx';
 
 
@@ -213,6 +213,7 @@ export const PAGES = {
     "AppWeather": AppWeather,
     "AppWhatsApp": AppWhatsApp,
     "AppYouTube": AppYouTube,
+    "ArmazenamentoConfig": ArmazenamentoConfig,
     "ArmazenamentoDados": ArmazenamentoDados,
     "AtrasoToque": AtrasoToque,
     "AtualizacoesApp": AtualizacoesApp,
@@ -222,6 +223,7 @@ export const PAGES = {
     "AvatarInicial": AvatarInicial,
     "BarraNotificacoes": BarraNotificacoes,
     "BloqueioApp": BloqueioApp,
+    "BloqueioTela": BloqueioTela,
     "BluetoothConfig": BluetoothConfig,
     "BotaoMaisGuia": BotaoMaisGuia,
     "Calculadora": Calculadora,
@@ -244,6 +246,7 @@ export const PAGES = {
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
     "ConfirmacaoDuasEtapas": ConfirmacaoDuasEtapas,
     "ContaWhatsApp": ContaWhatsApp,
+    "ContasConfig": ContasConfig,
     "ContatoAnexo": ContatoAnexo,
     "Contatos": Contatos,
     "ContatosPrivacidade": ContatosPrivacidade,
@@ -303,6 +306,7 @@ export const PAGES = {
     "MetaApps": MetaApps,
     "MicrofoneAudioGuia": MicrofoneAudioGuia,
     "MidiaLinksDocsGuia": MidiaLinksDocsGuia,
+    "ModoNoturno": ModoNoturno,
     "MostreVibeAvatares": MostreVibeAvatares,
     "MudarNumero": MudarNumero,
     "MultiJanelas": MultiJanelas,
@@ -326,11 +330,13 @@ export const PAGES = {
     "Relogio": Relogio,
     "Seguranca": Seguranca,
     "SilenciarNotificacoesGuia": SilenciarNotificacoesGuia,
+    "SobreDispositivo": SobreDispositivo,
     "SomAplicativoSeparado": SomAplicativoSeparado,
     "StatusPrivacidade": StatusPrivacidade,
     "TalkBack": TalkBack,
     "TamanhoTexto": TamanhoTexto,
     "TelaBloqueio": TelaBloqueio,
+    "TelaConfig": TelaConfig,
     "TelaInicial": TelaInicial,
     "TelaInicialPersonalizar": TelaInicialPersonalizar,
     "Telefone": Telefone,
@@ -350,12 +356,6 @@ export const PAGES = {
     "WhatsApp": WhatsApp,
     "WiFiConfig": WiFiConfig,
     "WidgetsTela": WidgetsTela,
-    "ModoNoturno": ModoNoturno,
-    "TelaConfig": TelaConfig,
-    "BloqueioTela": BloqueioTela,
-    "ArmazenamentoConfig": ArmazenamentoConfig,
-    "ContasConfig": ContasConfig,
-    "SobreDispositivo": SobreDispositivo,
 }
 
 export const pagesConfig = {

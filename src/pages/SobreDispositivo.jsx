@@ -49,8 +49,7 @@ export default function SobreDispositivo() {
           {/* Imagem do celular */}
           <div className="p-6 flex flex-col items-center border-b border-gray-200">
             <Smartphone className="w-24 h-24 text-gray-400 mb-3" />
-            <h3 className="text-xl font-semibold text-gray-900">Samsung Galaxy A54</h3>
-            <p className="text-sm text-gray-600">Forja da Consciência</p>
+            <h3 className="text-xl font-semibold text-gray-900">Meu Aparelho</h3>
           </div>
 
           {/* Informações principais */}
@@ -91,8 +90,7 @@ export default function SobreDispositivo() {
                   <Smartphone className="w-5 h-5 text-gray-600" />
                   <h4 className="font-medium text-gray-900">Modelo</h4>
                 </div>
-                <p className="text-sm text-gray-700">Samsung Galaxy A54 5G</p>
-                <p className="text-xs text-gray-500">SM-A546B</p>
+                <p className="text-sm text-gray-700">Smartphone Android</p>
               </div>
 
               <div className="p-4 bg-gray-50 rounded-lg">
@@ -101,7 +99,6 @@ export default function SobreDispositivo() {
                   <h4 className="font-medium text-gray-900">Versão do Android</h4>
                 </div>
                 <p className="text-sm text-gray-700">Android 14</p>
-                <p className="text-xs text-gray-500">One UI 6.0</p>
               </div>
 
               <div className="p-4 bg-gray-50 rounded-lg">
