@@ -21,17 +21,16 @@ export default function Layout({ children, currentPageName }) {
       meta.content = content;
     });
 
-    // Registrar Service Worker quando disponível
+    // Registrar Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js').catch(() => {
-        // Silencioso - será configurado pelo Base44
+        console.log('Service worker não disponível');
       });
     }
   }, []);
 
   return (
     <>
-      
       <div className="app-container">
         {children}
       </div>
