@@ -37,10 +37,9 @@ if not exist "src" (
 
 :: Criar pasta functions se não existir
 if not exist "src\functions" mkdir "src\functions"
-if not exist "public" mkdir "public"
 
 :: Criar sistema de localStorage
-echo [1/6] Criando sistema de banco local...
+echo [1/5] Criando sistema de banco local...
 (
 echo // Sistema de "banco de dados" local usando localStorage
 echo export const localDb = {
@@ -101,37 +100,8 @@ echo };
 
 echo ✓ Sistema criado!
 
-:: Criar manifest.json e ícones
-echo [2/6] Criando manifest PWA e ícones...
-(
-echo {
-echo   "name": "Manual WhatsApp - Forja da Consciência",
-echo   "short_name": "Manual WhatsApp",
-echo   "description": "Guia completo para usar WhatsApp",
-echo   "start_url": "/",
-echo   "display": "standalone",
-echo   "background_color": "#ffffff",
-echo   "theme_color": "#0EA5E9",
-echo   "orientation": "portrait",
-echo   "icons": [
-echo     {
-echo       "src": "/icon-192.png",
-echo       "sizes": "192x192",
-echo       "type": "image/png"
-echo     },
-echo     {
-echo       "src": "/icon-512.png",
-echo       "sizes": "512x512",
-echo       "type": "image/png"
-echo     }
-echo   ]
-echo }
-) > public\manifest.json
-
-echo ✓ Manifest criado!
-
 :: Limpar imports do Base44
-echo [3/6] Removendo imports do Base44...
+echo [2/5] Removendo imports do Base44...
 if exist "src\pages" (
     for /r src\pages %%f in (*.js *.jsx) do (
         powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""];?\s*', ''; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline" 2>nul
@@ -147,7 +117,7 @@ if exist "src\components" (
 )
 
 :: Adicionar import do mock
-echo [4/6] Adicionando sistema local...
+echo [3/5] Adicionando sistema local...
 if exist "src\pages" (
     for /r src\pages %%f in (*.js *.jsx) do (
         powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; if ($content -match 'base44') { if ($content -notmatch 'localStorageDb') { $content = 'import { mockBase44 as base44 } from ''../functions/localStorageDb'';`n' + $content; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline } }" 2>nul
@@ -163,12 +133,12 @@ if exist "src\components" (
 )
 
 :: Instalar dependências
-echo [5/6] Instalando dependências...
+echo [4/5] Instalando dependências...
 call npm install >nul 2>&1
 echo ✓ Dependências instaladas!
 
 :: Build
-echo [6/6] Compilando aplicativo...
+echo [5/5] Compilando aplicativo...
 call npm run build
 
 if exist "dist\index.html" (
@@ -177,12 +147,9 @@ if exist "dist\index.html" (
     echo ✅ CONVERSÃO CONCLUÍDA COM SUCESSO!
     echo ========================================
     echo.
-    echo 📁 Arquivos criados:
-    echo    - dist\index.html
-    echo    - dist\manifest.json
-    echo    - dist\assets\*
+    echo 📁 Arquivo criado: dist\index.html
+    echo 🌐 Abra no navegador para testar
     echo.
-    echo 🌐 Abra dist\index.html no navegador
     echo 📦 Para distribuir: copie toda a pasta "dist"
     echo.
 ) else (
