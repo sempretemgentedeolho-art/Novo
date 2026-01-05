@@ -4,14 +4,20 @@
 
 📋 PASSO A PASSO:
 
-1. COPIE o arquivo "converter-standalone.bat" para a pasta raiz 
-   do projeto que você quer converter (junto com package.json)
+1. LOCALIZE a pasta RAIZ do projeto
+   ➜ É a pasta onde está o arquivo "package.json"
+   ➜ Geralmente tem as pastas: src, node_modules, dist
+   
+   ❌ ERRADO: G:\ebooks\Prontos para a VPS\
+   ✅ CERTO:   G:\ebooks\Prontos para a VPS\meu_projeto\
 
-2. CLIQUE DUAS VEZES no arquivo "converter-standalone.bat"
+2. COPIE o arquivo "converter-standalone.bat" para essa pasta raiz
 
-3. AGUARDE a conversão (pode demorar alguns minutos)
+3. CLIQUE DUAS VEZES no arquivo "converter-standalone.bat"
 
-4. ABRA o arquivo "dist/index.html" no navegador
+4. AGUARDE a conversão (pode demorar 2-5 minutos)
+
+5. ABRA o arquivo "dist/index.html" no navegador
 
 ═══════════════════════════════════════════════════════════
 
@@ -25,31 +31,44 @@
 
 ⚠️ IMPORTANTE:
 
+- Copie o conversor para a PASTA RAIZ (onde tem package.json)
 - Você precisa ter Node.js instalado
-- O script remove todas as conexões com Base44
 - O app funcionará 100% offline
-- Dados serão salvos no navegador (localStorage)
+- Dados salvos no navegador (localStorage)
 
 ═══════════════════════════════════════════════════════════
 
-❓ PROBLEMAS?
+❓ SE DER ERRO "package.json não encontrado":
 
-Se der erro, tente:
+Você não está na pasta raiz! Procure a pasta que contém:
+- package.json
+- pasta "src" 
+- pasta "node_modules"
 
-1. Abrir o PowerShell como Administrador
-2. Navegar até a pasta do projeto:
-   cd "caminho\da\pasta"
-3. Executar manualmente:
-   .\converter-standalone.bat
+Copie o conversor para ESSA pasta.
 
 ═══════════════════════════════════════════════════════════
 
-📁 ONDE ESTÃO OS ARQUIVOS FINAIS?
+❓ SE DER ERRO NA COMPILAÇÃO:
 
-Após a conversão, os arquivos prontos ficam em:
-- dist/index.html (abra este no navegador)
-- dist/assets/ (arquivos do sistema)
+Abra o PowerShell na pasta raiz e rode:
+   npm install
+   npm run build
 
-Você pode copiar toda a pasta "dist" para onde quiser!
+Se funcionar, o arquivo estará em: dist\index.html
+
+═══════════════════════════════════════════════════════════
+
+📁 ESTRUTURA CORRETA:
+
+meu_projeto\                    ← Pasta raiz (cole aqui!)
+├── converter-standalone.bat    ← Arquivo do conversor
+├── package.json               
+├── src\
+│   ├── pages\
+│   ├── components\
+│   └── functions\
+├── node_modules\
+└── dist\                       ← Resultado final
 
 ═══════════════════════════════════════════════════════════
