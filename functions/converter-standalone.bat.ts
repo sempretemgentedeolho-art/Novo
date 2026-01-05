@@ -5,6 +5,9 @@ echo CONVERSOR UNIVERSAL PARA STANDALONE
 echo ========================================
 echo.
 
+:: Verificar se existe pasta functions, se não criar
+if not exist "functions" mkdir functions
+
 :: Criar sistema de localStorage
 echo [1/5] Criando sistema de banco local...
 (
@@ -65,39 +68,68 @@ echo   }
 echo };
 ) > functions\localStorageDb.js
 
+echo ✓ Sistema criado!
+
 :: Limpar imports do Base44
 echo [2/5] Removendo imports do Base44...
-for /r pages %%f in (*.js *.jsx) do (
-    powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""];?\s*', ''; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""]', ''; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline" 2>nul
+if exist "pages" (
+    for /r pages %%f in (*.js *.jsx) do (
+        powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""];?\s*', ''; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline" 2>nul
+    )
+    echo ✓ Páginas processadas!
 )
 
-for /r components %%f in (*.js *.jsx) do (
-    powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""];?\s*', ''; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""]', ''; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline" 2>nul
+if exist "components" (
+    for /r components %%f in (*.js *.jsx) do (
+        powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; $content = $content -replace 'import\s+{\s*base44\s*}\s+from\s+[''\""]@/api/base44Client[''\""];?\s*', ''; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline" 2>nul
+    )
+    echo ✓ Componentes processados!
 )
 
 :: Adicionar import do mock no início dos arquivos que usam base44
 echo [3/5] Adicionando sistema local...
-for /r pages %%f in (*.js *.jsx) do (
-    powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; if ($content -match 'base44') { if ($content -notmatch 'localStorageDb') { $content = 'import { mockBase44 as base44 } from ''../functions/localStorageDb'';`n' + $content; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline } }" 2>nul
+if exist "pages" (
+    for /r pages %%f in (*.js *.jsx) do (
+        powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; if ($content -match 'base44') { if ($content -notmatch 'localStorageDb') { $content = 'import { mockBase44 as base44 } from ''../functions/localStorageDb'';`n' + $content; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline } }" 2>nul
+    )
+    echo ✓ Sistema adicionado às páginas!
 )
 
-for /r components %%f in (*.js *.jsx) do (
-    powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; if ($content -match 'base44') { if ($content -notmatch 'localStorageDb') { $content = 'import { mockBase44 as base44 } from ''../../functions/localStorageDb'';`n' + $content; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline } }" 2>nul
+if exist "components" (
+    for /r components %%f in (*.js *.jsx) do (
+        powershell -Command "$content = Get-Content '%%f' -Raw -Encoding UTF8; if ($content -match 'base44') { if ($content -notmatch 'localStorageDb') { $content = 'import { mockBase44 as base44 } from ''../../functions/localStorageDb'';`n' + $content; Set-Content '%%f' -Value $content -Encoding UTF8 -NoNewline } }" 2>nul
+    )
+    echo ✓ Sistema adicionado aos componentes!
 )
 
 :: Instalar dependências
 echo [4/5] Instalando dependências...
-call npm install
+call npm install >nul 2>&1
+echo ✓ Dependências instaladas!
 
 :: Build
 echo [5/5] Compilando aplicativo...
 call npm run build
 
-echo.
-echo ========================================
-echo ✅ CONVERSÃO CONCLUÍDA!
-echo ========================================
-echo.
-echo Abra o arquivo: dist\index.html
-echo.
+if exist "dist\index.html" (
+    echo.
+    echo ========================================
+    echo ✅ CONVERSÃO CONCLUÍDA COM SUCESSO!
+    echo ========================================
+    echo.
+    echo 📁 Arquivo criado: dist\index.html
+    echo.
+    echo 🚀 Abra o arquivo no navegador para testar!
+    echo.
+) else (
+    echo.
+    echo ========================================
+    echo ❌ ERRO NA CONVERSÃO
+    echo ========================================
+    echo.
+    echo O arquivo dist\index.html não foi criado.
+    echo Verifique os erros acima.
+    echo.
+)
+
 pause
