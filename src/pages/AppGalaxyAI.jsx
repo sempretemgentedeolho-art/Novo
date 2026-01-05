@@ -13,7 +13,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { base44 } from '@/api/base44Client';
 
 const aiFeatures = [
   {
@@ -71,16 +70,10 @@ export default function AppGalaxyAI() {
     if (!prompt.trim()) return;
     
     setLoading(true);
-    try {
-      const response = await base44.integrations.Core.InvokeLLM({
-        prompt: prompt,
-        add_context_from_internet: false
-      });
-      setResult(response);
-    } catch (error) {
-      setResult('Erro ao processar. Tente novamente.');
-    }
-    setLoading(false);
+    setTimeout(() => {
+      setResult(`Recurso Galaxy IA: ${selectedFeature.title}\n\nEsta é uma versão demonstrativa. Em um dispositivo real, a IA processaria: "${prompt}"`);
+      setLoading(false);
+    }, 2000);
   };
 
   return (
