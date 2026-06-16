@@ -1,0 +1,9 @@
+{
+  "name": "Celular Interativo Forja da Consci\u00eancia Companion",
+  "site": {
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "serveCommand": "npm run dev",
+    "outputDirectory": "./dist"
+  }
+}
