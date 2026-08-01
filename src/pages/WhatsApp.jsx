@@ -16,8 +16,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const initialChats = [
   { 
     id: 1, 
-    name: "Vôlei da Galera", 
-    message: "Sandro: 🟢 Figurinha", 
+    name: "Grupo da Família",
+    message: "Roberto: 🟢 Figurinha",
     time: "29/01/2025", 
     unread: 3,
     avatar: "🏐",
@@ -29,7 +29,7 @@ const initialChats = [
   },
   { 
     id: 2, 
-    name: "Vôlei Operário",
+    name: "Turma do Trabalho",
     message: "Carlos: Blzz",
     time: "28/01/2025", 
     unread: 1,
@@ -59,8 +59,8 @@ const initialChats = [
   },
   { 
     id: 5, 
-    name: "Sebrae Apoia", 
-    message: "Olá! 😊 Tudo bem? Não esqueça que hoje...", 
+    name: "Dona Marta",
+    message: "Olá! 😊 Tudo bem? Não esqueça que hoje...",
     time: "20/01/2025", 
     unread: 2,
     avatar: "🏢",
@@ -77,8 +77,8 @@ const initialChats = [
   },
   { 
     id: 7, 
-    name: "Sebrae Facilita", 
-    message: "👏 Olá! Precificar corretamente é esser", 
+    name: "Seu Antônio",
+    message: "👏 Olá! Tudo certo para o encontro",
     time: "16/01/2025", 
     unread: 0,
     avatar: "🏢",
