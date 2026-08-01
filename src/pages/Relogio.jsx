@@ -217,27 +217,7 @@ export default function Relogio() {
           <h1 className="text-2xl font-bold">Relógio</h1>
         </div>
 
-        {/* Tutorial de Uso */}
-        <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 m-4">
-          <p className="text-sm text-indigo-900 mb-3">
-            💊 <strong>📖 VAMOS APRENDER: Como agendar alarmes para medicamentos</strong>
-          </p>
-          <ol className="text-sm text-indigo-800 space-y-2 ml-4">
-            <li>1️⃣ <strong>Clique no sinal de MAIS (+)</strong> à sua direita no topo da tela</li>
-            <li>2️⃣ Escolha um horário sugerido ou coloque o horário que você quer</li>
-            <li>3️⃣ Escreva o nome do remédio (ex: "Remédio da pressão")</li>
-            <li>4️⃣ <strong>Clique nos dias da semana:</strong> Os dias que ficarem AZUIS são os dias que o alarme vai despertar! Se não quiser algum dia, clique nele para tirar.</li>
-            <li>5️⃣ Clique em <strong>"Criar Alarme"</strong> no fim da tela</li>
-          </ol>
-          <p className="text-sm text-indigo-900 mt-3">
-            📅 <strong>Para consultas médicas:</strong> Crie um alarme no dia e horário da consulta com o nome do médico!
-          </p>
-          <p className="text-xs text-indigo-700 mt-2">
-            💡 Dica: Para desligar um alarme, clique no botãozinho branco ao lado do horário. Ele fica cinza quando desligado.
-          </p>
-        </div>
-
-        <Tabs defaultValue="relogio" className="flex-1 flex flex-col">
+        <Tabs defaultValue="relogio" className="flex-1 flex flex-col min-h-0">
           <TabsList className="w-full grid grid-cols-4 bg-gray-100 rounded-none h-12">
             <TabsTrigger value="relogio">Relógio</TabsTrigger>
             <TabsTrigger value="alarme">Alarmes</TabsTrigger>
@@ -307,6 +287,25 @@ export default function Relogio() {
 
           {/* Alarmes */}
           <TabsContent value="alarme" className="flex-1 overflow-y-auto p-4">
+            {/* Tutorial de Uso */}
+            <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-4">
+              <p className="text-sm text-indigo-900 mb-3">
+                💊 <strong>📖 VAMOS APRENDER: Como agendar alarmes para medicamentos</strong>
+              </p>
+              <ol className="text-sm text-indigo-800 space-y-2 ml-4">
+                <li>1️⃣ <strong>Clique no sinal de MAIS (+)</strong> à sua direita no topo da tela</li>
+                <li>2️⃣ Escolha um horário sugerido ou coloque o horário que você quer</li>
+                <li>3️⃣ Escreva o nome do remédio (ex: "Remédio da pressão")</li>
+                <li>4️⃣ <strong>Clique nos dias da semana:</strong> Os dias que ficarem AZUIS são os dias que o alarme vai despertar! Se não quiser algum dia, clique nele para tirar.</li>
+                <li>5️⃣ Clique em <strong>"Criar Alarme"</strong> no fim da tela</li>
+              </ol>
+              <p className="text-sm text-indigo-900 mt-3">
+                📅 <strong>Para consultas médicas:</strong> Crie um alarme no dia e horário da consulta com o nome do médico!
+              </p>
+              <p className="text-xs text-indigo-700 mt-2">
+                💡 Dica: Para desligar um alarme, clique no botãozinho branco ao lado do horário. Ele fica cinza quando desligado.
+              </p>
+            </div>
             {alarms.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
                 <Bell className="w-16 h-16 mx-auto mb-4 opacity-30" />
@@ -374,7 +373,7 @@ export default function Relogio() {
           </TabsContent>
 
           {/* Cronômetro */}
-          <TabsContent value="cronometro" className="flex-1 flex flex-col p-6">
+          <TabsContent value="cronometro" className="flex-1 flex flex-col p-6 min-h-0 overflow-hidden">
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="text-7xl font-light text-gray-900 mb-12">
                 {formatStopwatchTime(stopwatchTime)}
@@ -424,7 +423,7 @@ export default function Relogio() {
           </TabsContent>
 
           {/* Timer */}
-          <TabsContent value="timer" className="flex-1 flex flex-col p-6">
+          <TabsContent value="timer" className="flex-1 flex flex-col p-6 min-h-0 overflow-hidden">
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="text-7xl font-light text-gray-900 mb-12">
                 {timerMinutes.toString().padStart(2, '0')}:{timerSeconds.toString().padStart(2, '0')}
