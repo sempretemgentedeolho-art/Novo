@@ -612,12 +612,170 @@ export default function GerarDocumentacao() {
       y += 6;
     });
 
+    // ===== PLATAFORMA DE DESENVOLVIMENTO BASE44 =====
+    pdf.addPage();
+    pdf.setFontSize(20);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text("7. Plataforma de Desenvolvimento Base44", margin, 30);
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.text(
+      "Este aplicativo foi desenvolvido na plataforma Base44 (base44.com),",
+      margin,
+      45
+    );
+    pdf.text(
+      "um backend-as-a-service que fornece autenticação, banco de dados,",
+      margin,
+      52
+    );
+    pdf.text(
+      "integrações, hospedagem e deploy para iOS/Android a partir do",
+      margin,
+      59
+    );
+    pdf.text("mesmo código-fonte.", margin, 66);
+
+    pdf.setFontSize(14);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(14, 165, 233);
+    pdf.text("Painel de Controle da Plataforma", margin, 80);
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text(
+      "O painel de controle do Base44 contém as seguintes seções que",
+      margin,
+      90
+    );
+    pdf.text("gerenciam todos os aspectos do aplicativo:", margin, 97);
+
+    const base44Sections = [
+      {
+        name: "Visão geral",
+        desc: "Dashboard principal com métricas do aplicativo, status de deploy, número de usuários, créditos consumidos e resumo geral do projeto.",
+      },
+      {
+        name: "Usuários",
+        desc: "Gerenciamento de usuários do aplicativo. Permite convidar usuários (inviteUser), definir papéis (admin/user), visualizar usuários registrados e controlar acesso ao app.",
+      },
+      {
+        name: "Dados",
+        desc: "Gerenciamento de entidades (database schema). Define a estrutura de dados do aplicativo via arquivos JSON em base44/entities/. Inclui criação, edição e visualização de registros.",
+      },
+      {
+        name: "Análises",
+        desc: "Analytics do aplicativo. Rastreia eventos personalizados via base44.analytics.track(), métricas de uso, engajamento de usuários e estatísticas de acesso.",
+      },
+      {
+        name: "Marketing",
+        desc: "Ferramentas de marketing: SEO, meta tags, Open Graph, configuração de domínios personalizados e otimização para motores de busca.",
+      },
+      {
+        name: "Domínios",
+        desc: "Configuração de domínios personalizados. Permite publicar o aplicativo em domínios próprios, configurar SSL/HTTPS e gerenciar subdomínios.",
+      },
+      {
+        name: "Integrações",
+        desc: "Conectores OAuth para serviços externos: Google Calendar, Gmail, Slack, GitHub, Notion, Salesforce, HubSpot, Instagram, TikTok e mais de 80 outros serviços.",
+      },
+      {
+        name: "Segurança",
+        desc: "Configuração de segurança: Row-Level Security (RLS) por entidade, autenticação, papéis de usuário (admin/user), controle de acesso e proteção de dados.",
+      },
+      {
+        name: "Código",
+        desc: "Editor de código-fonte do aplicativo. Acesso aos arquivos do projeto: páginas (src/pages/), componentes (src/components/), funções backend (base44/functions/), entidades (base44/entities/), agentes (base44/agents/) e fluxos de trabalho (base44/workflows/).",
+      },
+      {
+        name: "Agentes",
+        desc: "Agentes de IA in-app configuráveis. Agentes suportam WhatsApp/Telegram, acesso a entidades, funções backend e fluxos de trabalho. Configurados via arquivos JSON em base44/agents/.",
+      },
+      {
+        name: "Fluxos de trabalho",
+        desc: "Automações trigger-driven: agendadas (cron), baseadas em eventos de entidade, webhooks de conectores, auth de usuários e publicação. Definidos em base44/workflows/ no formato CNCF SWF v1.0.",
+      },
+      {
+        name: "Logs",
+        desc: "Logs de execução do aplicativo: logs de funções backend, execuções de fluxos de trabalho, erros de API, eventos de autenticação e histórico de deploys.",
+      },
+      {
+        name: "API",
+        desc: "Configuração de API: chaves de API, webhooks, endpoints REST, SDK do Base44 (base44Client.js) e documentação de integração. O SDK é pré-inicializado em src/api/base44Client.js.",
+      },
+      {
+        name: "Configurações",
+        desc: "Configurações gerais do aplicativo: nome, descrição, ícone, tema, modo público/privado, configurações de publicação (iOS/Android) e preferências do projeto.",
+      },
+    ];
+
+    y = 107;
+    base44Sections.forEach((sec) => {
+      if (y > pageHeight - 25) {
+        pdf.addPage();
+        y = 20;
+      }
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(11);
+      pdf.setTextColor(14, 165, 233);
+      pdf.text(`▸ ${sec.name}`, margin, y);
+      y += 6;
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      pdf.setTextColor(50, 50, 50);
+      const descLines = pdf.splitTextToSize(sec.desc, pageWidth - margin * 2);
+      descLines.forEach((line) => {
+        if (y > pageHeight - 15) {
+          pdf.addPage();
+          y = 20;
+        }
+        pdf.text(line, margin + 4, y);
+        y += 5;
+      });
+      y += 3;
+    });
+
+    // Configuração do Base44 no projeto
+    if (y > pageHeight - 30) {
+      pdf.addPage();
+      y = 20;
+    }
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(12);
+    pdf.setTextColor(20, 20, 20);
+    pdf.text("Arquivo de Configuração da Plataforma", margin, y + 5);
+    y += 12;
+    pdf.setFont("courier", "normal");
+    pdf.setFontSize(8);
+    pdf.setTextColor(40, 40, 40);
+    const configContent = getFileContent("/base44/config.jsonc");
+    if (configContent) {
+      const configLines = String(configContent).split("\n");
+      configLines.forEach((line) => {
+        if (y > pageHeight - 15) {
+          pdf.addPage();
+          y = 20;
+          pdf.setFont("courier", "normal");
+          pdf.setFontSize(8);
+          pdf.setTextColor(40, 40, 40);
+        }
+        const wrapped = pdf.splitTextToSize(line, pageWidth - margin * 2);
+        wrapped.forEach((w) => {
+          pdf.text(w, margin, y);
+          y += 4;
+        });
+      });
+    }
+
     // ===== ESTRUTURA DE ARQUIVOS DO REPOSITÓRIO =====
     pdf.addPage();
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("7. Estrutura Completa do Repositório", margin, 30);
+    pdf.text("8. Estrutura Completa do Repositório", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -679,7 +837,7 @@ export default function GerarDocumentacao() {
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("8. Verificação de Arquivos Críticos", margin, 30);
+    pdf.text("9. Verificação de Arquivos Críticos", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -747,7 +905,7 @@ export default function GerarDocumentacao() {
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("9. Código-Fonte Completo do Projeto", margin, 30);
+    pdf.text("10. Código-Fonte Completo do Projeto", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -820,7 +978,7 @@ export default function GerarDocumentacao() {
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("10. Declaração de Integridade Documental", margin, 30);
+    pdf.text("11. Declaração de Integridade Documental", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -830,6 +988,7 @@ export default function GerarDocumentacao() {
       "",
       `• ${SCREENS.length} telas documentadas com prints e descrições técnicas`,
       `• ${allPaths.length} arquivos de código-fonte integral (HTML, JS, JSX, TS, CSS, JSON, SVG, MD)`,
+      "• Documentação completa do painel de controle da plataforma Base44",
       "• Inclui configuração do projeto, PWA, service worker e manifest",
       "• Estrutura completa do repositório",
       "• Arquitetura técnica detalhada",
@@ -838,7 +997,7 @@ export default function GerarDocumentacao() {
       "",
       "Todos os arquivos que compõem o projeto estão documentados",
       "integralmente neste PDF, sem omissões. O código-fonte de cada",
-      "arquivo está reproduzido na íntegra nas seções 9 e 10.",
+      "arquivo está reproduzido na íntegra nas seções 10 e 11.",
       "",
       "Esta documentação atende aos requisitos de depósito de",
       "propriedade intelectual junto ao INPI (Instituto Nacional da",
