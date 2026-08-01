@@ -79,6 +79,7 @@ export default function Telefone() {
   const navigate = useNavigate();
   const [number, setNumber] = useState("");
   const [stepIndex, setStepIndex] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [showBlockDialog, setShowBlockDialog] = useState(false);
   const [blockNumber, setBlockNumber] = useState("");
   const [blockedNumbers, setBlockedNumbers] = useState([
@@ -149,6 +150,7 @@ export default function Telefone() {
 
   const handleMenu = () => {
     if (currentStep.target !== "menu") return;
+    setMenuOpen(true);
     goNext();
   };
 
@@ -158,6 +160,7 @@ export default function Telefone() {
   };
 
   const handleBlockNumber = () => {
+    setMenuOpen(false);
     speak(
       "Bloquear Números. Aqui você pode bloquear números de telefone indesejados, como vendedores chatos ou golpistas. Números bloqueados não conseguem mais te ligar. Digite o número que você quer bloquear."
     );
@@ -235,7 +238,7 @@ export default function Telefone() {
                   className="absolute -inset-1 rounded-full bg-yellow-400 z-0 pointer-events-none"
                 />
               )}
-              <DropdownMenu>
+              <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
                 <DropdownMenuTrigger asChild>
                   <motion.button
                     animate={currentStep.target === "menu" ? { scale: [1, 1.12, 1] } : {}}
@@ -251,11 +254,11 @@ export default function Telefone() {
                     <Ban className="w-4 h-4 mr-2" />
                     Bloquear números
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => alert("Histórico de chamadas")}>
+                  <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Histórico de chamadas"); }}>
                     <Clock className="w-4 h-4 mr-2" />
                     Histórico
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => alert("Configurações")}>
+                  <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Configurações"); }}>
                     <Settings className="w-4 h-4 mr-2" />
                     Configurações
                   </DropdownMenuItem>
