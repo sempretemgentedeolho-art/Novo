@@ -171,7 +171,7 @@ export default function Home() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Tela inicial. Escolha o aplicativo que deseja abrir. Deslize do topo para baixo para ver notificações."
+        "Tela inicial. Escolha o aplicativo que deseja abrir. Deslize a seta para baixo, lá em cima no topo da tela, para ver as notificações. Toque na seta que está piscando."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -351,11 +351,20 @@ export default function Home() {
           {/* Indicador de swipe */}
           <motion.button
             onClick={() => setNotificationsOpen(true)}
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             className="absolute top-2 left-1/2 -translate-x-1/2 z-50"
           >
-            <ChevronDown className="w-6 h-6 text-white drop-shadow-lg" />
+            <motion.div
+              animate={{ scale: [1, 1.6, 1.6], opacity: [0.7, 0.2, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+              className="absolute -inset-2 rounded-full bg-yellow-400 z-0"
+            />
+            <motion.div
+              animate={{ y: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              className="relative z-10"
+            >
+              <ChevronDown className="w-6 h-6 text-white drop-shadow-lg" />
+            </motion.div>
           </motion.button>
         </div>
 
