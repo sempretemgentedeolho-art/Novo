@@ -184,16 +184,16 @@ const businessList = [
 ];
 
 const contactsList = [
-  { id: 1, name: "Alexandre Tadeu", status: "Disponível", avatar: "🏖️" },
-  { id: 2, name: "Susi", status: "🤗", avatar: "👩" },
-  { id: 3, name: "Manu", status: "Não posso falar, somente WhatsApp", avatar: "👩" },
-  { id: 4, name: "Mãe Novo", status: "", avatar: "👩" },
-  { id: 5, name: "Robinho Ar Condicionado", status: "", avatar: "🏢" },
-  { id: 6, name: "Cleiton Newats", status: "", avatar: "👨" },
-  { id: 7, name: "david Volei", status: "🏐", avatar: "👨" },
-  { id: 8, name: "Nilva", status: "Tu te tornas eternamente responsáv...", avatar: "❤️" },
-  { id: 9, name: "Camila Schumacher", status: "", avatar: "👩" },
-  { id: 10, name: "Pedro Santos", status: "Ocupado", avatar: "👨" },
+  { id: 1, name: "Carlos Mendes", status: "Disponível", avatar: "🏖️" },
+  { id: 2, name: "Sandra", status: "🤗", avatar: "👩" },
+  { id: 3, name: "Manuela", status: "Não posso falar, somente WhatsApp", avatar: "👩" },
+  { id: 4, name: "Dona Rosa", status: "", avatar: "👩" },
+  { id: 5, name: "Roberto Serviços", status: "", avatar: "🏢" },
+  { id: 6, name: "Cláudio", status: "", avatar: "👨" },
+  { id: 7, name: "David", status: "🏐", avatar: "👨" },
+  { id: 8, name: "Nilza", status: "Tu te tornas eternamente responsáv...", avatar: "❤️" },
+  { id: 9, name: "Camila Souza", status: "", avatar: "👩" },
+  { id: 10, name: "Paulo Lima", status: "Ocupado", avatar: "👨" },
 ];
 
 export default function WhatsApp() {
