@@ -25,7 +25,7 @@ const STEPS = [
   },
   {
     id: "settings_open",
-    text: "Estas são as configurações do vídeo. Aqui você escolhe a qualidade: 1080 é a melhor qualidade, 720 é qualidade média, e 240 é para vídeos em câmera lenta. Você também pode escolher gravar na vertical, que é o formato reto, ou na horizontal, que é o formato deitado. No momento em que você entendeu, toque no X que está piscando, lá em cima no canto direito, para fechar e voltar para a tela da câmera e continuar as explicações.",
+    text: "Estas são as configurações do vídeo. Aqui você escolhe a qualidade: 1080 é a melhor qualidade, 720 é qualidade média, e 240 é para vídeos em câmera lenta. Você também pode escolher a orientação do vídeo: vertical, que é o formato reto, ou horizontal, que é o formato deitado. Agora que você escolheu a qualidade e a orientação do seu vídeo, você pode clicar no X que está piscando, lá em cima no canto direito, para voltar para a tela da câmera e continuar as explicações.",
     target: "close_settings",
   },
   {
