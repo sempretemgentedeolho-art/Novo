@@ -286,7 +286,7 @@ export default function Relogio() {
           </TabsContent>
 
           {/* Alarmes */}
-          <TabsContent value="alarme" className="flex-1 overflow-y-auto p-4">
+          <TabsContent value="alarme" className="flex-1 overflow-y-auto p-4 flex flex-col justify-center">
             {/* Tutorial de Uso */}
             <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-4">
               <p className="text-sm text-indigo-900 mb-3">
