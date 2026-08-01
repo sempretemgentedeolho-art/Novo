@@ -245,18 +245,18 @@ export default function Telefone() {
                   </motion.button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={handleBlockNumber} className="relative">
-                    {currentStep.target === "block_item" && (
-                      <motion.div
-                        animate={{ opacity: [0.4, 0.9, 0.4] }}
-                        transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
-                        className="absolute inset-0 rounded-md bg-yellow-400"
-                      />
-                    )}
-                    <span className="relative z-10 flex items-center">
+                  <DropdownMenuItem onClick={handleBlockNumber} asChild>
+                    <motion.div
+                      animate={currentStep.target === "block_item" ? {
+                        backgroundColor: ["rgba(250,204,21,0.4)", "rgba(250,204,21,0.85)", "rgba(250,204,21,0.4)"],
+                        scale: [1, 1.05, 1]
+                      } : {}}
+                      transition={currentStep.target === "block_item" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                      className="flex items-center cursor-pointer"
+                    >
                       <Ban className="w-4 h-4 mr-2" />
-                      Bloquear números
-                    </span>
+                      <span className="font-semibold">Bloquear números</span>
+                    </motion.div>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Histórico de chamadas"); }}>
                     <Clock className="w-4 h-4 mr-2" />
