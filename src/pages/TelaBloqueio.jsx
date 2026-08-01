@@ -6,33 +6,46 @@ import { StatusBar } from '@/components/StatusBar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp, Lock, Heart, X, Phone, AlertTriangle, Droplet, Pill, User, Contact } from 'lucide-react';
 
-// Dados médicos de emergência (ICE - In Case of Emergency)
-// Um socorrista pode acessar estas informações mesmo com o celular bloqueado
-const medicalInfo = {
-  name: "Maria Oliveira",
-  age: 68,
-  bloodType: "O+",
-  height: "1,62m",
-  weight: "68kg",
-  organDonor: true,
-  allergies: ["Penicilina", "Dipirona", "Frutos do mar"],
-  medications: [
-    "Losartana 50mg - 1x ao dia (manhã)",
-    "Metformina 850mg - 2x ao dia",
-    "AAS 100mg - 1x ao dia (após almoço)"
-  ],
-  conditions: [
-    "Hipertensão arterial",
-    "Diabetes tipo 2",
-    "Cardiopatia leve"
-  ],
-  emergencyContacts: [
-    { name: "Ana Oliveira (Filha)", phone: "(11) 98765-4321", relation: "Filha" },
-    { name: "Carlos Oliveira (Marido)", phone: "(11) 97654-3210", relation: "Esposo" },
-    { name: "Dra. Patricia Mendes", phone: "(11) 3456-7890", relation: "Médica" }
-  ],
-  notes: "Paciente faz uso de marcapasso. Em caso de emergência, priorizar contato com a filha Ana."
+// Dados de exemplo (usados quando o usuário ainda não cadastrou suas informações)
+const exemploMedico = {
+  name: "Toque em Configurações para cadastrar",
+  age: "",
+  bloodType: "?",
+  height: "",
+  weight: "",
+  organDonor: false,
+  allergies: ["Nenhuma alergia cadastrada"],
+  medications: ["Nenhum medicamento cadastrado"],
+  conditions: ["Nenhuma condição cadastrada"],
+  emergencyContacts: [],
+  notes: ""
 };
+
+// Carrega os dados médicos do localStorage (preenchidos em Configurações > Informações médicas)
+function carregarDadosMedicos() {
+  try {
+    const saved = localStorage.getItem("dadosMedicosEmergencia");
+    if (saved) {
+      const dados = JSON.parse(saved);
+      return {
+        name: dados.nome || "Usuário",
+        age: "",
+        bloodType: dados.tipoSanguineo || "?",
+        height: "",
+        weight: "",
+        organDonor: false,
+        allergies: dados.alergias ? dados.alergias.split(",").map(s => s.trim()).filter(Boolean) : [],
+        medications: dados.medicamentos ? dados.medicamentos.split("\n").map(s => s.trim()).filter(Boolean) : [],
+        conditions: dados.condicoes ? dados.condicoes.split(",").map(s => s.trim()).filter(Boolean) : [],
+        emergencyContacts: dados.contatoEmergencia ? [{ name: dados.contatoEmergencia, phone: dados.telefoneEmergencia || "", relation: "Contato" }] : [],
+        notes: ""
+      };
+    }
+  } catch (e) {
+    console.error("Erro ao carregar dados médicos:", e);
+  }
+  return exemploMedico;
+}
 
 export default function TelaBloqueio() {
   const navigate = useNavigate();
@@ -76,6 +89,9 @@ export default function TelaBloqueio() {
     }
     setShowEmergency(true);
   };
+
+  const medicalInfo = carregarDadosMedicos();
+  const temDadosCadastrados = localStorage.getItem("dadosMedicosEmergencia") !== null;
 
   return (
     <PhoneFrame>
@@ -210,6 +226,27 @@ export default function TelaBloqueio() {
                 </div>
 
                 <div className="p-5 space-y-4">
+                  {/* Aviso de como cadastrar */}
+                  {!temDadosCadastrados && (
+                    <div className="bg-blue-50 border-l-4 border-blue-500 rounded-2xl p-4">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-bold text-blue-900 text-sm mb-1">Como cadastrar seus dados</h4>
+                          <p className="text-xs text-blue-800">
+                            Para um socorrista ver suas informações reais aqui, você precisa cadastrá-las:
+                          </p>
+                          <ol className="text-xs text-blue-800 mt-1 space-y-0.5">
+                            <li>1. Desbloqueie o celular</li>
+                            <li>2. Abra <strong>Configurações</strong></li>
+                            <li>3. Toque em <strong>Informações médicas</strong></li>
+                            <li>4. Preencha e toque em <strong>Salvar</strong></li>
+                          </ol>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Nome e Idade */}
                   <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
                     <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center">

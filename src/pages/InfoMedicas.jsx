@@ -22,6 +22,16 @@ export default function InfoMedicas() {
   });
 
   useEffect(() => {
+    // Carregar dados salvos do localStorage
+    const saved = localStorage.getItem("dadosMedicosEmergencia");
+    if (saved) {
+      try {
+        setFormData(JSON.parse(saved));
+      } catch (e) {
+        console.error("Erro ao carregar dados médicos:", e);
+      }
+    }
+
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
@@ -45,10 +55,13 @@ export default function InfoMedicas() {
   }, []);
 
   const handleSave = () => {
+    // Salvar no localStorage para acessar na tela de bloqueio
+    localStorage.setItem("dadosMedicosEmergencia", JSON.stringify(formData));
+
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
-      const utter = new SpeechSynthesisUtterance("Informações médicas salvas com sucesso!");
+      const utter = new SpeechSynthesisUtterance("Informações médicas salvas com sucesso! Agora um socorrista pode ver seus dados na tela de bloqueio, mesmo com o celular bloqueado.");
       utter.lang = "pt-BR";
       utter.rate = 0.80;
       synth.speak(utter);
