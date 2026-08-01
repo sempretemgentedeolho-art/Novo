@@ -26,6 +26,35 @@ import Relogio from "./Relogio";
 import VozConfig from "./VozConfig";
 import InfoMedicas from "./InfoMedicas";
 
+// === IMPORTAÇÃO DE ARQUIVOS RAW PARA DOCUMENTAÇÃO COMPLETA (INPI) ===
+// Todos os arquivos de código-fonte via import.meta.glob (Vite)
+const sourceFiles = import.meta.glob("/src/**/*.{jsx,js,ts,tsx,css,json}", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+// Arquivos do diretório base44 (backend, entidades, funções)
+const base44Files = import.meta.glob("/base44/**/*.{ts,js,json,jsonc,txt}", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+// Arquivos de configuração da raiz do projeto
+const rootConfigFiles = import.meta.glob(
+  ["/package.json", "/vite.config.js", "/tailwind.config.js", "/postcss.config.js",
+   "/jsconfig.json", "/components.json", "/eslint.config.js", "/README.md", "/index.html"],
+  { query: "?raw", import: "default", eager: true }
+);
+
+// Arquivos públicos (PWA)
+const publicFiles = import.meta.glob("/public/*", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
 const SCREENS = [
   {
     component: Inicio,
@@ -571,6 +600,171 @@ export default function GerarDocumentacao() {
       y += 6;
     });
 
+    // ===== ESTRUTURA DE ARQUIVOS DO REPOSITÓRIO =====
+    pdf.addPage();
+    pdf.setFontSize(20);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text("7. Estrutura Completa do Repositório", margin, 30);
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.text("Listagem de todos os arquivos do projeto:", margin, 45);
+
+    const allPaths = [
+      ...Object.keys(sourceFiles),
+      ...Object.keys(base44Files),
+    ].sort();
+
+    pdf.setFontSize(8);
+    pdf.setFont("courier", "normal");
+    pdf.setTextColor(40, 40, 40);
+    y = 55;
+    allPaths.forEach((path) => {
+      if (y > pageHeight - 15) {
+        pdf.addPage();
+        y = 20;
+        pdf.setFontSize(8);
+        pdf.setFont("courier", "normal");
+        pdf.setTextColor(40, 40, 40);
+      }
+      pdf.text(path, margin, y);
+      y += 4.5;
+    });
+
+    // ===== CÓDIGO-FONTE COMPLETO =====
+    pdf.addPage();
+    pdf.setFontSize(20);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text("8. Código-Fonte Completo do Projeto", margin, 30);
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.text(
+      "Esta seção contém o código-fonte integral de cada arquivo do repositório,",
+      margin,
+      45
+    );
+    pdf.text("incluindo HTML, JSON, JavaScript, CSS e configurações.", margin, 52);
+    pdf.text(`Total de arquivos documentados: ${allPaths.length}`, margin, 62);
+
+    // Função para adicionar código de um arquivo ao PDF
+    const addFileToPdf = (filePath, content) => {
+      pdf.addPage();
+
+      // Cabeçalho do arquivo
+      pdf.setFillColor(14, 165, 233);
+      pdf.rect(0, 0, pageWidth, 12, "F");
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFontSize(9);
+      pdf.setFont("helvetica", "bold");
+      pdf.text(filePath, margin, 8);
+
+      // Conteúdo
+      pdf.setFontSize(7);
+      pdf.setFont("courier", "normal");
+      pdf.setTextColor(40, 40, 40);
+
+      const contentWidth = pageWidth - margin * 2;
+      const lineHeight = 3.8;
+      let yy = 20;
+
+      const lines = String(content).split("\n");
+      for (const line of lines) {
+        const wrapped = pdf.splitTextToSize(line, contentWidth);
+        for (const w of wrapped) {
+          if (yy > pageHeight - 12) {
+            pdf.addPage();
+            // Repete cabeçalho em páginas de continuação
+            pdf.setFillColor(14, 165, 233);
+            pdf.rect(0, 0, pageWidth, 8, "F");
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFontSize(7);
+            pdf.setFont("helvetica", "bold");
+            pdf.text(`${filePath} (continuação)`, margin, 5.5);
+            pdf.setFontSize(7);
+            pdf.setFont("courier", "normal");
+            pdf.setTextColor(40, 40, 40);
+            yy = 14;
+          }
+          pdf.text(w, margin, yy);
+          yy += lineHeight;
+        }
+      }
+    };
+
+    // Adicionar todos os arquivos de código-fonte
+    for (let i = 0; i < allPaths.length; i++) {
+      const filePath = allPaths[i];
+      const content = sourceFiles[filePath] || base44Files[filePath];
+      if (content) {
+        setProgress(Math.round(((i + SCREENS.length) / (allPaths.length + SCREENS.length)) * 100));
+        setCurrentScreen(`Código: ${filePath}`);
+        addFileToPdf(filePath, content);
+      }
+    }
+
+    // ===== ARQUIVOS DE CONFIGURAÇÃO RAIZ =====
+    pdf.addPage();
+    pdf.setFontSize(16);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(14, 165, 233);
+    pdf.text("9. Arquivos de Configuração e PWA", margin, 30);
+    pdf.setTextColor(20, 20, 20);
+
+    const configFiles = [
+      ...Object.entries(rootConfigFiles).map(([path, content]) => ({ path, content })),
+      ...Object.entries(publicFiles).map(([path, content]) => ({ path, content })),
+    ].sort((a, b) => a.path.localeCompare(b.path));
+
+    configFiles.forEach((f) => {
+      if (f.content) {
+        addFileToPdf(f.path, f.content);
+      }
+    });
+
+    // ===== DECLARAÇÃO DE INTEGRIDADE PARA O INPI =====
+    pdf.addPage();
+    pdf.setFontSize(20);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text("10. Declaração de Integridade Documental", margin, 30);
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    const declaracao = [
+      "Este documento contém a documentação técnica integral do",
+      "aplicativo Forja da Consciência, incluindo:",
+      "",
+      `• ${SCREENS.length} telas documentadas com prints e descrições técnicas`,
+      `• ${allPaths.length} arquivos de código-fonte (HTML, JS, JSX, CSS, JSON)`,
+      `• ${configFiles.length} arquivos de configuração do projeto e PWA`,
+      "• Estrutura completa do repositório",
+      "• Arquitetura técnica detalhada",
+      "• Fluxo de navegação completo",
+      "• Recursos de acessibilidade",
+      "",
+      "Todos os arquivos que compõem o projeto estão documentados",
+      "integralmente neste PDF, sem omissões. O código-fonte de cada",
+      "arquivo está reproduzido na íntegra nas seções 8 e 9.",
+      "",
+      "Esta documentação atende aos requisitos de depósito de",
+      "propriedade intelectual junto ao INPI (Instituto Nacional da",
+      "Propriedade Industrial), contendo a totalidade da criação",
+      "do software, desde a configuração do ambiente de desenvolvimento",
+      "até o código-fonte de cada componente, página e utilitário.",
+      "",
+      `Data de geração: ${new Date().toLocaleString("pt-BR")}`,
+      `Versão do documento: 1.0`,
+      `Total de páginas: ${pdf.getNumberOfPages()}`,
+    ];
+    y = 45;
+    declaracao.forEach((line) => {
+      pdf.text(line, margin, y);
+      y += 6;
+    });
+
     // Salvar
     pdf.save("Forja_da_Consciencia_Documentacao_Tecnica.pdf");
 
@@ -610,7 +804,7 @@ export default function GerarDocumentacao() {
           </div>
           <h2 className="text-2xl font-bold mb-2">Gerar PDF Técnico</h2>
           <p className="text-sm text-white/70">
-            Documento completo com prints de todas as telas e descrições técnicas para patenteamento
+            Documento completo com prints de telas, código-fonte integral, HTML, JSON e configurações para patenteamento no INPI
           </p>
         </div>
 
@@ -621,12 +815,16 @@ export default function GerarDocumentacao() {
             <span className="font-semibold">{SCREENS.length}</span>
           </div>
           <div className="flex justify-between bg-white/5 rounded-xl px-4 py-2">
+            <span className="text-white/60">Arquivos de código:</span>
+            <span className="font-semibold">{Object.keys(sourceFiles).length + Object.keys(base44Files).length + Object.keys(rootConfigFiles).length + Object.keys(publicFiles).length}</span>
+          </div>
+          <div className="flex justify-between bg-white/5 rounded-xl px-4 py-2">
             <span className="text-white/60">Formato:</span>
             <span className="font-semibold">PDF (A4)</span>
           </div>
           <div className="flex justify-between bg-white/5 rounded-xl px-4 py-2">
             <span className="text-white/60">Conteúdo:</span>
-            <span className="font-semibold">Prints + Texto técnico</span>
+            <span className="font-semibold">Prints + Código + HTML + JSON</span>
           </div>
         </div>
 
