@@ -15,12 +15,22 @@ const STEPS = [
   },
   {
     id: "photo_done",
-    text: "Muito bem! Você tirou uma foto. Se você quer fazer um vídeo, clique na palavra VÍDEO, que está no meio da tela embaixo, do lado esquerdo.",
+    text: "Muito bem! Você tirou uma foto. Vamos aprender a fazer um vídeo. Clique onde está piscando: a palavra VÍDEO, no meio da tela embaixo, do lado esquerdo.",
     target: "video_mode",
   },
   {
     id: "video_selected",
-    text: "Perfeito! Agora estamos no modo vídeo. Aqui você faz vídeos. O celular tem configurações de vídeo: você pode gravar na vertical ou na horizontal, e escolher a qualidade: 1080, 720 ou 240. Vou te mostrar as configurações depois. Agora, toque no botão vermelho redondo embaixo para começar a gravar.",
+    text: "Muito bem! Agora vamos aprender a configurar o vídeo. Lá em cima, do lado direito, tem um desenho de uma engrenagem. Clique onde está piscando para abrir as configurações.",
+    target: "settings",
+  },
+  {
+    id: "settings_open",
+    text: "Estas são as configurações do vídeo. Aqui você escolhe a qualidade: 1080 é a melhor qualidade, 720 é qualidade média, e 240 é para vídeos em câmera lenta. Você também pode escolher gravar na vertical, que é o formato reto, ou na horizontal, que é o formato deitado. Toque no X para fechar e continuar.",
+    target: "close_settings",
+  },
+  {
+    id: "settings_closed",
+    text: "Muito bem! Agora que você configurou o vídeo, vamos gravar. Toque no botão vermelho redondo embaixo da tela para começar a gravar.",
     target: "capture",
   },
   {
@@ -30,17 +40,7 @@ const STEPS = [
   },
   {
     id: "video_done",
-    text: "Muito bem! O vídeo foi salvo. Agora vou te mostrar as configurações da câmera. Lá em cima, do lado direito, tem um desenho de uma engrenagem. Toque nela.",
-    target: "settings",
-  },
-  {
-    id: "settings_open",
-    text: "Estas são as configurações da câmera. Aqui você escolhe a qualidade do vídeo: 1080 é a melhor qualidade, 720 é qualidade média, e 240 é para vídeos em câmera lenta. Você também pode escolher gravar na vertical, que é o formato reto, ou na horizontal, que é o formato deitado. Toque em qualquer lugar para fechar e continuar.",
-    target: "close_settings",
-  },
-  {
-    id: "settings_closed",
-    text: "Muito bem! Agora vou te ensinar a ligar o flash, que ajuda a tirar fotos no escuro. Lá em cima, do lado direito, tem um desenho de um raio. Toque nele.",
+    text: "Muito bem! O vídeo foi salvo. Agora vou te ensinar a ligar o flash, que ajuda a tirar fotos no escuro. Lá em cima, do lado direito, tem um desenho de um raio. Toque nele.",
     target: "flash",
   },
   {
@@ -115,7 +115,7 @@ export default function CameraPage() {
       setPhotoTaken(true);
       speak("Foto capturada! Muito bem!");
       setTimeout(goNext, 1300);
-    } else if (currentStep.id === "video_selected") {
+    } else if (currentStep.id === "settings_closed") {
       setIsRecording(true);
       speak("Gravando vídeo! Para parar, toque novamente.");
       setTimeout(goNext, 1600);
@@ -130,7 +130,7 @@ export default function CameraPage() {
   const handleVideoMode = () => {
     if (currentStep.target !== "video_mode") return;
     setMode("video");
-    speak("Modo vídeo selecionado!");
+    speak("Modo vídeo selecionado! Muito bem!");
     setTimeout(goNext, 1000);
   };
 
@@ -138,7 +138,7 @@ export default function CameraPage() {
   const handleSettings = () => {
     if (currentStep.target !== "settings") return;
     setShowSettings(true);
-    speak("Abrindo as configurações da câmera!");
+    speak("Abrindo as configurações do vídeo!");
     setTimeout(goNext, 1000);
   };
 
@@ -146,7 +146,7 @@ export default function CameraPage() {
   const handleCloseSettings = () => {
     if (currentStep.target !== "close_settings") return;
     setShowSettings(false);
-    speak("Configurações fechadas!");
+    speak("Configurações fechadas! Muito bem!");
     setTimeout(goNext, 800);
   };
 
