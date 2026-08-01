@@ -317,41 +317,6 @@ export default function CameraPage() {
           </div>
         </div>
 
-        {/* Tutorial overlay - barra de instrução embaixo */}
-        <AnimatePresence>
-          <motion.div
-            key={currentStep.id}
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 25 }}
-            className="absolute bottom-0 left-0 right-0 bg-blue-900/95 backdrop-blur-md text-white p-5 z-40"
-          >
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-yellow-400 text-blue-900 font-bold flex items-center justify-center flex-shrink-0 text-sm">
-                {stepIndex + 1}
-              </div>
-              <div className="flex-1">
-                <p className="text-sm leading-relaxed">{currentStep.text}</p>
-                <div className="flex items-center gap-2 mt-3">
-                  <div className="flex gap-1">
-                    {STEPS.map((_, i) => (
-                      <div
-                        key={i}
-                        className={`h-1.5 rounded-full transition-all ${
-                          i === stepIndex ? "w-6 bg-yellow-400" : "w-1.5 bg-white/30"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-xs text-white/60 ml-auto">
-                    Passo {stepIndex + 1} de {STEPS.length}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
       </div>
     </PhoneFrame>
   );
