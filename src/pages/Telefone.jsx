@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { ArrowLeft, Phone, Delete, User, MoreVertical, Ban, Clock, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import {
@@ -22,9 +22,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+// Sequência do tutorial: cada etapa tem um alvo que pisca.
+const STEPS = [
+  {
+    id: "intro",
+    text: "Bem-vindo ao aplicativo Telefone! Aqui é onde você faz ligações. No meio da tela tem um teclado com números. Toque em qualquer número para começar a digitar o telefone.",
+    target: "keypad",
+  },
+  {
+    id: "typed",
+    text: "Muito bem! Você digitou um número. Agora, lá embaixo no meio, tem um botão verde grande com o desenho de um telefone. Toque nele para fazer a ligação.",
+    target: "call",
+  },
+  {
+    id: "called",
+    text: "Muito bem! A ligação foi feita. Agora vou te ensinar a apagar um número se você digitar errado. Lá embaixo, do lado direito, tem um botão com uma setinha para trás. Toque nele.",
+    target: "delete",
+  },
+  {
+    id: "deleted",
+    text: "Muito bem! O número foi apagado. Agora vou te ensinar a ver seus contatos, que são as pessoas salvas no seu celular. Lá embaixo, do lado esquerdo, tem um botão com o desenho de uma pessoa. Toque nele.",
+    target: "contacts",
+  },
+  {
+    id: "contacts_done",
+    text: "Muito bem! Agora vou te ensinar a bloquear números indesejados, como vendedores chatos ou golpistas. Lá em cima, do lado direito, tem três pontinhos. Toque neles.",
+    target: "menu",
+  },
+  {
+    id: "menu_done",
+    text: "Muito bem! Este é o menu. Aqui você pode bloquear números, ver o histórico de chamadas e mudar as configurações. Parabéns! Você aprendeu a usar o Telefone! Toque na seta no canto esquerdo em cima para voltar.",
+    target: "back",
+  },
+];
+
 export default function Telefone() {
   const navigate = useNavigate();
   const [number, setNumber] = useState("");
+  const [stepIndex, setStepIndex] = useState(0);
   const [showBlockDialog, setShowBlockDialog] = useState(false);
   const [blockNumber, setBlockNumber] = useState("");
   const [blockedNumbers, setBlockedNumbers] = useState([
@@ -32,63 +67,74 @@ export default function Telefone() {
     { number: "(11) 98888-7777", reason: "Telemarketing" },
   ]);
 
+  const currentStep = STEPS[stepIndex];
+
+  // Narração da etapa atual — dispara automaticamente ao mudar de etapa
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
-      const utter = new SpeechSynthesisUtterance(
-        "Aplicativo Telefone. Aqui é para fazer ligações. Digite o número para ligar. Você também pode bloquear números indesejados no menu de três pontinhos."
-      );
+      const utter = new SpeechSynthesisUtterance(currentStep.text);
       utter.lang = "pt-BR";
-      utter.rate = 0.9;
+      utter.rate = 0.82;
       synth.speak(utter);
     }
     return () => window.speechSynthesis.cancel();
-  }, []);
+  }, [stepIndex]);
 
-  const handleNumberClick = (num) => {
-    if (number.length < 15) {
-      setNumber(number + num);
-      const synth = window.speechSynthesis;
-      if (synth) {
-        synth.cancel();
-        const utter = new SpeechSynthesisUtterance(num);
-        utter.lang = "pt-BR";
-        utter.rate = 0.8;
-        synth.speak(utter);
-      }
-    }
+  const goNext = () => {
+    setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   };
 
-  const handleDelete = () => {
-    setNumber(number.slice(0, -1));
-  };
-
-  const handleCall = () => {
-    if (number) {
-      const synth = window.speechSynthesis;
-      if (synth) {
-        synth.cancel();
-        const utter = new SpeechSynthesisUtterance(`Ligando para ${number}`);
-        utter.lang = "pt-BR";
-        utter.rate = 0.9;
-        synth.speak(utter);
-      }
-      alert(`Ligando para ${number}...`);
-    }
-  };
-
-  const handleBlockNumber = () => {
+  const speak = (text) => {
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
-      const utter = new SpeechSynthesisUtterance(
-        "Bloquear Números. Aqui você pode bloquear números de telefone indesejados, como vendedores chatos ou golpistas. Números bloqueados não conseguem mais te ligar. Digite o número que você quer bloquear."
-      );
+      const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "pt-BR";
-      utter.rate = 0.9;
+      utter.rate = 0.82;
       synth.speak(utter);
     }
+  };
+
+  const handleNumberClick = (num) => {
+    if (currentStep.target !== "keypad") return;
+    setNumber(number + num);
+    speak(num);
+    goNext();
+  };
+
+  const handleDelete = () => {
+    if (currentStep.target !== "delete") return;
+    setNumber(number.slice(0, -1));
+    goNext();
+  };
+
+  const handleCall = () => {
+    if (currentStep.target !== "call") return;
+    speak("Ligando!");
+    goNext();
+  };
+
+  const handleContacts = () => {
+    if (currentStep.target !== "contacts") return;
+    goNext();
+  };
+
+  const handleMenu = () => {
+    if (currentStep.target !== "menu") return;
+    goNext();
+  };
+
+  const handleBack = () => {
+    if (currentStep.target !== "back") return;
+    navigate(createPageUrl("Home"));
+  };
+
+  const handleBlockNumber = () => {
+    speak(
+      "Bloquear Números. Aqui você pode bloquear números de telefone indesejados, como vendedores chatos ou golpistas. Números bloqueados não conseguem mais te ligar. Digite o número que você quer bloquear."
+    );
     setShowBlockDialog(true);
   };
 
@@ -101,30 +147,13 @@ export default function Telefone() {
     setBlockedNumbers([...blockedNumbers, { number: blockNumber, reason: "Bloqueado manualmente" }]);
     setBlockNumber("");
     setShowBlockDialog(false);
-
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      const utter = new SpeechSynthesisUtterance(
-        `Número ${blockNumber} bloqueado com sucesso! Este número não pode mais te ligar. Você está protegido.`
-      );
-      utter.lang = "pt-BR";
-      utter.rate = 0.9;
-      synth.speak(utter);
-    }
+    speak(`Número ${blockNumber} bloqueado com sucesso! Este número não pode mais te ligar. Você está protegido.`);
   };
 
   const handleUnblock = (number) => {
     if (confirm(`Deseja desbloquear o número ${number}?`)) {
       setBlockedNumbers(blockedNumbers.filter(b => b.number !== number));
-      const synth = window.speechSynthesis;
-      if (synth) {
-        synth.cancel();
-        const utter = new SpeechSynthesisUtterance(`Número ${number} desbloqueado.`);
-        utter.lang = "pt-BR";
-        utter.rate = 0.9;
-        synth.speak(utter);
-      }
+      speak(`Número ${number} desbloqueado.`);
     }
   };
 
@@ -135,6 +164,26 @@ export default function Telefone() {
     "*", "0", "#"
   ];
 
+  // Destaque pulsante para o botão ativo
+  const Pulse = ({ active, children, className = "" }) => (
+    <div className={`relative ${className}`}>
+      {active && (
+        <motion.div
+          animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+          className="absolute -inset-2 rounded-full bg-yellow-400 z-0"
+        />
+      )}
+      <motion.div
+        animate={active ? { scale: [1, 1.12, 1] } : {}}
+        transition={active ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+        className="relative z-10"
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+
   return (
     <PhoneFrame>
       <div className="h-full bg-white flex flex-col">
@@ -143,14 +192,18 @@ export default function Telefone() {
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex justify-between items-center mb-2">
-            <button onClick={() => navigate(createPageUrl("Home"))}>
-              <ArrowLeft className="w-6 h-6 text-gray-700" />
-            </button>
+            <Pulse active={currentStep.target === "back"}>
+              <button onClick={handleBack}>
+                <ArrowLeft className="w-6 h-6 text-gray-700" />
+              </button>
+            </Pulse>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center">
-                  <MoreVertical className="w-6 h-6 text-gray-700" />
-                </button>
+                <Pulse active={currentStep.target === "menu"}>
+                  <button className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center">
+                    <MoreVertical className="w-6 h-6 text-gray-700" />
+                  </button>
+                </Pulse>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleBlockNumber}>
@@ -171,13 +224,6 @@ export default function Telefone() {
           <h1 className="text-2xl font-semibold text-gray-900">Telefone</h1>
         </div>
 
-        {/* Dica */}
-        <div className="bg-green-50 border-l-4 border-green-500 p-4 m-4">
-          <p className="text-sm text-green-900">
-            💡 <strong>Dica:</strong> Use o menu de três pontinhos para bloquear números indesejados. Proteja-se de vendedores chatos e golpistas!
-          </p>
-        </div>
-
         {/* Display */}
         <div className="px-6 py-12 text-center flex-1">
           <div className="text-4xl font-light text-gray-900 min-h-[48px]">
@@ -189,45 +235,52 @@ export default function Telefone() {
         <div className="px-8 pb-8">
           <div className="grid grid-cols-3 gap-4 mb-6">
             {buttons.map((btn) => (
-              <motion.button
-                key={btn}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleNumberClick(btn)}
-                className="aspect-square rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-2xl font-medium text-gray-900 transition-colors"
-              >
-                {btn}
-              </motion.button>
+              <Pulse key={btn} active={currentStep.target === "keypad" && btn === "1"}>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleNumberClick(btn)}
+                  className="aspect-square rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-2xl font-medium text-gray-900 transition-colors"
+                >
+                  {btn}
+                </motion.button>
+              </Pulse>
             ))}
           </div>
 
           {/* Action Buttons */}
           <div className="flex items-center justify-between gap-4">
-            <Button
-              variant="outline"
-              size="icon"
-              className="w-14 h-14 rounded-full"
-              onClick={() => navigate(createPageUrl("Contatos"))}
-            >
-              <User className="w-6 h-6" />
-            </Button>
+            <Pulse active={currentStep.target === "contacts"}>
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-14 h-14 rounded-full"
+                onClick={handleContacts}
+              >
+                <User className="w-6 h-6" />
+              </Button>
+            </Pulse>
 
-            <Button
-              onClick={handleCall}
-              disabled={!number}
-              className="w-20 h-20 rounded-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300"
-            >
-              <Phone className="w-8 h-8" />
-            </Button>
+            <Pulse active={currentStep.target === "call"}>
+              <Button
+                onClick={handleCall}
+                disabled={!number && currentStep.target !== "call"}
+                className="w-20 h-20 rounded-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300"
+              >
+                <Phone className="w-8 h-8" />
+              </Button>
+            </Pulse>
 
-            <Button
-              variant="outline"
-              size="icon"
-              className="w-14 h-14 rounded-full"
-              onClick={handleDelete}
-              disabled={!number}
-            >
-              <Delete className="w-6 h-6" />
-            </Button>
+            <Pulse active={currentStep.target === "delete"}>
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-14 h-14 rounded-full"
+                onClick={handleDelete}
+                disabled={!number && currentStep.target !== "delete"}
+              >
+                <Delete className="w-6 h-6" />
+              </Button>
+            </Pulse>
           </div>
         </div>
       </div>
@@ -297,7 +350,7 @@ export default function Telefone() {
             <Button variant="outline" onClick={() => setShowBlockDialog(false)}>
               Fechar
             </Button>
-            <Button 
+            <Button
               onClick={handleSaveBlock}
               className="bg-red-500 hover:bg-red-600"
               disabled={!blockNumber}
