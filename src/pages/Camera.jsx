@@ -1,49 +1,61 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, FlipHorizontal, Zap, Settings, Video, Camera, Image as ImageIcon, Check } from "lucide-react";
+import { ArrowLeft, FlipHorizontal, Zap, Settings, Camera, Image as ImageIcon, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneFrame } from "@/components/PhoneFrame";
 
+// Sequência do tutorial: cada etapa tem um alvo que pisca.
+// Ao clicar no botão que pisca, ele para de piscar e a próxima etapa começa.
 const STEPS = [
   {
     id: "intro",
-    text: "Bem-vindo à câmera! Vou te ensinar tudo com calma. Esta câmera serve para tirar fotos e fazer vídeos. Vamos começar tirando uma foto. Olhe embaixo da tela, tem um botão branco redondo grande. Toque nele para tirar a foto.",
+    text: "Bem-vindo à câmera! Vou te ensinar tudo com calma. Embaixo da tela tem um botão branco redondo grande. Toque nele para tirar uma foto.",
     target: "capture",
   },
   {
-    id: "photo_taken",
-    text: "Muito bem! Você tirou uma foto. A foto foi salva na galeria. Agora vou te ensinar a fazer um vídeo. Olhe no meio da tela, embaixo, tem as palavras VÍDEO, FOTO e RETRATO. Toque na palavra VÍDEO, que está do lado esquerdo.",
+    id: "photo_done",
+    text: "Muito bem! Você tirou uma foto. Se você quer fazer um vídeo, clique na palavra VÍDEO, que está no meio da tela embaixo, do lado esquerdo.",
     target: "video_mode",
   },
   {
-    id: "video_mode",
-    text: "Perfeito! Agora estamos no modo vídeo. Para começar a gravar, toque no botão vermelho redondo embaixo da tela. O mesmo botão de antes, mas agora ele fica vermelho.",
+    id: "video_selected",
+    text: "Perfeito! Agora estamos no modo vídeo. Aqui você faz vídeos. O celular tem configurações de vídeo: você pode gravar na vertical ou na horizontal, e escolher a qualidade: 1080, 720 ou 240. Vou te mostrar as configurações depois. Agora, toque no botão vermelho redondo embaixo para começar a gravar.",
     target: "capture",
   },
   {
     id: "recording",
-    text: "Você está gravando um vídeo! Veja o pontinho vermelho piscando lá em cima com a palavra REC. Para parar de gravar, toque novamente no botão vermelho.",
+    text: "Você está gravando um vídeo! Veja o pontinho vermelho piscando em cima com a palavra REC. Para parar de gravar, toque novamente no botão vermelho.",
     target: "capture",
   },
   {
     id: "video_done",
-    text: "Muito bem! O vídeo foi salvo. Agora vou te ensinar a ligar o flash, que ajuda a tirar fotos no escuro. Olhe lá em cima, do lado direito, tem um desenho de um raio. Toque nele.",
+    text: "Muito bem! O vídeo foi salvo. Agora vou te mostrar as configurações da câmera. Lá em cima, do lado direito, tem um desenho de uma engrenagem. Toque nela.",
+    target: "settings",
+  },
+  {
+    id: "settings_open",
+    text: "Estas são as configurações da câmera. Aqui você escolhe a qualidade do vídeo: 1080 é a melhor qualidade, 720 é qualidade média, e 240 é para vídeos em câmera lenta. Você também pode escolher gravar na vertical, que é o formato reto, ou na horizontal, que é o formato deitado. Toque em qualquer lugar para fechar e continuar.",
+    target: "close_settings",
+  },
+  {
+    id: "settings_closed",
+    text: "Muito bem! Agora vou te ensinar a ligar o flash, que ajuda a tirar fotos no escuro. Lá em cima, do lado direito, tem um desenho de um raio. Toque nele.",
     target: "flash",
   },
   {
     id: "flash_on",
-    text: "O flash está ligado! Ele ficou amarelinho. Agora vou te ensinar a trocar de câmera, para usar a câmera da frente e tirar uma selfie. Olhe embaixo, do lado direito, tem um desenho de duas setinhas. Toque nele.",
+    text: "O flash está ligado! Ele ficou amarelinho. Agora vou te ensinar a trocar de câmera para tirar uma selfie, que é uma foto de você mesmo. Embaixo, do lado direito, tem um desenho de duas setinhas. Toque nele.",
     target: "flip",
   },
   {
     id: "flipped",
-    text: "Você trocou de câmera! Agora a câmera está apontando para você. Agora vou te ensinar a ver as fotos que você tirou. Olhe embaixo, do lado esquerdo, tem um quadradinho com uma foto. Toque nele.",
+    text: "Você trocou de câmera! Agora a câmera está apontando para você. Agora vou te ensinar a ver as fotos e vídeos que você tirou. Embaixo, do lado esquerdo, tem um quadradinho. Toque nele.",
     target: "gallery",
   },
   {
     id: "done",
-    text: "Parabéns! Você aprendeu a usar a câmera! Você sabe tirar fotos, fazer vídeos, ligar o flash, trocar de câmera e ver suas fotos. Toque na seta no canto esquerdo em cima para voltar.",
+    text: "Parabéns! Você aprendeu a usar a câmera! Você sabe tirar fotos, fazer vídeos, mudar as configurações, ligar o flash, trocar de câmera e ver suas fotos. Toque na seta no canto esquerdo em cima para voltar.",
     target: "back",
   },
 ];
@@ -56,6 +68,9 @@ export default function CameraPage() {
   const [isRecording, setIsRecording] = useState(false);
   const [frontCamera, setFrontCamera] = useState(false);
   const [photoTaken, setPhotoTaken] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [videoQuality, setVideoQuality] = useState("1080");
+  const [videoOrientation, setVideoOrientation] = useState("vertical");
   const spokenRef = useRef(false);
 
   const currentStep = STEPS[stepIndex];
@@ -88,105 +103,99 @@ export default function CameraPage() {
     }
   };
 
-  const nextStep = () => {
+  const goNext = () => {
     spokenRef.current = true;
     setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   };
 
-  // Botão de capturar foto/vídeo
+  // Botão de capturar
   const handleCapture = () => {
+    if (currentStep.target !== "capture") return;
     if (currentStep.id === "intro") {
       setPhotoTaken(true);
       speak("Foto capturada! Muito bem!");
-      setTimeout(nextStep, 1200);
-    } else if (currentStep.id === "video_mode") {
+      setTimeout(goNext, 1300);
+    } else if (currentStep.id === "video_selected") {
       setIsRecording(true);
       speak("Gravando vídeo! Para parar, toque novamente.");
-      setTimeout(nextStep, 1500);
+      setTimeout(goNext, 1600);
     } else if (currentStep.id === "recording") {
       setIsRecording(false);
       speak("Vídeo salvo! Muito bem!");
-      setTimeout(nextStep, 1200);
+      setTimeout(goNext, 1300);
     }
   };
 
-  // Trocar modo para vídeo
+  // Trocar para modo vídeo
   const handleVideoMode = () => {
-    if (currentStep.id === "photo_taken") {
-      setMode("video");
-      speak("Modo vídeo selecionado!");
-      setTimeout(nextStep, 1000);
-    }
+    if (currentStep.target !== "video_mode") return;
+    setMode("video");
+    speak("Modo vídeo selecionado!");
+    setTimeout(goNext, 1000);
+  };
+
+  // Abrir configurações
+  const handleSettings = () => {
+    if (currentStep.target !== "settings") return;
+    setShowSettings(true);
+    speak("Abrindo as configurações da câmera!");
+    setTimeout(goNext, 1000);
+  };
+
+  // Fechar configurações
+  const handleCloseSettings = () => {
+    if (currentStep.target !== "close_settings") return;
+    setShowSettings(false);
+    speak("Configurações fechadas!");
+    setTimeout(goNext, 800);
   };
 
   // Flash
   const handleFlash = () => {
-    if (currentStep.id === "flash_on" || currentStep.id === "intro" || currentStep.id === "photo_taken" || currentStep.id === "video_mode" || currentStep.id === "recording") {
-      setFlash(!flash);
-      if (currentStep.id === "flash_on") {
-        speak("Flash desligado!");
-      } else {
-        speak("Flash ligado!");
-      }
-    } else if (currentStep.id === "flash") {
-      setFlash(true);
-      speak("Flash ligado! Muito bem!");
-      setTimeout(nextStep, 1000);
-    }
+    if (currentStep.target !== "flash") return;
+    setFlash(true);
+    speak("Flash ligado! Muito bem!");
+    setTimeout(goNext, 1000);
   };
 
   // Trocar câmera
   const handleFlip = () => {
-    if (currentStep.id === "flipped" || currentStep.id === "flash_on") {
-      setFrontCamera(!frontCamera);
-      speak(frontCamera ? "Câmera de trás!" : "Câmera da frente!");
-    } else if (currentStep.id === "flip") {
-      setFrontCamera(true);
-      speak("Câmera da frente selecionada! Muito bem!");
-      setTimeout(nextStep, 1000);
-    }
+    if (currentStep.target !== "flip") return;
+    setFrontCamera(true);
+    speak("Câmera da frente selecionada! Muito bem!");
+    setTimeout(goNext, 1000);
   };
 
   // Galeria
   const handleGallery = () => {
-    if (currentStep.id === "gallery") {
-      speak("Abrindo a galeria!");
-      setTimeout(() => navigate(createPageUrl("Galeria")), 800);
-    } else {
-      speak("Abrindo a galeria!");
-      setTimeout(() => navigate(createPageUrl("Galeria")), 800);
-    }
+    if (currentStep.target !== "gallery") return;
+    speak("Abrindo a galeria!");
+    setTimeout(() => navigate(createPageUrl("Galeria")), 800);
   };
 
   // Voltar
   const handleBack = () => {
-    if (currentStep.id === "done") {
-      navigate(createPageUrl("Home"));
-    } else {
-      navigate(createPageUrl("Home"));
-    }
+    speak("Voltando!");
+    setTimeout(() => navigate(createPageUrl("Home")), 600);
   };
 
-  // Componente de destaque pulsante para o botão ativo
-  const Highlight = ({ active, children, className = "" }) => (
+  // Destaque pulsante para o botão ativo
+  const Pulse = ({ active, children, className = "" }) => (
     <div className={`relative ${className}`}>
       {active && (
-        <>
-          <motion.div
-            animate={{ scale: [1, 1.4, 1.4], opacity: [0.8, 0.3, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-            className="absolute inset-0 rounded-full bg-yellow-400 z-0"
-          />
-          <motion.div
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
-            className="relative z-10"
-          >
-            {children}
-          </motion.div>
-        </>
+        <motion.div
+          animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+          className="absolute -inset-2 rounded-full bg-yellow-400 z-0"
+        />
       )}
-      {!active && <div className="relative z-10">{children}</div>}
+      <motion.div
+        animate={active ? { scale: [1, 1.12, 1] } : {}}
+        transition={active ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+        className="relative z-10"
+      >
+        {children}
+      </motion.div>
     </div>
   );
 
@@ -213,28 +222,32 @@ export default function CameraPage() {
 
           {/* Top Controls */}
           <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-20">
-            <button
-              onClick={handleBack}
-              className="w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center"
-            >
-              <ArrowLeft className="w-5 h-5 text-white" />
-            </button>
+            <Pulse active={currentStep.target === "back"}>
+              <button
+                onClick={handleBack}
+                className="w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center"
+              >
+                <ArrowLeft className="w-5 h-5 text-white" />
+              </button>
+            </Pulse>
 
             <div className="flex gap-3">
-              <Highlight active={currentStep.target === "flash"}>
+              <Pulse active={currentStep.target === "flash"}>
                 <button
                   onClick={handleFlash}
                   className={`w-10 h-10 rounded-full backdrop-blur flex items-center justify-center ${flash ? "bg-yellow-500" : "bg-black/50"}`}
                 >
                   <Zap className="w-5 h-5 text-white" />
                 </button>
-              </Highlight>
-              <button
-                onClick={() => navigate(createPageUrl("CameraConfig"))}
-                className="w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center"
-              >
-                <Settings className="w-5 h-5 text-white" />
-              </button>
+              </Pulse>
+              <Pulse active={currentStep.target === "settings"}>
+                <button
+                  onClick={handleSettings}
+                  className="w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center"
+                >
+                  <Settings className="w-5 h-5 text-white" />
+                </button>
+              </Pulse>
             </div>
           </div>
 
@@ -243,14 +256,14 @@ export default function CameraPage() {
             <div className="flex justify-center gap-8 text-white text-sm">
               <button
                 onClick={handleVideoMode}
-                className={`relative ${mode === "video" ? "font-bold" : "opacity-60"}`}
+                className={`relative px-2 py-1 ${mode === "video" ? "font-bold" : "opacity-60"}`}
               >
                 VÍDEO
                 {currentStep.target === "video_mode" && (
                   <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.9, 0.4] }}
                     transition={{ repeat: Infinity, duration: 1 }}
-                    className="absolute -inset-2 rounded-lg bg-yellow-400/40 -z-10"
+                    className="absolute -inset-1 rounded-lg bg-yellow-400/50 -z-10"
                   />
                 )}
               </button>
@@ -272,23 +285,21 @@ export default function CameraPage() {
           {/* Bottom Controls */}
           <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-center z-20">
             {/* Gallery thumbnail */}
-            <div className="relative">
-              <Highlight active={currentStep.target === "gallery"}>
-                <button
-                  onClick={handleGallery}
-                  className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur hover:bg-white/30 flex items-center justify-center"
-                >
-                  {photoTaken ? (
-                    <ImageIcon className="w-8 h-8 text-white" />
-                  ) : (
-                    <div className="w-10 h-10 rounded-lg bg-gray-400" />
-                  )}
-                </button>
-              </Highlight>
-            </div>
+            <Pulse active={currentStep.target === "gallery"}>
+              <button
+                onClick={handleGallery}
+                className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur hover:bg-white/30 flex items-center justify-center"
+              >
+                {photoTaken ? (
+                  <ImageIcon className="w-8 h-8 text-white" />
+                ) : (
+                  <div className="w-10 h-10 rounded-lg bg-gray-400" />
+                )}
+              </button>
+            </Pulse>
 
             {/* Capture button */}
-            <Highlight active={currentStep.target === "capture"}>
+            <Pulse active={currentStep.target === "capture"}>
               <button
                 onClick={handleCapture}
                 className={`w-20 h-20 rounded-full border-4 border-white backdrop-blur transition-all ${
@@ -301,22 +312,116 @@ export default function CameraPage() {
                   <div className="w-full h-full rounded-full bg-white"></div>
                 )}
               </button>
-            </Highlight>
+            </Pulse>
 
             {/* Flip camera */}
-            <div className="relative">
-              <Highlight active={currentStep.target === "flip"}>
-                <button
-                  onClick={handleFlip}
-                  className="w-14 h-14 rounded-full bg-white/20 backdrop-blur hover:bg-white/30 flex items-center justify-center"
-                >
-                  <FlipHorizontal className="w-6 h-6 text-white" />
-                </button>
-              </Highlight>
-            </div>
+            <Pulse active={currentStep.target === "flip"}>
+              <button
+                onClick={handleFlip}
+                className="w-14 h-14 rounded-full bg-white/20 backdrop-blur hover:bg-white/30 flex items-center justify-center"
+              >
+                <FlipHorizontal className="w-6 h-6 text-white" />
+              </button>
+            </Pulse>
           </div>
         </div>
 
+        {/* Painel de Configurações */}
+        <AnimatePresence>
+          {showSettings && (
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
+              className="absolute inset-0 bg-gray-900/95 backdrop-blur-md z-50 flex flex-col"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-5 border-b border-white/10">
+                <h2 className="text-white text-lg font-bold">Configurações da Câmera</h2>
+                <Pulse active={currentStep.target === "close_settings"}>
+                  <button
+                    onClick={handleCloseSettings}
+                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"
+                  >
+                    <X className="w-5 h-5 text-white" />
+                  </button>
+                </Pulse>
+              </div>
+
+              {/* Conteúdo */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                {/* Qualidade do vídeo */}
+                <div>
+                  <h3 className="text-white/80 text-sm font-semibold mb-3">Qualidade do Vídeo</h3>
+                  <div className="space-y-2">
+                    {[
+                      { val: "1080", label: "1080p (Full HD)", desc: "Melhor qualidade" },
+                      { val: "720", label: "720p (HD)", desc: "Qualidade média" },
+                      { val: "240", label: "240p (Câmera lenta)", desc: "Para vídeos em câmera lenta" },
+                    ].map((opt) => (
+                      <button
+                        key={opt.val}
+                        onClick={() => {
+                          setVideoQuality(opt.val);
+                          speak(`${opt.label} selecionado!`);
+                        }}
+                        className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                          videoQuality === opt.val
+                            ? "border-yellow-400 bg-yellow-400/10"
+                            : "border-white/10 bg-white/5"
+                        }`}
+                      >
+                        <div className="text-left">
+                          <p className="text-white font-medium">{opt.label}</p>
+                          <p className="text-white/50 text-xs">{opt.desc}</p>
+                        </div>
+                        {videoQuality === opt.val && (
+                          <Check className="w-5 h-5 text-yellow-400" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Orientação do vídeo */}
+                <div>
+                  <h3 className="text-white/80 text-sm font-semibold mb-3">Orientação do Vídeo</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => {
+                        setVideoOrientation("vertical");
+                        speak("Vertical selecionado!");
+                      }}
+                      className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                        videoOrientation === "vertical"
+                          ? "border-yellow-400 bg-yellow-400/10"
+                          : "border-white/10 bg-white/5"
+                      }`}
+                    >
+                      <div className="w-8 h-14 rounded border-2 border-white/60"></div>
+                      <span className="text-white text-sm">Vertical</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setVideoOrientation("horizontal");
+                        speak("Horizontal selecionado!");
+                      }}
+                      className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                        videoOrientation === "horizontal"
+                          ? "border-yellow-400 bg-yellow-400/10"
+                          : "border-white/10 bg-white/5"
+                      }`}
+                    >
+                      <div className="w-14 h-8 rounded border-2 border-white/60"></div>
+                      <span className="text-white text-sm">Horizontal</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </PhoneFrame>
   );
