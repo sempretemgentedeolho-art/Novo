@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, Phone, Delete, User, MoreVertical, Ban, Clock, Settings, Search } from "lucide-react";
+import { ArrowLeft, Phone, Delete, User, MoreVertical, Ban, Clock, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { PhoneFrame } from "@/components/PhoneFrame";
@@ -70,7 +70,17 @@ const STEPS = [
   },
   {
     id: "menu_open",
-    text: "Muito bem! Este é o menu. Aqui você pode bloquear números, ver o histórico de chamadas e mudar as configurações. Parabéns! Você aprendeu a usar o Telefone! Toque na seta no canto esquerdo em cima para voltar.",
+    text: "Muito bem! Este é o menu. Toque em Bloquear números que está piscando para aprender a bloquear ligações indesejadas.",
+    target: "block_item",
+  },
+  {
+    id: "block_dialog",
+    text: "Digite um número para bloquear e toque no botão vermelho Bloquear que está piscando.",
+    target: "block_button",
+  },
+  {
+    id: "block_done",
+    text: "Muito bem! Número bloqueado com sucesso! Agora clique na seta para voltar para os aplicativos que está piscando.",
     target: "back",
   },
 ];
@@ -89,7 +99,7 @@ export default function Telefone() {
 
   const currentStep = STEPS[stepIndex];
 
-  // Narração da etapa atual — dispara automaticamente ao mudar de etapa
+  // Única fonte de narração: dispara ao mudar de etapa. Cancela qualquer fala anterior.
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (synth) {
@@ -106,21 +116,9 @@ export default function Telefone() {
     setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   };
 
-  const speak = (text) => {
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "pt-BR";
-      utter.rate = 0.82;
-      synth.speak(utter);
-    }
-  };
-
   const handleNumberClick = (num) => {
     if (currentStep.target !== "keypad") return;
     setNumber(number + num);
-    speak(num);
     goNext();
   };
 
@@ -132,7 +130,6 @@ export default function Telefone() {
 
   const handleCall = () => {
     if (currentStep.target !== "call") return;
-    speak("Ligando!");
     goNext();
   };
 
@@ -144,7 +141,6 @@ export default function Telefone() {
   const handleContactClick = (contact) => {
     if (currentStep.target !== "contacts_list") return;
     setNumber(contact.number);
-    speak(contact.name);
     goNext();
   };
 
@@ -154,17 +150,11 @@ export default function Telefone() {
     goNext();
   };
 
-  const handleBack = () => {
-    if (currentStep.target !== "back") return;
-    navigate(createPageUrl("Home"));
-  };
-
   const handleBlockNumber = () => {
+    if (currentStep.target !== "block_item") return;
     setMenuOpen(false);
-    speak(
-      "Bloquear Números. Aqui você pode bloquear números de telefone indesejados, como vendedores chatos ou golpistas. Números bloqueados não conseguem mais te ligar. Digite o número que você quer bloquear."
-    );
     setShowBlockDialog(true);
+    goNext();
   };
 
   const handleSaveBlock = () => {
@@ -172,17 +162,22 @@ export default function Telefone() {
       alert("Digite o número que deseja bloquear.");
       return;
     }
-
     setBlockedNumbers([...blockedNumbers, { number: blockNumber, reason: "Bloqueado manualmente" }]);
     setBlockNumber("");
     setShowBlockDialog(false);
-    speak(`Número ${blockNumber} bloqueado com sucesso! Este número não pode mais te ligar. Você está protegido.`);
+    if (currentStep.target === "block_button") {
+      goNext();
+    }
   };
 
-  const handleUnblock = (number) => {
-    if (confirm(`Deseja desbloquear o número ${number}?`)) {
-      setBlockedNumbers(blockedNumbers.filter(b => b.number !== number));
-      speak(`Número ${number} desbloqueado.`);
+  const handleBack = () => {
+    if (currentStep.target !== "back") return;
+    navigate(createPageUrl("Home"));
+  };
+
+  const handleUnblock = (num) => {
+    if (confirm(`Deseja desbloquear o número ${num}?`)) {
+      setBlockedNumbers(blockedNumbers.filter(b => b.number !== num));
     }
   };
 
@@ -229,7 +224,7 @@ export default function Telefone() {
               </button>
             </Halo>
 
-            {/* Menu 3 pontinhos — Halo fora do DropdownMenuTrigger para não quebrar o asChild */}
+            {/* Menu 3 pontinhos */}
             <div className="relative">
               {currentStep.target === "menu" && (
                 <motion.div
@@ -250,9 +245,18 @@ export default function Telefone() {
                   </motion.button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={handleBlockNumber}>
-                    <Ban className="w-4 h-4 mr-2" />
-                    Bloquear números
+                  <DropdownMenuItem onClick={handleBlockNumber} className="relative">
+                    {currentStep.target === "block_item" && (
+                      <motion.div
+                        animate={{ opacity: [0.4, 0.9, 0.4] }}
+                        transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
+                        className="absolute inset-0 rounded-md bg-yellow-400"
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center">
+                      <Ban className="w-4 h-4 mr-2" />
+                      Bloquear números
+                    </span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Histórico de chamadas"); }}>
                     <Clock className="w-4 h-4 mr-2" />
@@ -374,13 +378,6 @@ export default function Telefone() {
           </DialogHeader>
 
           <div className="space-y-4">
-            {/* Explicação */}
-            <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-xl">
-              <p className="text-sm text-orange-900">
-                🛡️ <strong>Importante:</strong> Bloqueie números de vendedores chatos, golpistas e pessoas indesejadas. Números bloqueados não conseguem mais te ligar. Você fica protegido!
-              </p>
-            </div>
-
             {/* Adicionar Número */}
             <div>
               <Label htmlFor="block-number">Número para Bloquear</Label>
@@ -431,13 +428,28 @@ export default function Telefone() {
             <Button variant="outline" onClick={() => setShowBlockDialog(false)}>
               Fechar
             </Button>
-            <Button
-              onClick={handleSaveBlock}
-              className="bg-red-500 hover:bg-red-600"
-              disabled={!blockNumber}
-            >
-              Bloquear
-            </Button>
+            <div className="relative">
+              {currentStep.target === "block_button" && (
+                <motion.div
+                  animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+                  className="absolute -inset-2 rounded-full bg-yellow-400 z-0 pointer-events-none"
+                />
+              )}
+              <motion.div
+                animate={currentStep.target === "block_button" ? { scale: [1, 1.12, 1] } : {}}
+                transition={currentStep.target === "block_button" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                className="relative z-10"
+              >
+                <Button
+                  onClick={handleSaveBlock}
+                  className="bg-red-500 hover:bg-red-600"
+                  disabled={!blockNumber}
+                >
+                  Bloquear
+                </Button>
+              </motion.div>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
