@@ -27,33 +27,43 @@ import VozConfig from "./VozConfig";
 import InfoMedicas from "./InfoMedicas";
 
 // === IMPORTAÇÃO DE ARQUIVOS RAW PARA DOCUMENTAÇÃO COMPLETA (INPI) ===
-// Todos os arquivos de código-fonte via import.meta.glob (Vite)
-const sourceFiles = import.meta.glob("/src/**/*.{jsx,js,ts,tsx,css,json}", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-});
-
-// Arquivos do diretório base44 (backend, entidades, funções)
-const base44Files = import.meta.glob("/base44/**/*.{ts,js,json,jsonc,txt}", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-});
-
-// Arquivos de configuração da raiz do projeto
-const rootConfigFiles = import.meta.glob(
-  ["/package.json", "/vite.config.js", "/tailwind.config.js", "/postcss.config.js",
-   "/jsconfig.json", "/components.json", "/eslint.config.js", "/README.md", "/index.html"],
+// Todos os arquivos de código-fonte via import.meta.glob (Vite) - sem omissões
+const sourceFiles = import.meta.glob(
+  "/src/**/*.{jsx,js,ts,tsx,css,json,html,svg,mjs,cjs,md}",
   { query: "?raw", import: "default", eager: true }
 );
 
-// Arquivos públicos (PWA)
-const publicFiles = import.meta.glob("/public/*", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-});
+// Arquivos do diretório base44 (backend, entidades, funções)
+const base44Files = import.meta.glob(
+  "/base44/**/*.{ts,js,json,jsonc,txt,md}",
+  { query: "?raw", import: "default", eager: true }
+);
+
+// Arquivos de configuração da raiz do projeto (catch-all + específicos)
+const rootConfigFiles = import.meta.glob(
+  ["/*.{js,ts,json,html,md,cjs,mjs}", "/.gitignore", "/package.json", "/vite.config.js",
+   "/tailwind.config.js", "/postcss.config.js", "/jsconfig.json", "/components.json",
+   "/eslint.config.js", "/README.md", "/index.html"],
+  { query: "?raw", import: "default", eager: true }
+);
+
+// Arquivos públicos (PWA) - recursivo
+const publicFiles = import.meta.glob(
+  "/public/**/*",
+  { query: "?raw", import: "default", eager: true }
+);
+
+// Lista unificada de todos os arquivos (para contagem e listagem)
+const ALL_FILE_PATHS = [
+  ...Object.keys(sourceFiles),
+  ...Object.keys(base44Files),
+  ...Object.keys(rootConfigFiles),
+  ...Object.keys(publicFiles),
+].sort();
+
+// Busca conteúdo de qualquer arquivo em qualquer glob
+const getFileContent = (path) =>
+  sourceFiles[path] || base44Files[path] || rootConfigFiles[path] || publicFiles[path];
 
 const SCREENS = [
   {
@@ -611,10 +621,7 @@ export default function GerarDocumentacao() {
     pdf.setFont("helvetica", "normal");
     pdf.text("Listagem de todos os arquivos do projeto:", margin, 45);
 
-    const allPaths = [
-      ...Object.keys(sourceFiles),
-      ...Object.keys(base44Files),
-    ].sort();
+    const allPaths = ALL_FILE_PATHS;
 
     pdf.setFontSize(8);
     pdf.setFont("courier", "normal");
@@ -694,10 +701,10 @@ export default function GerarDocumentacao() {
       }
     };
 
-    // Adicionar todos os arquivos de código-fonte
+    // Adicionar todos os arquivos de código-fonte (inclui config, PWA, base44)
     for (let i = 0; i < allPaths.length; i++) {
       const filePath = allPaths[i];
-      const content = sourceFiles[filePath] || base44Files[filePath];
+      const content = getFileContent(filePath);
       if (content) {
         setProgress(Math.round(((i + SCREENS.length) / (allPaths.length + SCREENS.length)) * 100));
         setCurrentScreen(`Código: ${filePath}`);
@@ -705,31 +712,12 @@ export default function GerarDocumentacao() {
       }
     }
 
-    // ===== ARQUIVOS DE CONFIGURAÇÃO RAIZ =====
-    pdf.addPage();
-    pdf.setFontSize(16);
-    pdf.setFont("helvetica", "bold");
-    pdf.setTextColor(14, 165, 233);
-    pdf.text("9. Arquivos de Configuração e PWA", margin, 30);
-    pdf.setTextColor(20, 20, 20);
-
-    const configFiles = [
-      ...Object.entries(rootConfigFiles).map(([path, content]) => ({ path, content })),
-      ...Object.entries(publicFiles).map(([path, content]) => ({ path, content })),
-    ].sort((a, b) => a.path.localeCompare(b.path));
-
-    configFiles.forEach((f) => {
-      if (f.content) {
-        addFileToPdf(f.path, f.content);
-      }
-    });
-
     // ===== DECLARAÇÃO DE INTEGRIDADE PARA O INPI =====
     pdf.addPage();
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("10. Declaração de Integridade Documental", margin, 30);
+    pdf.text("9. Declaração de Integridade Documental", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -738,8 +726,8 @@ export default function GerarDocumentacao() {
       "aplicativo Forja da Consciência, incluindo:",
       "",
       `• ${SCREENS.length} telas documentadas com prints e descrições técnicas`,
-      `• ${allPaths.length} arquivos de código-fonte (HTML, JS, JSX, CSS, JSON)`,
-      `• ${configFiles.length} arquivos de configuração do projeto e PWA`,
+      `• ${allPaths.length} arquivos de código-fonte integral (HTML, JS, JSX, TS, CSS, JSON, SVG, MD)`,
+      "• Inclui configuração do projeto, PWA, service worker e manifest",
       "• Estrutura completa do repositório",
       "• Arquitetura técnica detalhada",
       "• Fluxo de navegação completo",
