@@ -11,6 +11,7 @@ export default function AppCamera() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Esta é a câmera do seu celular. Toque no círculo branco grande para tirar uma foto."
@@ -18,6 +19,7 @@ export default function AppCamera() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   const tirarFoto = () => {

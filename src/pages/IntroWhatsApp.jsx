@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
@@ -103,6 +103,12 @@ const features = [
 export default function IntroWhatsApp() {
   const navigate = useNavigate();
   const [selectedFeature, setSelectedFeature] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    };
+  }, []);
 
   const handleFeatureClick = (feature) => {
     setSelectedFeature(feature.id);

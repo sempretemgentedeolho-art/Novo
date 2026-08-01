@@ -9,6 +9,7 @@ export default function AppFacebook() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Este é o Facebook. Aqui você vê publicações de amigos e familiares. Toque na seta para voltar."
@@ -16,6 +17,7 @@ export default function AppFacebook() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   const posts = [

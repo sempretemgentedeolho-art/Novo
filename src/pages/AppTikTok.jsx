@@ -9,6 +9,7 @@ export default function AppTikTok() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Este é o TikTok. Aqui você assiste vídeos curtos e divertidos. Toque na seta para voltar."
@@ -16,6 +17,7 @@ export default function AppTikTok() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   return (

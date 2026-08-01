@@ -9,6 +9,7 @@ export default function AppMensagens() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Este é o aplicativo de Mensagens. Aqui você envia e recebe SMS. Toque na seta para voltar."
@@ -16,6 +17,7 @@ export default function AppMensagens() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   const conversas = [

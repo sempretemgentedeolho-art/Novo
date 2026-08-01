@@ -9,6 +9,7 @@ export default function AppWhatsApp() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Este é o WhatsApp. Aqui você vê suas conversas. Toque na seta no canto superior esquerdo para voltar."
@@ -16,6 +17,7 @@ export default function AppWhatsApp() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   const conversas = [

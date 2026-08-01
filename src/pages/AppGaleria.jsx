@@ -9,6 +9,7 @@ export default function AppGaleria() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Esta é a galeria. Aqui ficam todas as suas fotos e vídeos. Toque na seta para voltar."
@@ -16,6 +17,7 @@ export default function AppGaleria() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   const fotos = [

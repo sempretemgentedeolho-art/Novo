@@ -9,6 +9,7 @@ export default function AppInstagram() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Este é o Instagram. Aqui você vê fotos e vídeos de amigos e pessoas que você segue. Toque na seta para voltar."
@@ -16,6 +17,7 @@ export default function AppInstagram() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
+    return () => synth.cancel();
   }, []);
 
   const posts = [
