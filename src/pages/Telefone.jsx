@@ -7,12 +7,6 @@ import { motion } from "framer-motion";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -237,35 +231,46 @@ export default function Telefone() {
                   className="absolute -inset-1 rounded-full bg-yellow-400 z-0 pointer-events-none"
                 />
               )}
-              <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
-                <DropdownMenuTrigger asChild>
+              <motion.button
+                animate={currentStep.target === "menu" ? { scale: [1, 1.12, 1] } : {}}
+                transition={currentStep.target === "menu" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                onClick={handleMenu}
+                className="relative z-10 w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center"
+              >
+                <MoreVertical className="w-6 h-6 text-gray-700" />
+              </motion.button>
+
+              {/* Menu customizado (sem Radix) — pulso total controle */}
+              {menuOpen && (
+                <div className="absolute top-12 right-0 z-50 w-52 bg-white rounded-xl shadow-xl border border-gray-200 py-1">
                   <motion.button
-                    animate={currentStep.target === "menu" ? { scale: [1, 1.12, 1] } : {}}
-                    transition={currentStep.target === "menu" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
-                    onClick={handleMenu}
-                    className="relative z-10 w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center"
-                  >
-                    <MoreVertical className="w-6 h-6 text-gray-700" />
-                  </motion.button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem
                     onClick={handleBlockNumber}
-                    className={currentStep.target === "block_item" ? "bg-yellow-400 animate-pulse font-bold ring-2 ring-yellow-600" : ""}
+                    animate={currentStep.target === "block_item" ? {
+                      backgroundColor: ["rgba(250,204,21,0.5)", "rgba(250,204,21,1)", "rgba(250,204,21,0.5)"],
+                      scale: [1, 1.03, 1]
+                    } : {}}
+                    transition={currentStep.target === "block_item" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                    className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-left text-gray-800 rounded-lg"
                   >
-                    <Ban className="w-4 h-4 mr-2" />
-                    Bloquear números
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Histórico de chamadas"); }}>
-                    <Clock className="w-4 h-4 mr-2" />
+                    <Ban className="w-4 h-4" />
+                    <span className="font-bold">Bloquear números</span>
+                  </motion.button>
+                  <button
+                    onClick={() => { setMenuOpen(false); alert("Histórico de chamadas"); }}
+                    className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-left text-gray-700 hover:bg-gray-100 rounded-lg"
+                  >
+                    <Clock className="w-4 h-4" />
                     Histórico
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Configurações"); }}>
-                    <Settings className="w-4 h-4 mr-2" />
+                  </button>
+                  <button
+                    onClick={() => { setMenuOpen(false); alert("Configurações"); }}
+                    className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-left text-gray-700 hover:bg-gray-100 rounded-lg"
+                  >
+                    <Settings className="w-4 h-4" />
                     Configurações
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-gray-900">Telefone</h1>
