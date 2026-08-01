@@ -175,14 +175,16 @@ export default function Mensagens() {
         </div>
 
         {/* New Message Button */}
-        <Halo active={currentStep.target === "new_message"} className="absolute bottom-6 right-6">
-          <Button
-            onClick={handleNewMessage}
-            className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg"
-          >
-            <MessageSquare className="w-6 h-6" />
-          </Button>
-        </Halo>
+        <div className="absolute bottom-8 right-6 z-30">
+          <Halo active={currentStep.target === "new_message"}>
+            <Button
+              onClick={handleNewMessage}
+              className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg"
+            >
+              <MessageSquare className="w-6 h-6" />
+            </Button>
+          </Halo>
+        </div>
       </div>
     </PhoneFrame>
   );
