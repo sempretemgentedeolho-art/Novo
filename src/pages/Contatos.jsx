@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { ArrowLeft, Search, Phone, MessageSquare, Plus, MoreVertical, Edit, Trash2, Star, User, Camera } from "lucide-react";
+import { motion } from "framer-motion";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import {
@@ -28,6 +28,30 @@ const initialContacts = [
   { id: 3, name: "Maria Silva", phone: "(11) 99876-5432", email: "maria@email.com", favorite: true },
 ];
 
+// Sequência do tutorial: cada etapa tem um alvo que pisca.
+const STEPS = [
+  {
+    id: "intro",
+    text: "Bem-vindo ao aplicativo Contatos! Aqui você guarda os números de telefone das pessoas. Cada linha é um contato, com o nome e o telefone. Agora vou te ensinar a adicionar um novo contato. Lá embaixo, do lado direito, tem um botão laranja com um sinal de mais que está piscando. Toque nele.",
+    target: "add_button",
+  },
+  {
+    id: "form",
+    text: "Muito bem! Esta é a tela para criar um novo contato. Primeiro escolha onde salvar: no aparelho ou na conta Google. Depois preencha o nome e o telefone. Você também pode adicionar uma foto tocando no ícone da câmera. Preencha o nome e o telefone e depois toque no botão Salvar que vai piscar.",
+    target: "form",
+  },
+  {
+    id: "save_button",
+    text: "Muito bem! Agora toque no botão Salvar que está piscando para salvar o contato.",
+    target: "save_button",
+  },
+  {
+    id: "saved",
+    text: "Parabéns! Contato criado com sucesso! Agora clique na seta para voltar que está piscando para retornar aos aplicativos.",
+    target: "back",
+  },
+];
+
 export default function Contatos() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +60,7 @@ export default function Contatos() {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [storageLocation, setStorageLocation] = useState("device");
-  const [hasGivenSaveInstruction, setHasGivenSaveInstruction] = useState(false);
+  const [stepIndex, setStepIndex] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -47,36 +71,34 @@ export default function Contatos() {
     favorite: false,
   });
 
+  const currentStep = STEPS[stepIndex];
+
+  // Única fonte de narração: dispara ao mudar de etapa. Cancela qualquer fala anterior.
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
-      const utter = new SpeechSynthesisUtterance(
-        "Aplicativo Contatos. Aqui você pode criar e gerenciar seus contatos. Clique no botão mais para adicionar um novo contato. É muito fácil! Vamos criar um contato juntos?"
-      );
+      const utter = new SpeechSynthesisUtterance(currentStep.text);
       utter.lang = "pt-BR";
-      utter.rate = 0.9;
-      synth.speak(utter);
+      utter.rate = 0.82;
+      const timer = setTimeout(() => synth.speak(utter), 150);
+      return () => {
+        clearTimeout(timer);
+        window.speechSynthesis.cancel();
+      };
     }
-    return () => window.speechSynthesis.cancel();
-  }, []);
+  }, [stepIndex]);
 
-  // Verificar se os campos obrigatórios foram preenchidos e dar instrução
+  // Avança para a etapa "save_button" quando nome e telefone estiverem preenchidos
   useEffect(() => {
-    if (showAddDialog && formData.name && formData.phone && !hasGivenSaveInstruction) {
-      const synth = window.speechSynthesis;
-      if (synth) {
-        synth.cancel();
-        const utter = new SpeechSynthesisUtterance(
-          "Muito bem! Agora que você preencheu os dados, clique em Salvar!"
-        );
-        utter.lang = "pt-BR";
-        utter.rate = 0.9;
-        synth.speak(utter);
-        setHasGivenSaveInstruction(true);
-      }
+    if (showAddDialog && formData.name && formData.phone && currentStep.id === "form") {
+      setStepIndex((i) => i + 1);
     }
-  }, [formData.name, formData.phone, showAddDialog, hasGivenSaveInstruction]);
+  }, [formData.name, formData.phone, showAddDialog, currentStep.id]);
+
+  const goNext = () => {
+    setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
+  };
 
   const filteredContacts = contacts
     .filter(contact => contact.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -101,58 +123,31 @@ export default function Contatos() {
   };
 
   const handleSaveEdit = () => {
-    setContacts(contacts.map(c => 
-      c.id === editingContact.id 
+    setContacts(contacts.map(c =>
+      c.id === editingContact.id
         ? { ...c, ...formData }
         : c
     ));
     setShowEditDialog(false);
     setEditingContact(null);
-    
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      const utter = new SpeechSynthesisUtterance("Contato atualizado com sucesso!");
-      utter.lang = "pt-BR";
-      utter.rate = 0.9;
-      synth.speak(utter);
-    }
   };
 
   const handleDeleteContact = (contactId) => {
     if (confirm("Deseja realmente excluir este contato?")) {
       setContacts(contacts.filter(c => c.id !== contactId));
-      const synth = window.speechSynthesis;
-      if (synth) {
-        synth.cancel();
-        const utter = new SpeechSynthesisUtterance("Contato excluído.");
-        utter.lang = "pt-BR";
-        utter.rate = 0.9;
-        synth.speak(utter);
-      }
     }
   };
 
   const handleToggleFavorite = (contactId) => {
-    setContacts(contacts.map(c => 
-      c.id === contactId 
+    setContacts(contacts.map(c =>
+      c.id === contactId
         ? { ...c, favorite: !c.favorite }
         : c
     ));
   };
 
   const handleAddContact = () => {
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      const utter = new SpeechSynthesisUtterance(
-        "Vamos criar um novo contato! Primeiro, escolha onde salvar: no aparelho ou na sua conta Google. Depois, preencha o nome e o telefone. Você também pode adicionar uma foto tocando no ícone da câmera. É muito simples!"
-      );
-      utter.lang = "pt-BR";
-      utter.rate = 0.9;
-      synth.speak(utter);
-    }
-    
+    if (currentStep.target !== "add_button") return;
     setFormData({
       name: "",
       phone: "",
@@ -162,8 +157,8 @@ export default function Contatos() {
       notes: "",
       favorite: false,
     });
-    setHasGivenSaveInstruction(false);
     setShowAddDialog(true);
+    goNext();
   };
 
   const handleSaveNewContact = () => {
@@ -171,26 +166,42 @@ export default function Contatos() {
       alert("Por favor, preencha pelo menos o nome e o telefone.");
       return;
     }
-    
+
     const newContact = {
       id: Math.max(...contacts.map(c => c.id)) + 1,
       ...formData,
     };
     setContacts([...contacts, newContact]);
     setShowAddDialog(false);
-    setHasGivenSaveInstruction(false);
-    
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      const utter = new SpeechSynthesisUtterance(
-        `Parabéns! Contato ${formData.name} criado com sucesso! Agora você pode ligar ou mandar mensagem para esta pessoa facilmente. Muito bem! Vamos voltar à tela inicial? Clique na seta à sua esquerda, bem em cima.`
-      );
-      utter.lang = "pt-BR";
-      utter.rate = 0.9;
-      synth.speak(utter);
+    if (currentStep.target === "save_button") {
+      goNext();
     }
   };
+
+  const handleBack = () => {
+    if (currentStep.target !== "back") return;
+    navigate(createPageUrl("Home"));
+  };
+
+  // Halo pulsante (overlay) — não interfere em refs/clicks do botão
+  const Halo = ({ active, children, className = "" }) => (
+    <div className={`relative ${className}`}>
+      {active && (
+        <motion.div
+          animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+          className="absolute -inset-2 rounded-full bg-yellow-400 z-0 pointer-events-none"
+        />
+      )}
+      <motion.div
+        animate={active ? { scale: [1, 1.12, 1] } : {}}
+        transition={active ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+        className="relative z-10"
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
 
   return (
     <PhoneFrame>
@@ -199,11 +210,15 @@ export default function Contatos() {
 
         {/* Header */}
         <div className="bg-orange-500 text-white p-6 pb-4">
-          <button onClick={() => navigate(createPageUrl("Home"))} className="mb-4">
-            <ArrowLeft className="w-6 h-6" />
-          </button>
+          <div className="flex justify-between items-center mb-4">
+            <Halo active={currentStep.target === "back"}>
+              <button onClick={handleBack}>
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+            </Halo>
+          </div>
           <h1 className="text-2xl font-bold mb-4">Contatos</h1>
-          
+
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
@@ -214,13 +229,6 @@ export default function Contatos() {
               className="w-full pl-10 pr-4 py-2 rounded-full bg-white/20 border border-white/30 text-white placeholder:text-white/70 outline-none"
             />
           </div>
-        </div>
-
-        {/* Dica */}
-        <div className="bg-orange-50 border-l-4 border-orange-500 p-4 m-4">
-          <p className="text-sm text-orange-900">
-            💡 <strong>Dica:</strong> Salve os contatos de familiares e amigos para ligar facilmente. Você pode adicionar foto para reconhecer melhor!
-          </p>
         </div>
 
         {/* Lista de Contatos */}
@@ -247,13 +255,13 @@ export default function Contatos() {
                 <p className="text-sm text-gray-500">{contact.phone}</p>
               </div>
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={() => alert(`Ligando para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-green-100 hover:bg-green-200 flex items-center justify-center"
                 >
                   <Phone className="w-5 h-5 text-green-600" />
                 </button>
-                <button 
+                <button
                   onClick={() => alert(`Enviando mensagem para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center"
                 >
@@ -274,7 +282,7 @@ export default function Contatos() {
                       <Star className="w-4 h-4 mr-2" />
                       Remover dos favoritos
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => handleDeleteContact(contact.id)}
                       className="text-red-600"
                     >
@@ -306,13 +314,13 @@ export default function Contatos() {
                 <p className="text-sm text-gray-500">{contact.phone}</p>
               </div>
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={() => alert(`Ligando para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-green-100 hover:bg-green-200 flex items-center justify-center"
                 >
                   <Phone className="w-5 h-5 text-green-600" />
                 </button>
-                <button 
+                <button
                   onClick={() => alert(`Enviando mensagem para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center"
                 >
@@ -333,7 +341,7 @@ export default function Contatos() {
                       <Star className="w-4 h-4 mr-2" />
                       Adicionar aos favoritos
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => handleDeleteContact(contact.id)}
                       className="text-red-600"
                     >
@@ -348,12 +356,16 @@ export default function Contatos() {
         </div>
 
         {/* Botão Adicionar Contato */}
-        <button 
-          onClick={handleAddContact}
-          className="absolute bottom-6 right-6 w-14 h-14 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg flex items-center justify-center"
-        >
-          <Plus className="w-7 h-7 text-white" />
-        </button>
+        <div className="absolute bottom-8 right-6 z-30">
+          <Halo active={currentStep.target === "add_button"}>
+            <button
+              onClick={handleAddContact}
+              className="w-14 h-14 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg flex items-center justify-center"
+            >
+              <Plus className="w-7 h-7 text-white" />
+            </button>
+          </Halo>
+        </div>
       </div>
 
       {/* Dialog de Adicionar */}
@@ -362,12 +374,12 @@ export default function Contatos() {
           <DialogHeader>
             <DialogTitle>Criar Novo Contato</DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             {/* Local de Armazenamento */}
             <div>
               <Label>Onde salvar?</Label>
-              <select 
+              <select
                 value={storageLocation}
                 onChange={(e) => setStorageLocation(e.target.value)}
                 className="w-full mt-2 p-2 border rounded-lg"
@@ -468,13 +480,28 @@ export default function Contatos() {
             <Button variant="outline" onClick={() => setShowAddDialog(false)}>
               Cancelar
             </Button>
-            <Button 
-              onClick={handleSaveNewContact} 
-              className="bg-orange-500 hover:bg-orange-600"
-              disabled={!formData.name || !formData.phone}
-            >
-              Salvar
-            </Button>
+            <div className="relative">
+              {currentStep.target === "save_button" && (
+                <motion.div
+                  animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+                  className="absolute -inset-2 rounded-full bg-yellow-400 z-0 pointer-events-none"
+                />
+              )}
+              <motion.div
+                animate={currentStep.target === "save_button" ? { scale: [1, 1.12, 1] } : {}}
+                transition={currentStep.target === "save_button" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                className="relative z-10"
+              >
+                <Button
+                  onClick={handleSaveNewContact}
+                  className="bg-orange-500 hover:bg-orange-600"
+                  disabled={!formData.name || !formData.phone}
+                >
+                  Salvar
+                </Button>
+              </motion.div>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { ArrowLeft, Plus, Bell, Trash2, Play, Pause, RotateCcw, Flag } from "lucide-react";
+import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
@@ -194,9 +195,23 @@ export default function Relogio() {
               <ArrowLeft className="w-6 h-6" />
             </button>
             {alarms.length > 0 && (
-              <button onClick={handleAddAlarm}>
-                <Plus className="w-6 h-6" />
-              </button>
+              <div className="relative">
+                {!showAddAlarm && (
+                  <motion.div
+                    animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0.2, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+                    className="absolute -inset-2 rounded-full bg-yellow-400 z-0 pointer-events-none"
+                  />
+                )}
+                <motion.button
+                  animate={!showAddAlarm ? { scale: [1, 1.2, 1] } : {}}
+                  transition={!showAddAlarm ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                  onClick={handleAddAlarm}
+                  className="relative z-10"
+                >
+                  <Plus className="w-6 h-6" />
+                </motion.button>
+              </div>
             )}
           </div>
           <h1 className="text-2xl font-bold">Relógio</h1>
@@ -297,12 +312,19 @@ export default function Relogio() {
                 <Bell className="w-16 h-16 mx-auto mb-4 opacity-30" />
                 <p className="text-lg font-medium mb-2">Nenhum alarme</p>
                 <p className="text-sm mb-4">Crie alarmes para seus medicamentos</p>
-                <button 
+                <motion.button
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
                   onClick={handleAddAlarm}
-                  className="px-6 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600"
+                  className="px-6 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 relative"
                 >
-                  Criar Alarme
-                </button>
+                  <motion.div
+                    animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+                    className="absolute -inset-2 rounded-full bg-yellow-400 z-0 pointer-events-none"
+                  />
+                  <span className="relative z-10">Criar Alarme</span>
+                </motion.button>
               </div>
             ) : (
               <div className="space-y-3">
@@ -548,13 +570,28 @@ export default function Relogio() {
             <Button variant="outline" onClick={() => setShowAddAlarm(false)}>
               Cancelar
             </Button>
-            <Button 
-              onClick={handleSaveAlarm} 
-              className="bg-indigo-500 hover:bg-indigo-600"
-              disabled={!newAlarm.label}
-            >
-              Criar Alarme
-            </Button>
+            <div className="relative">
+              {newAlarm.label && (
+                <motion.div
+                  animate={{ scale: [1, 1.5, 1.5], opacity: [0.7, 0.2, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+                  className="absolute -inset-2 rounded-full bg-yellow-400 z-0 pointer-events-none"
+                />
+              )}
+              <motion.div
+                animate={newAlarm.label ? { scale: [1, 1.12, 1] } : {}}
+                transition={newAlarm.label ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+                className="relative z-10"
+              >
+                <Button
+                  onClick={handleSaveAlarm}
+                  className="bg-indigo-500 hover:bg-indigo-600"
+                  disabled={!newAlarm.label}
+                >
+                  Criar Alarme
+                </Button>
+              </motion.div>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
