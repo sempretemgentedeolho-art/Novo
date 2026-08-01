@@ -1,0 +1,12 @@
+{
+  "name": "Forja da Consciência",
+  "short_name": "Forja",
+  "description": "Aprenda a usar seu celular de forma fácil e segura",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0EA5E9",
+  "theme_color": "#0EA5E9",
+  "lang": "pt-BR",
+  "icons": []
+}
