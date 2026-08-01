@@ -30,7 +30,7 @@ export default function VistoUltimo() {
         <StatusBar variant="light" />
 
         <div className="bg-white px-4 py-3 border-b border-gray-200 flex items-center">
-          <button onClick={() => navigate(fromCheckup ? createPageUrl("CheckupControleDados") : createPageUrl("Privacidade"))}>
+          <button onClick={() => navigate(createPageUrl("Privacidade"))}>
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
           <h1 className="text-xl font-semibold text-gray-900 ml-4">Visto por último e online</h1>

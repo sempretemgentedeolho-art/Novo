@@ -29,8 +29,8 @@ const initialChats = [
   },
   { 
     id: 2, 
-    name: "Vôlei Operário", 
-    message: "+55 51 9860-2942: Blzz", 
+    name: "Vôlei Operário",
+    message: "Carlos: Blzz",
     time: "28/01/2025", 
     unread: 1,
     avatar: "🏐",
@@ -41,8 +41,8 @@ const initialChats = [
   },
   { 
     id: 3, 
-    name: "+55 51 9535-8008", 
-    message: "✓ 👍", 
+    name: "Tio Fernando",
+    message: "✓ 👍",
     time: "24/01/2025", 
     unread: 0,
     avatar: "M",
@@ -50,8 +50,8 @@ const initialChats = [
   },
   { 
     id: 4, 
-    name: "+55 51 9673-4754", 
-    message: "+55 51 9673-4754 usa uma duração padrã...", 
+    name: "Vizinho João",
+    message: "Vizinho João usa uma duração padrã...",
     time: "13/08/2024", 
     unread: 0,
     avatar: "📞",
@@ -68,8 +68,8 @@ const initialChats = [
   },
   { 
     id: 6, 
-    name: "+55 51 9765-3263", 
-    message: "Bm dia Eu tenho O carro dai fica ruim dx...", 
+    name: "Marina Costa",
+    message: "Bm dia Eu tenho O carro dai fica ruim dx...",
     time: "17/01/2025", 
     unread: 0,
     avatar: "R",
