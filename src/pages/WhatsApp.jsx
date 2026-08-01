@@ -301,7 +301,7 @@ export default function WhatsApp() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Para criar um grupo selecione o número, clique na bolinha vai ficar verde, logo abaixo tem uma seta verde do seu lado direito clique nela."
+        "Para criar um grupo, clique na bolinha ao lado do nome, ela vai ficar verde, logo abaixo tem uma seta verde do seu lado direito, clique nela."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.85;
