@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
-import { 
-  ArrowLeft, Wifi, Bluetooth, Volume2, Bell, Moon, Battery, 
-  Smartphone, Lock, Shield, HardDrive, User, ChevronRight, Heart, AppWindow, Clock
+import {
+  ArrowLeft, Wifi, Bluetooth, Volume2, Bell, Moon, Battery,
+  Smartphone, Lock, Shield, HardDrive, User, ChevronRight, Heart, AppWindow, Clock, Mic
 } from "lucide-react";
 
 const settings = [
   { icon: Wifi, label: "Wi-Fi", value: "Casa_WiFi", color: "text-blue-600", page: "WiFiConfig" },
   { icon: Bluetooth, label: "Bluetooth", value: "Desligado", color: "text-blue-500", page: "BluetoothConfig" },
   { icon: Volume2, label: "Som e vibração", color: "text-gray-700", page: "VolumeControl" },
+  { icon: Mic, label: "Voz da narração", value: "Padrão", color: "text-indigo-600", page: "VozConfig" },
   { icon: Bell, label: "Notificações", color: "text-red-500", page: "Notificacoes" },
   { icon: Clock, label: "Relógio", color: "text-indigo-600", page: "Relogio" },
   { icon: Moon, label: "Modo noturno", value: "Desligado", color: "text-indigo-600", page: "ModoNoturno" },

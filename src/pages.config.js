@@ -170,6 +170,7 @@ import UsarEfeitosCamera from './pages/UsarEfeitosCamera';
 import VerContatoGuia from './pages/VerContatoGuia';
 import VideoConversaGuia from './pages/VideoConversaGuia';
 import VistoUltimo from './pages/VistoUltimo';
+import VozConfig from './pages/VozConfig';
 import VolumeControl from './pages/VolumeControl';
 import VolumeNotificacoes from './pages/VolumeNotificacoes';
 import WhatsApp from './pages/WhatsApp';
@@ -351,6 +352,7 @@ export const PAGES = {
     "VerContatoGuia": VerContatoGuia,
     "VideoConversaGuia": VideoConversaGuia,
     "VistoUltimo": VistoUltimo,
+    "VozConfig": VozConfig,
     "VolumeControl": VolumeControl,
     "VolumeNotificacoes": VolumeNotificacoes,
     "WhatsApp": WhatsApp,
