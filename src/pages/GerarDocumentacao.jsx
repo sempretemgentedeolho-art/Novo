@@ -639,12 +639,80 @@ export default function GerarDocumentacao() {
       y += 4.5;
     });
 
+    // ===== VERIFICAÇÃO DE ARQUIVOS CRÍTICOS =====
+    pdf.addPage();
+    pdf.setFontSize(20);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text("8. Verificação de Arquivos Críticos", margin, 30);
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.text(
+      "Confirmação de que os arquivos essenciais para comprovação de",
+      margin,
+      45
+    );
+    pdf.text("autoria estão presentes neste documento:", margin, 52);
+
+    const criticalFiles = [
+      "/.gitignore",
+      "/index.html",
+      "/vite.config.js",
+      "/package.json",
+      "/tailwind.config.js",
+      "/postcss.config.js",
+      "/jsconfig.json",
+      "/components.json",
+      "/eslint.config.js",
+      "/src/main.jsx",
+      "/src/App.jsx",
+      "/src/index.css",
+      "/src/pages.config.js",
+      "/src/api/base44Client.js",
+      "/src/lib/AuthContext.jsx",
+      "/src/lib/utils.js",
+      "/src/lib/speech.js",
+      "/src/utils/index.ts",
+      "/src/Layout.jsx",
+      "/public/manifest.json",
+      "/public/service-worker.js",
+      "/base44/config.jsonc",
+    ];
+
+    pdf.setFontSize(10);
+    pdf.setFont("courier", "normal");
+    y = 65;
+    let foundCount = 0;
+    criticalFiles.forEach((cf) => {
+      if (y > pageHeight - 15) {
+        pdf.addPage();
+        y = 20;
+        pdf.setFontSize(10);
+        pdf.setFont("courier", "normal");
+      }
+      const found = ALL_FILE_PATHS.includes(cf);
+      if (found) foundCount++;
+      pdf.setTextColor(found ? 22 : 200, found ? 163 : 30, found ? 74 : 30);
+      pdf.text(`${found ? "[OK]  " : "[FALTA]"} ${cf}`, margin, y);
+      y += 6;
+    });
+
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(20, 20, 20);
+    pdf.text(
+      `${foundCount} de ${criticalFiles.length} arquivos críticos confirmados`,
+      margin,
+      y + 5
+    );
+
     // ===== CÓDIGO-FONTE COMPLETO =====
     pdf.addPage();
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("8. Código-Fonte Completo do Projeto", margin, 30);
+    pdf.text("9. Código-Fonte Completo do Projeto", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -717,7 +785,7 @@ export default function GerarDocumentacao() {
     pdf.setFontSize(20);
     pdf.setFont("helvetica", "bold");
     pdf.setTextColor(20, 20, 20);
-    pdf.text("9. Declaração de Integridade Documental", margin, 30);
+    pdf.text("10. Declaração de Integridade Documental", margin, 30);
 
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
@@ -735,7 +803,7 @@ export default function GerarDocumentacao() {
       "",
       "Todos os arquivos que compõem o projeto estão documentados",
       "integralmente neste PDF, sem omissões. O código-fonte de cada",
-      "arquivo está reproduzido na íntegra nas seções 8 e 9.",
+      "arquivo está reproduzido na íntegra nas seções 9 e 10.",
       "",
       "Esta documentação atende aos requisitos de depósito de",
       "propriedade intelectual junto ao INPI (Instituto Nacional da",
@@ -792,7 +860,7 @@ export default function GerarDocumentacao() {
           </div>
           <h2 className="text-2xl font-bold mb-2">Gerar PDF Técnico</h2>
           <p className="text-sm text-white/70">
-            Documento completo com prints de telas, código-fonte integral, HTML, JSON e configurações para patenteamento no INPI
+            Documento completo com prints de telas, código-fonte integral, HTML, JSON, configurações, .gitignore, API e verificação de arquivos críticos para patenteamento no INPI
           </p>
         </div>
 
