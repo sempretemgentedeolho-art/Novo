@@ -107,9 +107,13 @@ export default function Telefone() {
       const utter = new SpeechSynthesisUtterance(currentStep.text);
       utter.lang = "pt-BR";
       utter.rate = 0.82;
-      synth.speak(utter);
+      // Pequeno atraso para garantir que o cancelamento conclua antes de iniciar nova fala
+      const timer = setTimeout(() => synth.speak(utter), 150);
+      return () => {
+        clearTimeout(timer);
+        window.speechSynthesis.cancel();
+      };
     }
-    return () => window.speechSynthesis.cancel();
   }, [stepIndex]);
 
   const goNext = () => {
@@ -245,18 +249,12 @@ export default function Telefone() {
                   </motion.button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={handleBlockNumber} asChild>
-                    <motion.div
-                      animate={currentStep.target === "block_item" ? {
-                        backgroundColor: ["rgba(250,204,21,0.4)", "rgba(250,204,21,0.85)", "rgba(250,204,21,0.4)"],
-                        scale: [1, 1.05, 1]
-                      } : {}}
-                      transition={currentStep.target === "block_item" ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
-                      className="flex items-center cursor-pointer"
-                    >
-                      <Ban className="w-4 h-4 mr-2" />
-                      <span className="font-semibold">Bloquear números</span>
-                    </motion.div>
+                  <DropdownMenuItem
+                    onClick={handleBlockNumber}
+                    className={currentStep.target === "block_item" ? "bg-yellow-400 animate-pulse font-bold ring-2 ring-yellow-600" : ""}
+                  >
+                    <Ban className="w-4 h-4 mr-2" />
+                    Bloquear números
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => { setMenuOpen(false); alert("Histórico de chamadas"); }}>
                     <Clock className="w-4 h-4 mr-2" />
