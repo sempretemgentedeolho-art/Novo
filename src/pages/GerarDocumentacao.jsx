@@ -29,25 +29,27 @@ import InfoMedicas from "./InfoMedicas";
 // === IMPORTAÇÃO DE ARQUIVOS RAW PARA DOCUMENTAÇÃO COMPLETA (INPI) ===
 // Todos os arquivos de código-fonte via import.meta.glob (Vite) - sem omissões
 const sourceFiles = import.meta.glob(
-  "/src/**/*.{jsx,js,ts,tsx,css,json,html,svg,mjs,cjs,md}",
+  "/src/**/*.{jsx,js,ts,tsx,css,json,jsonc,html,svg,mjs,cjs,md,yaml,yml}",
   { query: "?raw", import: "default", eager: true }
 );
 
-// Arquivos do diretório base44 (backend, entidades, funções)
+// Arquivos do diretório base44 (backend, entidades, funções) - todas as extensões
 const base44Files = import.meta.glob(
-  "/base44/**/*.{ts,js,json,jsonc,txt,md}",
+  "/base44/**/*.{ts,js,json,jsonc,txt,md,yaml,yml,bat,sh}",
   { query: "?raw", import: "default", eager: true }
 );
 
-// Arquivos de configuração da raiz do projeto (catch-all + específicos)
+// Arquivos de configuração da raiz do projeto (catch-all + específicos + dot files)
 const rootConfigFiles = import.meta.glob(
-  ["/*.{js,ts,json,html,md,cjs,mjs}", "/.gitignore", "/package.json", "/vite.config.js",
-   "/tailwind.config.js", "/postcss.config.js", "/jsconfig.json", "/components.json",
-   "/eslint.config.js", "/README.md", "/index.html"],
+  ["/*.{js,ts,json,html,md,cjs,mjs,yaml,yml,toml,bat,sh,lock}",
+   "/.gitignore", "/.env", "/.env.local", "/.env.production",
+   "/package.json", "/vite.config.js", "/tailwind.config.js", "/postcss.config.js",
+   "/jsconfig.json", "/components.json", "/eslint.config.js", "/README.md", "/index.html",
+   "/tsconfig.json", "/vercel.json", "/netlify.toml", "/package-lock.json", "/yarn.lock"],
   { query: "?raw", import: "default", eager: true }
 );
 
-// Arquivos públicos (PWA) - recursivo
+// Arquivos públicos (PWA) - recursivo, todas as extensões
 const publicFiles = import.meta.glob(
   "/public/**/*",
   { query: "?raw", import: "default", eager: true }
@@ -623,20 +625,53 @@ export default function GerarDocumentacao() {
 
     const allPaths = ALL_FILE_PATHS;
 
+    // Visualização em árvore organizada por diretório
     pdf.setFontSize(8);
     pdf.setFont("courier", "normal");
     pdf.setTextColor(40, 40, 40);
     y = 55;
+
+    // Agrupar arquivos por diretório raiz
+    const dirs = {
+      "/base44/": [],
+      "/public/": [],
+      "/src/": [],
+      "/ (raiz)": [],
+    };
     allPaths.forEach((path) => {
-      if (y > pageHeight - 15) {
+      if (path.startsWith("/base44/")) dirs["/base44/"].push(path);
+      else if (path.startsWith("/public/")) dirs["/public/"].push(path);
+      else if (path.startsWith("/src/")) dirs["/src/"].push(path);
+      else dirs["/ (raiz)"].push(path);
+    });
+
+    Object.entries(dirs).forEach(([dirName, files]) => {
+      if (files.length === 0) return;
+      if (y > pageHeight - 20) {
         pdf.addPage();
         y = 20;
         pdf.setFontSize(8);
         pdf.setFont("courier", "normal");
         pdf.setTextColor(40, 40, 40);
       }
-      pdf.text(path, margin, y);
-      y += 4.5;
+      pdf.setFont("helvetica", "bold");
+      pdf.setTextColor(14, 165, 233);
+      pdf.text(`${dirName} (${files.length} arquivos)`, margin, y);
+      y += 5;
+      pdf.setFont("courier", "normal");
+      pdf.setTextColor(40, 40, 40);
+      files.forEach((path) => {
+        if (y > pageHeight - 15) {
+          pdf.addPage();
+          y = 20;
+          pdf.setFontSize(8);
+          pdf.setFont("courier", "normal");
+          pdf.setTextColor(40, 40, 40);
+        }
+        pdf.text(`  ${path}`, margin, y);
+        y += 4.5;
+      });
+      y += 3;
     });
 
     // ===== VERIFICAÇÃO DE ARQUIVOS CRÍTICOS =====
