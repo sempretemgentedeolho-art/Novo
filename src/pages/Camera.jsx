@@ -71,16 +71,11 @@ export default function CameraPage() {
   const [showSettings, setShowSettings] = useState(false);
   const [videoQuality, setVideoQuality] = useState("1080");
   const [videoOrientation, setVideoOrientation] = useState("vertical");
-  const spokenRef = useRef(false);
 
   const currentStep = STEPS[stepIndex];
 
-  // Narração da etapa atual
+  // Narração da etapa atual — dispara automaticamente ao mudar de etapa
   useEffect(() => {
-    if (spokenRef.current) {
-      spokenRef.current = false;
-      return;
-    }
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
@@ -91,6 +86,10 @@ export default function CameraPage() {
     }
     return () => window.speechSynthesis.cancel();
   }, [stepIndex]);
+
+  const goNext = () => {
+    setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
+  };
 
   const speak = (text) => {
     const synth = window.speechSynthesis;
@@ -103,26 +102,18 @@ export default function CameraPage() {
     }
   };
 
-  const goNext = () => {
-    spokenRef.current = true;
-    setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
-  };
-
   // Botão de capturar
   const handleCapture = () => {
     if (currentStep.target !== "capture") return;
     if (currentStep.id === "intro") {
       setPhotoTaken(true);
-      speak("Foto capturada! Muito bem!");
-      setTimeout(goNext, 1300);
+      goNext();
     } else if (currentStep.id === "settings_closed") {
       setIsRecording(true);
-      speak("Gravando vídeo! Para parar, toque novamente.");
-      setTimeout(goNext, 1600);
+      goNext();
     } else if (currentStep.id === "recording") {
       setIsRecording(false);
-      speak("Vídeo salvo! Muito bem!");
-      setTimeout(goNext, 1300);
+      goNext();
     }
   };
 
@@ -130,53 +121,46 @@ export default function CameraPage() {
   const handleVideoMode = () => {
     if (currentStep.target !== "video_mode") return;
     setMode("video");
-    speak("Modo vídeo selecionado! Muito bem!");
-    setTimeout(goNext, 1000);
+    goNext();
   };
 
   // Abrir configurações
   const handleSettings = () => {
     if (currentStep.target !== "settings") return;
     setShowSettings(true);
-    speak("Abrindo as configurações do vídeo!");
-    setTimeout(goNext, 1000);
+    goNext();
   };
 
   // Fechar configurações
   const handleCloseSettings = () => {
     if (currentStep.target !== "close_settings") return;
     setShowSettings(false);
-    speak("Configurações fechadas! Muito bem!");
-    setTimeout(goNext, 800);
+    goNext();
   };
 
   // Flash
   const handleFlash = () => {
     if (currentStep.target !== "flash") return;
     setFlash(true);
-    speak("Flash ligado! Muito bem!");
-    setTimeout(goNext, 1000);
+    goNext();
   };
 
   // Trocar câmera
   const handleFlip = () => {
     if (currentStep.target !== "flip") return;
     setFrontCamera(true);
-    speak("Câmera da frente selecionada! Muito bem!");
-    setTimeout(goNext, 1000);
+    goNext();
   };
 
   // Galeria
   const handleGallery = () => {
     if (currentStep.target !== "gallery") return;
-    speak("Abrindo a galeria!");
-    setTimeout(() => navigate(createPageUrl("Galeria")), 800);
+    navigate(createPageUrl("Galeria"));
   };
 
   // Voltar
   const handleBack = () => {
-    speak("Voltando!");
-    setTimeout(() => navigate(createPageUrl("Home")), 600);
+    navigate(createPageUrl("Home"));
   };
 
   // Destaque pulsante para o botão ativo
