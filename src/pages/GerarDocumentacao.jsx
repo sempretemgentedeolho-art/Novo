@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, FileText, Download, Loader2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, FileText, Download, Loader2, CheckCircle2, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -1144,6 +1144,17 @@ export default function GerarDocumentacao() {
           <span className="text-xs text-white/50">Documentação Markdown</span>
           <div className="flex-1 h-px bg-white/20" />
         </div>
+
+        {/* Visualizar online */}
+        {!generating && (
+          <button
+            onClick={() => navigate(createPageUrl("VisualizarDocumentacao"))}
+            className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl font-semibold flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg mb-3"
+          >
+            <BookOpen className="w-5 h-5" />
+            Visualizar Documentação Online
+          </button>
+        )}
 
         {/* Botões Markdown */}
         {!generating && (
