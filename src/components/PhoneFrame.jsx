@@ -6,9 +6,14 @@ export function PhoneFrame({ children, className }) {
     <div className="w-full h-full flex items-center justify-center bg-black">
       <div
         className={cn(
-          "relative bg-white overflow-hidden h-full w-full max-w-[480px] mx-auto rounded-[2.5rem]",
+          "relative bg-white overflow-hidden mx-auto",
           className
         )}
+        style={{
+          width: 'min(100%, 390px)',
+          height: 'min(100dvh, 844px)',
+          borderRadius: '2.5rem',
+        }}
       >
         {children}
       </div>
