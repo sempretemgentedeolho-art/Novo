@@ -44,7 +44,7 @@ export default function TelaInicial() {
   ];
 
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-b from-[#0b1c3d] via-[#102650] to-[#0b1c3d] flex flex-col items-center justify-start text-white relative">
+    <div className="min-h-screen bg-gradient-to-b from-[#0b1c3d] via-[#102650] to-[#0b1c3d] flex flex-col items-center justify-start text-white relative">
       {/* Barra de status */}
       <div className="w-full flex justify-between items-center text-sm px-6 pt-6 opacity-80 relative z-10">
         <span className="font-medium">

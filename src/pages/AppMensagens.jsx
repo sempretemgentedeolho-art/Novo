@@ -9,7 +9,6 @@ export default function AppMensagens() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
-    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Este é o aplicativo de Mensagens. Aqui você envia e recebe SMS. Toque na seta para voltar."
@@ -17,7 +16,6 @@ export default function AppMensagens() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
-    return () => synth.cancel();
   }, []);
 
   const conversas = [
@@ -27,7 +25,15 @@ export default function AppMensagens() {
   ];
 
   return (
-    <div className="h-[100dvh] bg-white overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="relative w-full max-w-sm">
+        <div className="relative bg-black rounded-[50px] p-3 shadow-2xl">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-b-3xl z-10"></div>
+          
+          <div
+            className="relative rounded-[46px] overflow-hidden bg-white"
+            style={{ aspectRatio: "9/19.5" }}
+          >
             {/* Header */}
             <div className="bg-blue-500 text-white p-4 pt-8">
               <div className="flex items-center justify-between mb-4">
@@ -65,6 +71,9 @@ export default function AppMensagens() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

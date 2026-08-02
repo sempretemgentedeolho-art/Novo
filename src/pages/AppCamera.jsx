@@ -11,7 +11,6 @@ export default function AppCamera() {
   useEffect(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
-    synth.cancel();
 
     const utter = new SpeechSynthesisUtterance(
       "Esta é a câmera do seu celular. Toque no círculo branco grande para tirar uma foto."
@@ -19,7 +18,6 @@ export default function AppCamera() {
     utter.lang = "pt-BR";
     utter.rate = 0.95;
     synth.speak(utter);
-    return () => synth.cancel();
   }, []);
 
   const tirarFoto = () => {
@@ -37,7 +35,15 @@ export default function AppCamera() {
   };
 
   return (
-    <div className="h-[100dvh] bg-gradient-to-br from-gray-900 via-gray-800 to-black overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="relative w-full max-w-sm">
+        <div className="relative bg-black rounded-[50px] p-3 shadow-2xl">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-b-3xl z-10"></div>
+          
+          <div
+            className="relative rounded-[46px] overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black"
+            style={{ aspectRatio: "9/19.5" }}
+          >
             {/* Grid overlay */}
             <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-20 pointer-events-none">
               {Array.from({ length: 9 }).map((_, i) => (
@@ -112,6 +118,9 @@ export default function AppCamera() {
                 <RotateCw className="w-6 h-6 text-white" />
               </button>
             </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

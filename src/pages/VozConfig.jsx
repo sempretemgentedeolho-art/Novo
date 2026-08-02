@@ -33,7 +33,6 @@ export default function VozConfig() {
     }
     return () => {
       if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
         window.speechSynthesis.onvoiceschanged = null;
       }
     };
