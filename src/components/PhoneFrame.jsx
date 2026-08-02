@@ -3,19 +3,59 @@ import { cn } from '@/components/ui/utils';
 
 export function PhoneFrame({ children, className }) {
   return (
-    <div className="w-full h-[100dvh] bg-black flex items-center justify-center overflow-hidden">
-      <div className="relative h-[100dvh] aspect-[9/20] bg-black p-[3px] rounded-[2.75rem] shadow-2xl">
+    <div
+      style={{
+        width: '100%',
+        height: '100dvh',
+        background: 'black',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{
+          position: 'relative',
+          height: '100dvh',
+          aspectRatio: '9 / 20',
+          background: 'black',
+          padding: '3px',
+          borderRadius: '44px',
+          boxShadow: '0 0 40px rgba(0,0,0,0.5)',
+        }}
+      >
         {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20 flex items-center justify-center gap-2">
-          <div className="w-14 h-1.5 bg-slate-800 rounded-full"></div>
-          <div className="w-2.5 h-2.5 bg-slate-900 rounded-full border border-slate-700"></div>
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '128px',
+            height: '24px',
+            background: 'black',
+            borderBottomLeftRadius: '16px',
+            borderBottomRightRadius: '16px',
+            zIndex: 20,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+        >
+          <div style={{ width: '56px', height: '6px', background: '#1e293b', borderRadius: '9999px' }} />
+          <div style={{ width: '10px', height: '10px', background: '#0f172a', borderRadius: '9999px', border: '1px solid #334155' }} />
         </div>
 
         {/* Screen */}
-        <div className={cn(
-          "relative bg-white overflow-hidden h-full w-full rounded-[2.5rem]",
-          className
-        )}>
+        <div
+          className={cn(
+            "relative bg-white overflow-hidden h-full w-full",
+            className
+          )}
+          style={{ borderRadius: '40px' }}
+        >
           {children}
         </div>
       </div>
