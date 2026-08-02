@@ -35,33 +35,8 @@ import postcssConfig from "../../postcss.config.js?raw";
 import jsconfig from "../../jsconfig.json?raw";
 import componentsJson from "../../components.json?raw";
 import eslintConfig from "../../eslint.config.js?raw";
-import indexHtml from "../../index.html?raw";
-import readmeMd from "../../README.md?raw";
-import gitignoreContent from "../../.gitignore?raw";
-
-// Documentação Markdown da plataforma Base44 (Companion) - carregada via glob
-const _companionRawDocs = import.meta.glob("/src/companion-docs/*.md", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-});
-
-const companionDocs = [
-  { name: "Visão Geral", file: "Visao-geral.md", key: "/src/companion-docs/visao-geral.md" },
-  { name: "Usuários", file: "Usuarios.md", key: "/src/companion-docs/usuarios.md" },
-  { name: "Dados", file: "Dados.md", key: "/src/companion-docs/dados.md" },
-  { name: "Análises", file: "Analises.md", key: "/src/companion-docs/analises.md" },
-  { name: "Marketing", file: "Marketing.md", key: "/src/companion-docs/marketing.md" },
-  { name: "Domínios", file: "Dominios.md", key: "/src/companion-docs/dominios.md" },
-  { name: "Integrações", file: "Integracoes.md", key: "/src/companion-docs/integracoes.md" },
-  { name: "Segurança", file: "Seguranca.md", key: "/src/companion-docs/seguranca.md" },
-  { name: "Código", file: "Codigo.md", key: "/src/companion-docs/codigo.md" },
-  { name: "Agentes", file: "Agentes.md", key: "/src/companion-docs/agentes.md" },
-  { name: "Fluxos de Trabalho", file: "Fluxos-de-trabalho.md", key: "/src/companion-docs/fluxos-de-trabalho.md" },
-  { name: "Logs", file: "Logs.md", key: "/src/companion-docs/logs.md" },
-  { name: "API", file: "API.md", key: "/src/companion-docs/api.md" },
-  { name: "Configurações", file: "Configuracoes.md", key: "/src/companion-docs/configuracoes.md" },
-].map((d) => ({ name: d.name, file: d.file, content: _companionRawDocs[d.key] || "" }));
+import { indexHtml, readmeMd, gitignoreContent } from "@/lib/rawAssets";
+import { companionDocs } from "@/lib/companionDocs";
 // Apenas tipos de arquivo que o Vite consegue importar com ?raw sem erros de build
 const sourceFiles = import.meta.glob(
   "/src/**/*.{jsx,js,ts,tsx,css,json,jsonc,mjs,cjs}",
@@ -92,7 +67,7 @@ const rootConfigFiles = {
 
 // Arquivos públicos (PWA) - apenas tipos seguros (sem .html/.svg que quebram ?raw)
 const publicFiles = import.meta.glob(
-  "/public/**/*.{js,json,css,txt,webmanifest}",
+  "/public/**/*.{js,json,css}",
   { query: "?raw", import: "default", eager: true }
 );
 
