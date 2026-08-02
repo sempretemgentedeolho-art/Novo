@@ -27,15 +27,7 @@ export default function AppMensagens() {
   ];
 
   return (
-    <div className="min-h-[100dvh] bg-black flex items-center justify-center p-4">
-      <div className="relative w-full max-w-sm">
-        <div className="relative bg-black rounded-[50px] p-3 shadow-2xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-b-3xl z-10"></div>
-          
-          <div
-            className="relative rounded-[46px] overflow-hidden bg-white"
-            style={{ aspectRatio: "9/19.5" }}
-          >
+    <div className="h-[100dvh] bg-white overflow-hidden flex flex-col">
             {/* Header */}
             <div className="bg-blue-500 text-white p-4 pt-8">
               <div className="flex items-center justify-between mb-4">
@@ -73,9 +65,6 @@ export default function AppMensagens() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

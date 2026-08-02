@@ -7,12 +7,7 @@ export default function TikTok() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[100dvh] bg-gray-900 flex items-center justify-center p-4">
-      <div className="relative w-full max-w-sm">
-        <div className="relative bg-black rounded-[3rem] p-3 shadow-2xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10"></div>
-          
-          <div className="relative bg-black rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+    <div className="h-[100dvh] bg-black overflow-hidden flex flex-col">
             {/* Vídeo Simulado */}
             <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-pink-800 to-blue-900">
               <div className="absolute inset-0 flex items-center justify-center">
@@ -98,9 +93,6 @@ export default function TikTok() {
                 <span className="text-xs">Perfil</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
