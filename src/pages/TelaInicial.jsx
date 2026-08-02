@@ -41,7 +41,6 @@ export default function TelaInicial() {
     { nome: "Relógio", icone: "⏰", tela: "AppRelogio", cor: "from-indigo-400 to-indigo-600" },
     { nome: "Calculadora", icone: "🧮", tela: "AppCalculadora", cor: "from-orange-400 to-orange-600" },
     { nome: "Dicas", icone: "💡", tela: "AppDicas", cor: "from-yellow-400 to-yellow-600" },
-    { nome: "Documentação", icone: "📄", tela: "GerarDocumentacao", cor: "from-slate-500 to-slate-700" },
   ];
 
   return (
