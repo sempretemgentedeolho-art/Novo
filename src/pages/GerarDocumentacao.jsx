@@ -39,38 +39,29 @@ import indexHtml from "../../index.html?raw";
 import readmeMd from "../../README.md?raw";
 import gitignoreContent from "../../.gitignore?raw";
 
-// Documentação Markdown da plataforma Base44 (Companion)
-import visaoGeralMd from "../companion-docs/visao-geral.md?raw";
-import usuariosMd from "../companion-docs/usuarios.md?raw";
-import dadosMd from "../companion-docs/dados.md?raw";
-import analisesMd from "../companion-docs/analises.md?raw";
-import marketingMd from "../companion-docs/marketing.md?raw";
-import dominiosMd from "../companion-docs/dominios.md?raw";
-import integracoesMd from "../companion-docs/integracoes.md?raw";
-import segurancaMd from "../companion-docs/seguranca.md?raw";
-import codigoMd from "../companion-docs/codigo.md?raw";
-import agentesMd from "../companion-docs/agentes.md?raw";
-import fluxosMd from "../companion-docs/fluxos-de-trabalho.md?raw";
-import logsMd from "../companion-docs/logs.md?raw";
-import apiMd from "../companion-docs/api.md?raw";
-import configuracoesMd from "../companion-docs/configuracoes.md?raw";
+// Documentação Markdown da plataforma Base44 (Companion) - carregada via glob
+const _companionRawDocs = import.meta.glob("/src/companion-docs/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
 
 const companionDocs = [
-  { name: "Visão Geral", file: "Visão-geral.md", content: visaoGeralMd },
-  { name: "Usuários", file: "Usuários.md", content: usuariosMd },
-  { name: "Dados", file: "Dados.md", content: dadosMd },
-  { name: "Análises", file: "Análises.md", content: analisesMd },
-  { name: "Marketing", file: "Marketing.md", content: marketingMd },
-  { name: "Domínios", file: "Domínios.md", content: dominiosMd },
-  { name: "Integrações", file: "Integrações.md", content: integracoesMd },
-  { name: "Segurança", file: "Segurança.md", content: segurancaMd },
-  { name: "Código", file: "Código.md", content: codigoMd },
-  { name: "Agentes", file: "Agentes.md", content: agentesMd },
-  { name: "Fluxos de Trabalho", file: "Fluxos-de-trabalho.md", content: fluxosMd },
-  { name: "Logs", file: "Logs.md", content: logsMd },
-  { name: "API", file: "API.md", content: apiMd },
-  { name: "Configurações", file: "Configurações.md", content: configuracoesMd },
-];
+  { name: "Visão Geral", file: "Visao-geral.md", key: "/src/companion-docs/visao-geral.md" },
+  { name: "Usuários", file: "Usuarios.md", key: "/src/companion-docs/usuarios.md" },
+  { name: "Dados", file: "Dados.md", key: "/src/companion-docs/dados.md" },
+  { name: "Análises", file: "Analises.md", key: "/src/companion-docs/analises.md" },
+  { name: "Marketing", file: "Marketing.md", key: "/src/companion-docs/marketing.md" },
+  { name: "Domínios", file: "Dominios.md", key: "/src/companion-docs/dominios.md" },
+  { name: "Integrações", file: "Integracoes.md", key: "/src/companion-docs/integracoes.md" },
+  { name: "Segurança", file: "Seguranca.md", key: "/src/companion-docs/seguranca.md" },
+  { name: "Código", file: "Codigo.md", key: "/src/companion-docs/codigo.md" },
+  { name: "Agentes", file: "Agentes.md", key: "/src/companion-docs/agentes.md" },
+  { name: "Fluxos de Trabalho", file: "Fluxos-de-trabalho.md", key: "/src/companion-docs/fluxos-de-trabalho.md" },
+  { name: "Logs", file: "Logs.md", key: "/src/companion-docs/logs.md" },
+  { name: "API", file: "API.md", key: "/src/companion-docs/api.md" },
+  { name: "Configurações", file: "Configuracoes.md", key: "/src/companion-docs/configuracoes.md" },
+].map((d) => ({ name: d.name, file: d.file, content: _companionRawDocs[d.key] || "" }));
 // Apenas tipos de arquivo que o Vite consegue importar com ?raw sem erros de build
 const sourceFiles = import.meta.glob(
   "/src/**/*.{jsx,js,ts,tsx,css,json,jsonc,mjs,cjs}",
