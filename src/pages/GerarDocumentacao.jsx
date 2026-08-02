@@ -34,8 +34,14 @@ const sourceFiles = import.meta.glob(
 );
 
 // Arquivos do diretório base44 (backend, entidades, funções) - todas as extensões
+// Padrões negativos excluem pastas cujo nome contém extensão (.bat/.txt) pois o
+// entry.ts dentro delas é um script batch, não TypeScript válido
 const base44Files = import.meta.glob(
-  "/base44/**/*.{ts,js,json,jsonc,txt,md,yaml,yml,bat,sh}",
+  [
+    "/base44/**/*.{ts,js,json,jsonc,txt,md,yaml,yml,bat,sh}",
+    "!/base44/functions/converter-standalone.bat/**",
+    "!/base44/functions/INSTRUCOES_CONVERTER.txt/**",
+  ],
   { query: "?raw", import: "default", eager: true }
 );
 
