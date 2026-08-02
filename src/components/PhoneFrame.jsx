@@ -4,7 +4,7 @@ import { cn } from '@/components/ui/utils';
 export function PhoneFrame({ children, className }) {
   return (
     <div className="w-full min-h-[100dvh] bg-black flex items-center justify-center">
-      <div className="relative w-full max-w-md h-[100dvh]">
+      <div className="relative h-[100dvh] aspect-[9/19.5]">
         {/* Phone Border */}
         <div className="relative bg-black h-full p-2 sm:p-3">
           {/* Notch */}
