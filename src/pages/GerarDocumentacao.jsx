@@ -27,37 +27,48 @@ import VozConfig from "./VozConfig";
 import InfoMedicas from "./InfoMedicas";
 
 // === IMPORTAÇÃO DE ARQUIVOS RAW PARA DOCUMENTAÇÃO COMPLETA (INPI) ===
-// Todos os arquivos de código-fonte via import.meta.glob (Vite) - sem omissões
+// Arquivos de configuração da raiz - importados explicitamente com ?raw
+import packageJson from "../../package.json?raw";
+import viteConfig from "../../vite.config.js?raw";
+import tailwindConfig from "../../tailwind.config.js?raw";
+import postcssConfig from "../../postcss.config.js?raw";
+import jsconfig from "../../jsconfig.json?raw";
+import componentsJson from "../../components.json?raw";
+import eslintConfig from "../../eslint.config.js?raw";
+import indexHtml from "../../index.html?raw";
+import readmeMd from "../../README.md?raw";
+import gitignoreContent from "../../.gitignore?raw";
+// Apenas tipos de arquivo que o Vite consegue importar com ?raw sem erros de build
 const sourceFiles = import.meta.glob(
-  "/src/**/*.{jsx,js,ts,tsx,css,json,jsonc,html,svg,mjs,cjs,md,yaml,yml}",
+  "/src/**/*.{jsx,js,ts,tsx,css,json,jsonc,mjs,cjs}",
   { query: "?raw", import: "default", eager: true }
 );
 
-// Arquivos do diretório base44 (backend, entidades, funções) - todas as extensões
-// Padrões negativos excluem pastas cujo nome contém extensão (.bat/.txt) pois o
-// entry.ts dentro delas é um script batch, não TypeScript válido
-const base44Files = import.meta.glob(
-  [
-    "/base44/**/*.{ts,js,json,jsonc,txt,md,yaml,yml,bat,sh}",
-    "!/base44/functions/converter-standalone.bat/**",
-    "!/base44/functions/INSTRUCOES_CONVERTER.txt/**",
-  ],
-  { query: "?raw", import: "default", eager: true }
-);
+// Arquivos do diretório base44 - apenas pastas seguras (entities, config)
+// Funções com nomes de extensão (.bat/.txt) no nome da pasta quebram o esbuild
+const base44Files = {
+  ...import.meta.glob("/base44/entities/**/*.{ts,js,json,jsonc}", { query: "?raw", import: "default", eager: true }),
+  ...import.meta.glob("/base44/functions/localStorageDb/**/*.{ts,js,json}", { query: "?raw", import: "default", eager: true }),
+  ...import.meta.glob("/base44/config.{jsonc,json}", { query: "?raw", import: "default", eager: true }),
+};
 
-// Arquivos de configuração da raiz do projeto (catch-all + específicos + dot files)
-const rootConfigFiles = import.meta.glob(
-  ["/*.{js,ts,json,html,md,cjs,mjs,yaml,yml,toml,bat,sh,lock}",
-   "/.gitignore", "/.env", "/.env.local", "/.env.production",
-   "/package.json", "/vite.config.js", "/tailwind.config.js", "/postcss.config.js",
-   "/jsconfig.json", "/components.json", "/eslint.config.js", "/README.md", "/index.html",
-   "/tsconfig.json", "/vercel.json", "/netlify.toml", "/package-lock.json", "/yarn.lock"],
-  { query: "?raw", import: "default", eager: true }
-);
+// Arquivos de configuração da raiz - importados explicitamente no topo do arquivo
+const rootConfigFiles = {
+  "/package.json": packageJson,
+  "/vite.config.js": viteConfig,
+  "/tailwind.config.js": tailwindConfig,
+  "/postcss.config.js": postcssConfig,
+  "/jsconfig.json": jsconfig,
+  "/components.json": componentsJson,
+  "/eslint.config.js": eslintConfig,
+  "/index.html": indexHtml,
+  "/README.md": readmeMd,
+  "/.gitignore": gitignoreContent,
+};
 
-// Arquivos públicos (PWA) - recursivo, todas as extensões
+// Arquivos públicos (PWA) - apenas tipos seguros (sem .html/.svg que quebram ?raw)
 const publicFiles = import.meta.glob(
-  "/public/**/*",
+  "/public/**/*.{js,json,css,txt,webmanifest}",
   { query: "?raw", import: "default", eager: true }
 );
 
