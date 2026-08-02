@@ -38,6 +38,39 @@ import eslintConfig from "../../eslint.config.js?raw";
 import indexHtml from "../../index.html?raw";
 import readmeMd from "../../README.md?raw";
 import gitignoreContent from "../../.gitignore?raw";
+
+// Documentação Markdown da plataforma Base44 (Companion)
+import visaoGeralMd from "../companion-docs/visao-geral.md?raw";
+import usuariosMd from "../companion-docs/usuarios.md?raw";
+import dadosMd from "../companion-docs/dados.md?raw";
+import analisesMd from "../companion-docs/analises.md?raw";
+import marketingMd from "../companion-docs/marketing.md?raw";
+import dominiosMd from "../companion-docs/dominios.md?raw";
+import integracoesMd from "../companion-docs/integracoes.md?raw";
+import segurancaMd from "../companion-docs/seguranca.md?raw";
+import codigoMd from "../companion-docs/codigo.md?raw";
+import agentesMd from "../companion-docs/agentes.md?raw";
+import fluxosMd from "../companion-docs/fluxos-de-trabalho.md?raw";
+import logsMd from "../companion-docs/logs.md?raw";
+import apiMd from "../companion-docs/api.md?raw";
+import configuracoesMd from "../companion-docs/configuracoes.md?raw";
+
+const companionDocs = [
+  { name: "Visão Geral", file: "Visão-geral.md", content: visaoGeralMd },
+  { name: "Usuários", file: "Usuários.md", content: usuariosMd },
+  { name: "Dados", file: "Dados.md", content: dadosMd },
+  { name: "Análises", file: "Análises.md", content: analisesMd },
+  { name: "Marketing", file: "Marketing.md", content: marketingMd },
+  { name: "Domínios", file: "Domínios.md", content: dominiosMd },
+  { name: "Integrações", file: "Integrações.md", content: integracoesMd },
+  { name: "Segurança", file: "Segurança.md", content: segurancaMd },
+  { name: "Código", file: "Código.md", content: codigoMd },
+  { name: "Agentes", file: "Agentes.md", content: agentesMd },
+  { name: "Fluxos de Trabalho", file: "Fluxos-de-trabalho.md", content: fluxosMd },
+  { name: "Logs", file: "Logs.md", content: logsMd },
+  { name: "API", file: "API.md", content: apiMd },
+  { name: "Configurações", file: "Configurações.md", content: configuracoesMd },
+];
 // Apenas tipos de arquivo que o Vite consegue importar com ?raw sem erros de build
 const sourceFiles = import.meta.glob(
   "/src/**/*.{jsx,js,ts,tsx,css,json,jsonc,mjs,cjs}",
@@ -1046,6 +1079,39 @@ export default function GerarDocumentacao() {
     window.speechSynthesis?.cancel();
   };
 
+  const downloadMarkdown = () => {
+    // Combina toda a documentação markdown em um único arquivo
+    const separator = "\n\n---\n\n";
+    const header = `# Celular Interativo Forja da Consciência — Companion\n\nDocumentação técnica da plataforma Base44\n\nGerado em: ${new Date().toLocaleString("pt-BR")}\n\n---\n\n`;
+    const fullContent = header + companionDocs.map(doc => `# ${doc.name}\n\n${doc.content}`).join(separator);
+    const blob = new Blob([fullContent], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Forja-da-Consciencia-Companion.md";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadMarkdownSeparate = () => {
+    // Baixa cada arquivo markdown individualmente
+    companionDocs.forEach((doc, i) => {
+      setTimeout(() => {
+        const blob = new Blob([doc.content], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = doc.file;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, i * 300);
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex flex-col items-center justify-center p-6 text-white">
       {/* Header */}
@@ -1104,6 +1170,33 @@ export default function GerarDocumentacao() {
             <Download className="w-5 h-5" />
             Gerar Documentação PDF
           </button>
+        )}
+
+        {/* Separador */}
+        <div className="flex items-center gap-3 my-6">
+          <div className="flex-1 h-px bg-white/20" />
+          <span className="text-xs text-white/50">Documentação Markdown</span>
+          <div className="flex-1 h-px bg-white/20" />
+        </div>
+
+        {/* Botões Markdown */}
+        {!generating && (
+          <div className="space-y-3">
+            <button
+              onClick={downloadMarkdown}
+              className="w-full py-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl font-semibold flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg"
+            >
+              <Download className="w-5 h-5" />
+              Baixar Tudo (1 arquivo .md)
+            </button>
+            <button
+              onClick={downloadMarkdownSeparate}
+              className="w-full py-3 bg-white/10 rounded-2xl font-semibold flex items-center justify-center gap-2 hover:bg-white/20 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Baixar Separados (14 arquivos .md)
+            </button>
+          </div>
         )}
 
         {/* Progresso */}
