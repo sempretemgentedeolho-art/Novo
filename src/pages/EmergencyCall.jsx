@@ -14,7 +14,7 @@ export default function EmergencyCall() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-[100dvh] bg-white">
       {/* Header */}
       <div className="p-6">
         <h1 className="text-2xl font-semibold text-gray-900 mb-8">Emergência</h1>

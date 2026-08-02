@@ -27,7 +27,7 @@ export default function AppMensagens() {
   ];
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+    <div className="min-h-[100dvh] bg-black flex items-center justify-center p-4">
       <div className="relative w-full max-w-sm">
         <div className="relative bg-black rounded-[50px] p-3 shadow-2xl">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-b-3xl z-10"></div>
