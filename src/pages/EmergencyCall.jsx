@@ -90,7 +90,7 @@ export default function EmergencyCall() {
             <Phone className="w-7 h-7 text-white" />
           </button>
 
-          <button onClick={() => navigate(createPageUrl("UnlockScreen"))}>
+          <button onClick={() => navigate(createPageUrl("TelaBloqueio"))}>
             <X className="w-6 h-6 text-gray-600" />
           </button>
         </div>

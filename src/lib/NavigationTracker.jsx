@@ -12,6 +12,11 @@ export default function NavigationTracker() {
 
     // Log user activity when navigating to a page
     useEffect(() => {
+        // Cancela qualquer narração em andamento ao trocar de página
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+
         // Extract page name from pathname
         const pathname = location.pathname;
         let pageName;

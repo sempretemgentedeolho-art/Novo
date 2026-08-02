@@ -46,7 +46,10 @@ export function initSpeechVoice() {
   window.speechSynthesis.getVoices();
 
   _originalSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
+  // Sempre cancela qualquer fala em andamento antes de iniciar uma nova.
+  // Isso impede que vozes se sobreponham ao navegar entre páginas.
   window.speechSynthesis.speak = function (utterance) {
+    window.speechSynthesis.cancel();
     const selectedURI = getSelectedVoiceURI();
     if (selectedURI) {
       const voices = window.speechSynthesis.getVoices();
