@@ -18,10 +18,17 @@ import {
   Plus,
   MessageSquare,
   Play,
-  Video,
-  Image as ImageIcon,
   X,
+  Music2,
+  RefreshCcw,
+  Timer,
+  Sparkles,
+  Smile,
+  Wand2,
+  ChevronDown,
 } from "lucide-react";
+
+const MODOS = ["Vídeo", "Shorts", "Ao vivo", "Post"];
 
 const VIDEOS = [
   {
@@ -108,7 +115,7 @@ const STEPS = [
   {
     id: "create_open",
     target: "close_create",
-    text: "Nesta tela você pode gravar um vídeo com a câmera do celular, ou escolher um vídeo que já está na sua galeria, para publicar no YouTube. Hoje não vamos gravar. Toque no X, onde está piscando, para fechar.",
+    text: "Esta é a câmera para gravar um Short, que é um vídeo curto do YouTube. Em cima, no canto esquerdo, tem o X para fechar. No meio, o botão de adicionar música. E no canto direito, o número 15, que é o tempo máximo do vídeo em segundos. Do lado direito ficam as ferramentas: virar a câmera, velocidade, temporizador, efeitos, retoque e filtros. Embaixo, o botão vermelho começaria a gravação, a miniatura Adicionar pega um vídeo da galeria, e na barrinha preta o modo Shorts já vem escolhido. Hoje não vamos gravar. Toque no X, onde está piscando, para fechar.",
   },
   {
     id: "done",
@@ -123,6 +130,7 @@ export default function AppYouTube() {
   const [view, setView] = useState("home");
   const [chip, setChip] = useState("Todos");
   const [liked, setLiked] = useState(false);
+  const [modo, setModo] = useState("Shorts");
 
   const target = STEPS[stepIndex].target;
   const shownVideos = chip === "Todos" ? VIDEOS : VIDEOS.filter((v) => v.tag === chip);
@@ -537,7 +545,7 @@ export default function AppYouTube() {
           </div>
         )}
 
-        {/* Tela de criar vídeo */}
+        {/* Câmera de gravação do Shorts */}
         <AnimatePresence>
           {view === "create" && (
             <motion.div
@@ -545,38 +553,79 @@ export default function AppYouTube() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
-              className="absolute inset-0 bg-white z-[70] flex flex-col"
+              className="absolute inset-0 bg-gray-300 z-[70] flex flex-col"
             >
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-lg font-bold text-gray-900">Criar</h2>
+              {/* Prévia da câmera */}
+              <div className="absolute inset-0 bg-gradient-to-b from-gray-200 via-gray-300 to-gray-500" />
+
+              {/* Cabeçalho: fechar, adicionar música e tempo */}
+              <div className="relative z-10 flex items-center justify-between px-4 pt-7 pb-3">
                 <Pulse
                   active={target === "close_create"}
                   ring="rounded-full"
-                  className="inline-flex p-1.5"
+                  className="inline-flex"
                   onClick={handleCloseCreate}
                 >
                   <button
                     type="button"
-                    className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"
+                    className="w-11 h-11 rounded-full bg-black/45 flex items-center justify-center"
                   >
-                    <X className="w-6 h-6 text-gray-900" />
+                    <X className="w-6 h-6 text-white" />
                   </button>
                 </Pulse>
-              </div>
-              <div className="p-5 space-y-3">
-                <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-gray-100 bg-gray-50">
-                  <Video className="w-6 h-6 text-gray-900" />
-                  <div>
-                    <p className="text-gray-900 font-medium">Gravar um vídeo</p>
-                    <p className="text-xs text-gray-600">Filme com a câmera do celular</p>
-                  </div>
+
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/45">
+                  <Music2 className="w-5 h-5 text-white" />
+                  <span className="text-white text-sm font-semibold">Adicionar música</span>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-gray-100 bg-gray-50">
-                  <ImageIcon className="w-6 h-6 text-gray-900" />
-                  <div>
-                    <p className="text-gray-900 font-medium">Escolher da galeria</p>
-                    <p className="text-xs text-gray-600">Use um vídeo que já está no celular</p>
-                  </div>
+
+                <div className="w-11 h-11 rounded-full bg-black/45 flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">15</span>
+                </div>
+              </div>
+
+              {/* Ferramentas laterais */}
+              <div className="relative z-10 flex-1 flex justify-end px-4">
+                <div className="flex flex-col items-center gap-5 mt-2 px-3 py-4 rounded-2xl bg-black/40 self-start">
+                  <RefreshCcw className="w-6 h-6 text-white" />
+                  <span className="text-white text-sm font-bold">1x</span>
+                  <Timer className="w-6 h-6 text-white" />
+                  <Sparkles className="w-6 h-6 text-white" />
+                  <Smile className="w-6 h-6 text-white" />
+                  <Wand2 className="w-6 h-6 text-white" />
+                  <ChevronDown className="w-6 h-6 text-white" />
+                </div>
+              </div>
+
+              {/* Miniatura da galeria e botão de gravar */}
+              <div className="relative z-10 px-6 pb-4 flex items-end justify-between">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="w-12 h-12 rounded-lg border-2 border-white bg-gradient-to-br from-sky-400 to-emerald-500" />
+                  <span className="text-white text-xs font-medium">Adicionar</span>
+                </div>
+
+                <div className="w-20 h-20 rounded-full bg-white/30 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-red-600 border-4 border-white" />
+                </div>
+
+                <div className="w-12" />
+              </div>
+
+              {/* Modos de criação */}
+              <div className="relative z-10 px-3 pb-6">
+                <div className="flex items-center justify-center gap-1 bg-black/75 rounded-full p-1.5">
+                  {MODOS.map((m) => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => setModo(m)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
+                        modo === m ? "bg-gray-600 text-white" : "text-white/70"
+                      }`}
+                    >
+                      {m}
+                    </button>
+                  ))}
                 </div>
               </div>
             </motion.div>
