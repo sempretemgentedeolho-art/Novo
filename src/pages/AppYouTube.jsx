@@ -26,6 +26,7 @@ import VideoPlayer from "@/components/youtube/VideoPlayer";
 import ShareSheet from "@/components/youtube/ShareSheet";
 import NotificationsView from "@/components/youtube/NotificationsView";
 import HistoryView from "@/components/youtube/HistoryView";
+import ChapterPicker from "@/components/youtube/ChapterPicker";
 import CreateMenu from "@/components/youtube/CreateMenu";
 import ShortsCamera from "@/components/youtube/ShortsCamera";
 import ShortsEdit from "@/components/youtube/ShortsEdit";
@@ -76,6 +77,55 @@ const VIDEOS = [
 
 const CHIPS = ["Todos", "Receitas", "Músicas", "Notícias"];
 
+// Partes do tutorial: a pessoa pode começar direto na que tem dúvida
+const CHAPTERS = [
+  {
+    id: "inicio",
+    label: "Começar do início",
+    description: "Procurar um vídeo, escolher e assistir",
+    icon: Search,
+    stepIndex: 0,
+    view: "home",
+    chip: "Todos",
+  },
+  {
+    id: "curtir",
+    label: "Curtir, se inscrever e salvar",
+    description: "O joinha, acompanhar o canal e guardar o vídeo",
+    icon: ThumbsUp,
+    stepIndex: 3,
+    view: "player",
+    chip: "Receitas",
+  },
+  {
+    id: "compartilhar",
+    label: "Compartilhar e comentar",
+    description: "Mandar o vídeo para alguém e escrever um comentário",
+    icon: Share2,
+    stepIndex: 6,
+    view: "player",
+    chip: "Receitas",
+  },
+  {
+    id: "avisos",
+    label: "Avisos e histórico",
+    description: "A campainha, o que você já assistiu e sua área",
+    icon: Bell,
+    stepIndex: 11,
+    view: "results",
+    chip: "Receitas",
+  },
+  {
+    id: "shorts",
+    label: "Gravar e publicar um Short",
+    description: "Gravar um vídeo curto, enfeitar e publicar",
+    icon: Zap,
+    stepIndex: 16,
+    view: "you",
+    chip: "Todos",
+  },
+];
+
 // Cada etapa: texto falado em voz alta + elemento que pisca em amarelo
 const STEPS = [
   {
@@ -111,7 +161,7 @@ const STEPS = [
   {
     id: "salvo",
     target: "compartilhar",
-    text: "O vídeo ficou salvo na sua lista. Agora toque em COMPARTILHAR, onde está piscando, para mandar este vídeo para alguém da sua família.",
+    text: "Agora toque em COMPARTILHAR, onde está piscando, para mandar este vídeo para alguém da sua família.",
   },
   {
     id: "compartilhar_open",
@@ -136,7 +186,7 @@ const STEPS = [
   {
     id: "back_results",
     target: "notifications",
-    text: "De volta à lista de vídeos. Agora toque na campainha, lá em cima do lado direito, onde está piscando, para ver os avisos dos canais que você acompanha.",
+    text: "Esta é a lista de vídeos. Agora toque na campainha, lá em cima do lado direito, onde está piscando, para ver os avisos dos canais que você acompanha.",
   },
   {
     id: "notificacoes_open",
@@ -227,6 +277,8 @@ const STEPS = [
 
 export default function AppYouTube() {
   const navigate = useNavigate();
+  const [chapter, setChapter] = useState(null);
+  const [runKey, setRunKey] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const [view, setView] = useState("home");
   const [chip, setChip] = useState("Todos");
@@ -239,6 +291,7 @@ export default function AppYouTube() {
   const shownVideos = chip === "Todos" ? VIDEOS : VIDEOS.filter((v) => v.tag === chip);
 
   useEffect(() => {
+    if (!chapter) return;
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
@@ -248,7 +301,19 @@ export default function AppYouTube() {
       synth.speak(utter);
     }
     return () => window.speechSynthesis.cancel();
-  }, [stepIndex]);
+  }, [stepIndex, chapter, runKey]);
+
+  // Começa o tutorial na parte escolhida no menu
+  const startChapter = (cap) => {
+    setChapter(cap);
+    setStepIndex(cap.stepIndex);
+    setView(cap.view);
+    setChip(cap.chip);
+    setCompartilhado(false);
+    setShareOpen(false);
+    setShortsScreen(null);
+    setRunKey((k) => k + 1);
+  };
 
   const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
 
@@ -717,6 +782,9 @@ export default function AppYouTube() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Menu de capítulos: escolher por onde começar */}
+        {!chapter && <ChapterPicker chapters={CHAPTERS} onSelect={startChapter} />}
       </div>
     </PhoneFrame>
   );
