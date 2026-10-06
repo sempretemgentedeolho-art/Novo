@@ -497,7 +497,7 @@ export default function AppYouTube() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
-              className="absolute inset-0 bg-white z-40 flex flex-col"
+              className="absolute inset-0 bg-white z-[70] flex flex-col"
             >
               <div className="flex items-center justify-between p-5 border-b border-gray-200">
                 <h2 className="text-lg font-bold text-gray-900">Criar</h2>
