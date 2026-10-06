@@ -34,16 +34,16 @@ export default function Inicio() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         onClick={handleStart}
-        className="h-full bg-gradient-to-br from-cyan-100 via-blue-100 to-teal-100 flex flex-col items-center justify-center p-8 cursor-pointer relative"
+        className="h-full bg-gradient-to-br from-cyan-100 via-blue-100 to-teal-100 flex flex-col items-center justify-center p-6 cursor-pointer relative overflow-y-auto"
       >
         {/* Logo Forja da Consciência */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-          className="mb-6"
+          className="mb-5"
         >
-          <div className="w-32 h-32 rounded-3xl bg-white shadow-2xl flex items-center justify-center p-4 relative overflow-hidden">
+          <div className="w-28 h-28 rounded-3xl bg-white shadow-2xl flex items-center justify-center p-4 relative overflow-hidden">
             {/* Brilho de fundo */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent"></div>
             
@@ -61,13 +61,13 @@ export default function Inicio() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-center mb-6"
+          className="text-center mb-5"
         >
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 drop-shadow-sm">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2 drop-shadow-sm">
             Bem-vindo!
           </h1>
          
-          <h2 className="text-3xl font-bold text-teal-700 drop-shadow-sm mb-4">
+          <h2 className="text-2xl font-bold text-teal-700 drop-shadow-sm mb-2">
             Forja da Consciência
           </h2>
           <div className="flex items-center justify-center gap-2 text-gray-600">
@@ -83,13 +83,13 @@ export default function Inicio() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-red-200 px-5 py-4 max-w-sm text-center mb-8"
+          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-red-200 px-4 py-3 max-w-sm text-center mb-5"
         >
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Youtube className="w-5 h-5 text-red-600" />
-            <h3 className="text-base font-bold text-gray-800">Dica rápida sobre o YouTube</h3>
+          <div className="flex items-center justify-center gap-2 mb-1.5">
+            <Youtube className="w-4 h-4 text-red-600" />
+            <h3 className="text-sm font-bold text-gray-800">Dica rápida sobre o YouTube</h3>
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-gray-700 leading-snug">
             Você <strong>não precisa de conta</strong> para assistir aos vídeos. Para curtir,
             comentar e salvar seus canais favoritos, entre com a sua conta do Google, o mesmo
             e-mail do Gmail.
@@ -103,18 +103,18 @@ export default function Inicio() {
           transition={{ delay: 0.9 }}
           className="text-center"
         >
-          <div className="bg-white/70 backdrop-blur-sm px-8 py-4 rounded-full shadow-lg border-2 border-teal-300">
-            <p className="text-teal-800 font-semibold text-lg">
+          <div className="bg-white/70 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border-2 border-teal-300">
+            <p className="text-teal-800 font-semibold text-base">
               Toque na tela para começar
             </p>
           </div>
           
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="mt-4"
+            className="mt-3"
           >
-            <div className="text-teal-700 text-4xl">👇</div>
+            <div className="text-teal-700 text-3xl">👇</div>
           </motion.div>
         </motion.div>
 
@@ -123,9 +123,9 @@ export default function Inicio() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-8 text-center"
+          className="mt-6 text-center"
         >
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-xs">
             Aprenda a usar seu celular<br />de forma fácil e segura
           </p>
         </motion.div>
