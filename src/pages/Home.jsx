@@ -211,8 +211,8 @@ export default function Home() {
     const synth = window.speechSynthesis;
     if (synth) synth.cancel();
 
-    // Neste treinamento só o YouTube abre. Os outros apps ficam visíveis, mas não abrem.
-    if (app.id !== 'youtube') {
+    // Neste treinamento só o YouTube e o Dicas abrem. Os outros apps ficam visíveis, mas não abrem.
+    if (app.id !== 'youtube' && app.id !== 'tips') {
       if (synth) {
         const aviso = new SpeechSynthesisUtterance(
           `${app.name} faz parte de outro treinamento. Aqui a gente aprende só o YouTube.`
