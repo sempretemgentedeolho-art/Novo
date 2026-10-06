@@ -18,17 +18,12 @@ import {
   Plus,
   MessageSquare,
   Play,
-  X,
-  Music2,
-  RefreshCcw,
-  Timer,
-  Sparkles,
-  Smile,
-  Wand2,
-  ChevronDown,
 } from "lucide-react";
-
-const MODOS = ["Vídeo", "Shorts", "Ao vivo", "Post"];
+import Pulse from "@/components/youtube/Pulse";
+import CreateMenu from "@/components/youtube/CreateMenu";
+import ShortsCamera from "@/components/youtube/ShortsCamera";
+import ShortsEdit from "@/components/youtube/ShortsEdit";
+import ShortsPublish from "@/components/youtube/ShortsPublish";
 
 const VIDEOS = [
   {
@@ -110,17 +105,67 @@ const STEPS = [
   {
     id: "you_open",
     target: "create_nav",
-    text: "Aqui em VOCÊ ficam a sua conta e os vídeos que você assistiu. Agora toque no sinal de MAIS, no meio da barra de baixo, onde está piscando, para ver como gravar um vídeo seu.",
+    text: "Aqui em VOCÊ ficam a sua conta e os vídeos que você assistiu. Agora toque no sinal de MAIS, no meio da barra de baixo, onde está piscando, para aprender a gravar um Short, que é um vídeo curto.",
   },
   {
-    id: "create_open",
-    target: "close_create",
-    text: "Esta é a câmera para gravar um Short, que é um vídeo curto do YouTube. Em cima, no canto esquerdo, tem o X para fechar. No meio, o botão de adicionar música. E no canto direito, o número 15, que é o tempo máximo do vídeo em segundos. Do lado direito ficam as ferramentas: virar a câmera, velocidade, temporizador, efeitos, retoque e filtros. Embaixo, o botão vermelho começaria a gravação, a miniatura Adicionar pega um vídeo da galeria, e na barrinha preta o modo Shorts já vem escolhido. Hoje não vamos gravar. Toque no X, onde está piscando, para fechar.",
+    id: "create_menu",
+    target: "short_option",
+    text: "Um menu subiu na tela com as opções para criar conteúdo no YouTube. A primeira opção é Criar um Short, que é um vídeo curto. Toque nela, onde está piscando, para abrir a câmera.",
+  },
+  {
+    id: "camera_open",
+    target: "record",
+    text: "A câmera do seu celular abriu. Vamos conhecer cada botão antes de gravar. No canto de cima do lado esquerdo tem o X, para fechar a câmera. No meio, o botão Adicionar música, para colocar uma música no seu vídeo. No canto de cima do lado direito, o número 15, que é o tempo máximo do vídeo em segundos: se você tocar nele, ele passa para 60 e te dá um minuto inteiro. Do lado direito ficam as ferramentas: as duas setas em círculo viram a câmera, entre a sua frente e o que está na frente do celular; o 1x muda a velocidade da gravação, mais lenta ou mais rápida; o relógio é o temporizador, para começar a gravar sozinho depois de alguns segundos; a estrela são os efeitos; a carinha é o retoque do rosto; e a varinha muda as cores e os filtros. A setinha para baixo mostra ainda mais opções. Embaixo, no canto esquerdo, a miniatura Adicionar pega um vídeo que já está na sua galeria. E no meio fica o botão vermelho, o botão principal. Agora mantenha o dedo apertado e segurado no botão vermelho, que está piscando. Enquanto você segura, a câmera grava a sua voz e a sua imagem. Se soltar o dedo, a gravação pausa.",
+  },
+  {
+    id: "recorded",
+    target: "check",
+    text: "Muito bem, você gravou o seu vídeo! O aviso em cima mostra quanto tempo você gravou, e quando você solta o dedo a gravação para. Agora toque no visto, o sinal de certo no canto de baixo do lado direito, onde está piscando, para enfeitar o seu vídeo.",
+  },
+  {
+    id: "edit_open",
+    target: "aa",
+    text: "Agora o YouTube abriu a tela de enfeites, onde você melhora o seu vídeo. O seu vídeo fica passando na tela várias vezes. Embaixo estão os botões de enfeite. Toque no Aa, onde está piscando, para escrever uma mensagem na tela do vídeo.",
+  },
+  {
+    id: "text_open",
+    target: "concluido",
+    text: "O teclado subiu. Digite a sua frase, por exemplo: Minha primeira receita. Em cima aparecem bolinhas coloridas: toque na cor que você mais gostar para mudar a cor da letra. Quando terminar de escrever, toque em Concluído, onde está piscando.",
+  },
+  {
+    id: "text_done",
+    target: "audio",
+    text: "Ficou ótimo! O seu texto apareceu no vídeo. Com o dedo, você pode arrastar o texto para cima, para baixo ou para os lados, para ele ficar no lugar que você quiser. Agora toque em Áudio, o desenho da nota musical, onde está piscando, para colocar uma música de fundo.",
+  },
+  {
+    id: "audio_open",
+    target: "musica",
+    text: "Aqui você escolhe a música do seu vídeo. Você pode digitar o nome da música ou do cantor que você gosta. Toque na música, onde está piscando, para ela tocar junto com o seu vídeo.",
+  },
+  {
+    id: "audio_done",
+    target: "next",
+    text: "Muito bem, a música foi adicionada! Agora, quando o seu vídeo estiver do jeito que você gostou, toque em Próximo, no canto de cima do lado direito, onde está piscando.",
+  },
+  {
+    id: "publish",
+    target: "titulo",
+    text: "Última tela! Aqui você escreve o título do seu vídeo. Toque no lugar onde está escrito Legende seu Short, onde está piscando, e digite o nome do seu vídeo. Por exemplo: Minha primeira receita.",
+  },
+  {
+    id: "publish_send",
+    target: "enviar",
+    text: "O título está pronto. Agora, para mandar o seu vídeo para a internet de verdade, toque no grande botão azul Enviar Short, lá embaixo, onde está piscando.",
+  },
+  {
+    id: "published",
+    target: "concluir",
+    text: "Parabéns! O seu Short foi publicado e agora está no YouTube, no seu canal, para quem você quiser ver. Toque em Concluir, onde está piscando, para voltar.",
   },
   {
     id: "done",
     target: "back",
-    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir e ver os vídeos que você já assistiu. Toque na seta, onde está piscando, para voltar à tela inicial.",
+    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir, ver os vídeos que você já assistiu e até gravar e publicar um Short. Toque na seta, onde está piscando, para voltar à tela inicial.",
   },
 ];
 
@@ -130,7 +175,8 @@ export default function AppYouTube() {
   const [view, setView] = useState("home");
   const [chip, setChip] = useState("Todos");
   const [liked, setLiked] = useState(false);
-  const [modo, setModo] = useState("Shorts");
+  const [shortsScreen, setShortsScreen] = useState(null);
+  const [duracao, setDuracao] = useState(0);
 
   const target = STEPS[stepIndex].target;
   const shownVideos = chip === "Todos" ? VIDEOS : VIDEOS.filter((v) => v.tag === chip);
@@ -185,7 +231,7 @@ export default function AppYouTube() {
   };
 
   const handleNavCreate = () => {
-    setView("create");
+    setShortsScreen("menu");
     if (target === "create_nav") goNext();
   };
 
@@ -197,30 +243,23 @@ export default function AppYouTube() {
     if (target === "you_nav") goNext();
   };
 
-  const handleCloseCreate = () => {
-    setView("you");
-    if (target === "close_create") goNext();
+  const handleShortsAction = (id, nextScreen) => {
+    if (nextScreen) setShortsScreen(nextScreen);
+    if (target === id) goNext();
   };
 
-  // Destaque amarelo pulsante no elemento da etapa atual
-  const Pulse = ({ active, children, className = "inline-flex", ring = "rounded-full", onClick }) => (
-    <div className={`relative ${className}`} onClick={onClick}>
-      {active && (
-        <motion.div
-          animate={{ scale: [1, 1.35, 1.35], opacity: [0.7, 0.25, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-          className={`absolute -inset-2 ${ring} bg-yellow-400 z-0 pointer-events-none`}
-        />
-      )}
-      <motion.div
-        animate={active ? { scale: [1, 1.07, 1] } : {}}
-        transition={active ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
-        className="relative z-10 w-full"
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
+  const handleRecorded = (segundos) => setDuracao(segundos);
+
+  const handleCloseShorts = () => {
+    setShortsScreen(null);
+    setView("you");
+  };
+
+  const handleFinishShorts = () => {
+    setShortsScreen(null);
+    setView("you");
+    if (target === "concluir") goNext();
+  };
 
   const VideoCard = ({ video, active, onClick }) => (
     <Pulse active={active} className="w-full" ring="rounded-2xl">
@@ -488,7 +527,7 @@ export default function AppYouTube() {
         {renderContent()}
 
         {/* Barra de baixo */}
-        {view !== "create" && (
+        {!shortsScreen && (
           <div className="bg-white border-t border-gray-200 flex justify-around items-center py-2 shrink-0">
             <Pulse ring="rounded-xl">
               <button onClick={handleNavHome} className="flex flex-col items-center gap-0.5">
@@ -545,89 +584,52 @@ export default function AppYouTube() {
           </div>
         )}
 
-        {/* Câmera de gravação do Shorts */}
+        {/* Criação de Short: menu, câmera, enfeites e publicação */}
         <AnimatePresence>
-          {view === "create" && (
+          {shortsScreen && (
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
-              className="absolute inset-0 bg-gray-300 z-[70] flex flex-col"
+              className="absolute inset-0 z-[70]"
             >
-              {/* Prévia da câmera */}
-              <div className="absolute inset-0 bg-gradient-to-b from-gray-200 via-gray-300 to-gray-500" />
+              {shortsScreen === "menu" && (
+                <CreateMenu
+                  target={target}
+                  onTap={(id) => handleShortsAction(id, "camera")}
+                />
+              )}
 
-              {/* Cabeçalho: fechar, adicionar música e tempo */}
-              <div className="relative z-10 flex items-center justify-between px-4 pt-7 pb-3">
-                <Pulse
-                  active={target === "close_create"}
-                  ring="rounded-full"
-                  className="inline-flex"
-                  onClick={handleCloseCreate}
-                >
-                  <button
-                    type="button"
-                    className="w-11 h-11 rounded-full bg-black/45 flex items-center justify-center"
-                  >
-                    <X className="w-6 h-6 text-white" />
-                  </button>
-                </Pulse>
+              {shortsScreen === "camera" && (
+                <ShortsCamera
+                  target={target}
+                  onTap={(id) => handleShortsAction(id)}
+                  onRecorded={handleRecorded}
+                  onCheck={() => handleShortsAction("check", "edit")}
+                  onClose={handleCloseShorts}
+                />
+              )}
 
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/45">
-                  <Music2 className="w-5 h-5 text-white" />
-                  <span className="text-white text-sm font-semibold">Adicionar música</span>
-                </div>
+              {shortsScreen === "edit" && (
+                <ShortsEdit
+                  target={target}
+                  duracao={duracao}
+                  onTap={(id) => handleShortsAction(id)}
+                  onNext={() => handleShortsAction("next", "publish")}
+                  onClose={handleCloseShorts}
+                />
+              )}
 
-                <div className="w-11 h-11 rounded-full bg-black/45 flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">15</span>
-                </div>
-              </div>
-
-              {/* Ferramentas laterais */}
-              <div className="relative z-10 flex-1 flex justify-end px-4">
-                <div className="flex flex-col items-center gap-5 mt-2 px-3 py-4 rounded-2xl bg-black/40 self-start">
-                  <RefreshCcw className="w-6 h-6 text-white" />
-                  <span className="text-white text-sm font-bold">1x</span>
-                  <Timer className="w-6 h-6 text-white" />
-                  <Sparkles className="w-6 h-6 text-white" />
-                  <Smile className="w-6 h-6 text-white" />
-                  <Wand2 className="w-6 h-6 text-white" />
-                  <ChevronDown className="w-6 h-6 text-white" />
-                </div>
-              </div>
-
-              {/* Miniatura da galeria e botão de gravar */}
-              <div className="relative z-10 px-6 pb-4 flex items-end justify-between">
-                <div className="flex flex-col items-center gap-1">
-                  <div className="w-12 h-12 rounded-lg border-2 border-white bg-gradient-to-br from-sky-400 to-emerald-500" />
-                  <span className="text-white text-xs font-medium">Adicionar</span>
-                </div>
-
-                <div className="w-20 h-20 rounded-full bg-white/30 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-red-600 border-4 border-white" />
-                </div>
-
-                <div className="w-12" />
-              </div>
-
-              {/* Modos de criação */}
-              <div className="relative z-10 px-3 pb-6">
-                <div className="flex items-center justify-center gap-1 bg-black/75 rounded-full p-1.5">
-                  {MODOS.map((m) => (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => setModo(m)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
-                        modo === m ? "bg-gray-600 text-white" : "text-white/70"
-                      }`}
-                    >
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              {shortsScreen === "publish" && (
+                <ShortsPublish
+                  target={target}
+                  duracao={duracao}
+                  onTap={(id) => handleShortsAction(id)}
+                  onFinish={handleFinishShorts}
+                  onClose={handleCloseShorts}
+                />
+              )}
             </motion.div>
           )}
         </AnimatePresence>
