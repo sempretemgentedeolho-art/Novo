@@ -18,8 +18,14 @@ import {
   Plus,
   MessageSquare,
   Play,
+  History as HistoryIcon,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
+import VideoRow from "@/components/youtube/VideoRow";
+import VideoPlayer from "@/components/youtube/VideoPlayer";
+import ShareSheet from "@/components/youtube/ShareSheet";
+import NotificationsView from "@/components/youtube/NotificationsView";
+import HistoryView from "@/components/youtube/HistoryView";
 import CreateMenu from "@/components/youtube/CreateMenu";
 import ShortsCamera from "@/components/youtube/ShortsCamera";
 import ShortsEdit from "@/components/youtube/ShortsEdit";
@@ -94,18 +100,68 @@ const STEPS = [
   },
   {
     id: "liked",
+    target: "inscrever",
+    text: "Muito bem, você curtiu o vídeo! Quem fez esta receita é o canal Cozinha da Vovó. Toque em INSCREVER, onde está piscando, para acompanhar esse canal. Assim ele avisa quando colocar vídeo novo, e não custa nada.",
+  },
+  {
+    id: "inscrito",
+    target: "salvar",
+    text: "Pronto, você está inscrito! Agora, se quiser guardar este vídeo para ver depois, toque em SALVAR, onde está piscando. Ele fica guardado na sua listinha de Assistir mais tarde.",
+  },
+  {
+    id: "salvo",
+    target: "compartilhar",
+    text: "O vídeo ficou salvo na sua lista. Agora toque em COMPARTILHAR, onde está piscando, para mandar este vídeo para alguém da sua família.",
+  },
+  {
+    id: "compartilhar_open",
+    target: "share_whats",
+    text: "Estas são as opções para mandar o vídeo: WhatsApp, Mensagens, e-mail ou copiar o link. Toque em WhatsApp, onde está piscando, para enviar para um contato.",
+  },
+  {
+    id: "compartilhado",
+    target: "comentar",
+    text: "Muito bem, o link do vídeo foi enviado! Agora toque em ADICIONAR UM COMENTÁRIO, onde está piscando, para escrever o que você achou do vídeo. Seu comentário fica embaixo do vídeo, para o canal e outras pessoas lerem.",
+  },
+  {
+    id: "comentario_open",
+    target: "enviar_comentario",
+    text: "Já escrevi uma sugestão para você: Que receita fácil, gostei muito! Se quiser, apague e escreva do seu jeito. Quando terminar, toque no botão azul COMENTAR, onde está piscando.",
+  },
+  {
+    id: "comentado",
     target: "leave_player",
-    text: "Muito bem, você curtiu o vídeo! Agora toque na seta de voltar, lá em cima do lado esquerdo, para ver os outros vídeos.",
+    text: "Parabéns! Seu comentário foi publicado embaixo do vídeo. Agora toque na seta de voltar, lá em cima do lado esquerdo, para ver os outros vídeos.",
   },
   {
     id: "back_results",
+    target: "notifications",
+    text: "De volta à lista de vídeos. Agora toque na campainha, lá em cima do lado direito, onde está piscando, para ver os avisos dos canais que você acompanha.",
+  },
+  {
+    id: "notificacoes_open",
+    target: "close_notifications",
+    text: "Aqui ficam as notificações: os avisos de vídeo novo, de quem respondeu o seu comentário e de quem respondeu você. Quando aparece uma bolinha vermelha na campainha, é porque tem novidade para ver. Toque na seta de voltar, onde está piscando, para continuar.",
+  },
+  {
+    id: "back_home",
     target: "you_nav",
-    text: "De volta à lista de vídeos. Agora toque em VOCÊ, no canto de baixo do lado direito, onde está piscando, para ver os vídeos que você já assistiu.",
+    text: "Agora toque em VOCÊ, no canto de baixo do lado direito, onde está piscando, para ver a sua área e o histórico do que você já assistiu.",
   },
   {
     id: "you_open",
+    target: "history_row",
+    text: "Esta é a sua área no YouTube: o seu nome, a sua conta do Google e as listas que você guardou. Toque em HISTÓRICO, onde está piscando, para ver todos os vídeos que você já assistiu.",
+  },
+  {
+    id: "history_open",
+    target: "back_from_history",
+    text: "Aqui fica o histórico: a lista de tudo que você assistiu, do mais novo para o mais antigo. É aqui que você acha aquele vídeo que viu e não lembra o nome. Toque na seta de voltar, onde está piscando.",
+  },
+  {
+    id: "back_from_history",
     target: "create_nav",
-    text: "Aqui em VOCÊ ficam a sua conta e os vídeos que você assistiu. Agora toque no sinal de MAIS, no meio da barra de baixo, onde está piscando, para aprender a gravar um Short, que é um vídeo curto.",
+    text: "Agora toque no sinal de MAIS, no meio da barra de baixo, onde está piscando, para aprender a gravar um Short, que é um vídeo curto.",
   },
   {
     id: "create_menu",
@@ -165,7 +221,7 @@ const STEPS = [
   {
     id: "done",
     target: "back",
-    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir, ver os vídeos que você já assistiu e até gravar e publicar um Short. Toque na seta, onde está piscando, para voltar à tela inicial.",
+    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir, se inscrever no canal, salvar, compartilhar, comentar, ver as notificações, o histórico e até gravar e publicar um Short. Toque na seta, onde está piscando, para voltar à tela inicial.",
   },
 ];
 
@@ -174,7 +230,8 @@ export default function AppYouTube() {
   const [stepIndex, setStepIndex] = useState(0);
   const [view, setView] = useState("home");
   const [chip, setChip] = useState("Todos");
-  const [liked, setLiked] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [compartilhado, setCompartilhado] = useState(false);
   const [shortsScreen, setShortsScreen] = useState(null);
   const [duracao, setDuracao] = useState(0);
 
@@ -197,8 +254,13 @@ export default function AppYouTube() {
 
   // Seta de cima: sai do vídeo durante o tutorial ou volta para a tela inicial
   const handleBack = () => {
-    if (target === "leave_player") {
+    if (target === "leave_player" || target === "close_notifications") {
       setView("results");
+      goNext();
+      return;
+    }
+    if (target === "back_from_history") {
+      setView("you");
       goNext();
       return;
     }
@@ -224,9 +286,28 @@ export default function AppYouTube() {
     goNext();
   };
 
-  const handleLike = () => {
-    if (target !== "like") return;
-    setLiked(true);
+  // Tela do vídeo: curtir, inscrever, salvar, compartilhar e comentar
+  const handlePlayerTap = (id) => {
+    if (id === "compartilhar") setShareOpen(true);
+    if (target === id) goNext();
+  };
+
+  const handleShareOption = () => {
+    setShareOpen(false);
+    if (target !== "share_whats") return;
+    setCompartilhado(true);
+    goNext();
+  };
+
+  const handleNotifications = () => {
+    if (target !== "notifications") return;
+    setView("notifications");
+    goNext();
+  };
+
+  const handleHistory = () => {
+    if (target !== "history_row") return;
+    setView("history");
     goNext();
   };
 
@@ -289,22 +370,7 @@ export default function AppYouTube() {
     </Pulse>
   );
 
-  const VideoRow = ({ video, subtitle }) => (
-    <div className="flex gap-3">
-      <div
-        className={`relative w-28 h-16 rounded-lg bg-gradient-to-br ${video.thumb} flex items-center justify-center shrink-0`}
-      >
-        <Play className="w-5 h-5 text-white" fill="currentColor" />
-        <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1 rounded">
-          {video.time}
-        </span>
-      </div>
-      <div className="flex-1">
-        <p className="text-sm font-medium text-gray-900 leading-snug">{video.title}</p>
-        <p className="text-xs text-gray-600 mt-0.5">{subtitle || video.channel}</p>
-      </div>
-    </div>
-  );
+  // A linha de vídeo agora vem do componente VideoRow
 
   const renderContent = () => {
     if (view === "search") {
@@ -358,44 +424,7 @@ export default function AppYouTube() {
 
     if (view === "player") {
       return (
-        <div className="flex-1 overflow-y-auto bg-white">
-          <div className="relative w-full aspect-video bg-black flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
-              <Play className="w-8 h-8 text-gray-900 ml-1" fill="currentColor" />
-            </div>
-            <span className="absolute bottom-2 left-3 text-white text-xs">12:40 / 12:40</span>
-          </div>
-          <div className="p-4">
-            <p className="font-bold text-gray-900 text-base leading-snug">
-              Receita de bolo de cenoura fácil e fofinho
-            </p>
-            <p className="text-xs text-gray-600 mt-1">Cozinha da Vovó · 1,2 mi de visualizações</p>
-
-            <div className="mt-5 flex items-center gap-5 overflow-x-auto pb-2">
-              <Pulse active={target === "like"} ring="rounded-xl">
-                <button onClick={handleLike} className="flex flex-col items-center gap-1 px-2">
-                  <ThumbsUp className={`w-6 h-6 ${liked ? "text-blue-600" : "text-gray-900"}`} />
-                  <span className="text-xs text-gray-700">{liked ? "Curtido" : "Curtir"}</span>
-                </button>
-              </Pulse>
-              <div className="flex flex-col items-center gap-1 px-2">
-                <Share2 className="w-6 h-6 text-gray-900" />
-                <span className="text-xs text-gray-700">Compartilhar</span>
-              </div>
-              <div className="flex flex-col items-center gap-1 px-2">
-                <Bookmark className="w-6 h-6 text-gray-900" />
-                <span className="text-xs text-gray-700">Salvar</span>
-              </div>
-            </div>
-
-            <div className="mt-4 border-t border-gray-100 pt-4">
-              <p className="text-sm font-medium text-gray-900 mb-2">Comentários</p>
-              <p className="text-xs text-gray-600">
-                Maria: Fiz ontem e ficou uma delícia! Muito fácil de entender.
-              </p>
-            </div>
-          </div>
-        </div>
+        <VideoPlayer target={target} compartilhado={compartilhado} onTap={handlePlayerTap} />
       );
     }
 
@@ -444,6 +473,14 @@ export default function AppYouTube() {
       );
     }
 
+    if (view === "notifications") {
+      return <NotificationsView />;
+    }
+
+    if (view === "history") {
+      return <HistoryView videos={[VIDEOS[0], VIDEOS[3], VIDEOS[2]]} />;
+    }
+
     if (view === "you") {
       return (
         <div className="flex-1 overflow-y-auto px-4 py-6">
@@ -456,6 +493,29 @@ export default function AppYouTube() {
               <p className="text-xs text-gray-600">Sua conta do YouTube</p>
             </div>
           </div>
+
+          <div className="mt-5 space-y-2">
+            <Pulse active={target === "history_row"} className="w-full" ring="rounded-2xl">
+              <button
+                onClick={handleHistory}
+                className="w-full flex items-center gap-3 rounded-2xl border border-gray-200 px-3 py-3 text-left"
+              >
+                <HistoryIcon className="w-5 h-5 text-gray-700" />
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">Histórico</p>
+                  <p className="text-xs text-gray-600">Tudo que você já assistiu</p>
+                </div>
+              </button>
+            </Pulse>
+            <div className="w-full flex items-center gap-3 rounded-2xl border border-gray-200 px-3 py-3">
+              <Bookmark className="w-5 h-5 text-gray-700" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-gray-900">Assistir mais tarde</p>
+                <p className="text-xs text-gray-600">Os vídeos que você salvou</p>
+              </div>
+            </div>
+          </div>
+
           <p className="text-xs font-bold text-gray-500 uppercase mt-6 mb-3">
             Vídeos que você assistiu
           </p>
@@ -501,7 +561,15 @@ export default function AppYouTube() {
 
         {/* Cabeçalho */}
         <div className="flex items-center gap-2 px-4 py-2 bg-white border-b border-gray-200">
-          <Pulse active={target === "back" || target === "leave_player"} ring="rounded-full">
+          <Pulse
+            active={
+              target === "back" ||
+              target === "leave_player" ||
+              target === "close_notifications" ||
+              target === "back_from_history"
+            }
+            ring="rounded-full"
+          >
             <button
               onClick={handleBack}
               className="w-9 h-9 rounded-full flex items-center justify-center"
@@ -513,7 +581,15 @@ export default function AppYouTube() {
           <span className="text-xl font-bold text-gray-900">YouTube</span>
           <div className="flex-1" />
           <MessageSquare className="w-6 h-6 text-gray-900" />
-          <Bell className="w-6 h-6 text-gray-900" />
+          <Pulse active={target === "notifications"} ring="rounded-full">
+            <button
+              onClick={handleNotifications}
+              className="w-9 h-9 rounded-full flex items-center justify-center relative"
+            >
+              <Bell className="w-6 h-6 text-gray-900" />
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-red-600" />
+            </button>
+          </Pulse>
           <Pulse active={target === "search"} ring="rounded-full">
             <button
               onClick={handleSearch}
@@ -525,6 +601,14 @@ export default function AppYouTube() {
         </div>
 
         {renderContent()}
+
+        {shareOpen && (
+          <ShareSheet
+            target={target}
+            onOption={handleShareOption}
+            onClose={() => setShareOpen(false)}
+          />
+        )}
 
         {/* Barra de baixo */}
         {!shortsScreen && (
