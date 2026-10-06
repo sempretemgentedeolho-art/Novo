@@ -172,7 +172,7 @@ export default function Home() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Tela inicial. Escolha o aplicativo que deseja abrir. Deslize a seta para baixo, lá em cima no topo da tela, para ver as notificações. Toque na seta que está piscando."
+        "Tela inicial. Toque no YouTube, onde está piscando, e vamos aprender juntos como usar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -394,8 +394,17 @@ export default function Home() {
                   onClick={() => handleAppClick(app)}
                   className="flex flex-col items-center gap-2"
                 >
-                  <div className={`w-14 h-14 rounded-2xl ${app.bgColor} flex items-center justify-center shadow-lg transition-all hover:scale-105`}>
-                    <Icon className={`w-7 h-7 ${app.iconColor}`} />
+                  <div className="relative">
+                    {app.id === 'youtube' && (
+                      <motion.div
+                        animate={{ scale: [1, 1.5, 1.5], opacity: [0.75, 0.2, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5, ease: 'easeOut' }}
+                        className="absolute inset-0 rounded-2xl bg-yellow-400 pointer-events-none"
+                      />
+                    )}
+                    <div className={`relative w-14 h-14 rounded-2xl ${app.bgColor} flex items-center justify-center shadow-lg transition-all hover:scale-105`}>
+                      <Icon className={`w-7 h-7 ${app.iconColor}`} />
+                    </div>
                   </div>
                   <span className="text-[10px] font-medium text-white drop-shadow text-center leading-tight">
                     {app.name}

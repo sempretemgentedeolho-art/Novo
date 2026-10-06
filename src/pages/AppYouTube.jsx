@@ -194,13 +194,13 @@ export default function AppYouTube() {
   };
 
   // Destaque amarelo pulsante no elemento da etapa atual
-  const Pulse = ({ active, children, className = "inline-flex", ring = "rounded-full" }) => (
-    <div className={`relative ${className}`}>
+  const Pulse = ({ active, children, className = "inline-flex", ring = "rounded-full", onClick }) => (
+    <div className={`relative ${className}`} onClick={onClick}>
       {active && (
         <motion.div
           animate={{ scale: [1, 1.35, 1.35], opacity: [0.7, 0.25, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-          className={`absolute -inset-2 ${ring} bg-yellow-400 z-0`}
+          className={`absolute -inset-2 ${ring} bg-yellow-400 z-0 pointer-events-none`}
         />
       )}
       <motion.div
@@ -501,12 +501,17 @@ export default function AppYouTube() {
             >
               <div className="flex items-center justify-between p-5 border-b border-gray-200">
                 <h2 className="text-lg font-bold text-gray-900">Criar</h2>
-                <Pulse active={target === "close_create"} ring="rounded-full">
+                <Pulse
+                  active={target === "close_create"}
+                  ring="rounded-full"
+                  className="inline-flex p-1.5"
+                  onClick={handleCloseCreate}
+                >
                   <button
-                    onClick={handleCloseCreate}
-                    className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+                    type="button"
+                    className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"
                   >
-                    <X className="w-5 h-5 text-gray-900" />
+                    <X className="w-6 h-6 text-gray-900" />
                   </button>
                 </Pulse>
               </div>
