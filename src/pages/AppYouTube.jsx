@@ -13,9 +13,10 @@ import {
   Share2,
   Bookmark,
   Home as HomeIcon,
-  Library,
-  PlusCircle,
-  User,
+  SquarePlay,
+  Zap,
+  Plus,
+  MessageSquare,
   Play,
   Video,
   Image as ImageIcon,
@@ -96,13 +97,13 @@ const STEPS = [
   },
   {
     id: "back_results",
-    target: "library_nav",
-    text: "De volta à lista de vídeos. Agora vou te mostrar a sua biblioteca, onde ficam os vídeos que você assistiu. Toque em BIBLIOTECA, lá embaixo, onde está piscando.",
+    target: "you_nav",
+    text: "De volta à lista de vídeos. Agora toque em VOCÊ, no canto de baixo do lado direito, onde está piscando, para ver os vídeos que você já assistiu.",
   },
   {
-    id: "library_open",
+    id: "you_open",
     target: "create_nav",
-    text: "Esta é a sua biblioteca. Aqui ficam os vídeos que você assistiu e os que você salvou para ver depois. Agora toque em CRIAR, no meio de baixo, onde está piscando, para ver como gravar um vídeo seu.",
+    text: "Aqui em VOCÊ ficam a sua conta e os vídeos que você assistiu. Agora toque no sinal de MAIS, no meio da barra de baixo, onde está piscando, para ver como gravar um vídeo seu.",
   },
   {
     id: "create_open",
@@ -112,7 +113,7 @@ const STEPS = [
   {
     id: "done",
     target: "back",
-    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir e ver a sua biblioteca. Toque na seta, onde está piscando, para voltar à tela inicial.",
+    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir e ver os vídeos que você já assistiu. Toque na seta, onde está piscando, para voltar à tela inicial.",
   },
 ];
 
@@ -175,21 +176,21 @@ export default function AppYouTube() {
     goNext();
   };
 
-  const handleNavLibrary = () => {
-    setView("library");
-    if (target === "library_nav") goNext();
-  };
-
   const handleNavCreate = () => {
     setView("create");
     if (target === "create_nav") goNext();
   };
 
   const handleNavHome = () => setView("home");
-  const handleNavYou = () => setView("you");
+  const handleNavShorts = () => setView("shorts");
+  const handleNavSubs = () => setView("subscriptions");
+  const handleNavYou = () => {
+    setView("you");
+    if (target === "you_nav") goNext();
+  };
 
   const handleCloseCreate = () => {
-    setView("library");
+    setView("you");
     if (target === "close_create") goNext();
   };
 
@@ -239,6 +240,23 @@ export default function AppYouTube() {
         </div>
       </button>
     </Pulse>
+  );
+
+  const VideoRow = ({ video, subtitle }) => (
+    <div className="flex gap-3">
+      <div
+        className={`relative w-28 h-16 rounded-lg bg-gradient-to-br ${video.thumb} flex items-center justify-center shrink-0`}
+      >
+        <Play className="w-5 h-5 text-white" fill="currentColor" />
+        <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1 rounded">
+          {video.time}
+        </span>
+      </div>
+      <div className="flex-1">
+        <p className="text-sm font-medium text-gray-900 leading-snug">{video.title}</p>
+        <p className="text-xs text-gray-600 mt-0.5">{subtitle || video.channel}</p>
+      </div>
+    </div>
   );
 
   const renderContent = () => {
@@ -334,34 +352,45 @@ export default function AppYouTube() {
       );
     }
 
-    if (view === "library") {
+    if (view === "shorts") {
+      return (
+        <div className="flex-1 relative overflow-hidden bg-gray-900">
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-600 via-rose-500 to-orange-500" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+              <Play className="w-8 h-8 text-gray-900 ml-1" fill="currentColor" />
+            </div>
+          </div>
+          <div className="absolute bottom-5 left-4 right-20">
+            <p className="text-white font-semibold text-sm leading-snug">
+              Dica rápida de como usar o celular
+            </p>
+            <p className="text-white/85 text-xs mt-1">@ForjaDaConsciencia</p>
+          </div>
+          <div className="absolute bottom-5 right-3 flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center">
+              <ThumbsUp className="w-7 h-7 text-white" />
+              <span className="text-white text-[11px] mt-0.5">128 mil</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Share2 className="w-7 h-7 text-white" />
+              <span className="text-white text-[11px] mt-0.5">Enviar</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (view === "subscriptions") {
       return (
         <div className="flex-1 overflow-y-auto px-4 pb-4">
-          <h2 className="text-lg font-bold text-gray-900 py-3">Biblioteca</h2>
-          <div className="flex gap-4 text-sm mb-4">
-            <span className="font-semibold text-gray-900 border-b-2 border-gray-900 pb-1">
-              Histórico
-            </span>
-            <span className="text-gray-500">Mais tarde</span>
-            <span className="text-gray-500">Playlists</span>
-          </div>
-          <p className="text-xs font-bold text-gray-500 uppercase mb-3">Vídeos que você assistiu</p>
+          <h2 className="text-lg font-bold text-gray-900 py-3">Inscrições</h2>
+          <p className="text-xs font-bold text-gray-500 uppercase mb-3">
+            Canais que você acompanha
+          </p>
           <div className="space-y-4">
-            {[VIDEOS[0], VIDEOS[3]].map((video) => (
-              <div key={video.id} className="flex gap-3">
-                <div
-                  className={`relative w-28 h-16 rounded-lg bg-gradient-to-br ${video.thumb} flex items-center justify-center shrink-0`}
-                >
-                  <Play className="w-5 h-5 text-white" fill="currentColor" />
-                  <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1 rounded">
-                    {video.time}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900 leading-snug">{video.title}</p>
-                  <p className="text-xs text-gray-600 mt-0.5">Assistido hoje</p>
-                </div>
-              </div>
+            {[VIDEOS[0], VIDEOS[2]].map((video) => (
+              <VideoRow key={video.id} video={video} />
             ))}
           </div>
         </div>
@@ -380,9 +409,14 @@ export default function AppYouTube() {
               <p className="text-xs text-gray-600">Sua conta do YouTube</p>
             </div>
           </div>
-          <p className="text-sm text-gray-700 mt-6">
-            Aqui ficam a sua conta, os seus vídeos e os canais que você acompanha.
+          <p className="text-xs font-bold text-gray-500 uppercase mt-6 mb-3">
+            Vídeos que você assistiu
           </p>
+          <div className="space-y-4">
+            {[VIDEOS[0], VIDEOS[3]].map((video) => (
+              <VideoRow key={video.id} video={video} subtitle="Assistido hoje" />
+            ))}
+          </div>
         </div>
       );
     }
@@ -431,6 +465,8 @@ export default function AppYouTube() {
           <Youtube className="w-7 h-7 text-red-600" />
           <span className="text-xl font-bold text-gray-900">YouTube</span>
           <div className="flex-1" />
+          <MessageSquare className="w-6 h-6 text-gray-900" />
+          <Bell className="w-6 h-6 text-gray-900" />
           <Pulse active={target === "search"} ring="rounded-full">
             <button
               onClick={handleSearch}
@@ -439,10 +475,6 @@ export default function AppYouTube() {
               <Search className="w-6 h-6 text-gray-900" />
             </button>
           </Pulse>
-          <Bell className="w-6 h-6 text-gray-900" />
-          <div className="w-7 h-7 rounded-full bg-red-600 text-white text-[11px] flex items-center justify-center font-bold">
-            EU
-          </div>
         </div>
 
         {renderContent()}
@@ -451,39 +483,55 @@ export default function AppYouTube() {
         {view !== "create" && (
           <div className="bg-white border-t border-gray-200 flex justify-around items-center py-2 shrink-0">
             <Pulse ring="rounded-xl">
-              <button onClick={handleNavHome} className="flex flex-col items-center gap-0.5 px-3">
+              <button onClick={handleNavHome} className="flex flex-col items-center gap-0.5">
                 <HomeIcon
                   className={`w-6 h-6 ${
                     view === "home" || view === "results" ? "text-gray-900" : "text-gray-500"
                   }`}
                 />
-                <span className="text-[11px] text-gray-700">Início</span>
-              </button>
-            </Pulse>
-
-            <Pulse active={target === "library_nav"} ring="rounded-xl">
-              <button
-                onClick={handleNavLibrary}
-                className="flex flex-col items-center gap-0.5 px-3"
-              >
-                <Library
-                  className={`w-6 h-6 ${view === "library" ? "text-gray-900" : "text-gray-500"}`}
-                />
-                <span className="text-[11px] text-gray-700">Biblioteca</span>
-              </button>
-            </Pulse>
-
-            <Pulse active={target === "create_nav"} ring="rounded-xl">
-              <button onClick={handleNavCreate} className="flex flex-col items-center gap-0.5 px-3">
-                <PlusCircle className="w-6 h-6 text-gray-500" />
-                <span className="text-[11px] text-gray-700">Criar</span>
+                <span className="text-[10px] text-gray-700">Início</span>
               </button>
             </Pulse>
 
             <Pulse ring="rounded-xl">
-              <button onClick={handleNavYou} className="flex flex-col items-center gap-0.5 px-3">
-                <User className={`w-6 h-6 ${view === "you" ? "text-gray-900" : "text-gray-500"}`} />
-                <span className="text-[11px] text-gray-700">Você</span>
+              <button onClick={handleNavShorts} className="flex flex-col items-center gap-0.5">
+                <Zap
+                  className={`w-6 h-6 ${view === "shorts" ? "text-gray-900" : "text-gray-500"}`}
+                />
+                <span className="text-[10px] text-gray-700">Shorts</span>
+              </button>
+            </Pulse>
+
+            <Pulse active={target === "create_nav"} ring="rounded-full">
+              <button
+                onClick={handleNavCreate}
+                className="w-12 h-12 rounded-full bg-gray-100 border border-gray-300 flex items-center justify-center"
+              >
+                <Plus className="w-7 h-7 text-gray-900" />
+              </button>
+            </Pulse>
+
+            <Pulse ring="rounded-xl">
+              <button onClick={handleNavSubs} className="flex flex-col items-center gap-0.5">
+                <SquarePlay
+                  className={`w-6 h-6 ${
+                    view === "subscriptions" ? "text-gray-900" : "text-gray-500"
+                  }`}
+                />
+                <span className="text-[10px] text-gray-700 whitespace-nowrap">Inscrições</span>
+              </button>
+            </Pulse>
+
+            <Pulse active={target === "you_nav"} ring="rounded-full">
+              <button onClick={handleNavYou} className="flex flex-col items-center gap-0.5">
+                <div
+                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold ${
+                    view === "you" ? "bg-gray-900 text-white" : "bg-gray-400 text-white"
+                  }`}
+                >
+                  EU
+                </div>
+                <span className="text-[10px] text-gray-700">Você</span>
               </button>
             </Pulse>
           </div>
