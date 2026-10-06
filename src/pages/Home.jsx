@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import {
   Phone, MessageSquare, Camera, Image, Settings,
   Calculator, Clock, Facebook, Instagram,
-  Video, Lightbulb
+  Video, Lightbulb, Youtube
 } from 'lucide-react';
 import { TikTokIcon } from '@/components/TikTokIcon';
 
@@ -27,6 +27,7 @@ const apps = [
   { id: 'instagram', name: 'Instagram', icon: Instagram, page: 'Instagram', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500', iconColor: 'text-white' },
   { id: 'calculator', name: 'Calculadora', icon: Calculator, page: 'Calculadora', bgColor: 'bg-gradient-to-br from-orange-400 to-red-500', iconColor: 'text-white' },
   { id: 'tiktok', name: 'TikTok', icon: TikTokIcon, page: 'TikTok', bgColor: 'bg-black', iconColor: 'text-white' },
+  { id: 'youtube', name: 'YouTube', icon: Youtube, page: 'AppYouTube', bgColor: 'bg-white border border-gray-200', iconColor: 'text-red-600' },
   { id: 'tips', name: 'Dicas', icon: Lightbulb, page: 'AppDicas', bgColor: 'bg-gradient-to-br from-yellow-400 to-amber-500', iconColor: 'text-white' },
 ];
 
