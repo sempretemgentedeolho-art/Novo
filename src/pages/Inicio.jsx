@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { motion } from 'framer-motion';
-import { Heart } from 'lucide-react';
+import { Heart, Youtube } from 'lucide-react';
 
 export default function Inicio() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function Inicio() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. Toque na tela para começar."
+        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. Antes de começar, uma dica rápida sobre o YouTube: você não precisa de conta para assistir aos vídeos. Se quiser curtir, comentar ou salvar seus canais favoritos, é só entrar com a sua conta do Google, o mesmo e-mail do Gmail. Toque na tela para começar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -41,9 +41,9 @@ export default function Inicio() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-          className="mb-8"
+          className="mb-6"
         >
-          <div className="w-40 h-40 rounded-3xl bg-white shadow-2xl flex items-center justify-center p-4 relative overflow-hidden">
+          <div className="w-32 h-32 rounded-3xl bg-white shadow-2xl flex items-center justify-center p-4 relative overflow-hidden">
             {/* Brilho de fundo */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent"></div>
             
@@ -61,7 +61,7 @@ export default function Inicio() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-6"
         >
           <h1 className="text-4xl font-bold text-gray-800 mb-4 drop-shadow-sm">
             Bem-vindo!
@@ -76,6 +76,24 @@ export default function Inicio() {
               Feito com carinho para você
             </p>
           </div>
+        </motion.div>
+
+        {/* Dica rápida sobre o YouTube */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-red-200 px-5 py-4 max-w-sm text-center mb-8"
+        >
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Youtube className="w-5 h-5 text-red-600" />
+            <h3 className="text-base font-bold text-gray-800">Dica rápida sobre o YouTube</h3>
+          </div>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            Você <strong>não precisa de conta</strong> para assistir aos vídeos. Para curtir,
+            comentar e salvar seus canais favoritos, entre com a sua conta do Google, o mesmo
+            e-mail do Gmail.
+          </p>
         </motion.div>
 
         {/* Call to Action */}
@@ -94,7 +112,7 @@ export default function Inicio() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="mt-8"
+            className="mt-4"
           >
             <div className="text-teal-700 text-4xl">👇</div>
           </motion.div>
