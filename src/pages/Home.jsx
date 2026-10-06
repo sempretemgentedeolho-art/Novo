@@ -209,10 +209,24 @@ export default function Home() {
 
   const handleAppClick = (app) => {
     const synth = window.speechSynthesis;
+    if (synth) synth.cancel();
+
+    // Neste treinamento só o YouTube abre. Os outros apps ficam visíveis, mas não abrem.
+    if (app.id !== 'youtube') {
+      if (synth) {
+        const aviso = new SpeechSynthesisUtterance(
+          `${app.name} faz parte de outro treinamento. Aqui a gente aprende só o YouTube.`
+        );
+        aviso.lang = 'pt-BR';
+        aviso.rate = 0.9;
+        synth.speak(aviso);
+      }
+      return;
+    }
+
     if (synth) {
-      synth.cancel();
       const utter = new SpeechSynthesisUtterance(`Abrindo ${app.name}`);
-      utter.lang = "pt-BR";
+      utter.lang = 'pt-BR';
       utter.rate = 0.9;
       synth.speak(utter);
     }
