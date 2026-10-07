@@ -49,8 +49,10 @@ export default function CaptionsPanel({
             key={e.id}
             type="button"
             onClick={() => onEstiloIndex(i)}
-            className={`flex-1 px-2 py-2 rounded-xl text-sm ${
-              i === estiloIndex ? "bg-white text-gray-900 font-semibold" : "bg-white/10 text-white"
+            className={`flex-1 px-2 py-2 rounded-full text-sm ${
+              i === estiloIndex
+                ? "bg-white text-gray-900 font-semibold"
+                : "border border-white/40 text-white"
             }`}
           >
             {e.nome}

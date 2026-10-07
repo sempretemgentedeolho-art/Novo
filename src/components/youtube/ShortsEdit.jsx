@@ -3,10 +3,10 @@ import {
   ArrowLeft,
   Music2,
   Volume2,
-  Sparkles,
+  Wand2,
   SlidersHorizontal,
-  Sticker,
-  Captions,
+  Smile,
+  Subtitles,
   ChevronDown,
   Film,
   Mic,
@@ -25,10 +25,10 @@ import NarracaoPanel from "@/components/youtube/NarracaoPanel";
 // Ferramentas do lado direito do vídeo, como no YouTube de verdade
 const FERRAMENTAS = [
   { id: "aa", label: "Texto", letra: "Aa" },
-  { id: "efeitos", label: "Efeitos", Icone: Sparkles },
+  { id: "efeitos", label: "Efeitos", Icone: Wand2 },
   { id: "filtros", label: "Filtros", Icone: SlidersHorizontal },
-  { id: "adesivos", label: "Adesivos", Icone: Sticker },
-  { id: "legendas", label: "Legendas", Icone: Captions },
+  { id: "adesivos", label: "Adesivos", Icone: Smile },
+  { id: "legendas", label: "Legendas", Icone: Subtitles },
 ];
 
 export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) {
@@ -165,10 +165,10 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
         <Pulse active={target === "musica_pill"} ring="rounded-full" onClick={() => abrir("musica")}>
           <button
             type="button"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/45"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white"
           >
-            <Music2 className="w-4 h-4 text-white" />
-            <span className="text-white text-sm font-semibold">Adicionar som</span>
+            <Music2 className="w-4 h-4 text-gray-900" />
+            <span className="text-gray-900 text-sm font-semibold">Adicionar som</span>
           </button>
         </Pulse>
 
@@ -206,13 +206,30 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
         <div className="self-start flex flex-col items-center gap-4 px-2.5 py-3 rounded-2xl bg-black/50">
           {FERRAMENTAS.map((f) => (
             <Pulse key={f.id} active={target === f.id} ring="rounded-xl" onClick={() => abrir(f.id)}>
-              <button type="button" className="flex flex-col items-center gap-0.5 w-9">
+              <button
+                type="button"
+                className={`flex flex-col items-center gap-0.5 w-11 py-2 rounded-xl ${
+                  painel === f.id ? "bg-white" : ""
+                }`}
+              >
                 {f.letra ? (
-                  <span className="text-white font-bold text-lg leading-none">{f.letra}</span>
+                  <span
+                    className={`font-bold text-lg leading-none ${
+                      painel === f.id ? "text-gray-900" : "text-white"
+                    }`}
+                  >
+                    {f.letra}
+                  </span>
                 ) : (
-                  <f.Icone className="w-5 h-5 text-white" />
+                  <f.Icone
+                    className={`w-5 h-5 ${painel === f.id ? "text-gray-900" : "text-white"}`}
+                  />
                 )}
-                <span className="text-white/70 text-[9px]">{f.label}</span>
+                <span
+                  className={`text-[9px] ${painel === f.id ? "text-gray-900" : "text-white/70"}`}
+                >
+                  {f.label}
+                </span>
               </button>
             </Pulse>
           ))}

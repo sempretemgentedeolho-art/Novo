@@ -4,7 +4,7 @@ import ToolPanel from "@/components/youtube/ToolPanel";
 export const CATEGORIAS = ["Para você", "Rosto", "Cenário"];
 
 export const EFEITOS = [
-  { id: "nenhum", nome: "Nenhum", emoji: "🚫", categoria: "Para você" },
+  { id: "nenhum", nome: "Nenhum", emoji: "", categoria: "Para você" },
   {
     id: "estrela",
     nome: "Estrela",
@@ -101,7 +101,9 @@ export default function EffectsPanel({
             type="button"
             onClick={() => setCategoria(c)}
             className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${
-              c === categoria ? "bg-white text-gray-900 font-semibold" : "bg-white/10 text-white"
+              c === categoria
+                ? "bg-white text-gray-900 font-semibold"
+                : "border border-white/40 text-white"
             }`}
           >
             {c}
