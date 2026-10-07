@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { ArrowLeft, Heart, MessageCircle, Send, Bookmark } from "lucide-react";
+import perfilMaria from "@/assets/imagens/perfil-maria.jpg";
+import perfilJoao from "@/assets/imagens/perfil-joao.jpg";
+import perfilAna from "@/assets/imagens/perfil-ana.jpg";
 
 export default function AppInstagram() {
   const navigate = useNavigate();
@@ -19,9 +22,9 @@ export default function AppInstagram() {
   }, []);
 
   const posts = [
-    { usuario: "Maria Silva", foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400", likes: 245 },
-    { usuario: "João Santos", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400", likes: 189 },
-    { usuario: "Ana Costa", foto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400", likes: 312 },
+    { usuario: "Maria Silva", foto: perfilMaria, likes: 245 },
+    { usuario: "João Santos", foto: perfilJoao, likes: 189 },
+    { usuario: "Ana Costa", foto: perfilAna, likes: 312 },
   ];
 
   return (

@@ -4,6 +4,7 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { motion } from 'framer-motion';
 import { Heart, Youtube } from 'lucide-react';
+import logoForja from '@/assets/imagens/logo-forja.png';
 
 export default function Inicio() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Inicio() {
             
             {/* Logo Oficial */}
             <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e15e54f0b0a5a83d550cb2/4bab0b48e_logo.png"
+              src={logoForja}
               alt="Forja da Consciência"
               className="w-full h-full object-contain relative z-10"
             />

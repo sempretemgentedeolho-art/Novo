@@ -2,6 +2,12 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { ArrowLeft } from "lucide-react";
+import galeria1 from "@/assets/imagens/galeria-1.jpg";
+import galeria2 from "@/assets/imagens/galeria-2.jpg";
+import galeria3 from "@/assets/imagens/galeria-3.jpg";
+import galeria4 from "@/assets/imagens/galeria-4.jpg";
+import galeria5 from "@/assets/imagens/galeria-5.jpg";
+import galeria6 from "@/assets/imagens/galeria-6.jpg";
 
 export default function AppGaleria() {
   const navigate = useNavigate();
@@ -18,14 +24,7 @@ export default function AppGaleria() {
     synth.speak(utter);
   }, []);
 
-  const fotos = [
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400",
-    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400",
-    "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=400",
-    "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=400",
-    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400",
-  ];
+  const fotos = [galeria1, galeria2, galeria3, galeria4, galeria5, galeria6];
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">

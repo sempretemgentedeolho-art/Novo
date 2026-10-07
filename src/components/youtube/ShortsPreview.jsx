@@ -1,9 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
+import fotoShorts from "@/assets/imagens/shorts-pessoa.jpg";
 
-const FOTO =
-  "https://base44.app/api/apps/68e15e54f0b0a5a83d550cb2/files/mp/public/68e15e54f0b0a5a83d550cb2/8c472f467_pessoa-short.jpg";
+const FOTO = fotoShorts;
 
 const ALINHAMENTO = {
   esquerda: "text-left",

@@ -4,17 +4,26 @@ import { createPageUrl } from "@/utils";
 import { ArrowLeft, Search, MoreVertical } from "lucide-react";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
+import galeria1 from "@/assets/imagens/galeria-1.jpg";
+import galeria2 from "@/assets/imagens/galeria-2.jpg";
+import galeria3 from "@/assets/imagens/galeria-3.jpg";
+import galeria4 from "@/assets/imagens/galeria-4.jpg";
+import galeria5 from "@/assets/imagens/galeria-5.jpg";
+import galeria6 from "@/assets/imagens/galeria-6.jpg";
+import galeria7 from "@/assets/imagens/galeria-7.jpg";
+import galeria8 from "@/assets/imagens/galeria-8.jpg";
+import galeria9 from "@/assets/imagens/galeria-9.jpg";
 
 const photos = [
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400",
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400",
-  "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=400",
-  "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=400",
-  "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400",
-  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400",
-  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400",
-  "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=400",
+  galeria1,
+  galeria2,
+  galeria3,
+  galeria4,
+  galeria5,
+  galeria6,
+  galeria7,
+  galeria8,
+  galeria9,
 ];
 
 export default function Galeria() {
