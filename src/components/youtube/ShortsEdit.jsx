@@ -57,6 +57,12 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
   const fecharPainel = () => setPainel("none");
 
+  // O botão Adicionar som abre o painel de música e avança o tutorial
+  const abrirMusica = () => {
+    setPainel("musica");
+    onTap("musica_pill");
+  };
+
   const concluirTexto = () => {
     if (!texto.trim()) setTexto("Meu primeiro Short ✨");
     setPainel("none");
@@ -163,7 +169,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           </button>
         </Pulse>
 
-        <Pulse active={target === "musica_pill"} ring="rounded-full" onClick={() => abrir("musica")}>
+        <Pulse active={target === "musica_pill"} ring="rounded-full" onClick={abrirMusica}>
           <button
             type="button"
             className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-neutral-800/60"
