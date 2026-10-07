@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Play, ThumbsUp, Share2, Bookmark, Bell, MessageSquare } from "lucide-react";
+import { Play, ThumbsUp, Share2, Bookmark, Bell, MessageSquare, Maximize } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 
 // Tela do vídeo aberto: canal, curtir, salvar, compartilhar e comentários
-export default function VideoPlayer({ target, compartilhado, onTap }) {
+export default function VideoPlayer({ target, compartilhado, onTap, onComentario }) {
   const [curtido, setCurtido] = useState(false);
   const [inscrito, setInscrito] = useState(false);
   const [salvo, setSalvo] = useState(false);
@@ -35,6 +35,7 @@ export default function VideoPlayer({ target, compartilhado, onTap }) {
   const enviarComentario = () => {
     setComentarioEnviado(true);
     setComentarioAberto(false);
+    onComentario(comentario);
     onTap("enviar_comentario");
   };
 
@@ -45,6 +46,17 @@ export default function VideoPlayer({ target, compartilhado, onTap }) {
           <Play className="w-8 h-8 text-gray-900 ml-1" fill="currentColor" />
         </div>
         <span className="absolute bottom-2 left-3 text-white text-xs">12:40 / 12:40</span>
+        <div className="absolute bottom-2 right-2 z-10">
+          <Pulse active={target === "telacheia_btn"} ring="rounded-lg">
+            <button
+              type="button"
+              onClick={() => onTap("telacheia_btn")}
+              className="w-9 h-9 rounded-lg bg-black/60 flex items-center justify-center"
+            >
+              <Maximize className="w-4 h-4 text-white" />
+            </button>
+          </Pulse>
+        </div>
       </div>
 
       <div className="p-4">
@@ -168,6 +180,19 @@ export default function VideoPlayer({ target, compartilhado, onTap }) {
               </button>
             </Pulse>
           )}
+
+          <Pulse active={target === "ver_comentarios"} className="w-full" ring="rounded-2xl">
+            <button
+              type="button"
+              onClick={() => onTap("ver_comentarios")}
+              className="w-full mt-3 flex items-center justify-between rounded-2xl border border-gray-200 px-3 py-3 text-left"
+            >
+              <span className="text-sm font-medium text-gray-900">
+                Ver todos os comentários
+              </span>
+              <span className="text-xs text-gray-600">128</span>
+            </button>
+          </Pulse>
         </div>
       </div>
     </div>

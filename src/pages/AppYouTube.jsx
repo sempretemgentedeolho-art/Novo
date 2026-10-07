@@ -19,6 +19,12 @@ import {
   MessageSquare,
   Play,
   History as HistoryIcon,
+  Download,
+  ListVideo,
+  Radio,
+  Settings,
+  HelpCircle,
+  Users,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 import VideoRow from "@/components/youtube/VideoRow";
@@ -26,6 +32,15 @@ import VideoPlayer from "@/components/youtube/VideoPlayer";
 import ShareSheet from "@/components/youtube/ShareSheet";
 import NotificationsView from "@/components/youtube/NotificationsView";
 import HistoryView from "@/components/youtube/HistoryView";
+import ListaVideosView from "@/components/youtube/ListaVideosView";
+import PlaylistsView from "@/components/youtube/PlaylistsView";
+import AoVivoView from "@/components/youtube/AoVivoView";
+import CanalView from "@/components/youtube/CanalView";
+import ConfigYouTubeView from "@/components/youtube/ConfigYouTubeView";
+import LegendasConfigView from "@/components/youtube/LegendasConfigView";
+import AjudaYouTubeView from "@/components/youtube/AjudaYouTubeView";
+import ComentariosView from "@/components/youtube/ComentariosView";
+import TelaCheiaView from "@/components/youtube/TelaCheiaView";
 import ChapterPicker from "@/components/youtube/ChapterPicker";
 import CreateMenu from "@/components/youtube/CreateMenu";
 import ShortsCamera from "@/components/youtube/ShortsCamera";
@@ -111,16 +126,25 @@ const CHAPTERS = [
     label: "Avisos e histórico",
     description: "A campainha, o que você já assistiu e sua área",
     icon: Bell,
-    stepIndex: 11,
+    stepIndex: 15,
     view: "results",
     chip: "Receitas",
+  },
+  {
+    id: "area",
+    label: "Sua área do YouTube",
+    description: "Assistir mais tarde, playlists, downloads, canal, configurações e ajuda",
+    icon: ListVideo,
+    stepIndex: 20,
+    view: "you",
+    chip: "Todos",
   },
   {
     id: "shorts",
     label: "Gravar e publicar um Short",
     description: "Gravar um vídeo curto, enfeitar e publicar",
     icon: Zap,
-    stepIndex: 16,
+    stepIndex: 42,
     view: "you",
     chip: "Todos",
   },
@@ -179,9 +203,29 @@ const STEPS = [
     text: "Já escrevi uma sugestão para você: Que receita fácil, gostei muito! Se quiser, apague e escreva do seu jeito. Quando terminar, toque no botão azul COMENTAR, onde está piscando.",
   },
   {
+    id: "comentarios_open",
+    target: "ver_comentarios",
+    text: "Seu comentário foi publicado e já aparece aqui embaixo, escrito Você. Agora toque em VER TODOS OS COMENTÁRIOS, onde está piscando, para ler o que as outras pessoas escreveram sobre este vídeo.",
+  },
+  {
+    id: "comentarios_done",
+    target: "voltar_comentarios",
+    text: "Esta é a tela dos comentários: os recados que as pessoas deixam para quem fez o vídeo. Você pode ler à vontade e escrever o seu, sempre com educação, porque todo mundo pode ler. Toque na seta de voltar, lá em cima do lado esquerdo, onde está piscando, para voltar ao vídeo.",
+  },
+  {
+    id: "tela_cheia_open",
+    target: "telacheia_btn",
+    text: "Agora toque no quadradinho do canto de baixo do lado direito do vídeo, onde está piscando. Ele coloca o vídeo em TELA CHEIA, bem grande, sem os outros botões atrapalhando.",
+  },
+  {
+    id: "tela_cheia_done",
+    target: "sair_tela_cheia",
+    text: "Este é o vídeo em tela cheia: só o vídeo e você. Vire o celular de lado para ele ficar ainda maior. Quando quiser voltar ao normal, toque no X, no canto de cima do lado esquerdo, onde está piscando.",
+  },
+  {
     id: "comentado",
     target: "leave_player",
-    text: "Parabéns! Seu comentário foi publicado embaixo do vídeo. Agora toque na seta de voltar, lá em cima do lado esquerdo, para ver os outros vídeos.",
+    text: "Muito bem! Agora você já sabe comentar e assistir em tela cheia. Toque na seta de voltar, lá em cima do lado esquerdo, onde está piscando, para ver os outros vídeos.",
   },
   {
     id: "back_results",
@@ -207,6 +251,116 @@ const STEPS = [
     id: "history_open",
     target: "back_from_history",
     text: "Aqui fica o histórico: a lista de tudo que você assistiu, do mais novo para o mais antigo. É aqui que você acha aquele vídeo que viu e não lembra o nome. Toque na seta de voltar, onde está piscando.",
+  },
+  {
+    id: "area_salvos",
+    target: "assistir_mais_tarde",
+    text: "Agora vamos conhecer a sua área, onde fica tudo que é seu no YouTube. Toque em ASSISTIR MAIS TARDE, onde está piscando. É a lista dos vídeos que você guardou tocando em SALVAR, como aquele da receita.",
+  },
+  {
+    id: "area_salvos_done",
+    target: "voltar_mais_tarde",
+    text: "Aqui ficam os vídeos guardados para ver depois. É só tocar em um deles quando quiser assistir. Toque na seta de voltar, onde está piscando, para ver o próximo item da sua área.",
+  },
+  {
+    id: "area_playlists",
+    target: "playlists",
+    text: "Agora toque em PLAYLISTS, onde está piscando. Playlist é uma listinha de vídeos que você junta para assistir um atrás do outro, sem precisar procurar.",
+  },
+  {
+    id: "area_playlist_receitas",
+    target: "playlist_receitas",
+    text: "Toque na playlist RECEITAS DA VOVÓ, onde está piscando, para abrir essa listinha de vídeos.",
+  },
+  {
+    id: "area_playlist_done",
+    target: "voltar_playlist_receitas",
+    text: "Dentro da playlist estão todos os vídeos dela, na ordem, um embaixo do outro. Toque na seta de voltar, onde está piscando, para voltar às suas playlists.",
+  },
+  {
+    id: "area_playlists_done",
+    target: "voltar_playlists",
+    text: "Você pode criar quantas playlists quiser, separadas por assunto: receitas, músicas, orações. Toque na seta de voltar, onde está piscando, para continuar.",
+  },
+  {
+    id: "area_gostei",
+    target: "gostei",
+    text: "Agora toque em VÍDEOS COM GOSTEI, onde está piscando. Aqui ficam todos os vídeos em que você tocou no joinha. É uma lista só sua, para achar fácil aqueles de que você mais gostou.",
+  },
+  {
+    id: "area_gostei_done",
+    target: "voltar_gostei",
+    text: "Prontinho, estes são os vídeos que você curtiu. Toque na seta de voltar, onde está piscando, para continuar vendo a sua área.",
+  },
+  {
+    id: "area_seus_videos",
+    target: "seus_videos",
+    text: "Agora toque em SEUS VÍDEOS, onde está piscando. É aqui que aparece o Short que você publicou, junto com todos os vídeos que você criar daqui para frente.",
+  },
+  {
+    id: "area_seus_videos_done",
+    target: "voltar_seus_videos",
+    text: "Este é o seu cantinho de quem faz vídeos: o que você publicou e quantas pessoas viram. Toque na seta de voltar, onde está piscando.",
+  },
+  {
+    id: "area_downloads",
+    target: "downloads",
+    text: "Agora toque em DOWNLOADS, onde está piscando. Vídeo baixado é aquele que fica guardado dentro do celular para você assistir sem internet, por exemplo quando viaja.",
+  },
+  {
+    id: "area_downloads_done",
+    target: "voltar_downloads",
+    text: "Aqui aparecem os vídeos que já estão dentro do celular, prontos para assistir mesmo sem sinal. Toque na seta de voltar, onde está piscando, para continuar.",
+  },
+  {
+    id: "area_aovivo",
+    target: "aovivo",
+    text: "Agora toque em TRANSMISSÕES AO VIVO, onde está piscando. Ao vivo quer dizer que está acontecendo naquele exato momento, com o selo vermelho AO VIVO na frente.",
+  },
+  {
+    id: "area_aovivo_done",
+    target: "voltar_aovivo",
+    text: "Nestes vídeos você acompanha na hora, como uma missa ou um programa de rádio. Toque na seta de voltar, onde está piscando, para continuar.",
+  },
+  {
+    id: "area_canal",
+    target: "canal",
+    text: "Agora toque em CANAIS QUE VOCÊ ACOMPANHA, onde está piscando, para ver a página do canal Cozinha da Vovó, de onde veio aquela receita.",
+  },
+  {
+    id: "area_canal_done",
+    target: "voltar_canal",
+    text: "Esta é a página do canal: o nome dele, quantas pessoas acompanham, os vídeos que ele publicou e o botão INSCREVER, que avisa você quando sair vídeo novo. Toque na seta de voltar, onde está piscando.",
+  },
+  {
+    id: "area_config",
+    target: "config_youtube",
+    text: "Agora toque em CONFIGURAÇÕES, onde está piscando. É aqui que você deixa o YouTube do seu jeito.",
+  },
+  {
+    id: "area_config_legendas",
+    target: "config_legendas",
+    text: "Estas são as configurações: as legendas automáticas, o modo restrito, que esconde vídeos que não são para a sua idade, a economia de dados e a reprodução automática. Toque em APARÊNCIA DA LEGENDA, onde está piscando, para escolher o tamanho da letra da legenda.",
+  },
+  {
+    id: "area_legendas_done",
+    target: "voltar_legendas_config",
+    text: "Escolha a letra que você enxerga melhor: Pequena, Média, Grande ou Enorme. Embaixo aparece um exemplo com a letra do tamanho que você escolheu. Toque na seta de voltar, onde está piscando.",
+  },
+  {
+    id: "area_config_done",
+    target: "voltar_config",
+    text: "Muito bem! Se a letra ainda estiver pequena, aumente também o tamanho do texto nas configurações do celular. Toque na seta de voltar, onde está piscando, para continuar.",
+  },
+  {
+    id: "area_ajuda",
+    target: "ajuda_youtube",
+    text: "Última parte da sua área. Toque em AJUDA, onde está piscando, para ver as dúvidas mais comuns com as respostas.",
+  },
+  {
+    id: "area_ajuda_done",
+    target: "voltar_ajuda",
+    text: "Aqui estão as respostas para as dúvidas de sempre, como voltar a ver um vídeo ou assistir sem internet. Toque na seta de voltar, onde está piscando, para terminar a sua área.",
   },
   {
     id: "back_from_history",
@@ -341,9 +495,31 @@ export default function AppYouTube() {
   const [compartilhado, setCompartilhado] = useState(false);
   const [shortsScreen, setShortsScreen] = useState(null);
   const [duracao, setDuracao] = useState(0);
+  const [meuComentario, setMeuComentario] = useState("");
+  const [playlistAberta, setPlaylistAberta] = useState("receitas");
 
   const target = STEPS[stepIndex].target;
   const shownVideos = chip === "Todos" ? VIDEOS : VIDEOS.filter((v) => v.tag === chip);
+
+  // Cada playlist tem o seu nome e os seus vídeos
+  const PLAYLISTS = {
+    receitas: { nome: "Receitas da Vovó", videos: [VIDEOS[0], VIDEOS[1]] },
+    musicas: { nome: "Músicas antigas", videos: [VIDEOS[2]] },
+    familia: { nome: "Para ver com a família", videos: [VIDEOS[0], VIDEOS[3]] },
+  };
+
+  // Itens da área "Você": cada um abre uma tela nova do YouTube
+  const ROWS_AREA = [
+    { id: "assistir_mais_tarde", view: "assistirmaiatarde", label: "Assistir mais tarde", sub: "Os vídeos que você salvou", icon: Bookmark },
+    { id: "playlists", view: "playlists", label: "Playlists", sub: "Listinhas de vídeos por assunto", icon: ListVideo },
+    { id: "gostei", view: "gostei", label: "Vídeos com Gostei", sub: "Onde você tocou no joinha", icon: ThumbsUp },
+    { id: "seus_videos", view: "seusvideos", label: "Seus vídeos", sub: "O que você publicou", icon: SquarePlay },
+    { id: "downloads", view: "downloads", label: "Downloads", sub: "Assistir sem internet", icon: Download },
+    { id: "aovivo", view: "aovivo", label: "Transmissões ao vivo", sub: "O que está passando agora", icon: Radio },
+    { id: "canal", view: "canal", label: "Canais que você acompanha", sub: "Cozinha da Vovó", icon: Users },
+    { id: "config_youtube", view: "configyoutube", label: "Configurações", sub: "Deixe o YouTube do seu jeito", icon: Settings },
+    { id: "ajuda_youtube", view: "ajuda", label: "Ajuda", sub: "Dúvidas comuns e respostas", icon: HelpCircle },
+  ];
 
   useEffect(() => {
     if (!chapter) return;
@@ -372,8 +548,30 @@ export default function AppYouTube() {
 
   const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
 
+  // Para onde a seta de voltar leva em cada tela nova
+  const VOLTAR_VIEW = {
+    voltar_comentarios: "player",
+    sair_tela_cheia: "player",
+    voltar_mais_tarde: "you",
+    voltar_playlists: "you",
+    voltar_playlist_receitas: "playlists",
+    voltar_gostei: "you",
+    voltar_seus_videos: "you",
+    voltar_downloads: "you",
+    voltar_aovivo: "you",
+    voltar_canal: "you",
+    voltar_config: "you",
+    voltar_legendas_config: "configyoutube",
+    voltar_ajuda: "you",
+  };
+
   // Seta de cima: sai do vídeo durante o tutorial ou volta para a tela inicial
   const handleBack = () => {
+    if (VOLTAR_VIEW[target]) {
+      setView(VOLTAR_VIEW[target]);
+      goNext();
+      return;
+    }
     if (target === "leave_player" || target === "close_notifications") {
       setView("results");
       goNext();
@@ -385,6 +583,12 @@ export default function AppYouTube() {
       return;
     }
     navigate(createPageUrl("Home"));
+  };
+
+  // Abre uma tela da área do YouTube e avança o tutorial quando é a vez dela
+  const abrirTela = (id, destino) => {
+    setView(destino);
+    if (target === id) goNext();
   };
 
   const handleSearch = () => {
@@ -406,9 +610,12 @@ export default function AppYouTube() {
     goNext();
   };
 
-  // Tela do vídeo: curtir, inscrever, salvar, compartilhar e comentar
+  // Tela do vídeo: curtir, inscrever, salvar, compartilhar, comentar e tela cheia
   const handlePlayerTap = (id) => {
     if (id === "compartilhar") setShareOpen(true);
+    if (id === "ver_comentarios") setView("comentarios");
+    if (id === "telacheia_btn") setView("telacheia");
+    if (id === "sair_tela_cheia") setView("player");
     if (target === id) goNext();
   };
 
@@ -542,9 +749,14 @@ export default function AppYouTube() {
       );
     }
 
-    if (view === "player") {
+    if (view === "player" || view === "telacheia") {
       return (
-        <VideoPlayer target={target} compartilhado={compartilhado} onTap={handlePlayerTap} />
+        <VideoPlayer
+          target={target}
+          compartilhado={compartilhado}
+          onTap={handlePlayerTap}
+          onComentario={setMeuComentario}
+        />
       );
     }
 
@@ -614,26 +826,35 @@ export default function AppYouTube() {
             </div>
           </div>
 
-          <div className="mt-5 space-y-2">
+          <p className="text-xs font-bold text-gray-500 uppercase mt-6 mb-3">Sua área</p>
+          <div className="space-y-2">
             <Pulse active={target === "history_row"} className="w-full" ring="rounded-2xl">
               <button
                 onClick={handleHistory}
                 className="w-full flex items-center gap-3 rounded-2xl border border-gray-200 px-3 py-3 text-left"
               >
-                <HistoryIcon className="w-5 h-5 text-gray-700" />
+                <HistoryIcon className="w-5 h-5 text-gray-700 shrink-0" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">Histórico</p>
                   <p className="text-xs text-gray-600">Tudo que você já assistiu</p>
                 </div>
               </button>
             </Pulse>
-            <div className="w-full flex items-center gap-3 rounded-2xl border border-gray-200 px-3 py-3">
-              <Bookmark className="w-5 h-5 text-gray-700" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Assistir mais tarde</p>
-                <p className="text-xs text-gray-600">Os vídeos que você salvou</p>
-              </div>
-            </div>
+
+            {ROWS_AREA.map((row) => (
+              <Pulse key={row.id} className="w-full" ring="rounded-2xl" active={target === row.id}>
+                <button
+                  onClick={() => abrirTela(row.id, row.view)}
+                  className="w-full flex items-center gap-3 rounded-2xl border border-gray-200 px-3 py-3 text-left"
+                >
+                  <row.icon className="w-5 h-5 text-gray-700 shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{row.label}</p>
+                    <p className="text-xs text-gray-600">{row.sub}</p>
+                  </div>
+                </button>
+              </Pulse>
+            ))}
           </div>
 
           <p className="text-xs font-bold text-gray-500 uppercase mt-6 mb-3">
@@ -646,6 +867,97 @@ export default function AppYouTube() {
           </div>
         </div>
       );
+    }
+
+    if (view === "comentarios") {
+      return <ComentariosView meuComentario={meuComentario} />;
+    }
+
+    if (view === "assistirmaiatarde") {
+      return (
+        <ListaVideosView
+          titulo="Assistir mais tarde"
+          subtitulo="Os vídeos que você guardou tocando em SALVAR, para assistir quando quiser."
+          videos={[VIDEOS[0], VIDEOS[3], VIDEOS[2]]}
+        />
+      );
+    }
+
+    if (view === "playlists") {
+      return (
+        <PlaylistsView
+          target={target}
+          onTap={(id) => {
+            setPlaylistAberta(id.replace("playlist_", ""));
+            abrirTela(id, "playlist_receitas");
+          }}
+        />
+      );
+    }
+
+    if (view === "playlist_receitas") {
+      const lista = PLAYLISTS[playlistAberta];
+      return (
+        <ListaVideosView
+          titulo={lista.nome}
+          subtitulo="Playlist com os vídeos em ordem, para assistir um atrás do outro."
+          videos={lista.videos}
+        />
+      );
+    }
+
+    if (view === "gostei") {
+      return (
+        <ListaVideosView
+          titulo="Vídeos com Gostei"
+          subtitulo="Todos os vídeos em que você tocou no joinha."
+          videos={[VIDEOS[0], VIDEOS[2]]}
+        />
+      );
+    }
+
+    if (view === "seusvideos") {
+      return (
+        <ListaVideosView
+          titulo="Seus vídeos"
+          subtitulo="Os vídeos que você publicou no seu canal."
+          aviso="Seu Short foi publicado e já está aqui, para quem você quiser ver."
+          videos={[VIDEOS[2]]}
+        />
+      );
+    }
+
+    if (view === "downloads") {
+      return (
+        <ListaVideosView
+          titulo="Downloads"
+          subtitulo="Vídeos guardados dentro do celular para assistir sem internet."
+          aviso="Estes vídeos ficam no seu aparelho e funcionam mesmo sem sinal."
+          videos={[VIDEOS[0], VIDEOS[3]]}
+        />
+      );
+    }
+
+    if (view === "aovivo") {
+      return <AoVivoView />;
+    }
+
+    if (view === "canal") {
+      return <CanalView videos={[VIDEOS[0], VIDEOS[1]]} />;
+    }
+
+    if (view === "configyoutube") {
+      return (
+        <ConfigYouTubeView target={target} onTap={(id) => abrirTela(id, "legendas_config")} />
+      );
+    }
+
+    if (view === "legendas_config") {
+      return <LegendasConfigView />;
+    }
+
+    if (view === "ajuda") {
+      return <AjudaYouTubeView />;
     }
 
     return (
@@ -686,7 +998,8 @@ export default function AppYouTube() {
               target === "back" ||
               target === "leave_player" ||
               target === "close_notifications" ||
-              target === "back_from_history"
+              target === "back_from_history" ||
+              Boolean(VOLTAR_VIEW[target])
             }
             ring="rounded-full"
           >
@@ -721,6 +1034,8 @@ export default function AppYouTube() {
         </div>
 
         {renderContent()}
+
+        {view === "telacheia" && <TelaCheiaView target={target} onTap={handlePlayerTap} />}
 
         {shareOpen && (
           <ShareSheet
