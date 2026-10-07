@@ -231,17 +231,17 @@ const STEPS = [
   {
     id: "edit_open",
     target: "aa",
-    text: "Agora o YouTube abriu a tela de enfeites, onde você melhora o seu vídeo. O seu vídeo fica passando na tela várias vezes. Embaixo estão os botões de enfeite. Toque no Aa, onde está piscando, para escrever uma mensagem na tela do vídeo.",
+    text: "Agora o YouTube abriu a tela de enfeites, onde você melhora o seu vídeo. O seu vídeo fica passando na tela, repetindo, como se estivesse tocando. Do lado direito tem uma barrinha com os enfeites: o Aa é o texto, a estrelinha são os efeitos, as duas bolinhas são os filtros, a carinha são os adesivos e a última são as legendas. Em cima, no meio, fica o botão Adicionar música. Embaixo, o botão Editar serve para cortar o vídeo, e o botão Avançar leva para a próxima tela. Toque no Aa, onde está piscando, para escrever uma mensagem na tela do vídeo.",
   },
   {
     id: "text_open",
     target: "concluido",
-    text: "O teclado subiu. Digite a sua frase, por exemplo: Minha primeira receita. Em cima aparecem bolinhas coloridas: toque na cor que você mais gostar para mudar a cor da letra. Quando terminar de escrever, toque em Concluído, onde está piscando.",
+    text: "O teclado subiu e apareceu o painel do texto. Digite a sua frase, por exemplo: Minha primeira receita. Aqui embaixo você escolhe o TIPO da letra: Clássico, Moderno ou Destaque. Depois toque numa das bolinhas coloridas para mudar a COR da letra. Assim você vê como a frase vai ficar. Quando terminar, toque em Concluir, lá em cima do lado direito, onde está piscando.",
   },
   {
     id: "text_done",
-    target: "audio",
-    text: "Ficou ótimo! O seu texto apareceu no vídeo. Com o dedo, você pode arrastar o texto para cima, para baixo ou para os lados, para ele ficar no lugar que você quiser. Agora toque em Áudio, o desenho da nota musical, onde está piscando, para colocar uma música de fundo.",
+    target: "musica_pill",
+    text: "Ficou ótimo! O seu texto apareceu no vídeo. Com o dedo, você pode arrastar o texto para cima, para baixo ou para os lados, para ele ficar no lugar que você quiser. Agora toque em ADICIONAR MÚSICA, lá em cima no meio da tela, onde está piscando, para colocar uma música de fundo.",
   },
   {
     id: "audio_open",
@@ -251,7 +251,7 @@ const STEPS = [
   {
     id: "audio_done",
     target: "next",
-    text: "Muito bem, a música foi adicionada! Agora, quando o seu vídeo estiver do jeito que você gostou, toque em Próximo, no canto de cima do lado direito, onde está piscando.",
+    text: "Muito bem, a música foi adicionada! Se quiser, ainda dá para mudar as cores com os Filtros, colocar um Adesivo ou escrever a Legenda do vídeo, na barrinha da direita. Quando o seu vídeo estiver do jeito que você gostou, toque em AVANÇAR, no canto de baixo do lado direito, onde está piscando.",
   },
   {
     id: "publish",
