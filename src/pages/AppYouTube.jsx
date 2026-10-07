@@ -25,6 +25,8 @@ import {
   Settings,
   HelpCircle,
   Users,
+  Mic,
+  TrendingUp,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 import VideoRow from "@/components/youtube/VideoRow";
@@ -41,6 +43,12 @@ import LegendasConfigView from "@/components/youtube/LegendasConfigView";
 import AjudaYouTubeView from "@/components/youtube/AjudaYouTubeView";
 import ComentariosView from "@/components/youtube/ComentariosView";
 import TelaCheiaView from "@/components/youtube/TelaCheiaView";
+import VozBuscaView from "@/components/youtube/VozBuscaView";
+import VideoConfigView from "@/components/youtube/VideoConfigView";
+import AparenciaView from "@/components/youtube/AparenciaView";
+import LetraGrandeView from "@/components/youtube/LetraGrandeView";
+import StudioView from "@/components/youtube/StudioView";
+import { CHAPTERS, STEPS } from "@/components/youtube/youtubeTutorial";
 import ChapterPicker from "@/components/youtube/ChapterPicker";
 import CreateMenu from "@/components/youtube/CreateMenu";
 import ShortsCamera from "@/components/youtube/ShortsCamera";
@@ -92,397 +100,7 @@ const VIDEOS = [
 
 const CHIPS = ["Todos", "Receitas", "Músicas", "Notícias"];
 
-// Partes do tutorial: a pessoa pode começar direto na que tem dúvida
-const CHAPTERS = [
-  {
-    id: "inicio",
-    label: "Começar do início",
-    description: "Procurar um vídeo, escolher e assistir",
-    icon: Search,
-    stepIndex: 0,
-    view: "home",
-    chip: "Todos",
-  },
-  {
-    id: "curtir",
-    label: "Curtir, se inscrever e salvar",
-    description: "O joinha, acompanhar o canal e guardar o vídeo",
-    icon: ThumbsUp,
-    stepIndex: 3,
-    view: "player",
-    chip: "Receitas",
-  },
-  {
-    id: "compartilhar",
-    label: "Compartilhar e comentar",
-    description: "Mandar o vídeo para alguém e escrever um comentário",
-    icon: Share2,
-    stepIndex: 6,
-    view: "player",
-    chip: "Receitas",
-  },
-  {
-    id: "avisos",
-    label: "Avisos e histórico",
-    description: "A campainha, o que você já assistiu e sua área",
-    icon: Bell,
-    stepIndex: 15,
-    view: "results",
-    chip: "Receitas",
-  },
-  {
-    id: "area",
-    label: "Sua área do YouTube",
-    description: "Assistir mais tarde, playlists, downloads, canal, configurações e ajuda",
-    icon: ListVideo,
-    stepIndex: 20,
-    view: "you",
-    chip: "Todos",
-  },
-  {
-    id: "shorts",
-    label: "Gravar e publicar um Short",
-    description: "Gravar um vídeo curto, enfeitar e publicar",
-    icon: Zap,
-    stepIndex: 42,
-    view: "you",
-    chip: "Todos",
-  },
-];
 
-// Cada etapa: texto falado em voz alta + elemento que pisca em amarelo
-const STEPS = [
-  {
-    id: "intro",
-    target: "search",
-    text: "Bem-vindo ao YouTube! Aqui você assiste a vídeos sobre tudo: receitas, músicas e notícias. Lá em cima, do lado direito, tem um desenho de uma lupa. Toque na lupa, onde está piscando, para procurar um vídeo.",
-  },
-  {
-    id: "search_open",
-    target: "suggestion",
-    text: "Agora você pode escolher o que quer assistir. Eu já escolhi para você. Toque na palavra RECEITAS, que está piscando, para ver os vídeos de receita.",
-  },
-  {
-    id: "results",
-    target: "first_video",
-    text: "Olhe os vídeos que apareceram. Toque onde está piscando: o primeiro vídeo, que é uma receita de bolo de cenoura.",
-  },
-  {
-    id: "watching",
-    target: "like",
-    text: "Você está assistindo ao vídeo! Embaixo dele tem vários botões. Toque no joinha, onde está piscando, para dizer que você gostou do vídeo.",
-  },
-  {
-    id: "liked",
-    target: "inscrever",
-    text: "Muito bem, você curtiu o vídeo! Quem fez esta receita é o canal Cozinha da Vovó. Toque em INSCREVER, onde está piscando, para acompanhar esse canal. Assim ele avisa quando colocar vídeo novo, e não custa nada.",
-  },
-  {
-    id: "inscrito",
-    target: "salvar",
-    text: "Pronto, você está inscrito! Agora, se quiser guardar este vídeo para ver depois, toque em SALVAR, onde está piscando. Ele fica guardado na sua listinha de Assistir mais tarde.",
-  },
-  {
-    id: "salvo",
-    target: "compartilhar",
-    text: "Agora toque em COMPARTILHAR, onde está piscando, para mandar este vídeo para alguém da sua família.",
-  },
-  {
-    id: "compartilhar_open",
-    target: "share_whats",
-    text: "Estas são as opções para mandar o vídeo: WhatsApp, Mensagens, e-mail ou copiar o link. Toque em WhatsApp, onde está piscando, para enviar para um contato.",
-  },
-  {
-    id: "compartilhado",
-    target: "comentar",
-    text: "Muito bem, o link do vídeo foi enviado! Agora toque em ADICIONAR UM COMENTÁRIO, onde está piscando, para escrever o que você achou do vídeo. Seu comentário fica embaixo do vídeo, para o canal e outras pessoas lerem.",
-  },
-  {
-    id: "comentario_open",
-    target: "enviar_comentario",
-    text: "Já escrevi uma sugestão para você: Que receita fácil, gostei muito! Se quiser, apague e escreva do seu jeito. Quando terminar, toque no botão azul COMENTAR, onde está piscando.",
-  },
-  {
-    id: "comentarios_open",
-    target: "ver_comentarios",
-    text: "Seu comentário foi publicado e já aparece aqui embaixo, escrito Você. Agora toque em VER TODOS OS COMENTÁRIOS, onde está piscando, para ler o que as outras pessoas escreveram sobre este vídeo.",
-  },
-  {
-    id: "comentarios_done",
-    target: "voltar_comentarios",
-    text: "Esta é a tela dos comentários: os recados que as pessoas deixam para quem fez o vídeo. Você pode ler à vontade e escrever o seu, sempre com educação, porque todo mundo pode ler. Toque na seta de voltar, lá em cima do lado esquerdo, onde está piscando, para voltar ao vídeo.",
-  },
-  {
-    id: "tela_cheia_open",
-    target: "telacheia_btn",
-    text: "Agora toque no quadradinho do canto de baixo do lado direito do vídeo, onde está piscando. Ele coloca o vídeo em TELA CHEIA, bem grande, sem os outros botões atrapalhando.",
-  },
-  {
-    id: "tela_cheia_done",
-    target: "sair_tela_cheia",
-    text: "Este é o vídeo em tela cheia: só o vídeo e você. Vire o celular de lado para ele ficar ainda maior. Quando quiser voltar ao normal, toque no X, no canto de cima do lado esquerdo, onde está piscando.",
-  },
-  {
-    id: "comentado",
-    target: "leave_player",
-    text: "Muito bem! Agora você já sabe comentar e assistir em tela cheia. Toque na seta de voltar, lá em cima do lado esquerdo, onde está piscando, para ver os outros vídeos.",
-  },
-  {
-    id: "back_results",
-    target: "notifications",
-    text: "Esta é a lista de vídeos. Agora toque na campainha, lá em cima do lado direito, onde está piscando, para ver os avisos dos canais que você acompanha.",
-  },
-  {
-    id: "notificacoes_open",
-    target: "close_notifications",
-    text: "Aqui ficam as notificações: os avisos de vídeo novo, de quem respondeu o seu comentário e de quem respondeu você. Quando aparece uma bolinha vermelha na campainha, é porque tem novidade para ver. Toque na seta de voltar, onde está piscando, para continuar.",
-  },
-  {
-    id: "back_home",
-    target: "you_nav",
-    text: "Agora toque em VOCÊ, no canto de baixo do lado direito, onde está piscando, para ver a sua área e o histórico do que você já assistiu.",
-  },
-  {
-    id: "you_open",
-    target: "history_row",
-    text: "Esta é a sua área no YouTube: o seu nome, a sua conta do Google e as listas que você guardou. Toque em HISTÓRICO, onde está piscando, para ver todos os vídeos que você já assistiu.",
-  },
-  {
-    id: "history_open",
-    target: "back_from_history",
-    text: "Aqui fica o histórico: a lista de tudo que você assistiu, do mais novo para o mais antigo. É aqui que você acha aquele vídeo que viu e não lembra o nome. Toque na seta de voltar, onde está piscando.",
-  },
-  {
-    id: "area_salvos",
-    target: "assistir_mais_tarde",
-    text: "Agora vamos conhecer a sua área, onde fica tudo que é seu no YouTube. Toque em ASSISTIR MAIS TARDE, onde está piscando. É a lista dos vídeos que você guardou tocando em SALVAR, como aquele da receita.",
-  },
-  {
-    id: "area_salvos_done",
-    target: "voltar_mais_tarde",
-    text: "Aqui ficam os vídeos guardados para ver depois. É só tocar em um deles quando quiser assistir. Toque na seta de voltar, onde está piscando, para ver o próximo item da sua área.",
-  },
-  {
-    id: "area_playlists",
-    target: "playlists",
-    text: "Agora toque em PLAYLISTS, onde está piscando. Playlist é uma listinha de vídeos que você junta para assistir um atrás do outro, sem precisar procurar.",
-  },
-  {
-    id: "area_playlist_receitas",
-    target: "playlist_receitas",
-    text: "Toque na playlist RECEITAS DA VOVÓ, onde está piscando, para abrir essa listinha de vídeos.",
-  },
-  {
-    id: "area_playlist_done",
-    target: "voltar_playlist_receitas",
-    text: "Dentro da playlist estão todos os vídeos dela, na ordem, um embaixo do outro. Toque na seta de voltar, onde está piscando, para voltar às suas playlists.",
-  },
-  {
-    id: "area_playlists_done",
-    target: "voltar_playlists",
-    text: "Você pode criar quantas playlists quiser, separadas por assunto: receitas, músicas, orações. Toque na seta de voltar, onde está piscando, para continuar.",
-  },
-  {
-    id: "area_gostei",
-    target: "gostei",
-    text: "Agora toque em VÍDEOS COM GOSTEI, onde está piscando. Aqui ficam todos os vídeos em que você tocou no joinha. É uma lista só sua, para achar fácil aqueles de que você mais gostou.",
-  },
-  {
-    id: "area_gostei_done",
-    target: "voltar_gostei",
-    text: "Prontinho, estes são os vídeos que você curtiu. Toque na seta de voltar, onde está piscando, para continuar vendo a sua área.",
-  },
-  {
-    id: "area_seus_videos",
-    target: "seus_videos",
-    text: "Agora toque em SEUS VÍDEOS, onde está piscando. É aqui que aparece o Short que você publicou, junto com todos os vídeos que você criar daqui para frente.",
-  },
-  {
-    id: "area_seus_videos_done",
-    target: "voltar_seus_videos",
-    text: "Este é o seu cantinho de quem faz vídeos: o que você publicou e quantas pessoas viram. Toque na seta de voltar, onde está piscando.",
-  },
-  {
-    id: "area_downloads",
-    target: "downloads",
-    text: "Agora toque em DOWNLOADS, onde está piscando. Vídeo baixado é aquele que fica guardado dentro do celular para você assistir sem internet, por exemplo quando viaja.",
-  },
-  {
-    id: "area_downloads_done",
-    target: "voltar_downloads",
-    text: "Aqui aparecem os vídeos que já estão dentro do celular, prontos para assistir mesmo sem sinal. Toque na seta de voltar, onde está piscando, para continuar.",
-  },
-  {
-    id: "area_aovivo",
-    target: "aovivo",
-    text: "Agora toque em TRANSMISSÕES AO VIVO, onde está piscando. Ao vivo quer dizer que está acontecendo naquele exato momento, com o selo vermelho AO VIVO na frente.",
-  },
-  {
-    id: "area_aovivo_done",
-    target: "voltar_aovivo",
-    text: "Nestes vídeos você acompanha na hora, como uma missa ou um programa de rádio. Toque na seta de voltar, onde está piscando, para continuar.",
-  },
-  {
-    id: "area_canal",
-    target: "canal",
-    text: "Agora toque em CANAIS QUE VOCÊ ACOMPANHA, onde está piscando, para ver a página do canal Cozinha da Vovó, de onde veio aquela receita.",
-  },
-  {
-    id: "area_canal_done",
-    target: "voltar_canal",
-    text: "Esta é a página do canal: o nome dele, quantas pessoas acompanham, os vídeos que ele publicou e o botão INSCREVER, que avisa você quando sair vídeo novo. Toque na seta de voltar, onde está piscando.",
-  },
-  {
-    id: "area_config",
-    target: "config_youtube",
-    text: "Agora toque em CONFIGURAÇÕES, onde está piscando. É aqui que você deixa o YouTube do seu jeito.",
-  },
-  {
-    id: "area_config_legendas",
-    target: "config_legendas",
-    text: "Estas são as configurações: as legendas automáticas, o modo restrito, que esconde vídeos que não são para a sua idade, a economia de dados e a reprodução automática. Toque em APARÊNCIA DA LEGENDA, onde está piscando, para escolher o tamanho da letra da legenda.",
-  },
-  {
-    id: "area_legendas_done",
-    target: "voltar_legendas_config",
-    text: "Escolha a letra que você enxerga melhor: Pequena, Média, Grande ou Enorme. Embaixo aparece um exemplo com a letra do tamanho que você escolheu. Toque na seta de voltar, onde está piscando.",
-  },
-  {
-    id: "area_config_done",
-    target: "voltar_config",
-    text: "Muito bem! Se a letra ainda estiver pequena, aumente também o tamanho do texto nas configurações do celular. Toque na seta de voltar, onde está piscando, para continuar.",
-  },
-  {
-    id: "area_ajuda",
-    target: "ajuda_youtube",
-    text: "Última parte da sua área. Toque em AJUDA, onde está piscando, para ver as dúvidas mais comuns com as respostas.",
-  },
-  {
-    id: "area_ajuda_done",
-    target: "voltar_ajuda",
-    text: "Aqui estão as respostas para as dúvidas de sempre, como voltar a ver um vídeo ou assistir sem internet. Toque na seta de voltar, onde está piscando, para terminar a sua área.",
-  },
-  {
-    id: "back_from_history",
-    target: "create_nav",
-    text: "Agora toque no sinal de MAIS, no meio da barra de baixo, onde está piscando, para aprender a gravar um Short, que é um vídeo curto.",
-  },
-  {
-    id: "create_menu",
-    target: "short_option",
-    text: "Um menu subiu na tela com as opções para criar conteúdo no YouTube. A primeira opção é Criar um Short, que é um vídeo curto. Toque nela, onde está piscando, para abrir a câmera.",
-  },
-  {
-    id: "camera_open",
-    target: "record",
-    text: "A câmera do seu celular abriu. Vamos conhecer cada botão antes de gravar. No canto de cima do lado esquerdo tem o X, para fechar a câmera. No meio, o botão Adicionar música, para colocar uma música no seu vídeo. No canto de cima do lado direito, o número 15, que é o tempo máximo do vídeo em segundos: se você tocar nele, ele passa para 60 e te dá um minuto inteiro. Do lado direito ficam as ferramentas: as duas setas em círculo viram a câmera, entre a sua frente e o que está na frente do celular; o 1x muda a velocidade da gravação, mais lenta ou mais rápida; o relógio é o temporizador, para começar a gravar sozinho depois de alguns segundos; a estrela são os efeitos; a carinha é o retoque do rosto; e a varinha muda as cores e os filtros. A setinha para baixo mostra ainda mais opções. Embaixo, no canto esquerdo, a miniatura Adicionar pega um vídeo que já está na sua galeria. E no meio fica o botão vermelho, o botão principal. Agora mantenha o dedo apertado e segurado no botão vermelho, que está piscando. Enquanto você segura, a câmera grava a sua voz e a sua imagem. Se soltar o dedo, a gravação pausa.",
-  },
-  {
-    id: "recorded",
-    target: "check",
-    text: "Muito bem, você gravou o seu vídeo! O aviso em cima mostra quanto tempo você gravou, e quando você solta o dedo a gravação para. Agora toque no visto, o sinal de certo no canto de baixo do lado direito, onde está piscando, para enfeitar o seu vídeo.",
-  },
-  {
-    id: "edit_open",
-    target: "aa",
-    text: "Agora o YouTube abriu a tela de enfeites, onde você melhora o seu vídeo. O seu vídeo fica passando na tela, repetindo, como se estivesse tocando. Do lado direito tem uma barrinha com os enfeites: o Aa é o texto, a estrelinha são os efeitos, as duas bolinhas são os filtros, a carinha são os adesivos e a última são as legendas. Em cima, no meio, fica o botão Adicionar som. Embaixo tem dois botões: Linha do tempo, para cortar o começo e o fim do vídeo, e Narração, para gravar a sua voz por cima. Mais abaixo fica o botão Avançar, que leva para a próxima tela. Toque no Aa, onde está piscando, para escrever uma mensagem na tela do vídeo.",
-  },
-  {
-    id: "text_open",
-    target: "concluido",
-    text: "O teclado subiu e apareceu o painel do texto. Digite a sua frase, por exemplo: Meu primeiro Short. Em cima, à esquerda, você escolhe o TIPO da letra: Clássico ou Moderno. O botão A muda o formato da letra e o último botão muda o texto de lugar, para a esquerda, para o meio ou para a direita. Depois toque numa das bolinhas coloridas para mudar a COR da letra. Assim você vê como a frase vai ficar. Quando terminar, toque em Concluir, lá em cima do lado direito, onde está piscando.",
-  },
-  {
-    id: "text_done",
-    target: "musica_pill",
-    text: "Ficou ótimo! O seu texto apareceu no vídeo. Com o dedo, você pode arrastar o texto para cima, para baixo ou para os lados, para ele ficar no lugar que você quiser. Agora toque em ADICIONAR SOM, lá em cima no meio da tela, onde está piscando, para colocar uma música de fundo.",
-  },
-  {
-    id: "audio_open",
-    target: "musica",
-    text: "Aqui você escolhe a música do seu vídeo. Você pode digitar o nome da música ou do cantor que você gosta. Toque na música, onde está piscando, para ela tocar junto com o seu vídeo.",
-  },
-  {
-    id: "efeitos_open",
-    target: "efeitos",
-    text: "Muito bem, a música foi adicionada! Agora vamos usar os outros enfeites, na barrinha da direita. Toque na varinha mágica, a ferramenta EFEITOS, onde está piscando.",
-  },
-  {
-    id: "efeitos_estrela",
-    target: "efeito_estrela",
-    text: "Estes são os efeitos: eles dão um clima diferente para o seu vídeo. Aqui já estão separados em Para você, Rosto e Cenário. Toque no efeito ESTRELA, onde está piscando, para ele aparecer no seu vídeo. A barrinha embaixo, chamada Intensidade, deixa o efeito mais forte ou mais fraco.",
-  },
-  {
-    id: "efeitos_done",
-    target: "efeitos_concluir",
-    text: "Ficou bonito! Você pode experimentar os outros efeitos quando quiser, é só tocar em outro e pronto. Quando terminar, toque em CONCLUIR, lá em cima do lado direito, onde está piscando, para voltar ao vídeo.",
-  },
-  {
-    id: "filtros_open",
-    target: "filtros",
-    text: "Agora toque em FILTROS, na barrinha da direita, onde está piscando. O filtro muda as cores do seu vídeo, como se fosse um óculos de sol.",
-  },
-  {
-    id: "filtros_dourado",
-    target: "filtro_dourado",
-    text: "Toque no filtro DOURADO, onde está piscando, para deixar a sua imagem com um tom mais quentinho. Se quiser, arraste a barrinha de Intensidade para escolher o quanto. Você também pode experimentar os outros: Vívido, Frio e Preto e Branco.",
-  },
-  {
-    id: "filtros_done",
-    target: "filtros_concluir",
-    text: "Muito bem! Toque em CONCLUIR, onde está piscando, para guardar essa cor no seu vídeo.",
-  },
-  {
-    id: "adesivos_open",
-    target: "adesivos",
-    text: "Agora toque em ADESIVOS, a carinha da barrinha da direita, onde está piscando. Adesivo é uma figurinha que você coloca em cima do vídeo.",
-  },
-  {
-    id: "adesivos_coracao",
-    target: "adesivo_coracao",
-    text: "Toque no adesivo CORAÇÃO, onde está piscando. Depois, com o dedo, você pode arrastar essa figurinha para o lugar que quiser no vídeo.",
-  },
-  {
-    id: "adesivos_done",
-    target: "adesivos_concluir",
-    text: "Pronto, o adesivo ficou no seu vídeo! Toque em CONCLUIR, onde está piscando, para voltar.",
-  },
-  {
-    id: "legendas_open",
-    target: "legendas",
-    text: "Falta a última ferramenta. Toque em LEGENDAS, onde está piscando. Legenda é o texto que aparece embaixo do vídeo com o que você falou, para quem assiste sem som conseguir entender.",
-  },
-  {
-    id: "legendas_done",
-    target: "legendas_concluir",
-    text: "O YouTube já deixou as LEGENDAS AUTOMÁTICAS ligadas em português, e eu escrevi uma sugestão para você. Se quiser mudar, toque na caixinha e apague para escrever do seu jeito. Toque em CONCLUIR, lá em cima, onde está piscando, para ver a legenda aparecendo no vídeo.",
-  },
-  {
-    id: "enfeites_done",
-    target: "next",
-    text: "Parabéns! Agora o seu vídeo tem texto, música, efeitos, filtro, adesivo e legenda. Toque em AVANÇAR, no canto de baixo do lado direito, onde está piscando, para publicar o seu Short.",
-  },
-  {
-    id: "publish",
-    target: "titulo",
-    text: "Última tela! Aqui você escreve o título do seu vídeo. Toque no lugar onde está escrito Legende seu Short, onde está piscando, e digite o nome do seu vídeo. Por exemplo: Minha primeira receita.",
-  },
-  {
-    id: "publish_send",
-    target: "enviar",
-    text: "O título está pronto. Agora, para mandar o seu vídeo para a internet de verdade, toque no grande botão azul Enviar Short, lá embaixo, onde está piscando.",
-  },
-  {
-    id: "published",
-    target: "concluir",
-    text: "Parabéns! O seu Short foi publicado e agora está no YouTube, no seu canal, para quem você quiser ver. Toque em Concluir, onde está piscando, para voltar.",
-  },
-  {
-    id: "done",
-    target: "back",
-    text: "Parabéns! Você aprendeu a usar o YouTube: procurar um vídeo, assistir, curtir, se inscrever no canal, salvar, compartilhar, comentar, ver as notificações, o histórico e até gravar e publicar um Short. Toque na seta, onde está piscando, para voltar à tela inicial.",
-  },
-];
 
 export default function AppYouTube() {
   const navigate = useNavigate();
@@ -516,6 +134,7 @@ export default function AppYouTube() {
     { id: "seus_videos", view: "seusvideos", label: "Seus vídeos", sub: "O que você publicou", icon: SquarePlay },
     { id: "downloads", view: "downloads", label: "Downloads", sub: "Assistir sem internet", icon: Download },
     { id: "aovivo", view: "aovivo", label: "Transmissões ao vivo", sub: "O que está passando agora", icon: Radio },
+    { id: "studio", view: "studio", label: "YouTube Studio", sub: "Para quem publica vídeos", icon: TrendingUp },
     { id: "canal", view: "canal", label: "Canais que você acompanha", sub: "Cozinha da Vovó", icon: Users },
     { id: "config_youtube", view: "configyoutube", label: "Configurações", sub: "Deixe o YouTube do seu jeito", icon: Settings },
     { id: "ajuda_youtube", view: "ajuda", label: "Ajuda", sub: "Dúvidas comuns e respostas", icon: HelpCircle },
@@ -563,6 +182,7 @@ export default function AppYouTube() {
     voltar_config: "you",
     voltar_legendas_config: "configyoutube",
     voltar_ajuda: "you",
+    voltar_letra: "aparencia",
   };
 
   // Seta de cima: sai do vídeo durante o tutorial ou volta para a tela inicial
@@ -616,6 +236,7 @@ export default function AppYouTube() {
     if (id === "ver_comentarios") setView("comentarios");
     if (id === "telacheia_btn") setView("telacheia");
     if (id === "sair_tela_cheia") setView("player");
+    if (id === "engrenagem") setView("video_config");
     if (target === id) goNext();
   };
 
@@ -636,6 +257,30 @@ export default function AppYouTube() {
     if (target !== "history_row") return;
     setView("history");
     goNext();
+  };
+
+  // Funções extras: buscar falando, configurações do vídeo e YouTube Studio
+  const handleVoz = () => {
+    setView("voz");
+    if (target === "voz") goNext();
+  };
+
+  const handleVozFalar = () => {
+    if (target === "voz_falar") goNext();
+  };
+
+  const handleVozResultado = () => {
+    setView("results");
+    if (target === "voz_resultado") goNext();
+  };
+
+  const handleVideoConfigTap = (id) => {
+    if (id === "video_config_concluir") setView("player");
+    if (target === id) goNext();
+  };
+
+  const handleStudioTab = (id) => {
+    if (target === id) goNext();
   };
 
   const handleNavCreate = () => {
@@ -706,7 +351,16 @@ export default function AppYouTube() {
           <div className="px-4 py-3">
             <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2">
               <Search className="w-5 h-5 text-gray-500" />
-              <span className="text-gray-900">receitas</span>
+              <span className="text-gray-900 flex-1">receitas</span>
+              <Pulse active={target === "voz"} ring="rounded-full">
+                <button
+                  type="button"
+                  onClick={handleVoz}
+                  className="w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0"
+                >
+                  <Mic className="w-5 h-5 text-red-600" />
+                </button>
+              </Pulse>
             </div>
           </div>
           <div className="px-4">
@@ -891,6 +545,9 @@ export default function AppYouTube() {
             setPlaylistAberta(id.replace("playlist_", ""));
             abrirTela(id, "playlist_receitas");
           }}
+          onAcao={(id) => {
+            if (target === id) goNext();
+          }}
         />
       );
     }
@@ -946,9 +603,37 @@ export default function AppYouTube() {
       return <CanalView videos={[VIDEOS[0], VIDEOS[1]]} />;
     }
 
+    if (view === "voz") {
+      return <VozBuscaView target={target} onFalar={handleVozFalar} onResultado={handleVozResultado} />;
+    }
+
+    if (view === "video_config") {
+      return <VideoConfigView target={target} onTap={handleVideoConfigTap} />;
+    }
+
+    if (view === "aparencia") {
+      return (
+        <AparenciaView
+          target={target}
+          onTap={(id) => abrirTela(id, id === "letra_grande" ? "letra_grande" : "aparencia")}
+        />
+      );
+    }
+
+    if (view === "letra_grande") {
+      return <LetraGrandeView />;
+    }
+
+    if (view === "studio") {
+      return <StudioView target={target} onTab={handleStudioTab} />;
+    }
+
     if (view === "configyoutube") {
       return (
-        <ConfigYouTubeView target={target} onTap={(id) => abrirTela(id, "legendas_config")} />
+        <ConfigYouTubeView
+          target={target}
+          onTap={(id) => abrirTela(id, id === "aparencia" ? "aparencia" : "legendas_config")}
+        />
       );
     }
 

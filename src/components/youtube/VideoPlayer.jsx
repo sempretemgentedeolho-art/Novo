@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Play, ThumbsUp, Share2, Bookmark, Bell, MessageSquare, Maximize } from "lucide-react";
+import { Play, ThumbsUp, Share2, Bookmark, Bell, MessageSquare, Maximize, Settings } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 
 // Tela do vídeo aberto: canal, curtir, salvar, compartilhar e comentários
@@ -10,6 +10,7 @@ export default function VideoPlayer({ target, compartilhado, onTap, onComentario
   const [comentarioAberto, setComentarioAberto] = useState(false);
   const [comentario, setComentario] = useState("");
   const [comentarioEnviado, setComentarioEnviado] = useState(false);
+  const [legenda, setLegenda] = useState(false);
 
   const curtir = () => {
     setCurtido(true);
@@ -45,7 +46,37 @@ export default function VideoPlayer({ target, compartilhado, onTap, onComentario
         <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
           <Play className="w-8 h-8 text-gray-900 ml-1" fill="currentColor" />
         </div>
+        {legenda && (
+          <p className="absolute bottom-11 left-3 right-3 text-center text-sm font-medium text-white bg-black/70 rounded-lg px-2 py-1 leading-snug">
+            Hoje vamos fazer um bolo de cenoura bem fofinho.
+          </p>
+        )}
         <span className="absolute bottom-2 left-3 text-white text-xs">12:40 / 12:40</span>
+        <div className="absolute top-2 right-2 z-10 flex items-center gap-2">
+          <Pulse active={target === "cc"} ring="rounded-lg">
+            <button
+              type="button"
+              onClick={() => {
+                setLegenda(!legenda);
+                onTap("cc");
+              }}
+              className={`w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold ${
+                legenda ? "bg-red-600 text-white" : "bg-black/60 text-white"
+              }`}
+            >
+              CC
+            </button>
+          </Pulse>
+          <Pulse active={target === "engrenagem"} ring="rounded-lg">
+            <button
+              type="button"
+              onClick={() => onTap("engrenagem")}
+              className="w-9 h-9 rounded-lg bg-black/60 flex items-center justify-center"
+            >
+              <Settings className="w-4 h-4 text-white" />
+            </button>
+          </Pulse>
+        </div>
         <div className="absolute bottom-2 right-2 z-10">
           <Pulse active={target === "telacheia_btn"} ring="rounded-lg">
             <button
