@@ -86,6 +86,22 @@ export default function ConfigYouTubeView({ target, onTap }) {
           </button>
         </Pulse>
 
+        <Pulse active={target === "audio_dublagem"} className="w-full" ring="rounded-2xl">
+          <button
+            type="button"
+            onClick={() => onTap("audio_dublagem")}
+            className="w-full flex items-center gap-3 rounded-2xl border border-gray-200 px-3 py-3 text-left"
+          >
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Áudio dublado</p>
+              <p className="text-xs text-gray-600 mt-0.5 leading-snug">
+                Ouvir em português os vídeos gravados em outro idioma
+              </p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-gray-400 shrink-0" />
+          </button>
+        </Pulse>
+
         <Pulse active={target === "aparencia"} className="w-full" ring="rounded-2xl">
           <button
             type="button"

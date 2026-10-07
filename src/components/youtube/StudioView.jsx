@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { LayoutDashboard, BarChart3, ListVideo, Eye, MessageSquare, ThumbsUp } from "lucide-react";
+import {
+  LayoutDashboard,
+  BarChart3,
+  ListVideo,
+  Eye,
+  MessageSquare,
+  ThumbsUp,
+  CircleDollarSign,
+} from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
+import MonetizacaoView from "@/components/youtube/MonetizacaoView";
 
 const ABAS = [
   { id: "studio_painel", label: "Painel", icon: LayoutDashboard },
   { id: "studio_estatisticas", label: "Estatísticas", icon: BarChart3 },
   { id: "studio_gerenciador", label: "Meus vídeos", icon: ListVideo },
+  { id: "tab_monetizacao", label: "Monetização", icon: CircleDollarSign },
 ];
 
 const GRAFICO = [
@@ -40,7 +50,7 @@ export default function StudioView({ target, onTab }) {
         que já publicou.
       </p>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1">
         {ABAS.map((a) => {
           const Icon = a.icon;
           return (
@@ -48,7 +58,7 @@ export default function StudioView({ target, onTab }) {
               <button
                 type="button"
                 onClick={() => abrir(a.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-full border-2 text-sm font-semibold ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-full border-2 text-sm font-semibold whitespace-nowrap shrink-0 ${
                   aba === a.id
                     ? "border-gray-900 bg-gray-900 text-white"
                     : "border-gray-200 text-gray-800"
@@ -126,6 +136,8 @@ export default function StudioView({ target, onTab }) {
             </div>
           ))}
         </div>
+      ) : aba === "tab_monetizacao" ? (
+        <MonetizacaoView target={target} onTap={onTab} />
       ) : (
         <div className="mt-4 space-y-3">
           <div className="rounded-2xl border border-gray-200 px-4 py-4">

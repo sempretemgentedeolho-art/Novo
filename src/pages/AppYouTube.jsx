@@ -27,6 +27,7 @@ import {
   Users,
   Mic,
   TrendingUp,
+  Scissors,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 import VideoRow from "@/components/youtube/VideoRow";
@@ -48,6 +49,9 @@ import VideoConfigView from "@/components/youtube/VideoConfigView";
 import AparenciaView from "@/components/youtube/AparenciaView";
 import LetraGrandeView from "@/components/youtube/LetraGrandeView";
 import StudioView from "@/components/youtube/StudioView";
+import ClipesView from "@/components/youtube/ClipesView";
+import ChatAoVivoView from "@/components/youtube/ChatAoVivoView";
+import DublagemView from "@/components/youtube/DublagemView";
 import { CHAPTERS, STEPS } from "@/components/youtube/youtubeTutorial";
 import ChapterPicker from "@/components/youtube/ChapterPicker";
 import CreateMenu from "@/components/youtube/CreateMenu";
@@ -132,6 +136,7 @@ export default function AppYouTube() {
     { id: "playlists", view: "playlists", label: "Playlists", sub: "Listinhas de vídeos por assunto", icon: ListVideo },
     { id: "gostei", view: "gostei", label: "Vídeos com Gostei", sub: "Onde você tocou no joinha", icon: ThumbsUp },
     { id: "seus_videos", view: "seusvideos", label: "Seus vídeos", sub: "O que você publicou", icon: SquarePlay },
+    { id: "clipes", view: "clipes", label: "Clipes", sub: "Os pedacinhos curtos dos vídeos", icon: Scissors },
     { id: "downloads", view: "downloads", label: "Downloads", sub: "Assistir sem internet", icon: Download },
     { id: "aovivo", view: "aovivo", label: "Transmissões ao vivo", sub: "O que está passando agora", icon: Radio },
     { id: "studio", view: "studio", label: "YouTube Studio", sub: "Para quem publica vídeos", icon: TrendingUp },
@@ -183,6 +188,10 @@ export default function AppYouTube() {
     voltar_legendas_config: "configyoutube",
     voltar_ajuda: "you",
     voltar_letra: "aparencia",
+    voltar_clipes: "you",
+    voltar_chat: "you",
+    voltar_dublagem: "configyoutube",
+    voltar_studio: "you",
   };
 
   // Seta de cima: sai do vídeo durante o tutorial ou volta para a tela inicial
@@ -280,6 +289,12 @@ export default function AppYouTube() {
   };
 
   const handleStudioTab = (id) => {
+    if (target === id) goNext();
+  };
+
+  // Botões das telas novas: Clipes, chat ao vivo, publicações do canal, dublagem e monetização
+  const handleTelaTap = (id) => {
+    if (id === "chat_abrir") setView("chat_aovivo");
     if (target === id) goNext();
   };
 
@@ -595,12 +610,20 @@ export default function AppYouTube() {
       );
     }
 
+    if (view === "clipes") {
+      return <ClipesView target={target} onTap={handleTelaTap} />;
+    }
+
+    if (view === "chat_aovivo") {
+      return <ChatAoVivoView target={target} onTap={handleTelaTap} />;
+    }
+
     if (view === "aovivo") {
-      return <AoVivoView />;
+      return <AoVivoView target={target} onTap={handleTelaTap} />;
     }
 
     if (view === "canal") {
-      return <CanalView videos={[VIDEOS[0], VIDEOS[1]]} />;
+      return <CanalView videos={[VIDEOS[0], VIDEOS[1]]} target={target} onTap={handleTelaTap} />;
     }
 
     if (view === "voz") {
@@ -632,13 +655,22 @@ export default function AppYouTube() {
       return (
         <ConfigYouTubeView
           target={target}
-          onTap={(id) => abrirTela(id, id === "aparencia" ? "aparencia" : "legendas_config")}
+          onTap={(id) =>
+            abrirTela(
+              id,
+              id === "aparencia" ? "aparencia" : id === "audio_dublagem" ? "dublagem" : "legendas_config"
+            )
+          }
         />
       );
     }
 
     if (view === "legendas_config") {
       return <LegendasConfigView />;
+    }
+
+    if (view === "dublagem") {
+      return <DublagemView target={target} onTap={handleTelaTap} />;
     }
 
     if (view === "ajuda") {
