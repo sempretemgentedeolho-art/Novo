@@ -72,3 +72,42 @@ meu_projeto\                    ← Pasta raiz (cole aqui!)
 └── dist\                       ← Resultado final
 
 ═══════════════════════════════════════════════════════════
+  EXPORTAR SOMENTE O YOUTUBE + DICAS (versão leve)
+═══════════════════════════════════════════════════════════
+
+Use o arquivo "converter-youtube-dicas.bat" quando quiser um
+app leve, com APENAS o treinamento do YouTube e o Dicas.
+
+PASSO A PASSO:
+
+1. Copie o "converter-youtube-dicas.bat" para a PASTA RAIZ
+   (a mesma pasta onde está o package.json)
+
+2. Clique duas vezes nele
+
+3. Aguarde (2 a 5 minutos). No fim ele mostra "CONCLUIDO!"
+
+4. Abra "dist\index.html" para testar
+
+O QUE ELE FAZ:
+
+- Guarda temporariamente as outras telas (WhatsApp, TikTok,
+  Instagram, etc.) fora da pasta src, para que NÃO entrem no
+  aplicativo exportado
+- Deixa no app somente: Início, Tela de Bloqueio, Tela Inicial
+  (Home), YouTube, Dicas e as telas de Configurações/Wi-Fi/
+  Bluetooth/Volume que a tela inicial usa
+- Compila e gera a pasta "dist" (bem mais leve: cerca de 0,85 MB
+  em vez de 1,9 MB)
+- No final devolve TODAS as telas para o projeto, igual estava
+  antes, para você continuar exportando outras versões depois
+
+IMPORTANTE:
+
+- O visual e o funcionamento são os mesmos: os ícones continuam
+  na tela inicial e o app fala qual treinamento faz cada um
+- Nada é apagado do projeto: as telas apenas voltam para o lugar
+  no fim da conversão
+- Se a compilação falhar, o projeto também é devolvido ao normal
+
+═══════════════════════════════════════════════════════════

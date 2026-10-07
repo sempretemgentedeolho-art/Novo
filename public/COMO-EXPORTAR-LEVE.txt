@@ -1,0 +1,56 @@
+============================================
+ EXPORTAR SOMENTE O YOUTUBE + DICAS (LEVE)
+============================================
+
+Use o arquivo "converter-youtube-dicas.bat" quando quiser um
+aplicativo leve, com APENAS o treinamento do YouTube e o Dicas.
+
+PASSO A PASSO
+
+1. Baixe o projeto (o mesmo download que você já usa).
+
+2. Copie o arquivo "converter-youtube-dicas.bat" para a PASTA
+   RAIZ do projeto, ou seja, a pasta onde está o package.json
+   (ele vem dentro da pasta "public", é só tirar de lá).
+
+3. Clique duas vezes no "converter-youtube-dicas.bat".
+
+4. Aguarde de 2 a 5 minutos. No fim aparece "CONCLUIDO!".
+
+5. Para testar: abra o arquivo "dist\index.html" no navegador.
+
+6. Para distribuir: copie a pasta "dist" inteira.
+
+
+O QUE ELE FAZ
+
+- Guarda temporariamente as outras telas (WhatsApp, TikTok,
+  Instagram, câmera, etc.) fora da pasta src, para que elas NÃO
+  entrem no aplicativo exportado.
+
+- Deixa no aplicativo somente: Início, Tela de Bloqueio, Tela
+  Inicial, YouTube, Dicas e as telas de Configurações, Wi-Fi,
+  Bluetooth, Volume e Sobre o aparelho, que a Tela Inicial usa.
+
+- Compila e gera a pasta "dist": cerca de 0,85 MB, contra
+  1,9 MB na versão completa.
+
+- No final devolve TODAS as telas para o projeto, exatamente
+  como estavam, para você continuar exportando outras versões.
+
+- Não muda nada no conteúdo das telas: o visual e o
+  funcionamento ficam iguais.
+
+
+IMPORTANTE
+
+- Os ícones continuam todos na Tela Inicial, e o app fala em voz
+  alta qual treinamento faz cada um. Só o YouTube e o Dicas abrem.
+
+- Nada é apagado do projeto em momento algum.
+
+- Se a compilação falhar, o projeto também é devolvido ao normal.
+
+- Precisa ter o Node.js instalado no computador.
+
+============================================
