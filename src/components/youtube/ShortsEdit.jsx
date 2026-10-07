@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  X,
+  ArrowLeft,
   Music2,
   Volume2,
   Sparkles,
@@ -8,8 +8,8 @@ import {
   Sticker,
   Captions,
   ChevronDown,
-  ChevronUp,
-  Undo2,
+  Film,
+  Mic,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 import ShortsPreview from "@/components/youtube/ShortsPreview";
@@ -18,8 +18,9 @@ import MusicPanel from "@/components/youtube/MusicPanel";
 import EffectsPanel, { EFEITOS } from "@/components/youtube/EffectsPanel";
 import FiltersPanel, { FILTROS } from "@/components/youtube/FiltersPanel";
 import StickersPanel from "@/components/youtube/StickersPanel";
-import CaptionsPanel from "@/components/youtube/CaptionsPanel";
+import CaptionsPanel, { ESTILOS_LEGENDA } from "@/components/youtube/CaptionsPanel";
 import EditarPanel from "@/components/youtube/EditarPanel";
+import NarracaoPanel from "@/components/youtube/NarracaoPanel";
 
 // Ferramentas do lado direito do vídeo, como no YouTube de verdade
 const FERRAMENTAS = [
@@ -33,15 +34,21 @@ const FERRAMENTAS = [
 export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) {
   const [painel, setPainel] = useState("none");
   const [mudo, setMudo] = useState(false);
+  const [narracao, setNarracao] = useState(false);
   const [texto, setTexto] = useState("");
-  const [corIndex, setCorIndex] = useState(1);
+  const [corIndex, setCorIndex] = useState(0);
   const [estiloIndex, setEstiloIndex] = useState(0);
   const [musica, setMusica] = useState(null);
   const [efeitoIndex, setEfeitoIndex] = useState(0);
-  const [intensidade, setIntensidade] = useState(60);
+  const [intensidade, setIntensidade] = useState(70);
   const [filtroIndex, setFiltroIndex] = useState(0);
+  const [intensidadeFiltro, setIntensidadeFiltro] = useState(70);
   const [adesivo, setAdesivo] = useState(null);
   const [legenda, setLegenda] = useState("");
+  const [legendaAtiva, setLegendaAtiva] = useState(true);
+  const [legendaEstiloIndex, setLegendaEstiloIndex] = useState(0);
+
+  const segundos = Math.max(duracao || 15, 1);
 
   const abrir = (id) => {
     setPainel(id);
@@ -51,7 +58,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
   const fecharPainel = () => setPainel("none");
 
   const concluirTexto = () => {
-    if (!texto.trim()) setTexto("Minha primeira receita");
+    if (!texto.trim()) setTexto("Meu primeiro Short");
     setPainel("none");
     onTap("concluido");
   };
@@ -80,7 +87,12 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
     if (painel === "musica") {
       return (
-        <MusicPanel target={target} musica={musica} onEscolher={escolherMusica} onConcluir={fecharPainel} />
+        <MusicPanel
+          target={target}
+          musica={musica}
+          onEscolher={escolherMusica}
+          onConcluir={fecharPainel}
+        />
       );
     }
 
@@ -98,7 +110,13 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
     if (painel === "filtros") {
       return (
-        <FiltersPanel filtroIndex={filtroIndex} onFiltroIndex={setFiltroIndex} onConcluir={fecharPainel} />
+        <FiltersPanel
+          filtroIndex={filtroIndex}
+          intensidade={intensidadeFiltro}
+          onFiltroIndex={setFiltroIndex}
+          onIntensidade={setIntensidadeFiltro}
+          onConcluir={fecharPainel}
+        />
       );
     }
 
@@ -107,11 +125,25 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
     }
 
     if (painel === "legendas") {
-      return <CaptionsPanel legenda={legenda} onLegenda={setLegenda} onConcluir={fecharPainel} />;
+      return (
+        <CaptionsPanel
+          legenda={legenda}
+          onLegenda={setLegenda}
+          ativas={legendaAtiva}
+          onAtivas={setLegendaAtiva}
+          estiloIndex={legendaEstiloIndex}
+          onEstiloIndex={setLegendaEstiloIndex}
+          onConcluir={fecharPainel}
+        />
+      );
     }
 
     if (painel === "editar") {
       return <EditarPanel onConcluir={fecharPainel} />;
+    }
+
+    if (painel === "narracao") {
+      return <NarracaoPanel onGravar={() => setNarracao(true)} onConcluir={fecharPainel} />;
     }
 
     return null;
@@ -119,14 +151,14 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
   return (
     <div className="absolute inset-0 bg-gray-900 flex flex-col">
-      {/* Cabeçalho: fechar, adicionar música e som */}
+      {/* Cabeçalho: voltar, adicionar som e ligar/desligar o som */}
       <div className="relative z-20 flex items-center justify-between px-3 pt-7 pb-2">
         <Pulse ring="rounded-full" onClick={onClose}>
           <button
             type="button"
             className="w-10 h-10 rounded-full bg-black/45 flex items-center justify-center"
           >
-            <X className="w-5 h-5 text-white" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </button>
         </Pulse>
 
@@ -136,7 +168,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
             className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/45"
           >
             <Music2 className="w-4 h-4 text-white" />
-            <span className="text-white text-sm font-semibold">Adicionar música</span>
+            <span className="text-white text-sm font-semibold">Adicionar som</span>
           </button>
         </Pulse>
 
@@ -157,14 +189,17 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
             duracao={duracao}
             musica={musica}
             mudo={mudo}
+            narracao={narracao}
             texto={texto}
             cor={CORES[corIndex]}
             estilo={ESTILOS[estiloIndex]}
             adesivo={adesivo}
-            legenda={legenda}
+            legenda={legendaAtiva ? legenda : ""}
+            legendaClasse={ESTILOS_LEGENDA[legendaEstiloIndex].classe}
             filtro={FILTROS[filtroIndex]}
             efeito={EFEITOS[efeitoIndex]}
             intensidade={intensidade}
+            intensidadeFiltro={intensidadeFiltro}
           />
         </div>
 
@@ -185,25 +220,39 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
         </div>
       </div>
 
-      {/* Dica e barra de baixo */}
-      <div className="relative z-10 flex flex-col items-center pb-1">
-        <ChevronUp className="w-4 h-4 text-white/70" />
-        <span className="text-white/70 text-[11px]">Deslize para cima para editar</span>
-      </div>
+      {/* Editar Short, linha do tempo, narração e Avançar */}
+      <div className="relative z-10 px-4 pb-5 pt-2">
+        <p className="text-white text-base font-semibold">Editar Short</p>
+        <p className="text-white/60 text-xs">{segundos} segundos</p>
 
-      <div className="relative z-10 flex items-center justify-between px-4 pb-5 pt-3">
-        <Pulse ring="rounded-xl" onClick={() => abrir("editar")}>
-          <button
-            type="button"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15"
-          >
-            <Undo2 className="w-4 h-4 text-white" />
-            <span className="text-white text-sm font-semibold">Editar</span>
-          </button>
-        </Pulse>
+        <div className="flex gap-2 mt-2.5">
+          <Pulse ring="rounded-xl" className="flex-1" onClick={() => abrir("editar")}>
+            <button
+              type="button"
+              className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white/15"
+            >
+              <Film className="w-4 h-4 text-white shrink-0" />
+              <span className="text-white text-xs font-semibold">Linha do tempo</span>
+            </button>
+          </Pulse>
 
-        <Pulse active={target === "next"} ring="rounded-full" onClick={onNext}>
-          <button type="button" className="px-7 py-2.5 rounded-full bg-white">
+          <Pulse ring="rounded-xl" className="flex-1" onClick={() => abrir("narracao")}>
+            <button
+              type="button"
+              className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white/15"
+            >
+              <Mic className="w-4 h-4 text-white shrink-0" />
+              <span className="text-white text-xs font-semibold">Narração</span>
+            </button>
+          </Pulse>
+        </div>
+
+        <p className="text-white/50 text-[11px] mt-2">
+          Toque nas ferramentas para personalizar seu vídeo.
+        </p>
+
+        <Pulse active={target === "next"} className="w-full mt-2.5" ring="rounded-xl" onClick={onNext}>
+          <button type="button" className="w-full py-3 rounded-xl bg-white">
             <span className="text-gray-900 text-sm font-semibold">Avançar</span>
           </button>
         </Pulse>

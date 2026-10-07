@@ -2,9 +2,9 @@ import React from "react";
 import Pulse from "@/components/youtube/Pulse";
 
 // Painel que sobe por baixo no editor do Short, com o botão Concluir
-export default function ToolPanel({ titulo, dica, concluirAtivo, onConcluir, children }) {
+export default function ToolPanel({ titulo, dica, rodape, concluirAtivo, onConcluir, children }) {
   return (
-    <div className="absolute inset-x-0 bottom-0 z-30 max-h-[68%] rounded-t-3xl bg-gray-950/95 backdrop-blur-sm flex flex-col">
+    <div className="absolute inset-x-0 bottom-0 z-30 max-h-[70%] rounded-t-3xl bg-gray-950/95 backdrop-blur-sm flex flex-col">
       <div className="flex items-start justify-between gap-3 px-4 pt-4 pb-3">
         <div className="flex-1">
           <p className="text-white text-base font-semibold">{titulo}</p>
@@ -21,7 +21,9 @@ export default function ToolPanel({ titulo, dica, concluirAtivo, onConcluir, chi
         </Pulse>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-6">{children}</div>
+      <div className="flex-1 overflow-y-auto px-4 pb-3">{children}</div>
+
+      {rodape && <p className="px-4 pb-5 pt-1 text-white/50 text-[11px] leading-snug">{rodape}</p>}
     </div>
   );
 }

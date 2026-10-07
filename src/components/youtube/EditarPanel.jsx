@@ -17,7 +17,7 @@ export default function EditarPanel({ onConcluir }) {
 
   return (
     <ToolPanel
-      titulo="Editar o vídeo"
+      titulo="Linha do tempo"
       dica="Arraste as barrinhas para cortar o começo e o fim"
       onConcluir={onConcluir}
     >

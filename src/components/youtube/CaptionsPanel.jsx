@@ -1,21 +1,80 @@
 import React from "react";
+import { Pencil } from "lucide-react";
 import ToolPanel from "@/components/youtube/ToolPanel";
 
+export const ESTILOS_LEGENDA = [
+  { id: "padrao", nome: "Padrão", classe: "text-xs" },
+  { id: "destaque", nome: "Destaque", classe: "text-sm font-bold" },
+  { id: "simples", nome: "Simples", classe: "text-xs font-normal" },
+];
+
 // Painel de legendas: escrever o que se fala no vídeo
-export default function CaptionsPanel({ legenda, onLegenda, onConcluir }) {
+export default function CaptionsPanel({
+  legenda,
+  onLegenda,
+  ativas,
+  onAtivas,
+  estiloIndex,
+  onEstiloIndex,
+  onConcluir,
+}) {
   return (
     <ToolPanel
       titulo="Legendas"
-      dica="Escreva o que você fala no vídeo. A legenda aparece embaixo da tela."
+      rodape="Toque em Editar legenda para corrigir o que foi escrito."
       onConcluir={onConcluir}
     >
-      <textarea
-        value={legenda}
-        onChange={(e) => onLegenda(e.target.value)}
-        rows={3}
-        placeholder="Hoje eu vou ensinar uma receita bem fácil"
-        className="w-full rounded-xl px-3 py-3 bg-white/10 border border-white/20 text-white text-base placeholder:text-white/40 resize-none"
-      />
+      <div className="flex items-center justify-between gap-3 rounded-2xl bg-white/10 p-3">
+        <div className="flex-1">
+          <p className="text-white text-sm font-medium">Legendas automáticas</p>
+          <p className="text-white/60 text-xs">Português (Brasil) · Geradas</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => onAtivas(!ativas)}
+          className={`w-12 h-7 rounded-full p-0.5 shrink-0 ${ativas ? "bg-sky-500" : "bg-white/25"}`}
+        >
+          <span
+            className={`block w-6 h-6 rounded-full bg-white transition-transform ${
+              ativas ? "translate-x-5" : ""
+            }`}
+          />
+        </button>
+      </div>
+
+      <p className="text-white/60 text-xs uppercase mt-4 mb-2">Estilo da legenda</p>
+      <div className="flex gap-2">
+        {ESTILOS_LEGENDA.map((e, i) => (
+          <button
+            key={e.id}
+            type="button"
+            onClick={() => onEstiloIndex(i)}
+            className={`flex-1 px-2 py-2 rounded-xl text-sm ${
+              i === estiloIndex ? "bg-white text-gray-900 font-semibold" : "bg-white/10 text-white"
+            }`}
+          >
+            {e.nome}
+          </button>
+        ))}
+      </div>
+
+      <p className="text-white/60 text-xs uppercase mt-4 mb-2">O que você falou</p>
+      <div className="rounded-2xl bg-white/10 p-3">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-white/70 text-xs">00:03 - 00:06</span>
+          <span className="flex items-center gap-1 text-white text-xs font-medium">
+            <Pencil className="w-3.5 h-3.5" />
+            Editar legenda
+          </span>
+        </div>
+        <textarea
+          value={legenda}
+          onChange={(e) => onLegenda(e.target.value)}
+          rows={2}
+          placeholder="Hoje eu vou criar meu primeiro Short!"
+          className="w-full rounded-xl px-3 py-2 bg-black/30 text-white text-sm placeholder:text-white/40 resize-none outline-none"
+        />
+      </div>
     </ToolPanel>
   );
 }

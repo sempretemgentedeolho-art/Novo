@@ -231,7 +231,7 @@ const STEPS = [
   {
     id: "edit_open",
     target: "aa",
-    text: "Agora o YouTube abriu a tela de enfeites, onde você melhora o seu vídeo. O seu vídeo fica passando na tela, repetindo, como se estivesse tocando. Do lado direito tem uma barrinha com os enfeites: o Aa é o texto, a estrelinha são os efeitos, as duas bolinhas são os filtros, a carinha são os adesivos e a última são as legendas. Em cima, no meio, fica o botão Adicionar música. Embaixo, o botão Editar serve para cortar o vídeo, e o botão Avançar leva para a próxima tela. Toque no Aa, onde está piscando, para escrever uma mensagem na tela do vídeo.",
+    text: "Agora o YouTube abriu a tela de enfeites, onde você melhora o seu vídeo. O seu vídeo fica passando na tela, repetindo, como se estivesse tocando. Do lado direito tem uma barrinha com os enfeites: o Aa é o texto, a estrelinha são os efeitos, as duas bolinhas são os filtros, a carinha são os adesivos e a última são as legendas. Em cima, no meio, fica o botão Adicionar som. Embaixo tem dois botões: Linha do tempo, para cortar o começo e o fim do vídeo, e Narração, para gravar a sua voz por cima. Mais abaixo fica o botão Avançar, que leva para a próxima tela. Toque no Aa, onde está piscando, para escrever uma mensagem na tela do vídeo.",
   },
   {
     id: "text_open",
@@ -241,7 +241,7 @@ const STEPS = [
   {
     id: "text_done",
     target: "musica_pill",
-    text: "Ficou ótimo! O seu texto apareceu no vídeo. Com o dedo, você pode arrastar o texto para cima, para baixo ou para os lados, para ele ficar no lugar que você quiser. Agora toque em ADICIONAR MÚSICA, lá em cima no meio da tela, onde está piscando, para colocar uma música de fundo.",
+    text: "Ficou ótimo! O seu texto apareceu no vídeo. Com o dedo, você pode arrastar o texto para cima, para baixo ou para os lados, para ele ficar no lugar que você quiser. Agora toque em ADICIONAR SOM, lá em cima no meio da tela, onde está piscando, para colocar uma música de fundo.",
   },
   {
     id: "audio_open",

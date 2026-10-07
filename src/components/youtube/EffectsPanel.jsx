@@ -1,12 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
 import ToolPanel from "@/components/youtube/ToolPanel";
 
+export const CATEGORIAS = ["Para você", "Rosto", "Cenário"];
+
 export const EFEITOS = [
-  { id: "nenhum", nome: "Nenhum" },
-  { id: "destaque", nome: "Destaque", overlay: "bg-gradient-to-tr from-white/40 via-transparent to-sky-300/40" },
-  { id: "quente", nome: "Tom quente", overlay: "bg-gradient-to-t from-orange-500/50 to-transparent" },
-  { id: "cinema", nome: "Cinema", overlay: "bg-gradient-to-t from-black/70 to-transparent" },
-  { id: "brilho", nome: "Brilho", overlay: "bg-gradient-to-b from-yellow-300/40 to-transparent" },
+  { id: "nenhum", nome: "Nenhum", emoji: "🚫", categoria: "Para você" },
+  {
+    id: "estrela",
+    nome: "Estrela",
+    emoji: "✨",
+    categoria: "Para você",
+    overlay: "bg-gradient-to-tr from-white/40 via-transparent to-sky-300/40",
+  },
+  {
+    id: "coracoes",
+    nome: "Corações",
+    emoji: "❤️",
+    categoria: "Para você",
+    overlay: "bg-gradient-to-t from-rose-500/50 to-transparent",
+  },
+  {
+    id: "brilho",
+    nome: "Brilho",
+    emoji: "🌟",
+    categoria: "Para você",
+    overlay: "bg-gradient-to-b from-yellow-300/40 to-transparent",
+  },
+  {
+    id: "distorcao",
+    nome: "Distorção",
+    emoji: "🌀",
+    categoria: "Para você",
+    overlay: "bg-gradient-to-r from-purple-500/40 via-transparent to-cyan-400/40",
+  },
+  {
+    id: "suavizar",
+    nome: "Suavizar",
+    emoji: "🙂",
+    categoria: "Rosto",
+    overlay: "bg-gradient-to-b from-white/25 to-transparent",
+  },
+  {
+    id: "contorno",
+    nome: "Contorno",
+    emoji: "😎",
+    categoria: "Rosto",
+    overlay: "bg-gradient-to-t from-black/50 to-transparent",
+  },
+  {
+    id: "retoque",
+    nome: "Retoque",
+    emoji: "💫",
+    categoria: "Rosto",
+    overlay: "bg-gradient-to-tr from-pink-300/35 to-transparent",
+  },
+  {
+    id: "cinema",
+    nome: "Cinema",
+    emoji: "🎬",
+    categoria: "Cenário",
+    overlay: "bg-gradient-to-t from-black/70 to-transparent",
+  },
+  {
+    id: "nevoa",
+    nome: "Névoa",
+    emoji: "🌫️",
+    categoria: "Cenário",
+    overlay: "bg-gradient-to-b from-slate-200/40 to-transparent",
+  },
+  {
+    id: "faisca",
+    nome: "Faísca",
+    emoji: "🔥",
+    categoria: "Cenário",
+    overlay: "bg-gradient-to-b from-orange-500/45 to-transparent",
+  },
 ];
 
 // Painel de efeitos: escolher o efeito e a intensidade
@@ -17,29 +85,53 @@ export default function EffectsPanel({
   onIntensidade,
   onConcluir,
 }) {
+  const [categoria, setCategoria] = useState(CATEGORIAS[0]);
+  const lista = EFEITOS.map((e, i) => ({ ...e, index: i })).filter((e) => e.categoria === categoria);
+
   return (
     <ToolPanel
       titulo="Efeitos"
-      dica="Escolha um efeito e ajuste a intensidade"
+      rodape="Arraste a barrinha para deixar o efeito mais forte ou mais fraco."
       onConcluir={onConcluir}
     >
-      <div className="space-y-2">
-        {EFEITOS.map((e, i) => (
+      <div className="flex gap-2 mb-3">
+        {CATEGORIAS.map((c) => (
           <button
-            key={e.id}
+            key={c}
             type="button"
-            onClick={() => onEfeitoIndex(i)}
-            className={`w-full flex items-center gap-3 p-3 rounded-xl text-left ${
-              i === efeitoIndex ? "bg-white text-gray-900 font-semibold" : "bg-white/10 text-white"
+            onClick={() => setCategoria(c)}
+            className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${
+              c === categoria ? "bg-white text-gray-900 font-semibold" : "bg-white/10 text-white"
             }`}
           >
-            <div className={`w-10 h-10 rounded-lg shrink-0 bg-gradient-to-br from-indigo-400 to-rose-400 ${e.overlay || ""}`} />
-            <span className="text-sm">{e.nome}</span>
+            {c}
           </button>
         ))}
       </div>
 
-      <p className="text-white/60 text-xs uppercase mt-4 mb-2">Intensidade</p>
+      <div className="grid grid-cols-3 gap-2.5">
+        {lista.map((e) => (
+          <button
+            key={e.id}
+            type="button"
+            onClick={() => onEfeitoIndex(e.index)}
+            className="flex flex-col items-center gap-1"
+          >
+            <div
+              className={`w-full h-16 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500 ${
+                e.overlay || ""
+              } ${e.index === efeitoIndex ? "ring-4 ring-white" : ""}`}
+            >
+              {e.emoji}
+            </div>
+            <span className={`text-xs ${e.index === efeitoIndex ? "text-white font-semibold" : "text-white/70"}`}>
+              {e.nome}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <p className="text-white/60 text-xs uppercase mt-4 mb-1">Intensidade</p>
       <input
         type="range"
         min="0"
