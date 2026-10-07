@@ -33,7 +33,7 @@ export default function StickersPanel({ adesivo, onAdesivo, onConcluir }) {
           >
             <div
               className={`w-full h-16 rounded-xl flex items-center justify-center text-3xl bg-white/10 ${
-                adesivo === a.emoji ? "ring-4 ring-white" : ""
+                adesivo === a.emoji ? "ring-2 ring-red-500" : ""
               }`}
             >
               {a.emoji}

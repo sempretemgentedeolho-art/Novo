@@ -32,11 +32,11 @@ export default function CaptionsPanel({
         <button
           type="button"
           onClick={() => onAtivas(!ativas)}
-          className={`w-12 h-7 rounded-full p-0.5 shrink-0 ${ativas ? "bg-sky-500" : "bg-white/25"}`}
+          className={`w-12 h-7 rounded-full p-0.5 shrink-0 ${ativas ? "bg-white" : "bg-white/25"}`}
         >
           <span
-            className={`block w-6 h-6 rounded-full bg-white transition-transform ${
-              ativas ? "translate-x-5" : ""
+            className={`block w-6 h-6 rounded-full transition-transform ${
+              ativas ? "translate-x-5 bg-gray-900" : "bg-white"
             }`}
           />
         </button>
@@ -51,8 +51,8 @@ export default function CaptionsPanel({
             onClick={() => onEstiloIndex(i)}
             className={`flex-1 px-2 py-2 rounded-full text-sm ${
               i === estiloIndex
-                ? "bg-white text-gray-900 font-semibold"
-                : "border border-white/40 text-white"
+                ? "border-2 border-white text-white font-semibold"
+                : "border border-white/40 text-white/70"
             }`}
           >
             {e.nome}

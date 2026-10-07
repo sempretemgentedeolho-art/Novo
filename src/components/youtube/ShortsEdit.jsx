@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import {
   ArrowLeft,
   Music2,
-  Volume2,
+  MoreVertical,
   Wand2,
-  SlidersHorizontal,
+  Blend,
   Smile,
-  Subtitles,
+  MessageSquareText,
   ChevronDown,
   Film,
   Mic,
+  Info,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
 import ShortsPreview from "@/components/youtube/ShortsPreview";
@@ -26,27 +27,26 @@ import NarracaoPanel from "@/components/youtube/NarracaoPanel";
 const FERRAMENTAS = [
   { id: "aa", label: "Texto", letra: "Aa" },
   { id: "efeitos", label: "Efeitos", Icone: Wand2 },
-  { id: "filtros", label: "Filtros", Icone: SlidersHorizontal },
+  { id: "filtros", label: "Filtros", Icone: Blend },
   { id: "adesivos", label: "Adesivos", Icone: Smile },
-  { id: "legendas", label: "Legendas", Icone: Subtitles },
+  { id: "legendas", label: "Legendas", Icone: MessageSquareText },
 ];
 
 export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) {
   const [painel, setPainel] = useState("none");
-  const [mudo, setMudo] = useState(false);
-  const [narracao, setNarracao] = useState(false);
   const [texto, setTexto] = useState("");
   const [corIndex, setCorIndex] = useState(0);
   const [estiloIndex, setEstiloIndex] = useState(0);
+  const [alinhamento, setAlinhamento] = useState("centro");
   const [musica, setMusica] = useState(null);
-  const [efeitoIndex, setEfeitoIndex] = useState(0);
+  const [efeitoIndex, setEfeitoIndex] = useState(1);
   const [intensidade, setIntensidade] = useState(70);
-  const [filtroIndex, setFiltroIndex] = useState(0);
+  const [filtroIndex, setFiltroIndex] = useState(1);
   const [intensidadeFiltro, setIntensidadeFiltro] = useState(70);
-  const [adesivo, setAdesivo] = useState(null);
+  const [adesivo, setAdesivo] = useState("❤️");
   const [legenda, setLegenda] = useState("");
   const [legendaAtiva, setLegendaAtiva] = useState(true);
-  const [legendaEstiloIndex, setLegendaEstiloIndex] = useState(0);
+  const [legendaEstiloIndex, setLegendaEstiloIndex] = useState(1);
 
   const segundos = Math.max(duracao || 15, 1);
 
@@ -58,7 +58,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
   const fecharPainel = () => setPainel("none");
 
   const concluirTexto = () => {
-    if (!texto.trim()) setTexto("Meu primeiro Short");
+    if (!texto.trim()) setTexto("Meu primeiro Short ✨");
     setPainel("none");
     onTap("concluido");
   };
@@ -76,9 +76,11 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           texto={texto}
           corIndex={corIndex}
           estiloIndex={estiloIndex}
+          alinhamento={alinhamento}
           onTexto={setTexto}
           onCorIndex={setCorIndex}
           onEstiloIndex={setEstiloIndex}
+          onAlinhamento={setAlinhamento}
           concluirAtivo={target === "concluido"}
           onConcluir={concluirTexto}
         />
@@ -143,7 +145,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
     }
 
     if (painel === "narracao") {
-      return <NarracaoPanel onGravar={() => setNarracao(true)} onConcluir={fecharPainel} />;
+      return <NarracaoPanel onConcluir={fecharPainel} />;
     }
 
     return null;
@@ -151,35 +153,29 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
   return (
     <div className="absolute inset-0 bg-gray-900 flex flex-col">
-      {/* Cabeçalho: voltar, adicionar som e ligar/desligar o som */}
+      {/* Cabeçalho: voltar, adicionar som e as opções */}
       <div className="relative z-20 flex items-center justify-between px-3 pt-7 pb-2">
         <Pulse ring="rounded-full" onClick={onClose}>
-          <button
-            type="button"
-            className="w-10 h-10 rounded-full bg-black/45 flex items-center justify-center"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
+          <button type="button" className="w-10 h-10 flex items-center justify-center">
+            <ArrowLeft className="w-6 h-6 text-white" />
           </button>
         </Pulse>
 
         <Pulse active={target === "musica_pill"} ring="rounded-full" onClick={() => abrir("musica")}>
           <button
             type="button"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/60"
           >
-            <Music2 className="w-4 h-4 text-gray-900" />
-            <span className="text-gray-900 text-sm font-semibold">Adicionar som</span>
+            <Music2 className="w-4 h-4 text-white" />
+            <span className="text-white text-sm font-semibold">
+              {musica ? musica.nome : "Adicionar som"}
+            </span>
           </button>
         </Pulse>
 
-        <Pulse ring="rounded-full" onClick={() => setMudo((m) => !m)}>
-          <button
-            type="button"
-            className="w-10 h-10 rounded-full bg-black/45 flex items-center justify-center"
-          >
-            <Volume2 className="w-5 h-5 text-white" />
-          </button>
-        </Pulse>
+        <button type="button" className="w-10 h-10 flex items-center justify-center">
+          <MoreVertical className="w-6 h-6 text-white" />
+        </button>
       </div>
 
       {/* Vídeo repetindo e as ferramentas do lado direito */}
@@ -187,12 +183,10 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
         <div className="flex-1">
           <ShortsPreview
             duracao={duracao}
-            musica={musica}
-            mudo={mudo}
-            narracao={narracao}
             texto={texto}
             cor={CORES[corIndex]}
             estilo={ESTILOS[estiloIndex]}
+            alinhamento={alinhamento}
             adesivo={adesivo}
             legenda={legendaAtiva ? legenda : ""}
             legendaClasse={ESTILOS_LEGENDA[legendaEstiloIndex].classe}
@@ -203,7 +197,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           />
         </div>
 
-        <div className="self-start flex flex-col items-center gap-4 px-2.5 py-3 rounded-2xl bg-black/50">
+        <div className="self-start flex flex-col items-center gap-3 py-2">
           {FERRAMENTAS.map((f) => (
             <Pulse key={f.id} active={target === f.id} ring="rounded-xl" onClick={() => abrir(f.id)}>
               <button
@@ -239,14 +233,16 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
       {/* Editar Short, linha do tempo, narração e Avançar */}
       <div className="relative z-10 px-4 pb-5 pt-2">
-        <p className="text-white text-base font-semibold">Editar Short</p>
-        <p className="text-white/60 text-xs">{segundos} segundos</p>
+        <div className="flex items-baseline justify-between">
+          <p className="text-white text-base font-semibold">Editar Short</p>
+          <p className="text-white/60 text-xs">{segundos} segundos</p>
+        </div>
 
         <div className="flex gap-2 mt-2.5">
           <Pulse ring="rounded-xl" className="flex-1" onClick={() => abrir("editar")}>
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white/15"
+              className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white/15"
             >
               <Film className="w-4 h-4 text-white shrink-0" />
               <span className="text-white text-xs font-semibold">Linha do tempo</span>
@@ -256,7 +252,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           <Pulse ring="rounded-xl" className="flex-1" onClick={() => abrir("narracao")}>
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white/15"
+              className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white/15"
             >
               <Mic className="w-4 h-4 text-white shrink-0" />
               <span className="text-white text-xs font-semibold">Narração</span>
@@ -264,12 +260,15 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           </Pulse>
         </div>
 
-        <p className="text-white/50 text-[11px] mt-2">
-          Toque nas ferramentas para personalizar seu vídeo.
-        </p>
+        <div className="flex items-center gap-1.5 mt-2">
+          <Info className="w-3.5 h-3.5 text-white/50 shrink-0" />
+          <p className="text-white/50 text-[11px]">
+            Toque nas ferramentas para personalizar seu vídeo.
+          </p>
+        </div>
 
-        <Pulse active={target === "next"} className="w-full mt-2.5" ring="rounded-xl" onClick={onNext}>
-          <button type="button" className="w-full py-3 rounded-xl bg-white">
+        <Pulse active={target === "next"} className="w-full mt-2.5" ring="rounded-full" onClick={onNext}>
+          <button type="button" className="w-full py-3 rounded-full bg-white">
             <span className="text-gray-900 text-sm font-semibold">Avançar</span>
           </button>
         </Pulse>

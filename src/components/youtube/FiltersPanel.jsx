@@ -40,14 +40,17 @@ export default function FiltersPanel({
         ))}
       </div>
 
-      <p className="text-white/60 text-xs uppercase mt-4 mb-1">Intensidade</p>
+      <div className="flex items-center justify-between mt-4 mb-1">
+        <span className="text-white/60 text-xs uppercase">Intensidade</span>
+        <span className="text-white text-xs font-semibold">{intensidade}%</span>
+      </div>
       <input
         type="range"
         min="0"
         max="100"
         value={intensidade}
         onChange={(e) => onIntensidade(Number(e.target.value))}
-        className="w-full accent-sky-500"
+        className="w-full accent-white"
       />
     </ToolPanel>
   );

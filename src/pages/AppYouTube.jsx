@@ -236,7 +236,7 @@ const STEPS = [
   {
     id: "text_open",
     target: "concluido",
-    text: "O teclado subiu e apareceu o painel do texto. Digite a sua frase, por exemplo: Minha primeira receita. Aqui embaixo você escolhe o TIPO da letra: Clássico, Moderno ou Destaque. Depois toque numa das bolinhas coloridas para mudar a COR da letra. Assim você vê como a frase vai ficar. Quando terminar, toque em Concluir, lá em cima do lado direito, onde está piscando.",
+    text: "O teclado subiu e apareceu o painel do texto. Digite a sua frase, por exemplo: Meu primeiro Short. Em cima, à esquerda, você escolhe o TIPO da letra: Clássico ou Moderno. O botão A muda o formato da letra e o último botão muda o texto de lugar, para a esquerda, para o meio ou para a direita. Depois toque numa das bolinhas coloridas para mudar a COR da letra. Assim você vê como a frase vai ficar. Quando terminar, toque em Concluir, lá em cima do lado direito, onde está piscando.",
   },
   {
     id: "text_done",

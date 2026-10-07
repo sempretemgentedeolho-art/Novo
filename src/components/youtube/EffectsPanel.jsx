@@ -122,7 +122,7 @@ export default function EffectsPanel({
             <div
               className={`w-full h-16 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500 ${
                 e.overlay || ""
-              } ${e.index === efeitoIndex ? "ring-4 ring-white" : ""}`}
+              } ${e.index === efeitoIndex ? "ring-2 ring-orange-500" : ""}`}
             >
               {e.emoji}
             </div>
@@ -133,14 +133,17 @@ export default function EffectsPanel({
         ))}
       </div>
 
-      <p className="text-white/60 text-xs uppercase mt-4 mb-1">Intensidade</p>
+      <div className="flex items-center justify-between mt-4 mb-1">
+        <span className="text-white/60 text-xs uppercase">Intensidade</span>
+        <span className="text-white text-xs font-semibold">{intensidade}%</span>
+      </div>
       <input
         type="range"
         min="0"
         max="100"
         value={intensidade}
         onChange={(e) => onIntensidade(Number(e.target.value))}
-        className="w-full accent-sky-500"
+        className="w-full accent-white"
       />
     </ToolPanel>
   );
