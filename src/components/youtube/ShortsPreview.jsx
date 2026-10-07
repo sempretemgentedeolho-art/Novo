@@ -2,6 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 
+const FOTO =
+  "https://base44.app/api/apps/68e15e54f0b0a5a83d550cb2/files/mp/public/68e15e54f0b0a5a83d550cb2/8c472f467_pessoa-short.jpg";
+
 const ALINHAMENTO = {
   esquerda: "text-left",
   centro: "text-center",
@@ -28,10 +31,12 @@ export default function ShortsPreview({
   const filtroCss = filtro?.aplicar ? filtro.aplicar((intensidadeFiltro ?? 70) / 100) : "";
 
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gray-900">
+    <div className="relative w-full h-full rounded overflow-hidden bg-gray-900">
       {/* Vídeo gravado */}
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500"
+      <img
+        src={FOTO}
+        alt="Vídeo gravado"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{ filter: filtroCss || undefined }}
       />
 
@@ -74,7 +79,7 @@ export default function ShortsPreview({
       )}
 
       {/* Tempo do vídeo, no canto de baixo do lado esquerdo */}
-      <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
+      <div className="absolute bottom-3 left-2 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1.5">
         <Play className="w-3.5 h-3.5 text-white" fill="currentColor" />
         <span className="text-white text-[11px] font-medium drop-shadow">
           0:{String(segundos).padStart(2, "0")} / 0:{total}

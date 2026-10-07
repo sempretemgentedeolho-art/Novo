@@ -152,11 +152,13 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
   };
 
   return (
-    <div className="absolute inset-0 bg-gray-900 flex flex-col">
+    <div className="absolute inset-0 bg-neutral-950 flex flex-col">
+      {/* Área do vídeo: a pessoa ocupa a tela e os botões ficam por cima */}
+      <div className="relative z-10 flex-1 bg-neutral-500 pt-7">
       {/* Cabeçalho: voltar, adicionar som e as opções */}
-      <div className="relative z-20 flex items-center justify-between px-3 pt-7 pb-2">
+      <div className="absolute top-7 left-0 right-0 z-20 flex items-center justify-between px-4 pt-2">
         <Pulse ring="rounded-full" onClick={onClose}>
-          <button type="button" className="w-10 h-10 flex items-center justify-center">
+          <button type="button" className="w-10 h-10 rounded-full bg-neutral-800/60 flex items-center justify-center">
             <ArrowLeft className="w-6 h-6 text-white" />
           </button>
         </Pulse>
@@ -164,7 +166,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
         <Pulse active={target === "musica_pill"} ring="rounded-full" onClick={() => abrir("musica")}>
           <button
             type="button"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/60"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-neutral-800/60"
           >
             <Music2 className="w-4 h-4 text-white" />
             <span className="text-white text-sm font-semibold">
@@ -173,14 +175,14 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           </button>
         </Pulse>
 
-        <button type="button" className="w-10 h-10 flex items-center justify-center">
+        <button type="button" className="w-10 h-10 rounded-full bg-neutral-800/60 flex items-center justify-center">
           <MoreVertical className="w-6 h-6 text-white" />
         </button>
       </div>
 
-      {/* Vídeo repetindo e as ferramentas do lado direito */}
-      <div className="relative z-10 flex-1 flex gap-2 px-3 py-2">
-        <div className="flex-1">
+      {/* Vídeo repetindo, com as ferramentas por cima do lado direito */}
+      <div className="absolute inset-x-5 top-[5.5rem] bottom-3">
+        <div className="w-full h-full">
           <ShortsPreview
             duracao={duracao}
             texto={texto}
@@ -197,7 +199,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           />
         </div>
 
-        <div className="self-start flex flex-col items-center gap-3 py-2">
+        <div className="absolute -right-1 top-4 z-20 w-14 flex flex-col items-center gap-2 py-3 rounded-full bg-neutral-800/60">
           {FERRAMENTAS.map((f) => (
             <Pulse key={f.id} active={target === f.id} ring="rounded-xl" onClick={() => abrir(f.id)}>
               <button
@@ -230,9 +232,10 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           <ChevronDown className="w-5 h-5 text-white/70" />
         </div>
       </div>
+      </div>
 
       {/* Editar Short, linha do tempo, narração e Avançar */}
-      <div className="relative z-10 px-4 pb-5 pt-2">
+      <div className="relative z-10 bg-neutral-900 px-5 pb-5 pt-4">
         <div className="flex items-baseline justify-between">
           <p className="text-white text-base font-semibold">Editar Short</p>
           <p className="text-white/60 text-xs">{segundos} segundos</p>
