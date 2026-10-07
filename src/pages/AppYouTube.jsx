@@ -249,9 +249,64 @@ const STEPS = [
     text: "Aqui você escolhe a música do seu vídeo. Você pode digitar o nome da música ou do cantor que você gosta. Toque na música, onde está piscando, para ela tocar junto com o seu vídeo.",
   },
   {
-    id: "audio_done",
+    id: "efeitos_open",
+    target: "efeitos",
+    text: "Muito bem, a música foi adicionada! Agora vamos usar os outros enfeites, na barrinha da direita. Toque na varinha mágica, a ferramenta EFEITOS, onde está piscando.",
+  },
+  {
+    id: "efeitos_estrela",
+    target: "efeito_estrela",
+    text: "Estes são os efeitos: eles dão um clima diferente para o seu vídeo. Aqui já estão separados em Para você, Rosto e Cenário. Toque no efeito ESTRELA, onde está piscando, para ele aparecer no seu vídeo. A barrinha embaixo, chamada Intensidade, deixa o efeito mais forte ou mais fraco.",
+  },
+  {
+    id: "efeitos_done",
+    target: "efeitos_concluir",
+    text: "Ficou bonito! Você pode experimentar os outros efeitos quando quiser, é só tocar em outro e pronto. Quando terminar, toque em CONCLUIR, lá em cima do lado direito, onde está piscando, para voltar ao vídeo.",
+  },
+  {
+    id: "filtros_open",
+    target: "filtros",
+    text: "Agora toque em FILTROS, na barrinha da direita, onde está piscando. O filtro muda as cores do seu vídeo, como se fosse um óculos de sol.",
+  },
+  {
+    id: "filtros_dourado",
+    target: "filtro_dourado",
+    text: "Toque no filtro DOURADO, onde está piscando, para deixar a sua imagem com um tom mais quentinho. Se quiser, arraste a barrinha de Intensidade para escolher o quanto. Você também pode experimentar os outros: Vívido, Frio e Preto e Branco.",
+  },
+  {
+    id: "filtros_done",
+    target: "filtros_concluir",
+    text: "Muito bem! Toque em CONCLUIR, onde está piscando, para guardar essa cor no seu vídeo.",
+  },
+  {
+    id: "adesivos_open",
+    target: "adesivos",
+    text: "Agora toque em ADESIVOS, a carinha da barrinha da direita, onde está piscando. Adesivo é uma figurinha que você coloca em cima do vídeo.",
+  },
+  {
+    id: "adesivos_coracao",
+    target: "adesivo_coracao",
+    text: "Toque no adesivo CORAÇÃO, onde está piscando. Depois, com o dedo, você pode arrastar essa figurinha para o lugar que quiser no vídeo.",
+  },
+  {
+    id: "adesivos_done",
+    target: "adesivos_concluir",
+    text: "Pronto, o adesivo ficou no seu vídeo! Toque em CONCLUIR, onde está piscando, para voltar.",
+  },
+  {
+    id: "legendas_open",
+    target: "legendas",
+    text: "Falta a última ferramenta. Toque em LEGENDAS, onde está piscando. Legenda é o texto que aparece embaixo do vídeo com o que você falou, para quem assiste sem som conseguir entender.",
+  },
+  {
+    id: "legendas_done",
+    target: "legendas_concluir",
+    text: "O YouTube já deixou as LEGENDAS AUTOMÁTICAS ligadas em português, e eu escrevi uma sugestão para você. Se quiser mudar, toque na caixinha e apague para escrever do seu jeito. Toque em CONCLUIR, lá em cima, onde está piscando, para ver a legenda aparecendo no vídeo.",
+  },
+  {
+    id: "enfeites_done",
     target: "next",
-    text: "Muito bem, a música foi adicionada! Se quiser, ainda dá para mudar as cores com os Filtros, colocar um Adesivo ou escrever a Legenda do vídeo, na barrinha da direita. Quando o seu vídeo estiver do jeito que você gostou, toque em AVANÇAR, no canto de baixo do lado direito, onde está piscando.",
+    text: "Parabéns! Agora o seu vídeo tem texto, música, efeitos, filtro, adesivo e legenda. Toque em AVANÇAR, no canto de baixo do lado direito, onde está piscando, para publicar o seu Short.",
   },
   {
     id: "publish",

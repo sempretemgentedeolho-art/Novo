@@ -16,12 +16,14 @@ export default function CaptionsPanel({
   onAtivas,
   estiloIndex,
   onEstiloIndex,
+  concluirAtivo,
   onConcluir,
 }) {
   return (
     <ToolPanel
       titulo="Legendas"
       rodape="Toque em Editar legenda para corrigir o que foi escrito."
+      concluirAtivo={concluirAtivo}
       onConcluir={onConcluir}
     >
       <div className="flex items-center justify-between gap-3 rounded-2xl bg-white/10 p-3">

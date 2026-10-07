@@ -1,4 +1,5 @@
 import React from "react";
+import Pulse from "@/components/youtube/Pulse";
 import ToolPanel from "@/components/youtube/ToolPanel";
 
 export const FILTROS = [
@@ -11,32 +12,49 @@ export const FILTROS = [
 
 // Painel de filtros: dá um novo tom ao vídeo
 export default function FiltersPanel({
+  target,
   filtroIndex,
   intensidade,
   onFiltroIndex,
   onIntensidade,
+  onTap,
+  concluirAtivo,
   onConcluir,
 }) {
   return (
-    <ToolPanel titulo="Filtros" dica="Dê um novo tom ao seu Short." onConcluir={onConcluir}>
+    <ToolPanel
+      titulo="Filtros"
+      dica="Dê um novo tom ao seu Short."
+      concluirAtivo={concluirAtivo}
+      onConcluir={onConcluir}
+    >
       <div className="flex gap-3 overflow-x-auto pb-1">
         {FILTROS.map((f, i) => (
-          <button
+          <Pulse
             key={f.id}
-            type="button"
-            onClick={() => onFiltroIndex(i)}
-            className="flex flex-col items-center gap-1.5 shrink-0"
+            className="shrink-0"
+            ring="rounded-xl"
+            active={target === `filtro_${f.id}`}
           >
-            <div
-              className={`w-16 h-24 rounded-xl bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500 ${
-                i === filtroIndex ? "ring-4 ring-white" : ""
-              }`}
-              style={{ filter: f.aplicar(1) || undefined }}
-            />
-            <span className={`text-xs ${i === filtroIndex ? "text-white font-semibold" : "text-white/70"}`}>
-              {f.nome}
-            </span>
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                onFiltroIndex(i);
+                onTap(`filtro_${f.id}`);
+              }}
+              className="flex flex-col items-center gap-1.5"
+            >
+              <div
+                className={`w-16 h-24 rounded-xl bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500 ${
+                  i === filtroIndex ? "ring-4 ring-white" : ""
+                }`}
+                style={{ filter: f.aplicar(1) || undefined }}
+              />
+              <span className={`text-xs ${i === filtroIndex ? "text-white font-semibold" : "text-white/70"}`}>
+                {f.nome}
+              </span>
+            </button>
+          </Pulse>
         ))}
       </div>
 

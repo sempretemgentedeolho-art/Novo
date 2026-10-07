@@ -39,11 +39,11 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
   const [estiloIndex, setEstiloIndex] = useState(0);
   const [alinhamento, setAlinhamento] = useState("centro");
   const [musica, setMusica] = useState(null);
-  const [efeitoIndex, setEfeitoIndex] = useState(1);
+  const [efeitoIndex, setEfeitoIndex] = useState(0);
   const [intensidade, setIntensidade] = useState(70);
-  const [filtroIndex, setFiltroIndex] = useState(1);
+  const [filtroIndex, setFiltroIndex] = useState(0);
   const [intensidadeFiltro, setIntensidadeFiltro] = useState(70);
-  const [adesivo, setAdesivo] = useState("❤️");
+  const [adesivo, setAdesivo] = useState(null);
   const [legenda, setLegenda] = useState("");
   const [legendaAtiva, setLegendaAtiva] = useState(true);
   const [legendaEstiloIndex, setLegendaEstiloIndex] = useState(1);
@@ -56,6 +56,17 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
   };
 
   const fecharPainel = () => setPainel("none");
+
+  // Fecha o painel do enfeite e avança o tutorial quando é a vez dele
+  const concluirEnfeite = (id) => {
+    setPainel("none");
+    onTap(id);
+  };
+
+  const concluirLegenda = () => {
+    if (!legenda.trim()) setLegenda("Hoje eu vou criar meu primeiro Short!");
+    concluirEnfeite("legendas_concluir");
+  };
 
   // O botão Adicionar som abre o painel de música e avança o tutorial
   const abrirMusica = () => {
@@ -107,11 +118,14 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
     if (painel === "efeitos") {
       return (
         <EffectsPanel
+          target={target}
           efeitoIndex={efeitoIndex}
           intensidade={intensidade}
           onEfeitoIndex={setEfeitoIndex}
           onIntensidade={setIntensidade}
-          onConcluir={fecharPainel}
+          onTap={onTap}
+          concluirAtivo={target === "efeitos_concluir"}
+          onConcluir={() => concluirEnfeite("efeitos_concluir")}
         />
       );
     }
@@ -119,17 +133,29 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
     if (painel === "filtros") {
       return (
         <FiltersPanel
+          target={target}
           filtroIndex={filtroIndex}
           intensidade={intensidadeFiltro}
           onFiltroIndex={setFiltroIndex}
           onIntensidade={setIntensidadeFiltro}
-          onConcluir={fecharPainel}
+          onTap={onTap}
+          concluirAtivo={target === "filtros_concluir"}
+          onConcluir={() => concluirEnfeite("filtros_concluir")}
         />
       );
     }
 
     if (painel === "adesivos") {
-      return <StickersPanel adesivo={adesivo} onAdesivo={setAdesivo} onConcluir={fecharPainel} />;
+      return (
+        <StickersPanel
+          target={target}
+          adesivo={adesivo}
+          onAdesivo={setAdesivo}
+          onTap={onTap}
+          concluirAtivo={target === "adesivos_concluir"}
+          onConcluir={() => concluirEnfeite("adesivos_concluir")}
+        />
+      );
     }
 
     if (painel === "legendas") {
@@ -141,7 +167,8 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           onAtivas={setLegendaAtiva}
           estiloIndex={legendaEstiloIndex}
           onEstiloIndex={setLegendaEstiloIndex}
-          onConcluir={fecharPainel}
+          concluirAtivo={target === "legendas_concluir"}
+          onConcluir={concluirLegenda}
         />
       );
     }

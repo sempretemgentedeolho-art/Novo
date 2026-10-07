@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Pulse from "@/components/youtube/Pulse";
 import ToolPanel from "@/components/youtube/ToolPanel";
 
 export const CATEGORIAS = ["Para você", "Rosto", "Cenário"];
@@ -79,10 +80,13 @@ export const EFEITOS = [
 
 // Painel de efeitos: escolher o efeito e a intensidade
 export default function EffectsPanel({
+  target,
   efeitoIndex,
   intensidade,
   onEfeitoIndex,
   onIntensidade,
+  onTap,
+  concluirAtivo,
   onConcluir,
 }) {
   const [categoria, setCategoria] = useState(CATEGORIAS[0]);
@@ -92,6 +96,7 @@ export default function EffectsPanel({
     <ToolPanel
       titulo="Efeitos"
       rodape="Arraste a barrinha para deixar o efeito mais forte ou mais fraco."
+      concluirAtivo={concluirAtivo}
       onConcluir={onConcluir}
     >
       <div className="flex gap-2 mb-3">
@@ -113,23 +118,27 @@ export default function EffectsPanel({
 
       <div className="grid grid-cols-3 gap-2.5">
         {lista.map((e) => (
-          <button
-            key={e.id}
-            type="button"
-            onClick={() => onEfeitoIndex(e.index)}
-            className="flex flex-col items-center gap-1"
-          >
-            <div
-              className={`w-full h-16 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500 ${
-                e.overlay || ""
-              } ${e.index === efeitoIndex ? "ring-2 ring-orange-500" : ""}`}
+          <Pulse key={e.id} className="w-full" ring="rounded-xl" active={target === `efeito_${e.id}`}>
+            <button
+              type="button"
+              onClick={() => {
+                onEfeitoIndex(e.index);
+                onTap(`efeito_${e.id}`);
+              }}
+              className="w-full flex flex-col items-center gap-1"
             >
-              {e.emoji}
-            </div>
-            <span className={`text-xs ${e.index === efeitoIndex ? "text-white font-semibold" : "text-white/70"}`}>
-              {e.nome}
-            </span>
-          </button>
+              <div
+                className={`w-full h-16 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-b from-indigo-500 via-purple-500 to-rose-500 ${
+                  e.overlay || ""
+                } ${e.index === efeitoIndex ? "ring-2 ring-orange-500" : ""}`}
+              >
+                {e.emoji}
+              </div>
+              <span className={`text-xs ${e.index === efeitoIndex ? "text-white font-semibold" : "text-white/70"}`}>
+                {e.nome}
+              </span>
+            </button>
+          </Pulse>
         ))}
       </div>
 
