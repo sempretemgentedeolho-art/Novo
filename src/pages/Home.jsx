@@ -23,7 +23,7 @@ const apps = [
   { id: 'clock', name: 'Relógio', icon: Clock, page: 'Relogio', bgColor: 'bg-gradient-to-br from-blue-500 to-indigo-600', iconColor: 'text-white' },
   { id: 'settings', name: 'Configurações', icon: Settings, page: 'Configuracoes', bgColor: 'bg-gradient-to-br from-gray-600 to-gray-800', iconColor: 'text-white' },
   { id: 'whatsapp', name: 'WhatsApp', icon: MessageCircle, page: 'WhatsApp', bgColor: 'bg-gradient-to-br from-green-400 to-green-600', iconColor: 'text-white' },
-  { id: 'facebook', name: 'Facebook', icon: Facebook, page: 'Facebook', bgColor: 'bg-gradient-to-br from-blue-600 to-blue-800', iconColor: 'text-white' },
+  { id: 'facebook', name: 'Facebook', icon: Facebook, page: 'AppFacebook', bgColor: 'bg-gradient-to-br from-blue-600 to-blue-800', iconColor: 'text-white' },
   { id: 'instagram', name: 'Instagram', icon: Instagram, page: 'Instagram', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500', iconColor: 'text-white' },
   { id: 'calculator', name: 'Calculadora', icon: Calculator, page: 'Calculadora', bgColor: 'bg-gradient-to-br from-orange-400 to-red-500', iconColor: 'text-white' },
   { id: 'tiktok', name: 'TikTok', icon: TikTokIcon, page: 'TikTok', bgColor: 'bg-black', iconColor: 'text-white' },
@@ -215,14 +215,14 @@ export default function Home() {
     const synth = window.speechSynthesis;
     if (synth) synth.cancel();
 
-    // Abrem: YouTube e Dicas (o treinamento do curso), Configurações (onde a
+    // Abrem: YouTube, Dicas e Facebook (os treinamentos), Configurações (onde a
     // pessoa liga contraste, menos animações, TalkBack e gestos) e Contatos
     // (a agenda de verdade, para guardar telefones). Os outros apps ficam
     // visíveis, mas só avisam em voz alta que fazem parte de outro treinamento.
-    if (!['youtube', 'tips', 'settings', 'contacts'].includes(app.id)) {
+    if (!['youtube', 'tips', 'facebook', 'settings', 'contacts'].includes(app.id)) {
       if (synth) {
         const aviso = new SpeechSynthesisUtterance(
-          `${app.name} faz parte de outro treinamento. Aqui a gente aprende só o YouTube.`
+          `${app.name} faz parte de outro treinamento. Aqui a gente aprende o YouTube, o Dicas e o Facebook.`
         );
         aviso.lang = 'pt-BR';
         aviso.rate = 0.9;

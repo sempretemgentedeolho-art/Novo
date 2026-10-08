@@ -2,7 +2,7 @@
 chcp 65001 >nul
 setlocal
 echo ============================================
-echo  EXPORTAR APENAS O YOUTUBE + DICAS (LEVE)
+echo  EXPORTAR YOUTUBE + DICAS + FACEBOOK (LEVE)
 echo ============================================
 echo.
 
@@ -40,8 +40,10 @@ mkdir "_paginas_preservadas"
 echo Inicio.jsx
 echo TelaBloqueio.jsx
 echo Home.jsx
+echo TelaInicial.jsx
 echo AppYouTube.jsx
 echo AppDicas.jsx
+echo AppFacebook.jsx
 echo Configuracoes.jsx
 echo WiFiConfig.jsx
 echo BluetoothConfig.jsx
@@ -64,8 +66,10 @@ copy /Y "src\pages.config.js" "src\pages.config.js.bak" >nul
 echo import Inicio from './pages/Inicio';
 echo import TelaBloqueio from './pages/TelaBloqueio';
 echo import Home from './pages/Home';
+echo import TelaInicial from './pages/TelaInicial';
 echo import AppYouTube from './pages/AppYouTube';
 echo import AppDicas from './pages/AppDicas';
+echo import AppFacebook from './pages/AppFacebook';
 echo import Configuracoes from './pages/Configuracoes';
 echo import WiFiConfig from './pages/WiFiConfig';
 echo import BluetoothConfig from './pages/BluetoothConfig';
@@ -77,8 +81,10 @@ echo export const PAGES = {
 echo     "Inicio": Inicio,
 echo     "TelaBloqueio": TelaBloqueio,
 echo     "Home": Home,
+echo     "TelaInicial": TelaInicial,
 echo     "AppYouTube": AppYouTube,
 echo     "AppDicas": AppDicas,
+echo     "AppFacebook": AppFacebook,
 echo     "Configuracoes": Configuracoes,
 echo     "WiFiConfig": WiFiConfig,
 echo     "BluetoothConfig": BluetoothConfig,
@@ -116,7 +122,7 @@ del "_lista_leve.txt" 2>nul
 echo.
 if exist "dist\index.html" (
     echo ============================================
-    echo  CONCLUIDO! Exportado so o YouTube + Dicas
+    echo  CONCLUIDO! Exportado YouTube + Dicas + Facebook
     echo ============================================
     echo  Arquivo pronto: dist\index.html
     echo  Para distribuir: copie a pasta "dist"

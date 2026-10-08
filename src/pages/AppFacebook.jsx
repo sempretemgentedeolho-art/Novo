@@ -1,90 +1,395 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, ThumbsUp, MessageCircle, Share2 } from "lucide-react";
+import { Facebook } from "lucide-react";
+import { PhoneFrame } from "@/components/PhoneFrame";
+import { StatusBar } from "@/components/StatusBar";
+import AvisoAcessibilidade from "@/components/AvisoAcessibilidade";
+import ChapterPicker from "@/components/youtube/ChapterPicker";
+import FacebookHeader from "@/components/facebook/FacebookHeader";
+import FacebookNav from "@/components/facebook/FacebookNav";
+import FeedView from "@/components/facebook/FeedView";
+import CreatePostView from "@/components/facebook/CreatePostView";
+import FriendsView from "@/components/facebook/FriendsView";
+import MessagesView from "@/components/facebook/MessagesView";
+import ProfileView from "@/components/facebook/ProfileView";
+import AvisosFacebookView from "@/components/facebook/AvisosFacebookView";
+import ShareSheetFacebook from "@/components/facebook/ShareSheetFacebook";
+import StoryView from "@/components/facebook/StoryView";
+import { CHAPTERS, STEPS } from "@/components/facebook/facebookTutorial";
+import {
+  PUBLICACOES,
+  GALERIA,
+  AMIGOS,
+  CONVERSAS,
+  MINHA_FOTO,
+} from "@/components/facebook/facebookData";
+import { useAcessibilidade } from "@/lib/acessibilidade";
 
 export default function AppFacebook() {
   const navigate = useNavigate();
+  const [chapter, setChapter] = useState(null);
+  const [runKey, setRunKey] = useState(0);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [view, setView] = useState("feed");
+  const [posts, setPosts] = useState(PUBLICACOES);
+  const [comentarioAberto, setComentarioAberto] = useState(null);
+  const [meuComentario, setMeuComentario] = useState("");
+  const [shareOpen, setShareOpen] = useState(false);
+  const [compartilhado, setCompartilhado] = useState(false);
+  const [storyAberta, setStoryAberta] = useState(null);
+  const [fotoEscolhida, setFotoEscolhida] = useState(null);
+  const [legenda, setLegenda] = useState("");
+  const [publicado, setPublicado] = useState(false);
+  const [amigos, setAmigos] = useState(AMIGOS);
+  const [conversas, setConversas] = useState(CONVERSAS);
+  const [chatAberto, setChatAberto] = useState(null);
+  const [recado, setRecado] = useState("");
 
+  const { talkback, gestos } = useAcessibilidade();
+  // Enquanto o menu de capítulos está aberto, nenhuma pista pisca por trás dele
+  const target = chapter ? STEPS[stepIndex].target : null;
+
+  // Cada passo do tutorial é falado em voz alta
   useEffect(() => {
+    if (!chapter) return;
     const synth = window.speechSynthesis;
-    if (!synth) return;
+    if (synth) {
+      synth.cancel();
+      const lembreteGestos = gestos
+        ? " Lembre-se: para voltar, deslize o dedo da borda esquerda para a direita."
+        : "";
+      const utter = new SpeechSynthesisUtterance(`${STEPS[stepIndex].text}${lembreteGestos}`);
+      utter.lang = "pt-BR";
+      // Com o TalkBack ligado a fala fica mais devagar, mais fácil de acompanhar
+      utter.rate = talkback ? 0.72 : 0.82;
+      synth.speak(utter);
+    }
+    return () => window.speechSynthesis.cancel();
+  }, [stepIndex, chapter, runKey, talkback, gestos]);
 
-    const utter = new SpeechSynthesisUtterance(
-      "Este é o Facebook. Aqui você vê publicações de amigos e familiares. Toque na seta para voltar."
+  const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
+
+  // Começa o tutorial na parte escolhida no menu
+  const startChapter = (cap) => {
+    setChapter(cap);
+    setStepIndex(cap.stepIndex);
+    setView(cap.view || "feed");
+    setPosts(PUBLICACOES);
+    setComentarioAberto(null);
+    setMeuComentario("");
+    setShareOpen(false);
+    setCompartilhado(false);
+    setStoryAberta(null);
+    setFotoEscolhida(null);
+    setLegenda("");
+    setPublicado(false);
+    setAmigos(AMIGOS);
+    setConversas(CONVERSAS);
+    setChatAberto(null);
+    setRecado("");
+    setRunKey((k) => k + 1);
+  };
+
+  // Curtir, comentar e apagar comentário
+  const handleCurtir = (id) => {
+    setPosts((anteriores) =>
+      anteriores.map((p) =>
+        p.id === id
+          ? { ...p, curtido: !p.curtido, curtidas: p.curtido ? p.curtidas - 1 : p.curtidas + 1 }
+          : p
+      )
     );
-    utter.lang = "pt-BR";
-    utter.rate = 0.95;
-    synth.speak(utter);
-  }, []);
+    if (target === "curtir") goNext();
+  };
 
-  const posts = [
-    { nome: "Maria Silva", texto: "Que dia lindo! ☀️", likes: 45, comentarios: 12 },
-    { nome: "João Santos", texto: "Alguém para um café? ☕", likes: 23, comentarios: 8 },
-    { nome: "Ana Costa", texto: "Finalmente férias! 🏖️", likes: 67, comentarios: 15 },
-  ];
+  const handleComentar = (id) => {
+    setComentarioAberto(id);
+    if (target === "comentar_btn") goNext();
+  };
+
+  const handleFocarComentario = () => {
+    if (target === "campo_comentario") goNext();
+  };
+
+  const handleEnviarComentario = (id) => {
+    // Se a pessoa tocar em Publicar sem escrever, o app escreve um recado simples por ela
+    const texto = meuComentario.trim() || "Que lindo, Maria! 😊";
+    setPosts((anteriores) =>
+      anteriores.map((p) =>
+        p.id === id
+          ? { ...p, comentarios: [...p.comentarios, { autor: "Você", texto, meu: true }] }
+          : p
+      )
+    );
+    setMeuComentario("");
+    setComentarioAberto(null);
+    if (target === "enviar_comentario") goNext();
+  };
+
+  const handleApagarComentario = (id, indice) => {
+    setPosts((anteriores) =>
+      anteriores.map((p) =>
+        p.id === id ? { ...p, comentarios: p.comentarios.filter((_, i) => i !== indice) } : p
+      )
+    );
+  };
+
+  // Compartilhar a publicação
+  const handleCompartilhar = () => {
+    setShareOpen(true);
+    if (target === "compartilhar_btn") goNext();
+  };
+
+  const handleEscolherOndeCompartilhar = () => {
+    setCompartilhado(true);
+    setShareOpen(false);
+    if (target === "share_whats") goNext();
+  };
+
+  const fecharCompartilhar = () => {
+    setShareOpen(false);
+    setCompartilhado(false);
+  };
+
+  // Publicar uma foto com legenda
+  const handleAbrirPublicar = () => {
+    setView("publicar");
+    if (target === "publicar_nav") goNext();
+  };
+
+  const handleEscolherFoto = (foto) => {
+    setFotoEscolhida(foto);
+    if (target === "escolher_foto") goNext();
+  };
+
+  const handleFocarLegenda = () => {
+    if (target === "campo_legenda") goNext();
+  };
+
+  const handlePublicar = () => {
+    // Se a pessoa tocar em Publicar sem escolher a foto, vai a primeira da galeria
+    const foto = fotoEscolhida || GALERIA[0].foto;
+    setPosts((anteriores) => [
+      {
+        id: `minha-${Date.now()}`,
+        autor: "Você",
+        foto: MINHA_FOTO,
+        quando: "agora mesmo",
+        texto: legenda.trim() || "Bom dia a todos!",
+        imagem: foto,
+        curtidas: 0,
+        curtido: false,
+        comentarios: [],
+      },
+      ...anteriores,
+    ]);
+    setPublicado(true);
+    if (target === "publicar_botao") goNext();
+  };
+
+  const handleVerNoFeed = () => {
+    setView("feed");
+    if (target === "ver_publicacao") goNext();
+  };
+
+  // Histórias de 24 horas
+  const handleAbrirStory = (story) => {
+    setStoryAberta(story);
+    if (target === "story_abrir") goNext();
+  };
+
+  const handleCriarStory = () => {
+    setStoryAberta({
+      id: "meu",
+      nome: "Você",
+      foto: MINHA_FOTO,
+      imagem: GALERIA[0].foto,
+      legenda: "Bom dia! Hoje vai ser um dia lindo. ☀️",
+      proprio: true,
+    });
+    if (target === "story_criar") goNext();
+  };
+
+  const handleFecharStory = () => {
+    setStoryAberta(null);
+    if (target === "story_fechar") goNext();
+  };
+
+  // Amigos e mensagens
+  const handleAbrirAmigos = () => {
+    setView("amigos");
+    if (target === "amigos_nav") goNext();
+  };
+
+  const handleAdicionarAmigo = (id) => {
+    setAmigos((anteriores) =>
+      anteriores.map((a) => (a.id === id ? { ...a, convite: true } : a))
+    );
+    if (target === "adicionar_amigo") goNext();
+  };
+
+  const handleAbrirMensagens = () => {
+    setView("mensagens");
+    if (target === "mensagens_nav") goNext();
+  };
+
+  const handleAbrirConversa = (id) => {
+    setChatAberto(id);
+    if (target === "conversa_maria") goNext();
+  };
+
+  const handleFocarRecado = () => {
+    if (target === "campo_recado") goNext();
+  };
+
+  const handleEnviarRecado = () => {
+    if (!chatAberto) return;
+    // Se a pessoa tocar na seta sem escrever, o app manda um recado simples por ela
+    const texto = recado.trim() || "Oi, Maria! Está tudo bem por aqui. 😊";
+    setConversas((anteriores) =>
+      anteriores.map((c) =>
+        c.id === chatAberto ? { ...c, recados: [...c.recados, { de: "eu", texto }] } : c
+      )
+    );
+    setRecado("");
+    if (target === "enviar_recado") goNext();
+  };
+
+  const handleAbrirPerfil = () => {
+    setView("perfil");
+    if (target === "perfil_nav") goNext();
+  };
+
+  const handleAbrirAvisos = () => {
+    setView("avisos");
+    if (target === "avisos") goNext();
+  };
+
+  // Seta de voltar: fecha o que estiver aberto e, no fim, volta para a tela inicial
+  const handleBack = () => {
+    if (target === "terminar") {
+      navigate(createPageUrl("Home"));
+      return;
+    }
+    if (storyAberta) {
+      handleFecharStory();
+      return;
+    }
+    if (chatAberto) {
+      setChatAberto(null);
+      return;
+    }
+    if (view !== "feed") {
+      setView("feed");
+      return;
+    }
+    navigate(createPageUrl("Home"));
+  };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="relative w-full max-w-sm">
-        <div className="relative bg-black rounded-[50px] p-3 shadow-2xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-b-3xl z-10"></div>
-          
-          <div
-            className="relative rounded-[46px] overflow-hidden bg-gray-100"
-            style={{ aspectRatio: "9/19.5" }}
-          >
-            {/* Header Facebook */}
-            <div className="bg-[#1877F2] text-white p-4 pt-8">
-              <div className="flex items-center justify-between">
-                <button onClick={() => navigate(createPageUrl("TelaInicial"))}>
-                  <ArrowLeft className="w-6 h-6" />
-                </button>
-                <h1 className="text-2xl font-bold">facebook</h1>
-                <div className="w-6"></div>
-              </div>
-            </div>
+    <PhoneFrame>
+      <div className="h-full bg-gray-100 flex flex-col relative overflow-hidden">
+        <StatusBar variant="light" />
+        <AvisoAcessibilidade />
 
-            {/* Feed */}
-            <div className="overflow-y-auto" style={{ height: "calc(100% - 80px)" }}>
-              {posts.map((post, idx) => (
-                <div key={idx} className="bg-white mb-2 p-4">
-                  {/* Cabeçalho */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-500"></div>
-                    <span className="font-semibold">{post.nome}</span>
-                  </div>
-                  
-                  {/* Texto */}
-                  <p className="mb-3 text-gray-800">{post.texto}</p>
-                  
-                  {/* Stats */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-3 pb-3 border-b">
-                    <span>👍 {post.likes}</span>
-                    <span>{post.comentarios} comentários</span>
-                  </div>
-                  
-                  {/* Botões */}
-                  <div className="flex items-center justify-around">
-                    <button className="flex items-center gap-2 text-gray-600">
-                      <ThumbsUp className="w-5 h-5" />
-                      <span>Curtir</span>
-                    </button>
-                    <button className="flex items-center gap-2 text-gray-600">
-                      <MessageCircle className="w-5 h-5" />
-                      <span>Comentar</span>
-                    </button>
-                    <button className="flex items-center gap-2 text-gray-600">
-                      <Share2 className="w-5 h-5" />
-                      <span>Compartilhar</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <FacebookHeader
+          target={target}
+          onBack={handleBack}
+          onAvisos={handleAbrirAvisos}
+          onMensagens={handleAbrirMensagens}
+        />
+
+        {view === "feed" && (
+          <FeedView
+            target={target}
+            posts={posts}
+            compartilhado={compartilhado}
+            comentarioAberto={comentarioAberto}
+            meuComentario={meuComentario}
+            onMudarComentario={setMeuComentario}
+            onFocarComentario={handleFocarComentario}
+            onCurtir={handleCurtir}
+            onComentar={handleComentar}
+            onCompartilhar={handleCompartilhar}
+            onEnviarComentario={handleEnviarComentario}
+            onApagarComentario={handleApagarComentario}
+            onAbrirStory={handleAbrirStory}
+            onCriarStory={handleCriarStory}
+          />
+        )}
+
+        {view === "publicar" && (
+          <CreatePostView
+            target={target}
+            fotoEscolhida={fotoEscolhida}
+            legenda={legenda}
+            publicado={publicado}
+            onEscolherFoto={handleEscolherFoto}
+            onMudarLegenda={setLegenda}
+            onFocarLegenda={handleFocarLegenda}
+            onPublicar={handlePublicar}
+            onVerNoFeed={handleVerNoFeed}
+          />
+        )}
+
+        {view === "amigos" && (
+          <FriendsView target={target} amigos={amigos} onAdicionar={handleAdicionarAmigo} />
+        )}
+
+        {view === "mensagens" && (
+          <MessagesView
+            target={target}
+            conversas={conversas}
+            aberta={chatAberto}
+            onAbrir={handleAbrirConversa}
+            onFechar={() => setChatAberto(null)}
+            recado={recado}
+            onMudarRecado={setRecado}
+            onFocarRecado={handleFocarRecado}
+            onEnviar={handleEnviarRecado}
+          />
+        )}
+
+        {view === "perfil" && <ProfileView posts={posts} amigos={amigos} />}
+        {view === "avisos" && <AvisosFacebookView />}
+
+        <FacebookNav
+          target={target}
+          view={view}
+          onFeed={() => setView("feed")}
+          onPublicar={handleAbrirPublicar}
+          onAmigos={handleAbrirAmigos}
+          onMensagens={handleAbrirMensagens}
+          onPerfil={handleAbrirPerfil}
+        />
+
+        {shareOpen && (
+          <ShareSheetFacebook
+            target={target}
+            onEscolher={handleEscolherOndeCompartilhar}
+            onFechar={fecharCompartilhar}
+          />
+        )}
+
+        {storyAberta && (
+          <StoryView story={storyAberta} target={target} onFechar={handleFecharStory} />
+        )}
+
+        {/* Menu de capítulos: escolher por onde começar */}
+        {!chapter && (
+          <ChapterPicker
+            chapters={CHAPTERS}
+            onSelect={startChapter}
+            marca="Facebook"
+            Icone={Facebook}
+            corBarra="bg-[#1877F2]"
+            corIcone="text-[#1877F2]"
+            corIconeFundo="bg-blue-50"
+            fala="Por onde você quer começar? Toque na parte do Facebook que você quer aprender hoje. A primeira opção é o tutorial completo, do começo."
+          />
+        )}
       </div>
-    </div>
+    </PhoneFrame>
   );
 }

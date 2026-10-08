@@ -1,9 +1,10 @@
 ============================================
- EXPORTAR SOMENTE O YOUTUBE + DICAS (LEVE)
+ EXPORTAR YOUTUBE + DICAS + FACEBOOK (LEVE)
 ============================================
 
 Use o arquivo "converter-youtube-dicas.bat" quando quiser um
-aplicativo leve, com APENAS o treinamento do YouTube e o Dicas.
+aplicativo leve, com APENAS os treinamentos do YouTube, do
+Dicas e do Facebook.
 
 PASSO A PASSO
 
@@ -28,11 +29,13 @@ O QUE ELE FAZ
   Instagram, câmera, etc.) fora da pasta src, para que elas NÃO
   entrem no aplicativo exportado.
 
-- Deixa no aplicativo somente: Início, Tela de Bloqueio, Tela
-  Inicial, YouTube, Dicas e as telas de Configurações, Wi-Fi,
-  Bluetooth, Volume e Sobre o aparelho, que a Tela Inicial usa.
+- Deixa no aplicativo somente as telas que você pediu: a tela de
+  boas-vindas, a tela de bloqueio, a tela inicial, a tela dos
+  aplicativos, o YouTube, o Dicas e o Facebook, mais as telas de
+  Configurações, Wi-Fi, Bluetooth, Volume e Sobre o aparelho,
+  que a tela inicial usa.
 
-- Compila e gera a pasta "dist": cerca de 0,85 MB, contra
+- Compila e gera a pasta "dist": cerca de 0,9 MB, contra
   1,9 MB na versão completa.
 
 - No final devolve TODAS as telas para o projeto, exatamente
@@ -44,8 +47,9 @@ O QUE ELE FAZ
 
 IMPORTANTE
 
-- Os ícones continuam todos na Tela Inicial, e o app fala em voz
-  alta qual treinamento faz cada um. Só o YouTube e o Dicas abrem.
+- Os ícones continuam todos na tela inicial, e o app fala em voz
+  alta qual treinamento faz cada um. Só o YouTube, o Dicas e o
+  Facebook abrem.
 
 - Nada é apagado do projeto em momento algum.
 
