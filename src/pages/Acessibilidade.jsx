@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
-import { ArrowLeft, Type, Eye, Sparkles, Volume2, Hand, Ear, ChevronRight } from "lucide-react";
+import { ArrowLeft, Type, Eye, Sparkles, Volume2, Hand, MoveUp, Ear, ChevronRight } from "lucide-react";
 
 export default function Acessibilidade() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Acessibilidade() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Acessibilidade. Esta é uma tela muito importante! Aqui você ajusta o WhatsApp para ficar mais confortável de usar. Vou explicar tudo com muito carinho. Tamanho do texto: você pode aumentar as letras para enxergar melhor. Se estiver pequeno, é só aumentar! Contraste elevado: deixa as cores mais fortes, ajuda muito a enxergar melhor. Reduzir animações: se as coisas mexem rápido demais na tela e te incomodam, aqui você pode deixar tudo mais calmo. Volume e vibração: para ajustar o som e a vibração do jeito que você gosta. Interação por toque: se você tem dificuldade para tocar na tela, aqui tem ajudas especiais. Leitura de tela: ativa o leitor de tela do celular, que fala tudo que está na tela para você. Role com calma para ver todas as opções. Clique na seta à sua esquerda acima para voltar."
+        "Acessibilidade. Esta é uma tela muito importante! Aqui você ajusta o celular para ficar mais confortável de usar. Vou explicar tudo com muito carinho. Tamanho do texto: você pode aumentar as letras para enxergar melhor. Se estiver pequeno, é só aumentar! Contraste elevado: deixa as cores mais fortes, ajuda muito a enxergar melhor. Reduzir animações: se as coisas mexem rápido demais na tela e te incomodam, aqui você pode deixar tudo mais calmo. Volume e vibração: para ajustar o som e a vibração do jeito que você gosta. Interação por toque: se você tem dificuldade para tocar na tela, aqui tem ajudas especiais. Navegação por gestos: para quem prefere deslizar o dedo em vez de apertar botões. Leitura de tela: ativa o leitor de tela do celular, que fala tudo que está na tela para você. Role com calma para ver todas as opções. Clique na seta à sua esquerda acima para voltar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.70;
@@ -29,7 +29,9 @@ export default function Acessibilidade() {
         <StatusBar variant="light" />
 
         <div className="bg-white px-4 py-3 border-b border-gray-200 flex items-center">
-          <button onClick={() => navigate(createPageUrl("ConfiguracoesWhatsApp"))}>
+          {/* Volta para a tela de onde a pessoa veio: as Configurações do
+              aparelho ou as Configurações do WhatsApp */}
+          <button onClick={() => navigate(-1)}>
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
           <h1 className="text-xl font-semibold text-gray-900 ml-4">Acessibilidade</h1>
@@ -40,7 +42,7 @@ export default function Acessibilidade() {
           <div className="bg-blue-50 mx-4 mt-4 mb-4 rounded-lg p-4">
             <h3 className="font-semibold text-gray-900 mb-2">💙 Feito para você!</h3>
             <p className="text-sm text-gray-700">
-              Estas configurações ajudam a deixar o WhatsApp mais fácil e confortável de usar. Não tenha pressa, explore cada opção com calma.
+              Estas configurações ajudam a deixar o celular mais fácil e confortável de usar. Não tenha pressa, explore cada opção com calma.
             </p>
           </div>
 
@@ -125,6 +127,19 @@ export default function Acessibilidade() {
           {/* Interação */}
           <div className="px-4 py-3 border-b-8 border-gray-100">
             <h3 className="text-sm text-gray-500 mb-3">👆 Interação e toque</h3>
+
+            <button onClick={() => navigate(createPageUrl("NavegacaoGestos"))} className="w-full flex justify-between items-center mb-4">
+              <div className="flex items-center gap-3">
+                <MoveUp className="w-6 h-6 text-gray-600" />
+                <div>
+                  <h4 className="text-gray-900 text-left font-medium">Navegação por gestos</h4>
+                  <p className="text-sm text-gray-500 text-left">
+                    Deslizar o dedo em vez de apertar botões
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </button>
 
             <button onClick={() => navigate(createPageUrl("TempoToque"))} className="w-full flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">

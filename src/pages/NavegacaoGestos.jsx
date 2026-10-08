@@ -20,7 +20,7 @@ export default function NavegacaoGestos() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Navegação por gestos. Aqui você aprende a usar o celular deslizando o dedo, ao invés de apertar botões. É mais moderno e rápido."
+        "Navegação por gestos. Aqui você aprende a usar o celular deslizando o dedo, ao invés de apertar botões. É mais moderno e rápido. Toque no botão da tela para ligar ou desligar esta ajuda. Clique na seta à sua esquerda acima para voltar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.80;
@@ -36,7 +36,7 @@ export default function NavegacaoGestos() {
 
         {/* Header */}
         <div className="bg-[#1976D2] text-white px-4 py-3 flex items-center gap-4">
-          <button onClick={() => navigate(createPageUrl("Home"))}>
+          <button onClick={() => navigate(createPageUrl("Acessibilidade"))}>
             <ArrowLeft className="w-6 h-6" />
           </button>
           <h2 className="text-lg font-medium">Navegação por Gestos</h2>
