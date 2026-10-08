@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { motion } from 'framer-motion';
-import { Heart, Facebook, Youtube } from 'lucide-react';
+import { Heart, Facebook } from 'lucide-react';
 import logoForja from '@/assets/imagens/logo-forja.png';
 
 export default function Inicio() {
@@ -14,7 +14,7 @@ export default function Inicio() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. O treinamento de hoje é o Facebook, e de bônus você leva também o YouTube e o Dicas. Antes de começar, uma dica rápida sobre o Facebook: para entrar e usar o Facebook você precisa de uma conta, feita com o seu nome, um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos, passo a passo. Toque na tela para começar."
+        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. O treinamento de hoje é o Facebook. Antes de começar, uma dica rápida: para entrar e usar o Facebook você precisa de uma conta, feita com o seu nome, um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos, passo a passo. Toque na tela para começar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -88,7 +88,7 @@ export default function Inicio() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-blue-300 px-4 py-3 max-w-sm text-center mb-4"
+          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-blue-300 px-4 py-3 max-w-sm text-center mb-5"
         >
           <div className="flex items-center justify-center gap-2 mb-1.5">
             <Facebook className="w-4 h-4 text-[#1877F2]" />
@@ -98,24 +98,6 @@ export default function Inicio() {
             Para entrar e usar o Facebook você precisa de uma <strong>conta</strong>: seu nome,
             um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos.
           </p>
-        </motion.div>
-
-        {/* Bônus que vêm junto com o Facebook */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.85 }}
-          className="flex items-center justify-center gap-2 mb-5 flex-wrap"
-        >
-          <span className="bg-white/80 border-2 border-blue-300 rounded-full px-3 py-1 text-xs font-semibold text-blue-800">
-            Treinamento: Facebook
-          </span>
-          <span className="bg-white/80 border-2 border-red-200 rounded-full px-3 py-1 text-xs font-semibold text-red-700 flex items-center gap-1">
-            <Youtube className="w-3.5 h-3.5" /> Bônus: YouTube
-          </span>
-          <span className="bg-white/80 border-2 border-yellow-300 rounded-full px-3 py-1 text-xs font-semibold text-yellow-700">
-            Bônus: Dicas
-          </span>
         </motion.div>
 
         {/* Call to Action */}
@@ -148,7 +130,7 @@ export default function Inicio() {
           className="mt-6 text-center"
         >
           <p className="text-gray-600 text-xs">
-            Aprenda o Facebook no seu celular<br />com YouTube e Dicas de bônus
+            Aprenda o Facebook no seu celular<br />de forma fácil e segura
           </p>
         </motion.div>
       </motion.div>

@@ -28,7 +28,8 @@ export default function ProfileView({ posts, amigos }) {
         <p className="text-sm font-bold text-gray-900 mb-1">Suas publicações</p>
         {minhas.length === 0 ? (
           <p className="text-sm text-gray-600 leading-snug">
-            Você ainda não publicou nada. Toque no sinal de mais, embaixo, para publicar uma foto.
+            Você ainda não publicou nada. Na aba Início, toque na caixinha No que você está
+            pensando para publicar uma foto.
           </p>
         ) : (
           minhas.map((post) => (

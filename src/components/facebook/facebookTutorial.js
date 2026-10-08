@@ -1,4 +1,4 @@
-import { Home, ThumbsUp, Share2, Sparkles, Users, Bell } from "lucide-react";
+import { Home, ThumbsUp, Share2, Sparkles, Newspaper, Users, Bell } from "lucide-react";
 
 // Partes do tutorial do Facebook: a pessoa escolhe por onde quer começar
 export const CHAPTERS = [
@@ -27,11 +27,19 @@ export const CHAPTERS = [
     view: "feed",
   },
   {
+    id: "feeds",
+    label: "Aba Feeds (só o mais recente)",
+    description: "Ver as publicações na ordem, e usar os filtros",
+    icon: Newspaper,
+    stepIndex: 15,
+    view: "feed",
+  },
+  {
     id: "amigos",
     label: "Amigos e mensagens",
     description: "Convidar amigos e conversar",
     icon: Users,
-    stepIndex: 15,
+    stepIndex: 17,
     view: "feed",
   },
   {
@@ -39,7 +47,7 @@ export const CHAPTERS = [
     label: "Seu perfil e avisos",
     description: "Sua página, sua foto e a campainha de avisos",
     icon: Bell,
-    stepIndex: 21,
+    stepIndex: 24,
     view: "feed",
   },
 ];
@@ -78,8 +86,8 @@ export const STEPS = [
   },
   {
     id: "publicar_abrir",
-    target: "publicar_nav",
-    text: "Muito bem, você compartilhou! Agora você vai publicar uma foto sua. Embaixo, na barra branca, toque no sinal de MAIS, onde está piscando, para criar uma publicação.",
+    target: "publicar_caixa",
+    text: "Muito bem, você compartilhou! Agora você vai publicar uma foto sua. Na aba Início, lá em cima, tem uma caixinha branca escrita No que você está pensando. Toque nela, onde está piscando, para criar uma publicação.",
   },
   {
     id: "escolher_foto",
@@ -122,9 +130,24 @@ export const STEPS = [
     text: "Sua história também fica no ar por 24 horas e depois desaparece sozinha. Toque no X, onde está piscando, para fechar.",
   },
   {
-    id: "abrir_amigos",
-    target: "amigos_nav",
-    text: "Agora vamos ver os seus amigos. Embaixo, na barra branca, toque no desenho de duas pessoas, onde está piscando.",
+    id: "abrir_feeds",
+    target: "aba_feeds",
+    text: "Agora você vai conhecer a aba FEEDS. No alto da tela tem uma fileira de desenhos: a casinha, o vídeo, o jornalzinho, as pessoas, a campainha e as três risquinhas. Toque no JORNALZINHO, onde está piscando, para ver só as publicações mais recentes.",
+  },
+  {
+    id: "feeds_filtro",
+    target: "filtro_amigos",
+    text: "Esta é a aba Feeds: aqui as publicações aparecem na ordem, da mais nova para a mais antiga, sem as sugestões do Facebook. Em cima tem os filtros: Todos, Favoritos, Amigos, Grupos e Páginas. Toque em AMIGOS, onde está piscando, para ver só o que os seus amigos publicaram.",
+  },
+  {
+    id: "abrir_menu",
+    target: "aba_menu",
+    text: "Muito bem! Agora toque nas TRÊS RISQUINHAS, no canto direito de cima, onde está piscando, para abrir o menu do Facebook. É ali que ficam o seu perfil, os seus amigos e as suas conversas.",
+  },
+  {
+    id: "abrir_amigos_menu",
+    target: "menu_amigos",
+    text: "Toque em AMIGOS, onde está piscando, para ver a sua lista de amigos.",
   },
   {
     id: "adicionar_amigo",
@@ -133,8 +156,8 @@ export const STEPS = [
   },
   {
     id: "abrir_mensagens",
-    target: "mensagens_nav",
-    text: "Agora toque no balãozinho de conversa, embaixo, onde está piscando, para ver as suas mensagens.",
+    target: "mensagens_icone",
+    text: "Agora toque no BALÃOZINHO de conversa, lá em cima no canto direito, onde está piscando, para ver as suas mensagens.",
   },
   {
     id: "abrir_conversa",
@@ -152,18 +175,23 @@ export const STEPS = [
     text: "Toque na seta azul, onde está piscando, para enviar a sua mensagem. Ela chega na hora para a Maria.",
   },
   {
+    id: "abrir_menu_perfil",
+    target: "aba_menu",
+    text: "Está chegando ao fim. Toque outra vez nas TRÊS RISQUINHAS, lá em cima, onde está piscando, para abrir o menu.",
+  },
+  {
     id: "abrir_perfil",
-    target: "perfil_nav",
-    text: "Está chegando ao fim. Toque no desenho da pessoa, no canto direito de baixo, onde está piscando, para ver a sua página no Facebook.",
+    target: "menu_perfil",
+    text: "Toque em PERFIL, onde está piscando, para ver a sua página no Facebook.",
   },
   {
     id: "abrir_avisos",
-    target: "avisos",
-    text: "Nesta página ficam a sua foto, os seus amigos e as suas publicações. Toque na campainha, lá em cima, onde está piscando, para ver os seus avisos.",
+    target: "aba_avisos",
+    text: "Nesta página ficam a sua foto, os seus amigos e as suas publicações. Toque na CAMPAINHA, lá em cima, onde está piscando, para ver os seus avisos.",
   },
   {
     id: "terminar",
     target: "back",
-    text: "Estes são os seus avisos: as curtidas, os comentários e quem começou a seguir você. Você aprendeu o principal do Facebook: curtir, comentar, compartilhar, publicar foto, ver histórias, amigos, mensagens e o seu perfil. Toque na seta de voltar, onde está piscando, para terminar.",
+    text: "Estes são os seus avisos: as curtidas, os comentários e quem começou a seguir você. Você aprendeu o principal do Facebook: curtir, comentar, compartilhar, publicar foto, ver histórias, a aba Feeds, amigos, mensagens e o seu perfil. Toque na seta de voltar, onde está piscando, para terminar.",
   },
 ];

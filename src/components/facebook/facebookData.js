@@ -28,6 +28,8 @@ export const STORIES = [
   { id: 'ana', nome: 'Ana Costa', foto: perfilAna, imagem: foto5, legenda: 'Chegando da viagem! 🏖️' },
 ];
 
+// Publicações. O "filtro" diz a que grupo cada uma pertence na aba Feeds;
+// "favorito" marca quem a pessoa escolheu ver primeiro.
 export const PUBLICACOES = [
   {
     id: 'p1',
@@ -39,6 +41,8 @@ export const PUBLICACOES = [
     curtidas: 12,
     curtido: false,
     comentarios: [{ autor: 'João Santos', texto: 'Que delícia, Maria!' }],
+    filtro: 'amigos',
+    favorito: true,
   },
   {
     id: 'p2',
@@ -50,6 +54,7 @@ export const PUBLICACOES = [
     curtidas: 8,
     curtido: false,
     comentarios: [{ autor: 'Ana Costa', texto: 'Eu conheço um ótimo, João!' }],
+    filtro: 'amigos',
   },
   {
     id: 'p3',
@@ -61,6 +66,7 @@ export const PUBLICACOES = [
     curtidas: 34,
     curtido: false,
     comentarios: [],
+    filtro: 'amigos',
   },
   {
     id: 'p4',
@@ -72,7 +78,54 @@ export const PUBLICACOES = [
     curtidas: 21,
     curtido: false,
     comentarios: [],
+    filtro: 'paginas',
+    favorito: true,
   },
+  {
+    id: 'p5',
+    autor: 'Clube de Leitura',
+    foto: null,
+    quando: '2 dias',
+    texto: 'Neste mês vamos ler "O Pequeno Príncipe". Quem participa?',
+    imagem: foto1,
+    curtidas: 6,
+    curtido: false,
+    comentarios: [],
+    filtro: 'grupos',
+  },
+  {
+    id: 'p6',
+    autor: 'Grupo da Família',
+    foto: null,
+    quando: '3 dias',
+    texto: 'Almoço de domingo na casa da vovó! Levem a sobremesa. 🍰',
+    imagem: foto4,
+    curtidas: 15,
+    curtido: false,
+    comentarios: [],
+    filtro: 'grupos',
+  },
+];
+
+// Mostra só o que a pessoa escolheu no filtro da aba Feeds
+export function postsDoFiltro(posts, filtro) {
+  if (filtro === 'favoritos') return posts.filter((p) => p.favorito);
+  if (filtro === 'todos') return posts;
+  return posts.filter((p) => p.filtro === filtro);
+}
+
+// A aba Vídeo
+export const VIDEOS = [
+  { id: 'v1', titulo: 'Receita de bolo de cenoura, passo a passo', imagem: foto3 },
+  { id: 'v2', titulo: 'Caminhada leve no parque: 10 minutos', imagem: foto2 },
+  { id: 'v3', titulo: 'Viagem bonita para você sonhar acordado', imagem: foto5 },
+];
+
+// A aba Grupos
+export const GRUPOS = [
+  { id: 'g1', nome: 'Grupo da Família', membros: '8 membros', imagem: foto4 },
+  { id: 'g2', nome: 'Clube de Leitura', membros: '24 membros', imagem: foto1 },
+  { id: 'g3', nome: 'Amigos da Igreja', membros: '56 membros', imagem: foto6 },
 ];
 
 export const AMIGOS = [

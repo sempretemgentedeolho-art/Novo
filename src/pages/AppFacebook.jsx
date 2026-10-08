@@ -7,8 +7,12 @@ import { StatusBar } from "@/components/StatusBar";
 import AvisoAcessibilidade from "@/components/AvisoAcessibilidade";
 import ChapterPicker from "@/components/youtube/ChapterPicker";
 import FacebookHeader from "@/components/facebook/FacebookHeader";
-import FacebookNav from "@/components/facebook/FacebookNav";
+import FacebookTabs from "@/components/facebook/FacebookTabs";
 import FeedView from "@/components/facebook/FeedView";
+import FeedsView from "@/components/facebook/FeedsView";
+import VideoView from "@/components/facebook/VideoView";
+import GruposView from "@/components/facebook/GruposView";
+import MenuView from "@/components/facebook/MenuView";
 import CreatePostView from "@/components/facebook/CreatePostView";
 import FriendsView from "@/components/facebook/FriendsView";
 import MessagesView from "@/components/facebook/MessagesView";
@@ -32,6 +36,7 @@ export default function AppFacebook() {
   const [runKey, setRunKey] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const [view, setView] = useState("feed");
+  const [filtro, setFiltro] = useState("todos");
   const [posts, setPosts] = useState(PUBLICACOES);
   const [comentarioAberto, setComentarioAberto] = useState(null);
   const [meuComentario, setMeuComentario] = useState("");
@@ -75,6 +80,7 @@ export default function AppFacebook() {
     setChapter(cap);
     setStepIndex(cap.stepIndex);
     setView(cap.view || "feed");
+    setFiltro("todos");
     setPosts(PUBLICACOES);
     setComentarioAberto(null);
     setMeuComentario("");
@@ -152,10 +158,10 @@ export default function AppFacebook() {
     setCompartilhado(false);
   };
 
-  // Publicar uma foto com legenda
+  // Publicar uma foto com legenda (pela caixinha da aba Início)
   const handleAbrirPublicar = () => {
     setView("publicar");
-    if (target === "publicar_nav") goNext();
+    if (target === "publicar_caixa") goNext();
   };
 
   const handleEscolherFoto = (foto) => {
@@ -181,6 +187,8 @@ export default function AppFacebook() {
         curtidas: 0,
         curtido: false,
         comentarios: [],
+        filtro: "amigos",
+        favorito: true,
       },
       ...anteriores,
     ]);
@@ -216,10 +224,24 @@ export default function AppFacebook() {
     if (target === "story_fechar") goNext();
   };
 
+  // Trocar de aba pelo alto da tela
+  const abrirAba = (aba) => {
+    setView(aba);
+    if (aba === "feeds" && target === "aba_feeds") goNext();
+    if (aba === "avisos" && target === "aba_avisos") goNext();
+    if (aba === "menu" && target === "aba_menu") goNext();
+  };
+
+  // Filtros da aba Feeds
+  const handleFiltro = (id) => {
+    setFiltro(id);
+    if (target === `filtro_${id}`) goNext();
+  };
+
   // Amigos e mensagens
   const handleAbrirAmigos = () => {
     setView("amigos");
-    if (target === "amigos_nav") goNext();
+    if (target === "menu_amigos") goNext();
   };
 
   const handleAdicionarAmigo = (id) => {
@@ -231,7 +253,7 @@ export default function AppFacebook() {
 
   const handleAbrirMensagens = () => {
     setView("mensagens");
-    if (target === "mensagens_nav") goNext();
+    if (target === "mensagens_icone" || target === "menu_mensagens") goNext();
   };
 
   const handleAbrirConversa = (id) => {
@@ -258,12 +280,13 @@ export default function AppFacebook() {
 
   const handleAbrirPerfil = () => {
     setView("perfil");
-    if (target === "perfil_nav") goNext();
+    if (target === "menu_perfil") goNext();
   };
 
-  const handleAbrirAvisos = () => {
-    setView("avisos");
-    if (target === "avisos") goNext();
+  // Ver as publicações do grupo: abre a aba Feeds já no filtro Grupos
+  const handleVerGrupos = () => {
+    setFiltro("grupos");
+    setView("feeds");
   };
 
   // Seta de voltar: fecha o que estiver aberto e, no fim, volta para a tela inicial
@@ -293,12 +316,9 @@ export default function AppFacebook() {
         <StatusBar variant="light" />
         <AvisoAcessibilidade />
 
-        <FacebookHeader
-          target={target}
-          onBack={handleBack}
-          onAvisos={handleAbrirAvisos}
-          onMensagens={handleAbrirMensagens}
-        />
+        <FacebookHeader target={target} onBack={handleBack} onMensagens={handleAbrirMensagens} />
+
+        <FacebookTabs target={target} view={view} onAbrir={abrirAba} />
 
         {view === "feed" && (
           <FeedView
@@ -316,6 +336,38 @@ export default function AppFacebook() {
             onApagarComentario={handleApagarComentario}
             onAbrirStory={handleAbrirStory}
             onCriarStory={handleCriarStory}
+            onAbrirPublicar={handleAbrirPublicar}
+          />
+        )}
+
+        {view === "feeds" && (
+          <FeedsView
+            target={target}
+            posts={posts}
+            filtro={filtro}
+            onMudarFiltro={handleFiltro}
+            compartilhado={compartilhado}
+            comentarioAberto={comentarioAberto}
+            meuComentario={meuComentario}
+            onMudarComentario={setMeuComentario}
+            onFocarComentario={handleFocarComentario}
+            onCurtir={handleCurtir}
+            onComentar={handleComentar}
+            onCompartilhar={handleCompartilhar}
+            onEnviarComentario={handleEnviarComentario}
+            onApagarComentario={handleApagarComentario}
+          />
+        )}
+
+        {view === "video" && <VideoView />}
+        {view === "grupos" && <GruposView onAbrirPublicacoes={handleVerGrupos} />}
+
+        {view === "menu" && (
+          <MenuView
+            target={target}
+            onPerfil={handleAbrirPerfil}
+            onAmigos={handleAbrirAmigos}
+            onMensagens={handleAbrirMensagens}
           />
         )}
 
@@ -353,16 +405,6 @@ export default function AppFacebook() {
 
         {view === "perfil" && <ProfileView posts={posts} amigos={amigos} />}
         {view === "avisos" && <AvisosFacebookView />}
-
-        <FacebookNav
-          target={target}
-          view={view}
-          onFeed={() => setView("feed")}
-          onPublicar={handleAbrirPublicar}
-          onAmigos={handleAbrirAmigos}
-          onMensagens={handleAbrirMensagens}
-          onPerfil={handleAbrirPerfil}
-        />
 
         {shareOpen && (
           <ShareSheetFacebook
