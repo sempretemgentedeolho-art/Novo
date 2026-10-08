@@ -53,15 +53,8 @@ export default function Pulse({
           className={`absolute -inset-2 ${ring} ${corDestaque} z-0 pointer-events-none`}
         />
       )}
-      <motion.div
-        animate={active && !reduzirAnimacoes ? { scale: [1, 1.07, 1] } : {}}
-        transition={
-          active && !reduzirAnimacoes ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}
-        }
-        className="relative z-10 w-full"
-      >
-        {children}
-      </motion.div>
+      {/* O botão fica parado (só o anel pisca), para o toque sempre acertar */}
+      <div className="relative z-10 w-full">{children}</div>
     </div>
   );
 }
