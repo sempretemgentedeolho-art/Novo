@@ -204,18 +204,19 @@ export default function AppYouTube() {
 
   // Seta de cima: sai do vídeo durante o tutorial ou volta para a tela inicial
   const handleBack = () => {
-    if (VOLTAR_VIEW[target]) {
-      setView(VOLTAR_VIEW[target]);
-      goNext();
-      return;
-    }
-    if (target === "leave_player" || target === "close_notifications") {
-      setView("results");
-      goNext();
-      return;
-    }
-    if (target === "back_from_history") {
-      setView("you");
+    const destino =
+      VOLTAR_VIEW[target] ||
+      (target === "leave_player" || target === "close_notifications"
+        ? "results"
+        : target === "back_from_history"
+          ? "you"
+          : null);
+
+    // A seta só volta para dentro do YouTube se o passo ainda mandar ir para outra tela.
+    // Se a pessoa já está nessa tela (parte terminada), a seta sai para a tela inicial,
+    // senão ela ficaria presa sem fazer nada.
+    if (destino && destino !== view) {
+      setView(destino);
       goNext();
       return;
     }
