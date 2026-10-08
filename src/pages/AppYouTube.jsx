@@ -123,7 +123,8 @@ export default function AppYouTube() {
   const [playlistAberta, setPlaylistAberta] = useState("receitas");
 
   const { talkback, gestos } = useAcessibilidade();
-  const target = STEPS[stepIndex].target;
+  // Enquanto o menu de capítulos está aberto, nenhuma pista pisca por trás dele
+  const target = chapter ? STEPS[stepIndex].target : null;
   const shownVideos = chip === "Todos" ? VIDEOS : VIDEOS.filter((v) => v.tag === chip);
 
   // Cada playlist tem o seu nome e os seus vídeos

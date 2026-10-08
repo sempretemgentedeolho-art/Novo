@@ -19,8 +19,17 @@ export default function Pulse({
   // para ninguém precisar adivinhar que é preciso rolar a lista.
   useEffect(() => {
     if (!active || !ref.current) return;
-    ref.current.scrollIntoView({
-      block: "center",
+    // Rola só a lista que contém a pista; nunca mexe na moldura da tela
+    let box = ref.current.parentElement;
+    while (box && !/(auto|scroll)/.test(getComputedStyle(box).overflowY)) {
+      box = box.parentElement;
+    }
+    if (!box) return;
+    const el = ref.current.getBoundingClientRect();
+    const area = box.getBoundingClientRect();
+    if (el.top >= area.top && el.bottom <= area.bottom) return;
+    box.scrollTo({
+      top: box.scrollTop + el.top - area.top - area.height / 2 + el.height / 2,
       behavior: reduzirAnimacoes ? "auto" : "smooth",
     });
   }, [active, reduzirAnimacoes]);
