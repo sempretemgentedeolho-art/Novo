@@ -178,7 +178,15 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
     }
 
     if (painel === "narracao") {
-      return <NarracaoPanel onConcluir={fecharPainel} />;
+      return (
+        <NarracaoPanel
+          concluirAtivo={target === "narracao_concluir"}
+          onConcluir={() => {
+            fecharPainel();
+            if (target === "narracao_concluir") onTap("narracao_concluir");
+          }}
+        />
+      );
     }
 
     return null;
@@ -285,7 +293,15 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
             </button>
           </Pulse>
 
-          <Pulse ring="rounded-xl" className="flex-1" onClick={() => abrir("narracao")}>
+          <Pulse
+            ring="rounded-xl"
+            className="flex-1"
+            active={target === "narracao"}
+            onClick={() => {
+              abrir("narracao");
+              if (target === "narracao") onTap("narracao");
+            }}
+          >
             <button
               type="button"
               className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white/15"

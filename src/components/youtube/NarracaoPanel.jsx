@@ -3,7 +3,7 @@ import { Mic, Square } from "lucide-react";
 import ToolPanel from "@/components/youtube/ToolPanel";
 
 // Painel de narração: gravar a voz por cima do vídeo
-export default function NarracaoPanel({ onConcluir }) {
+export default function NarracaoPanel({ concluirAtivo, onConcluir }) {
   const [gravando, setGravando] = useState(false);
   const [tempo, setTempo] = useState(0);
 
@@ -20,6 +20,7 @@ export default function NarracaoPanel({ onConcluir }) {
       titulo="Narração"
       dica="Grave a sua voz para explicar o vídeo"
       rodape="Fale pertinho do celular, com a sua voz normal."
+      concluirAtivo={concluirAtivo}
       onConcluir={onConcluir}
     >
       <div className="flex flex-col items-center py-2">

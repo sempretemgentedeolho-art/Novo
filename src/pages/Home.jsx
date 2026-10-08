@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, Sun, Volume2, Wifi, Bluetooth, Settings as SettingsIcon, MessageCircle, Mail, Calendar, Heart, ShoppingBag, Music, Bell, Reply, ThumbsUp, Check, Phone as PhoneIcon, Calendar as CalendarIcon, Activity, Flashlight, Plane, Signal } from 'lucide-react';
+import { ChevronDown, X, Sun, Volume2, Wifi, Bluetooth, Settings as SettingsIcon, MessageCircle, Mail, Calendar, Heart, ShoppingBag, Music, Bell, Reply, ThumbsUp, Check, Phone as PhoneIcon, Calendar as CalendarIcon, Activity, Flashlight, Plane, Signal, MapPin, HelpCircle } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import {
   Phone, MessageSquare, Camera, Image, Settings,
@@ -161,6 +161,7 @@ export default function Home() {
   const [flashlightEnabled, setFlashlightEnabled] = useState(false);
   const [airplaneModeEnabled, setAirplaneModeEnabled] = useState(false);
   const [mobileDataEnabled, setMobileDataEnabled] = useState(true);
+  const [locationEnabled, setLocationEnabled] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -346,6 +347,17 @@ export default function Home() {
           utter6.lang = "pt-BR";
           utter6.rate = 0.9;
           synth.speak(utter6);
+          break;
+
+        case 'location':
+          setLocationEnabled(!locationEnabled);
+          message = !locationEnabled
+            ? "Localização ligada. Agora o celular sabe onde você está, e os aplicativos de mapa e de transporte conseguem te orientar pelo caminho."
+            : "Localização desligada. O celular para de saber onde você está, e a bateria dura um pouco mais.";
+          const utter7 = new SpeechSynthesisUtterance(message);
+          utter7.lang = "pt-BR";
+          utter7.rate = 0.9;
+          synth.speak(utter7);
           break;
       }
     }
@@ -725,7 +737,34 @@ export default function Home() {
                       <Signal className={`w-6 h-6 ${mobileDataEnabled ? 'text-white' : 'text-slate-300'}`} />
                       <span className={`text-xs font-medium ${mobileDataEnabled ? 'text-white' : 'text-slate-300'}`}>Dados</span>
                     </button>
+
+                    <button
+                      onClick={() => handleQuickToggle('location')}
+                      className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-all ${
+                        locationEnabled ? 'bg-blue-500' : 'bg-white/10'
+                      }`}
+                    >
+                      <MapPin className={`w-6 h-6 ${locationEnabled ? 'text-white' : 'text-slate-300'}`} />
+                      <span className={`text-xs font-medium ${locationEnabled ? 'text-white' : 'text-slate-300'}`}>Localização</span>
+                    </button>
                   </div>
+                </div>
+
+                {/* Explicação de cada botão */}
+                <div className="px-6 pb-4">
+                  <button
+                    onClick={() => {
+                      setQuickPanelOpen(false);
+                      navigate(createPageUrl('ConfiguracoesRapidas'));
+                    }}
+                    className="w-full bg-white/10 hover:bg-white/15 rounded-2xl p-4 flex items-center justify-between transition-all"
+                  >
+                    <div className="flex items-center gap-3">
+                      <HelpCircle className="w-5 h-5" />
+                      <span className="font-medium">O que é cada botão?</span>
+                    </div>
+                    <span className="text-slate-400">›</span>
+                  </button>
                 </div>
 
                 {/* Settings Button */}

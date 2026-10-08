@@ -10,6 +10,7 @@ import {
 import { Card } from '@/components/ui/card';
 import { motion, AnimatePresence } from 'framer-motion';
 import AvisoAcessibilidade from '@/components/AvisoAcessibilidade';
+import PassosTutorial from '@/components/dicas/PassosTutorial';
 
 const tutorials = {
   primeiros_passos: [
@@ -274,18 +275,10 @@ export default function AppDicas() {
     setSelectedCategory(category.key);
   };
 
+  // A leitura em voz alta e os destaques de cada passo ficam no PassosTutorial
   const handleTutorialClick = (tutorial) => {
+    window.speechSynthesis?.cancel();
     setSelectedTutorial(tutorial);
-    
-    // Lê o tutorial em voz alta
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      const utter = new SpeechSynthesisUtterance(`${tutorial.title}. ${tutorial.content}`);
-      utter.lang = "pt-BR";
-      utter.rate = 0.9;
-      synth.speak(utter);
-    }
   };
 
   const handleCloseTutorial = () => {
@@ -333,27 +326,15 @@ export default function AppDicas() {
           {selectedTutorial ? (
             // Tela do Tutorial
             <>
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl mb-4">
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl">
                 <p className="text-sm text-blue-900">
-                  🔊 <strong>Ouça:</strong> Este tutorial está sendo lido em voz alta para você!
+                  🔊 <strong>Ouça e acompanhe:</strong> cada passo é lido em voz alta e fica
+                  destacado na tela. Use os botões <strong>Antes</strong> e{" "}
+                  <strong>Próximo</strong> para caminhar no tutorial.
                 </p>
               </div>
 
-              <Card className="p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{selectedTutorial.title}</h2>
-                <div className="prose prose-sm">
-                  <p className="text-gray-700 whitespace-pre-line leading-relaxed text-base">
-                    {selectedTutorial.content}
-                  </p>
-                </div>
-              </Card>
-
-              <button
-                onClick={handleCloseTutorial}
-                className="w-full py-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl font-bold text-lg shadow-lg"
-              >
-                Fechar Tutorial
-              </button>
+              <PassosTutorial tutorial={selectedTutorial} onFechar={handleCloseTutorial} />
             </>
           ) : !selectedCategory ? (
             // Categorias

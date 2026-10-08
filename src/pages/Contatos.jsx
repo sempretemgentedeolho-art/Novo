@@ -59,6 +59,8 @@ export default function Contatos() {
   const [editingContact, setEditingContact] = useState(null);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [contatoParaExcluir, setContatoParaExcluir] = useState(null);
+  const [avisoContato, setAvisoContato] = useState("");
   const [storageLocation, setStorageLocation] = useState("device");
   const [stepIndex, setStepIndex] = useState(0);
   const [formData, setFormData] = useState({
@@ -132,10 +134,20 @@ export default function Contatos() {
     setEditingContact(null);
   };
 
-  const handleDeleteContact = (contactId) => {
-    if (confirm("Deseja realmente excluir este contato?")) {
-      setContacts(contacts.filter(c => c.id !== contactId));
-    }
+  // Mostra um recado na tela em vez de usar janelas do navegador
+  const mostrarAvisoContato = (texto) => {
+    setAvisoContato(texto);
+    setTimeout(() => setAvisoContato(""), 2500);
+  };
+
+  const handleDeleteContact = (contact) => {
+    setContatoParaExcluir(contact);
+  };
+
+  const confirmarExclusao = () => {
+    setContacts(contacts.filter(c => c.id !== contatoParaExcluir.id));
+    mostrarAvisoContato(`${contatoParaExcluir.name} foi excluído da sua lista.`);
+    setContatoParaExcluir(null);
   };
 
   const handleToggleFavorite = (contactId) => {
@@ -163,7 +175,7 @@ export default function Contatos() {
 
   const handleSaveNewContact = () => {
     if (!formData.name || !formData.phone) {
-      alert("Por favor, preencha pelo menos o nome e o telefone.");
+      mostrarAvisoContato("Por favor, preencha pelo menos o nome e o telefone.");
       return;
     }
 
@@ -233,6 +245,12 @@ export default function Contatos() {
 
         {/* Lista de Contatos */}
         <div className="flex-1 overflow-y-auto">
+          {avisoContato && (
+            <div className="sticky top-0 z-20 mx-4 my-2 rounded-xl bg-green-600 text-white text-sm font-semibold px-4 py-3 text-center">
+              {avisoContato}
+            </div>
+          )}
+
           {filteredContacts.some(c => c.favorite) && (
             <div className="px-6 py-2 bg-gray-50 border-b border-gray-200">
               <h3 className="text-sm font-semibold text-gray-600">⭐ FAVORITOS</h3>
@@ -256,13 +274,13 @@ export default function Contatos() {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => alert(`Ligando para ${contact.name}...`)}
+                  onClick={() => mostrarAvisoContato(`Ligando para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-green-100 hover:bg-green-200 flex items-center justify-center"
                 >
                   <Phone className="w-5 h-5 text-green-600" />
                 </button>
                 <button
-                  onClick={() => alert(`Enviando mensagem para ${contact.name}...`)}
+                  onClick={() => mostrarAvisoContato(`Enviando mensagem para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center"
                 >
                   <MessageSquare className="w-5 h-5 text-blue-600" />
@@ -283,7 +301,7 @@ export default function Contatos() {
                       Remover dos favoritos
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      onClick={() => handleDeleteContact(contact.id)}
+                      onClick={() => handleDeleteContact(contact)}
                       className="text-red-600"
                     >
                       <Trash2 className="w-4 h-4 mr-2" />
@@ -315,13 +333,13 @@ export default function Contatos() {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => alert(`Ligando para ${contact.name}...`)}
+                  onClick={() => mostrarAvisoContato(`Ligando para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-green-100 hover:bg-green-200 flex items-center justify-center"
                 >
                   <Phone className="w-5 h-5 text-green-600" />
                 </button>
                 <button
-                  onClick={() => alert(`Enviando mensagem para ${contact.name}...`)}
+                  onClick={() => mostrarAvisoContato(`Enviando mensagem para ${contact.name}...`)}
                   className="w-10 h-10 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center"
                 >
                   <MessageSquare className="w-5 h-5 text-blue-600" />
@@ -342,7 +360,7 @@ export default function Contatos() {
                       Adicionar aos favoritos
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      onClick={() => handleDeleteContact(contact.id)}
+                      onClick={() => handleDeleteContact(contact)}
                       className="text-red-600"
                     >
                       <Trash2 className="w-4 h-4 mr-2" />
@@ -502,6 +520,29 @@ export default function Contatos() {
                 </Button>
               </motion.div>
             </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Confirmação de exclusão */}
+      <Dialog
+        open={!!contatoParaExcluir}
+        onOpenChange={(aberto) => !aberto && setContatoParaExcluir(null)}
+      >
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Excluir contato?</DialogTitle>
+          </DialogHeader>
+          <p className="text-gray-700">
+            {contatoParaExcluir?.name} será apagado da sua lista de contatos.
+          </p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setContatoParaExcluir(null)}>
+              Cancelar
+            </Button>
+            <Button onClick={confirmarExclusao} className="bg-red-600 hover:bg-red-700">
+              Excluir
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
