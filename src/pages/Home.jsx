@@ -175,7 +175,7 @@ export default function Home() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Tela inicial. Toque no YouTube, onde está piscando, e vamos aprender juntos como usar."
+        "Tela inicial. Toque no Facebook, onde está piscando, e vamos aprender juntos como usar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -425,7 +425,7 @@ export default function Home() {
                   className="flex flex-col items-center gap-2"
                 >
                   <div className="relative">
-                    {app.id === 'youtube' && (
+                    {app.id === 'facebook' && (
                       <motion.div
                         animate={{ scale: [1, 1.5, 1.5], opacity: [0.75, 0.2, 0] }}
                         transition={{ repeat: Infinity, duration: 1.5, ease: 'easeOut' }}
