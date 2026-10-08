@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { CalendarDays, MapPin, Users, Check } from "lucide-react";
+import Pulse from "@/components/youtube/Pulse";
 import { EVENTOS } from "@/components/facebook/facebookData";
 
 // A tela Eventos: festas e encontros com data marcada
-export default function EventosView() {
+export default function EventosView({ target, onAvancar }) {
   const [vou, setVou] = useState([]);
 
-  const alternar = (id) =>
+  const alternar = (id) => {
     setVou((anteriores) =>
       anteriores.includes(id) ? anteriores.filter((x) => x !== id) : [...anteriores, id]
     );
+    onAvancar("eventos_vou");
+  };
 
   return (
     <div className="flex-1 overflow-y-auto bg-white">
@@ -21,7 +24,7 @@ export default function EventosView() {
         </p>
       </div>
 
-      {EVENTOS.map((evento) => (
+      {EVENTOS.map((evento, index) => (
         <div key={evento.id} className="px-3 py-3 border-t border-gray-100">
           <div className="flex gap-3">
             <img src={evento.imagem} alt="" className="w-16 h-16 rounded-xl object-cover shrink-0" />
@@ -39,17 +42,25 @@ export default function EventosView() {
             </div>
           </div>
 
-          <button
-            onClick={() => alternar(evento.id)}
-            className={`mt-2 px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1 ${
-              vou.includes(evento.id)
-                ? "bg-green-100 text-green-800"
-                : "bg-[#1877F2] text-white"
-            }`}
-          >
-            {vou.includes(evento.id) && <Check className="w-4 h-4" />}
-            {vou.includes(evento.id) ? "Você vai participar" : "Vou participar"}
-          </button>
+          <div className="mt-2">
+            <Pulse
+              active={target === "eventos_vou" && index === 0}
+              ring="rounded-full"
+              className="inline-flex"
+            >
+              <button
+                onClick={() => alternar(evento.id)}
+                className={`px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1 ${
+                  vou.includes(evento.id)
+                    ? "bg-green-100 text-green-800"
+                    : "bg-[#1877F2] text-white"
+                }`}
+              >
+                {vou.includes(evento.id) && <Check className="w-4 h-4" />}
+                {vou.includes(evento.id) ? "Você vai participar" : "Vou participar"}
+              </button>
+            </Pulse>
+          </div>
         </div>
       ))}
     </div>

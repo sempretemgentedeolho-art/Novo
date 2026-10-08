@@ -252,6 +252,11 @@ export default function AppFacebook() {
     if (target === `menu_${destino}`) goNext();
   };
 
+  // Nas telas novas, a pista do tutorial avança quando a pessoa toca no lugar certo
+  const avancarSe = (alvo) => {
+    if (target === alvo) goNext();
+  };
+
   const handleAdicionarAmigo = (id) => {
     setAmigos((anteriores) =>
       anteriores.map((a) => (a.id === id ? { ...a, convite: true } : a))
@@ -367,14 +372,18 @@ export default function AppFacebook() {
 
         {view === "menu" && <MenuView target={target} onAbrir={handleAbrirMenu} />}
 
-        {view === "mercado" && <MercadoView />}
-        {view === "reels" && <ReelsView />}
-        {view === "salvos" && <SalvosView />}
-        {view === "eventos" && <EventosView />}
-        {view === "memorias" && <MemoriasView />}
-        {view === "paginas" && <PaginasView />}
-        {view === "configfacebook" && <ConfigFacebookView />}
-        {view === "ajudafacebook" && <AjudaFacebookView />}
+        {view === "mercado" && <MercadoView target={target} onAvancar={avancarSe} />}
+        {view === "reels" && <ReelsView target={target} onAvancar={avancarSe} />}
+        {view === "salvos" && <SalvosView target={target} onAvancar={avancarSe} />}
+        {view === "eventos" && <EventosView target={target} onAvancar={avancarSe} />}
+        {view === "memorias" && <MemoriasView target={target} onAvancar={avancarSe} />}
+        {view === "paginas" && <PaginasView target={target} onAvancar={avancarSe} />}
+        {view === "configfacebook" && (
+          <ConfigFacebookView target={target} onAvancar={avancarSe} />
+        )}
+        {view === "ajudafacebook" && (
+          <AjudaFacebookView target={target} onAvancar={avancarSe} />
+        )}
 
         {view === "publicar" && (
           <CreatePostView

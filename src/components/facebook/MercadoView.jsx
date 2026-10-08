@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { MapPin } from "lucide-react";
+import Pulse from "@/components/youtube/Pulse";
 import { MERCADO } from "@/components/facebook/facebookData";
 
 // A tela Mercado: a feirinha onde as pessoas anunciam o que vendem perto de você
-export default function MercadoView() {
+export default function MercadoView({ target, onAvancar }) {
+  const [escolhido, setEscolhido] = useState(null);
+
+  const tocar = (item) => {
+    setEscolhido(item.id);
+    onAvancar("mercado_item");
+  };
+
   return (
     <div className="flex-1 overflow-y-auto bg-gray-100">
       <div className="bg-white p-3">
@@ -15,17 +23,34 @@ export default function MercadoView() {
       </div>
 
       <div className="grid grid-cols-2 gap-2 p-2">
-        {MERCADO.map((item) => (
-          <div key={item.id} className="bg-white rounded-xl overflow-hidden">
-            <img src={item.imagem} alt="" className="w-full h-24 object-cover" />
-            <div className="p-2">
-              <p className="text-sm font-bold text-gray-900 leading-snug">{item.preco}</p>
-              <p className="text-xs text-gray-700 leading-snug mt-0.5">{item.titulo}</p>
-              <p className="text-[11px] text-gray-500 flex items-center gap-1 mt-1">
-                <MapPin className="w-3 h-3 shrink-0" /> {item.cidade}
-              </p>
-            </div>
-          </div>
+        {MERCADO.map((item, index) => (
+          <Pulse
+            key={item.id}
+            active={target === "mercado_item" && index === 0}
+            className="w-full"
+            ring="rounded-xl"
+          >
+            <button
+              onClick={() => tocar(item)}
+              className={`w-full h-full text-left bg-white rounded-xl overflow-hidden ${
+                escolhido === item.id ? "ring-2 ring-[#1877F2]" : ""
+              }`}
+            >
+              <img src={item.imagem} alt="" className="w-full h-24 object-cover" />
+              <div className="p-2">
+                <p className="text-sm font-bold text-gray-900 leading-snug">{item.preco}</p>
+                <p className="text-xs text-gray-700 leading-snug mt-0.5">{item.titulo}</p>
+                <p className="text-[11px] text-gray-500 flex items-center gap-1 mt-1">
+                  <MapPin className="w-3 h-3 shrink-0" /> {item.cidade}
+                </p>
+                {escolhido === item.id && (
+                  <p className="text-[11px] font-semibold text-[#1877F2] leading-snug mt-1">
+                    Você escolheu este anúncio. Na vida real, é aqui que você fala com quem vende.
+                  </p>
+                )}
+              </div>
+            </button>
+          </Pulse>
         ))}
       </div>
 

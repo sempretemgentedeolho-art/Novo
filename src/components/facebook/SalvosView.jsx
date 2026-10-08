@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Bookmark } from "lucide-react";
+import Pulse from "@/components/youtube/Pulse";
 import { SALVOS } from "@/components/facebook/facebookData";
 
 const FILTROS = [
@@ -10,9 +11,14 @@ const FILTROS = [
 ];
 
 // A tela Salvos: o que a pessoa guardou para ver depois, sem perder
-export default function SalvosView() {
+export default function SalvosView({ target, onAvancar }) {
   const [filtro, setFiltro] = useState("todos");
   const itens = filtro === "todos" ? SALVOS : SALVOS.filter((item) => item.tipo === filtro);
+
+  const escolher = (id) => {
+    setFiltro(id);
+    onAvancar("salvos_filtro");
+  };
 
   return (
     <div className="flex-1 overflow-y-auto bg-white">
@@ -24,19 +30,24 @@ export default function SalvosView() {
         </p>
       </div>
 
-      <div className="flex gap-2 px-3 pb-2">
+      <div className="flex flex-wrap gap-2 px-3 pb-2">
         {FILTROS.map((opcao) => (
-          <button
+          <Pulse
             key={opcao.id}
-            onClick={() => setFiltro(opcao.id)}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
-              filtro === opcao.id
-                ? "bg-[#1877F2] text-white"
-                : "bg-gray-100 text-gray-700 border border-gray-200"
-            }`}
+            active={target === "salvos_filtro" && opcao.id === "Vídeo"}
+            ring="rounded-full"
           >
-            {opcao.rotulo}
-          </button>
+            <button
+              onClick={() => escolher(opcao.id)}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
+                filtro === opcao.id
+                  ? "bg-[#1877F2] text-white"
+                  : "bg-gray-100 text-gray-700 border border-gray-200"
+              }`}
+            >
+              {opcao.rotulo}
+            </button>
+          </Pulse>
         ))}
       </div>
 

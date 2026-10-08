@@ -213,19 +213,19 @@ export const PAGINAS = [
 
 // A tela Configurações e privacidade do Facebook
 export const CONFIG_FACEBOOK = [
-  { id: 'c1', titulo: 'Senha e segurança', recado: 'Trocar a sua senha e ver quem entrou na sua conta' },
-  { id: 'c2', titulo: 'Privacidade', recado: 'Escolher quem pode ver o que você publica' },
-  { id: 'c3', titulo: 'Notificações', recado: 'Escolher sobre o que o Facebook pode avisar você' },
-  { id: 'c4', titulo: 'Bloqueio e silenciamento', recado: 'Bloquear alguém que incomoda você' },
-  { id: 'c5', titulo: 'Sua atividade', recado: 'Ver o que você curtiu, comentou e pesquisou' },
-  { id: 'c6', titulo: 'Ajuda a melhorar o Facebook', recado: 'Escolher o que o Facebook pode usar para melhorar' },
+  { id: 'c1', titulo: 'Senha e segurança', recado: 'Trocar a sua senha e ver quem entrou na sua conta', detalhe: 'Aqui você troca a sua senha e vê em quais aparelhos a sua conta está aberta.' },
+  { id: 'c2', titulo: 'Privacidade', recado: 'Escolher quem pode ver o que você publica', detalhe: 'Escolha se o que você publica pode ser visto por todo mundo, só pelos amigos ou só por você.' },
+  { id: 'c3', titulo: 'Notificações', recado: 'Escolher sobre o que o Facebook pode avisar você', detalhe: 'Escolha se você quer ser avisado quando alguém curtir, comentar ou mandar mensagem.' },
+  { id: 'c4', titulo: 'Bloqueio e silenciamento', recado: 'Bloquear alguém que incomoda você', detalhe: 'Se alguém incomoda você, pode bloquear: a pessoa deixa de ver o que você publica.' },
+  { id: 'c5', titulo: 'Sua atividade', recado: 'Ver o que você curtiu, comentou e pesquisou', detalhe: 'Veja tudo o que você curtiu, comentou e pesquisou, e apague o que não quiser mais.' },
+  { id: 'c6', titulo: 'Ajuda a melhorar o Facebook', recado: 'Escolher o que o Facebook pode usar para melhorar', detalhe: 'Você escolhe o que o Facebook pode usar para deixar o aplicativo melhor.' },
 ];
 
 // A tela Ajuda e suporte do Facebook
 export const AJUDA_FACEBOOK = [
-  { id: 'h1', titulo: 'Central de ajuda', recado: 'Perguntas e respostas sobre tudo no Facebook' },
-  { id: 'h2', titulo: 'Reportar um problema', recado: 'Contar para o Facebook quando algo não funciona' },
-  { id: 'h3', titulo: 'Denunciar algo que incomoda', recado: 'Avisar sobre uma publicação ou mensagem ruim' },
-  { id: 'h4', titulo: 'Falar com o suporte', recado: 'Pedir ajuda a uma pessoa do Facebook' },
-  { id: 'h5', titulo: 'Dicas de segurança', recado: 'Como se proteger de golpes e mentiras na internet' },
+  { id: 'h1', titulo: 'Central de ajuda', recado: 'Perguntas e respostas sobre tudo no Facebook', detalhe: 'Escreva a sua dúvida e o Facebook mostra a resposta, passo a passo.' },
+  { id: 'h2', titulo: 'Reportar um problema', recado: 'Contar para o Facebook quando algo não funciona', detalhe: 'Conte o que aconteceu: o Facebook recebe o seu aviso e tenta corrigir.' },
+  { id: 'h3', titulo: 'Denunciar algo que incomoda', recado: 'Avisar sobre uma publicação ou mensagem ruim', detalhe: 'Se vir uma publicação ou mensagem ruim, avise aqui. Você não precisa responder nada.' },
+  { id: 'h4', titulo: 'Falar com o suporte', recado: 'Pedir ajuda a uma pessoa do Facebook', detalhe: 'Se a dúvida continuar, é por aqui que você pede ajuda a uma pessoa do Facebook.' },
+  { id: 'h5', titulo: 'Dicas de segurança', recado: 'Como se proteger de golpes e mentiras na internet', detalhe: 'Aprenda a reconhecer golpes, como pedidos de dinheiro por mensagem.' },
 ];

@@ -1,4 +1,15 @@
-import { Home, ThumbsUp, Share2, Sparkles, Newspaper, Users, Bell } from "lucide-react";
+import {
+  Home,
+  ThumbsUp,
+  Share2,
+  Sparkles,
+  Newspaper,
+  Users,
+  Bell,
+  Store,
+  CalendarDays,
+  Flag,
+} from "lucide-react";
 
 // Partes do tutorial do Facebook: a pessoa escolhe por onde quer começar
 export const CHAPTERS = [
@@ -48,6 +59,30 @@ export const CHAPTERS = [
     description: "Sua página, sua foto e a campainha de avisos",
     icon: Bell,
     stepIndex: 24,
+    view: "feed",
+  },
+  {
+    id: "mercado_reels",
+    label: "Mercado e Reels",
+    description: "O que as pessoas vendem perto, e vídeos curtinhos",
+    icon: Store,
+    stepIndex: 27,
+    view: "feed",
+  },
+  {
+    id: "salvos_eventos",
+    label: "Salvos, eventos e memórias",
+    description: "Guardar para depois, festas e fotos de outros anos",
+    icon: CalendarDays,
+    stepIndex: 34,
+    view: "feed",
+  },
+  {
+    id: "paginas_ajustes",
+    label: "Páginas, ajustes e ajuda",
+    description: "Lojas que você segue, senha, privacidade e dúvidas",
+    icon: Flag,
+    stepIndex: 43,
     view: "feed",
   },
 ];
@@ -190,8 +225,133 @@ export const STEPS = [
     text: "Nesta página ficam a sua foto, os seus amigos e as suas publicações. Toque na CAMPAINHA, lá em cima, onde está piscando, para ver os seus avisos.",
   },
   {
+    id: "abrir_menu_mercado",
+    target: "aba_menu",
+    text: "Você viu os seus avisos. Agora vamos conhecer as outras partes do Facebook, que ficam todas no menu. Toque nas TRÊS RISQUINHAS, no canto direito de cima, onde está piscando, para abrir o menu.",
+  },
+  {
+    id: "menu_mercado",
+    target: "menu_mercado",
+    text: "Olhe quanta coisa tem no menu, e não só amigos e conversas. Toque em MERCADO, onde está piscando. O Mercado é como uma feirinha: as pessoas que moram perto anunciam o que querem vender.",
+  },
+  {
+    id: "mercado_item",
+    target: "mercado_item",
+    text: "Estes são os anúncios de quem mora perto de você, com o preço e a distância. Toque no primeiro anúncio, onde está piscando, para ver como é.",
+  },
+  {
+    id: "voltar_menu_reels",
+    target: "aba_menu",
+    text: "No Mercado você só olha, sem compromisso nenhum: ninguém vai cobrar nada de você. Para ver outras coisas, toque outra vez nas TRÊS RISQUINHAS, onde está piscando.",
+  },
+  {
+    id: "menu_reels",
+    target: "menu_reels",
+    text: "Toque em REELS, onde está piscando. Reels são vídeos bem curtinhos, de menos de um minuto, que passam um atrás do outro.",
+  },
+  {
+    id: "reels_curtir",
+    target: "reels_curtir",
+    text: "Toque no JOINHA, à direita, onde está piscando, para mostrar que você gostou deste vídeo. O número do lado é quantas pessoas gostaram também.",
+  },
+  {
+    id: "reels_proximo",
+    target: "reels_proximo",
+    text: "Para ver o próximo vídeo, toque em PRÓXIMO, onde está piscando. É assim que se passa de um Reel para outro, sem precisar fazer mais nada.",
+  },
+  {
+    id: "abrir_menu_salvos",
+    target: "aba_menu",
+    text: "Vamos conhecer mais três partes do menu. Toque nas TRÊS RISQUINHAS, onde está piscando.",
+  },
+  {
+    id: "menu_salvos",
+    target: "menu_salvos",
+    text: "Toque em SALVOS, onde está piscando. Aqui fica tudo o que você guardou para ver depois, sem perder nada.",
+  },
+  {
+    id: "salvos_filtro",
+    target: "salvos_filtro",
+    text: "Estas bolinhas em cima separam o que você guardou: Tudo, Vídeos, Publicações e Links. Toque em VÍDEOS, onde está piscando, para ver só os vídeos guardados.",
+  },
+  {
+    id: "voltar_menu_eventos",
+    target: "aba_menu",
+    text: "Muito bem! Toque outra vez nas TRÊS RISQUINHAS, onde está piscando, para ver a próxima parte.",
+  },
+  {
+    id: "menu_eventos",
+    target: "menu_eventos",
+    text: "Toque em EVENTOS, onde está piscando. Evento é uma festa, uma feira ou um encontro com dia e lugar marcados.",
+  },
+  {
+    id: "eventos_vou",
+    target: "eventos_vou",
+    text: "Toque em VOU PARTICIPAR, no primeiro evento, onde está piscando. Assim quem organiza sabe que você vai estar lá.",
+  },
+  {
+    id: "voltar_menu_memorias",
+    target: "aba_menu",
+    text: "Se mudar de ideia, é só tocar outra vez no mesmo botão, e o Facebook avisa quem organiza. Toque nas TRÊS RISQUINHAS, onde está piscando.",
+  },
+  {
+    id: "menu_memorias",
+    target: "menu_memorias",
+    text: "Toque em MEMÓRIAS, onde está piscando. Aqui o Facebook lembra você do que você publicou em outros anos, como um álbum de fotos antigas.",
+  },
+  {
+    id: "memorias_item",
+    target: "memorias_item",
+    text: "Toque na lembrança, onde está piscando, para guardá-la. Se aparecer alguma que você não quer mais ver, é só tocar nos três pontinhos da publicação e escolher Ocultar.",
+  },
+  {
+    id: "abrir_menu_paginas",
+    target: "aba_menu",
+    text: "Falta pouco para terminar. Toque nas TRÊS RISQUINHAS, onde está piscando.",
+  },
+  {
+    id: "menu_paginas",
+    target: "menu_paginas",
+    text: "Toque em PÁGINAS, onde está piscando. Página é como o perfil de uma loja, de um restaurante ou de um grupo musical.",
+  },
+  {
+    id: "paginas_seguir",
+    target: "paginas_seguir",
+    text: "Toque em SEGUIR, do lado do Jardim em Casa, onde está piscando. Quando você segue uma página, o que ela publica aparece no seu Início. Se não quiser mais, toque de novo no mesmo botão.",
+  },
+  {
+    id: "abrir_menu_config",
+    target: "aba_menu",
+    text: "Agora as duas partes mais importantes do menu. Toque nas TRÊS RISQUINHAS, onde está piscando.",
+  },
+  {
+    id: "menu_config",
+    target: "menu_configfacebook",
+    text: "Toque em CONFIGURAÇÕES E PRIVACIDADE, onde está piscando. É aqui que você manda no seu Facebook.",
+  },
+  {
+    id: "config_item",
+    target: "config_item",
+    text: "Toque em SENHA E SEGURANÇA, onde está piscando. Aqui você troca a sua senha e vê em quais aparelhos a sua conta está aberta. Ninguém mexe aqui por você.",
+  },
+  {
+    id: "abrir_menu_ajuda",
+    target: "aba_menu",
+    text: "Na próxima vez que ficar com dúvida, é aqui que você volta. Toque nas TRÊS RISQUINHAS, onde está piscando, para ver a última parte.",
+  },
+  {
+    id: "menu_ajuda",
+    target: "menu_ajudafacebook",
+    text: "Toque em AJUDA E SUPORTE, onde está piscando. Aqui o próprio Facebook responde as suas dúvidas.",
+  },
+  {
+    id: "ajuda_item",
+    target: "ajuda_item",
+    text: "Toque em CENTRAL DE AJUDA, onde está piscando. Sempre que ficar com dúvida sobre qualquer coisa do Facebook, é por aqui que você procura a resposta.",
+  },
+  {
     id: "terminar",
     target: "back",
-    text: "Estes são os seus avisos: as curtidas, os comentários e quem começou a seguir você. Você aprendeu o principal do Facebook: curtir, comentar, compartilhar, publicar foto, ver histórias, a aba Feeds, amigos, mensagens e o seu perfil. Toque na seta de voltar, onde está piscando, para terminar.",
+    text: "Muito bem, chegou ao fim do treino! Você aprendeu o principal do Facebook: curtir, comentar, compartilhar, publicar foto, ver histórias, a aba Feeds, amigos, mensagens, o seu perfil, o Mercado, os Reels, os Salvos, os Eventos, as Memórias, as Páginas, as Configurações e a Ajuda. Toque na seta de voltar, onde está piscando, para terminar.",
   },
 ];
