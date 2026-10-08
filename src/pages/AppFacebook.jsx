@@ -18,6 +18,14 @@ import FriendsView from "@/components/facebook/FriendsView";
 import MessagesView from "@/components/facebook/MessagesView";
 import ProfileView from "@/components/facebook/ProfileView";
 import AvisosFacebookView from "@/components/facebook/AvisosFacebookView";
+import MercadoView from "@/components/facebook/MercadoView";
+import ReelsView from "@/components/facebook/ReelsView";
+import SalvosView from "@/components/facebook/SalvosView";
+import EventosView from "@/components/facebook/EventosView";
+import MemoriasView from "@/components/facebook/MemoriasView";
+import PaginasView from "@/components/facebook/PaginasView";
+import ConfigFacebookView from "@/components/facebook/ConfigFacebookView";
+import AjudaFacebookView from "@/components/facebook/AjudaFacebookView";
 import ShareSheetFacebook from "@/components/facebook/ShareSheetFacebook";
 import StoryView from "@/components/facebook/StoryView";
 import { CHAPTERS, STEPS } from "@/components/facebook/facebookTutorial";
@@ -238,10 +246,10 @@ export default function AppFacebook() {
     if (target === `filtro_${id}`) goNext();
   };
 
-  // Amigos e mensagens
-  const handleAbrirAmigos = () => {
-    setView("amigos");
-    if (target === "menu_amigos") goNext();
+  // Qualquer item do menu das três risquinhas: abre a tela escolhida
+  const handleAbrirMenu = (destino) => {
+    setView(destino);
+    if (target === `menu_${destino}`) goNext();
   };
 
   const handleAdicionarAmigo = (id) => {
@@ -276,11 +284,6 @@ export default function AppFacebook() {
     );
     setRecado("");
     if (target === "enviar_recado") goNext();
-  };
-
-  const handleAbrirPerfil = () => {
-    setView("perfil");
-    if (target === "menu_perfil") goNext();
   };
 
   // Ver as publicações do grupo: abre a aba Feeds já no filtro Grupos
@@ -362,14 +365,16 @@ export default function AppFacebook() {
         {view === "video" && <VideoView />}
         {view === "grupos" && <GruposView onAbrirPublicacoes={handleVerGrupos} />}
 
-        {view === "menu" && (
-          <MenuView
-            target={target}
-            onPerfil={handleAbrirPerfil}
-            onAmigos={handleAbrirAmigos}
-            onMensagens={handleAbrirMensagens}
-          />
-        )}
+        {view === "menu" && <MenuView target={target} onAbrir={handleAbrirMenu} />}
+
+        {view === "mercado" && <MercadoView />}
+        {view === "reels" && <ReelsView />}
+        {view === "salvos" && <SalvosView />}
+        {view === "eventos" && <EventosView />}
+        {view === "memorias" && <MemoriasView />}
+        {view === "paginas" && <PaginasView />}
+        {view === "configfacebook" && <ConfigFacebookView />}
+        {view === "ajudafacebook" && <AjudaFacebookView />}
 
         {view === "publicar" && (
           <CreatePostView

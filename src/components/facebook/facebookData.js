@@ -165,3 +165,67 @@ export const AVISOS = [
   { id: 'a2', foto: perfilJoao, texto: 'João Santos comentou: "Que lindo!"', quando: '5 h' },
   { id: 'a3', foto: perfilAna, texto: 'Ana Costa começou a seguir você', quando: 'Ontem' },
 ];
+
+// A tela Mercado: a feirinha de anúncios de quem mora perto
+export const MERCADO = [
+  { id: 'm1', titulo: 'Bicicleta aro 26, boa para passear', preco: 'R$ 350', cidade: '2 km de você', imagem: foto2 },
+  { id: 'm2', titulo: 'Jogo de panelas de ferro, pouco usado', preco: 'R$ 120', cidade: '3 km de você', imagem: foto3 },
+  { id: 'm3', titulo: 'Máquina de costura antiga, funcionando', preco: 'R$ 480', cidade: '5 km de você', imagem: foto1 },
+  { id: 'm4', titulo: 'Poltrona de sala, muito confortável', preco: 'R$ 200', cidade: '6 km de você', imagem: foto4 },
+  { id: 'm5', titulo: 'Plantas e vasos para a sua casa', preco: 'R$ 25', cidade: '1 km de você', imagem: foto6 },
+  { id: 'm6', titulo: 'Guarda-sol grande para o quintal', preco: 'R$ 90', cidade: '4 km de você', imagem: foto5 },
+];
+
+// A tela Reels: vídeos curtos, um atrás do outro
+export const REELS = [
+  { id: 'r1', autor: 'Cozinha da Vovó', legenda: 'Bolo de fubá quentinho, sai da forma em 40 minutos 🍰', imagem: foto3, curtidas: 320 },
+  { id: 'r2', autor: 'Maria Silva', legenda: 'Caminhada no parque hoje de manhã 🌳', imagem: foto2, curtidas: 128 },
+  { id: 'r3', autor: 'João Santos', legenda: 'Dica para o jardim: regue bem cedo 💧', imagem: foto1, curtidas: 87 },
+];
+
+// A tela Salvos: o que a pessoa guardou para ver depois
+export const SALVOS = [
+  { id: 's1', tipo: 'Vídeo', titulo: 'Receita de bolo de cenoura, passo a passo', quem: 'Cozinha da Vovó', imagem: foto3 },
+  { id: 's2', tipo: 'Publicação', titulo: 'Caminhada leve no parque: 10 minutos', quem: 'João Santos', imagem: foto2 },
+  { id: 's3', tipo: 'Link', titulo: 'Como usar o Facebook sem medo', quem: 'Ajuda do Facebook', imagem: foto5 },
+];
+
+// A tela Eventos: festas e encontros com data marcada
+export const EVENTOS = [
+  { id: 'e1', nome: 'Festa Junina do bairro', quando: 'Sábado, 12 de julho, às 19h', onde: 'Salão da igreja', pessoas: '38 pessoas vão', imagem: foto4 },
+  { id: 'e2', nome: 'Feira de artesanato', quando: 'Domingo, 20 de julho, às 9h', onde: 'Praça central', pessoas: '21 pessoas vão', imagem: foto6 },
+  { id: 'e3', nome: 'Aula de dança para a melhor idade', quando: 'Terça-feira, 22 de julho, às 15h', onde: 'Clube dos amigos', pessoas: '14 pessoas vão', imagem: foto1 },
+];
+
+// A tela Memórias: o que a pessoa publicou em outros anos
+export const MEMORIAS = [
+  { id: 'l1', quando: 'Faz 2 anos', texto: 'Você publicou: "Aniversário da neta, que tarde feliz!"', imagem: foto4 },
+  { id: 'l2', quando: 'Faz 5 anos', texto: 'Você publicou: "Férias na praia com a família."', imagem: foto5 },
+  { id: 'l3', quando: 'Faz 1 ano', texto: 'Maria Silva escreveu: "Que bom ter você por perto!"', imagem: perfilMaria },
+];
+
+// A tela Páginas: as lojas e páginas que a pessoa acompanha
+export const PAGINAS = [
+  { id: 'pg1', nome: 'Cozinha da Vovó', sobre: 'Receitas simples, com poucos ingredientes', imagem: foto3, seguindo: true },
+  { id: 'pg2', nome: 'Jardim em Casa', sobre: 'Dicas de plantas para quem tem pouco espaço', imagem: foto1, seguindo: false },
+  { id: 'pg3', nome: 'Clube da Melhor Idade', sobre: 'Encontros, dança e viagens em grupo', imagem: foto6, seguindo: true },
+];
+
+// A tela Configurações e privacidade do Facebook
+export const CONFIG_FACEBOOK = [
+  { id: 'c1', titulo: 'Senha e segurança', recado: 'Trocar a sua senha e ver quem entrou na sua conta' },
+  { id: 'c2', titulo: 'Privacidade', recado: 'Escolher quem pode ver o que você publica' },
+  { id: 'c3', titulo: 'Notificações', recado: 'Escolher sobre o que o Facebook pode avisar você' },
+  { id: 'c4', titulo: 'Bloqueio e silenciamento', recado: 'Bloquear alguém que incomoda você' },
+  { id: 'c5', titulo: 'Sua atividade', recado: 'Ver o que você curtiu, comentou e pesquisou' },
+  { id: 'c6', titulo: 'Ajuda a melhorar o Facebook', recado: 'Escolher o que o Facebook pode usar para melhorar' },
+];
+
+// A tela Ajuda e suporte do Facebook
+export const AJUDA_FACEBOOK = [
+  { id: 'h1', titulo: 'Central de ajuda', recado: 'Perguntas e respostas sobre tudo no Facebook' },
+  { id: 'h2', titulo: 'Reportar um problema', recado: 'Contar para o Facebook quando algo não funciona' },
+  { id: 'h3', titulo: 'Denunciar algo que incomoda', recado: 'Avisar sobre uma publicação ou mensagem ruim' },
+  { id: 'h4', titulo: 'Falar com o suporte', recado: 'Pedir ajuda a uma pessoa do Facebook' },
+  { id: 'h5', titulo: 'Dicas de segurança', recado: 'Como se proteger de golpes e mentiras na internet' },
+];
