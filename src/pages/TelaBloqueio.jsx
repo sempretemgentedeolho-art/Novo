@@ -141,6 +141,10 @@ export default function TelaBloqueio() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           onClick={handleUnlock}
+          role="button"
+          tabIndex={0}
+          aria-label="Deslize para cima para desbloquear a tela"
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleUnlock(); }}
           className="absolute bottom-28 left-0 right-0 flex flex-col items-center cursor-pointer"
         >
           <motion.div

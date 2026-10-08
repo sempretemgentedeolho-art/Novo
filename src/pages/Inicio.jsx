@@ -35,6 +35,10 @@ export default function Inicio() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         onClick={handleStart}
+        role="button"
+        tabIndex={0}
+        aria-label="Toque na tela para começar o tutorial"
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleStart(); }}
         className="h-full bg-gradient-to-br from-cyan-100 via-blue-100 to-teal-100 flex flex-col items-center justify-center p-6 cursor-pointer relative overflow-y-auto"
       >
         {/* Logo Forja da Consciência */}
