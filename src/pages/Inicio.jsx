@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { motion } from 'framer-motion';
-import { Heart, Youtube } from 'lucide-react';
+import { Heart, Facebook, Youtube } from 'lucide-react';
 import logoForja from '@/assets/imagens/logo-forja.png';
 
 export default function Inicio() {
@@ -14,7 +14,7 @@ export default function Inicio() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. Antes de começar, uma dica rápida sobre o YouTube: você não precisa de conta para assistir aos vídeos. Se quiser curtir, comentar ou salvar seus canais favoritos, é só entrar com a sua conta do Google, o mesmo e-mail do Gmail. Toque na tela para começar."
+        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. O treinamento de hoje é o Facebook, e de bônus você leva também o YouTube e o Dicas. Antes de começar, uma dica rápida sobre o Facebook: para entrar e usar o Facebook você precisa de uma conta, feita com o seu nome, um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos, passo a passo. Toque na tela para começar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -39,7 +39,7 @@ export default function Inicio() {
         tabIndex={0}
         aria-label="Toque na tela para começar o tutorial"
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleStart(); }}
-        className="h-full bg-gradient-to-br from-cyan-100 via-blue-100 to-teal-100 flex flex-col items-center justify-center p-6 cursor-pointer relative overflow-y-auto"
+        className="h-full bg-gradient-to-br from-blue-100 via-sky-50 to-blue-100 flex flex-col items-center justify-center p-6 cursor-pointer relative overflow-y-auto"
       >
         {/* Logo Forja da Consciência */}
         <motion.div
@@ -72,7 +72,7 @@ export default function Inicio() {
             Bem-vindo!
           </h1>
          
-          <h2 className="text-2xl font-bold text-teal-700 drop-shadow-sm mb-2">
+          <h2 className="text-2xl font-bold text-[#1877F2] drop-shadow-sm mb-2">
             Forja da Consciência
           </h2>
           <div className="flex items-center justify-center gap-2 text-gray-600">
@@ -83,22 +83,39 @@ export default function Inicio() {
           </div>
         </motion.div>
 
-        {/* Dica rápida sobre o YouTube */}
+        {/* Dica rápida sobre o Facebook (treinamento principal) */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-red-200 px-4 py-3 max-w-sm text-center mb-5"
+          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-blue-300 px-4 py-3 max-w-sm text-center mb-4"
         >
           <div className="flex items-center justify-center gap-2 mb-1.5">
-            <Youtube className="w-4 h-4 text-red-600" />
-            <h3 className="text-sm font-bold text-gray-800">Dica rápida sobre o YouTube</h3>
+            <Facebook className="w-4 h-4 text-[#1877F2]" />
+            <h3 className="text-sm font-bold text-gray-800">Dica rápida sobre o Facebook</h3>
           </div>
           <p className="text-sm text-gray-700 leading-snug">
-            Você <strong>não precisa de conta</strong> para assistir aos vídeos. Para curtir,
-            comentar e salvar seus canais favoritos, entre com a sua conta do Google, o mesmo
-            e-mail do Gmail.
+            Para entrar e usar o Facebook você precisa de uma <strong>conta</strong>: seu nome,
+            um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos.
           </p>
+        </motion.div>
+
+        {/* Bônus que vêm junto com o Facebook */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.85 }}
+          className="flex items-center justify-center gap-2 mb-5 flex-wrap"
+        >
+          <span className="bg-white/80 border-2 border-blue-300 rounded-full px-3 py-1 text-xs font-semibold text-blue-800">
+            Treinamento: Facebook
+          </span>
+          <span className="bg-white/80 border-2 border-red-200 rounded-full px-3 py-1 text-xs font-semibold text-red-700 flex items-center gap-1">
+            <Youtube className="w-3.5 h-3.5" /> Bônus: YouTube
+          </span>
+          <span className="bg-white/80 border-2 border-yellow-300 rounded-full px-3 py-1 text-xs font-semibold text-yellow-700">
+            Bônus: Dicas
+          </span>
         </motion.div>
 
         {/* Call to Action */}
@@ -108,8 +125,8 @@ export default function Inicio() {
           transition={{ delay: 0.9 }}
           className="text-center"
         >
-          <div className="bg-white/70 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border-2 border-teal-300">
-            <p className="text-teal-800 font-semibold text-base">
+          <div className="bg-white/70 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border-2 border-blue-300">
+            <p className="text-blue-800 font-semibold text-base">
               Toque na tela para começar
             </p>
           </div>
@@ -119,7 +136,7 @@ export default function Inicio() {
             transition={{ repeat: Infinity, duration: 1.5 }}
             className="mt-3"
           >
-            <div className="text-teal-700 text-3xl">👇</div>
+            <div className="text-[#1877F2] text-3xl">👇</div>
           </motion.div>
         </motion.div>
 
@@ -131,7 +148,7 @@ export default function Inicio() {
           className="mt-6 text-center"
         >
           <p className="text-gray-600 text-xs">
-            Aprenda a usar seu celular<br />de forma fácil e segura
+            Aprenda o Facebook no seu celular<br />com YouTube e Dicas de bônus
           </p>
         </motion.div>
       </motion.div>
