@@ -50,15 +50,15 @@ export default function StudioView({ target, onTab }) {
         que já publicou.
       </p>
 
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="grid grid-cols-2 gap-2">
         {ABAS.map((a) => {
           const Icon = a.icon;
           return (
-            <Pulse key={a.id} active={target === a.id} ring="rounded-full">
+            <Pulse key={a.id} active={target === a.id} className="w-full" ring="rounded-full">
               <button
                 type="button"
                 onClick={() => abrir(a.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-full border-2 text-sm font-semibold whitespace-nowrap shrink-0 ${
+                className={`w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-full border-2 text-sm font-semibold ${
                   aba === a.id
                     ? "border-gray-900 bg-gray-900 text-white"
                     : "border-gray-200 text-gray-800"
