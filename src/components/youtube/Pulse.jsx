@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useAcessibilidade } from "@/lib/acessibilidade";
 
@@ -13,11 +13,22 @@ export default function Pulse({
   onClick,
 }) {
   const { contraste, reduzirAnimacoes } = useAcessibilidade();
+  const ref = useRef(null);
+
+  // A pista do passo atual se traz sozinha para a parte visível da tela,
+  // para ninguém precisar adivinhar que é preciso rolar a lista.
+  useEffect(() => {
+    if (!active || !ref.current) return;
+    ref.current.scrollIntoView({
+      block: "center",
+      behavior: reduzirAnimacoes ? "auto" : "smooth",
+    });
+  }, [active, reduzirAnimacoes]);
 
   const corDestaque = contraste ? "bg-yellow-300 border-4 border-black" : "bg-yellow-400";
 
   return (
-    <div className={`relative ${className}`} onClick={onClick}>
+    <div ref={ref} className={`relative ${className}`} onClick={onClick}>
       {active && (
         <motion.div
           animate={
