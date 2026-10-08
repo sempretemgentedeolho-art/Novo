@@ -319,9 +319,50 @@ export default function AppYouTube() {
     if (target === "you_nav") goNext();
   };
 
+  // Cada ação das telas de Short conclui um ou mais passos do tutorial.
+  // A conferência é feita pelo ID do passo (e não pelo alvo que pisca), assim
+  // o tutorial avança mesmo quando o painel foi aberto antes de o passo chegar.
+  const PASSOS_DA_ACAO = {
+    short_option: ["create_menu"],
+    record: ["camera_open"],
+    check: ["camera_open", "recorded"],
+    aa: ["edit_open"],
+    concluido: ["edit_open", "text_open"],
+    musica_pill: ["text_done"],
+    musica: ["audio_open"],
+    efeitos: ["efeitos_open"],
+    efeito_estrela: ["efeitos_estrela"],
+    efeitos_concluir: ["efeitos_open", "efeitos_estrela", "efeitos_done"],
+    filtros: ["filtros_open"],
+    filtro_dourado: ["filtros_dourado"],
+    filtros_concluir: ["filtros_open", "filtros_dourado", "filtros_done"],
+    adesivos: ["adesivos_open"],
+    adesivo_coracao: ["adesivos_coracao"],
+    adesivos_concluir: ["adesivos_open", "adesivos_coracao", "adesivos_done"],
+    legendas: ["legendas_open"],
+    legendas_concluir: ["legendas_open", "legendas_done"],
+    narracao: ["narracao_open"],
+    narracao_concluir: ["narracao_open", "narracao_done"],
+    next: ["enfeites_done"],
+    titulo: ["publish"],
+    enviar: ["publish_send"],
+    published: ["published"],
+  };
+
+  // Vai para o passo que vem depois do último passo que esta ação conclui
+  const avancarAposPassos = (passos) => {
+    const atual = STEPS[stepIndex] && STEPS[stepIndex].id;
+    if (!atual || !passos.includes(atual)) return;
+    const indices = passos
+      .map((p) => STEPS.findIndex((s) => s.id === p))
+      .filter((i) => i >= 0);
+    if (!indices.length) return;
+    setStepIndex(Math.min(Math.max(...indices) + 1, STEPS.length - 1));
+  };
+
   const handleShortsAction = (id, nextScreen) => {
     if (nextScreen) setShortsScreen(nextScreen);
-    if (target === id) goNext();
+    avancarAposPassos(PASSOS_DA_ACAO[id] || []);
   };
 
   const handleRecorded = (segundos) => setDuracao(segundos);
@@ -334,7 +375,7 @@ export default function AppYouTube() {
   const handleFinishShorts = () => {
     setShortsScreen(null);
     setView("you");
-    if (target === "concluir") goNext();
+    avancarAposPassos(PASSOS_DA_ACAO.published);
   };
 
   const VideoCard = ({ video, active, onClick }) => (

@@ -204,7 +204,7 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
           concluirAtivo={target === "narracao_concluir"}
           onConcluir={() => {
             fecharPainel();
-            if (target === "narracao_concluir") onTap("narracao_concluir");
+            onTap("narracao_concluir");
           }}
         />
       );
