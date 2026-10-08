@@ -150,6 +150,8 @@ export default function Home() {
   const navigate = useNavigate();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [quickPanelOpen, setQuickPanelOpen] = useState(false);
+  // Explicação escrita do botão que a pessoa acabou de tocar nas Configurações Rápidas
+  const [avisoRapido, setAvisoRapido] = useState("");
   const [time, setTime] = useState(new Date());
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -201,6 +203,7 @@ export default function Home() {
     
     if (isDownSwipe && touchStart < 200) {
       if (Math.abs(distance) > 100) {
+        setAvisoRapido("");
         setQuickPanelOpen(true);
       } else {
         setNotificationsOpen(true);
@@ -289,10 +292,9 @@ export default function Home() {
           utter1.lang = "pt-BR";
           utter1.rate = 0.9;
           synth.speak(utter1);
-          setTimeout(() => {
-            setQuickPanelOpen(false);
-            navigate(createPageUrl('WiFiConfig'));
-          }, 3000);
+          // Abre a tela na hora: quem explica os detalhes é a própria tela
+          setQuickPanelOpen(false);
+          navigate(createPageUrl('WiFiConfig'));
           break;
           
         case 'bluetooth':
@@ -301,10 +303,8 @@ export default function Home() {
           utter2.lang = "pt-BR";
           utter2.rate = 0.9;
           synth.speak(utter2);
-          setTimeout(() => {
-            setQuickPanelOpen(false);
-            navigate(createPageUrl('BluetoothConfig'));
-          }, 3000);
+          setQuickPanelOpen(false);
+          navigate(createPageUrl('BluetoothConfig'));
           break;
           
         case 'sound':
@@ -313,10 +313,8 @@ export default function Home() {
           utter3.lang = "pt-BR";
           utter3.rate = 0.9;
           synth.speak(utter3);
-          setTimeout(() => {
-            setQuickPanelOpen(false);
-            navigate(createPageUrl('VolumeControl'));
-          }, 3000);
+          setQuickPanelOpen(false);
+          navigate(createPageUrl('VolumeControl'));
           break;
           
         case 'flashlight':
@@ -363,6 +361,9 @@ export default function Home() {
           synth.speak(utter7);
           break;
       }
+
+      // A mesma explicação aparece escrita no painel, para quem não ouvir bem
+      setAvisoRapido(message);
     }
   };
 
@@ -599,6 +600,7 @@ export default function Home() {
                   <button
                     onClick={() => {
                       setNotificationsOpen(false);
+                      setAvisoRapido("");
                       setQuickPanelOpen(true);
                     }}
                     className="w-full bg-slate-300 hover:bg-slate-400 rounded-2xl p-4 flex items-center justify-center gap-2 transition-all"
@@ -787,6 +789,19 @@ export default function Home() {
                   </button>
                 </div>
               </motion.div>
+
+              {/* Explicação escrita do botão tocado: fica flutuando em cima,
+                  sem empurrar os botões de lugar */}
+              {avisoRapido && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  className="absolute bottom-4 left-4 right-4 z-[60] bg-slate-900 border border-white/25 rounded-2xl p-3 shadow-2xl"
+                >
+                  <p className="text-sm text-white leading-snug">{avisoRapido}</p>
+                </motion.div>
+              )}
             </>
           )}
         </AnimatePresence>
