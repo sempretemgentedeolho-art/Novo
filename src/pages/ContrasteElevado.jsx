@@ -4,10 +4,11 @@ import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import { ArrowLeft } from "lucide-react";
+import { getAcessibilidade, setAcessibilidade } from "@/lib/acessibilidade";
 
 export default function ContrasteElevado() {
   const navigate = useNavigate();
-  const [highContrast, setHighContrast] = useState(false);
+  const [highContrast, setHighContrast] = useState(getAcessibilidade().contraste);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -64,7 +65,10 @@ export default function ContrasteElevado() {
                 <input
                   type="checkbox"
                   checked={highContrast}
-                  onChange={(e) => setHighContrast(e.target.checked)}
+                  onChange={(e) => {
+                    setHighContrast(e.target.checked);
+                    setAcessibilidade({ contraste: e.target.checked });
+                  }}
                   className="sr-only peer"
                 />
                 <div className={`w-16 h-9 rounded-full ${highContrast ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-7 after:w-7 after:transition-all ${highContrast ? 'after:translate-x-7' : ''}`}></div>

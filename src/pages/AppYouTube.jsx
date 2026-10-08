@@ -30,6 +30,8 @@ import {
   Scissors,
 } from "lucide-react";
 import Pulse from "@/components/youtube/Pulse";
+import AvisoAcessibilidade from "@/components/AvisoAcessibilidade";
+import { useAcessibilidade } from "@/lib/acessibilidade";
 import VideoRow from "@/components/youtube/VideoRow";
 import VideoPlayer from "@/components/youtube/VideoPlayer";
 import ShareSheet from "@/components/youtube/ShareSheet";
@@ -120,6 +122,7 @@ export default function AppYouTube() {
   const [meuComentario, setMeuComentario] = useState("");
   const [playlistAberta, setPlaylistAberta] = useState("receitas");
 
+  const { talkback, gestos } = useAcessibilidade();
   const target = STEPS[stepIndex].target;
   const shownVideos = chip === "Todos" ? VIDEOS : VIDEOS.filter((v) => v.tag === chip);
 
@@ -150,13 +153,17 @@ export default function AppYouTube() {
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
-      const utter = new SpeechSynthesisUtterance(STEPS[stepIndex].text);
+      const lembreteGestos = gestos
+        ? " Lembre-se: para voltar, deslize o dedo da borda esquerda para a direita."
+        : "";
+      const utter = new SpeechSynthesisUtterance(`${STEPS[stepIndex].text}${lembreteGestos}`);
       utter.lang = "pt-BR";
-      utter.rate = 0.82;
+      // Com o TalkBack ligado a fala fica mais devagar, mais fácil de acompanhar
+      utter.rate = talkback ? 0.72 : 0.82;
       synth.speak(utter);
     }
     return () => window.speechSynthesis.cancel();
-  }, [stepIndex, chapter, runKey]);
+  }, [stepIndex, chapter, runKey, talkback, gestos]);
 
   // Começa o tutorial na parte escolhida no menu
   const startChapter = (cap) => {
@@ -707,6 +714,7 @@ export default function AppYouTube() {
     <PhoneFrame>
       <div className="h-full bg-white flex flex-col relative overflow-hidden">
         <StatusBar variant="light" />
+        <AvisoAcessibilidade />
 
         {/* Cabeçalho */}
         <div className="flex items-center gap-2 px-4 py-2 bg-white border-b border-gray-200">

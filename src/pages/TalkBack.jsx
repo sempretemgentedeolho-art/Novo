@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAcessibilidade, setAcessibilidade } from "@/lib/acessibilidade";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
@@ -7,6 +8,12 @@ import { ArrowLeft, Ear, Volume2, Hand } from "lucide-react";
 
 export default function TalkBack() {
   const navigate = useNavigate();
+  const [talkback, setTalkBack] = useState(getAcessibilidade().talkback);
+
+  const alternarTalkBack = (valor) => {
+    setTalkBack(valor);
+    setAcessibilidade({ talkback: valor });
+  };
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -35,6 +42,28 @@ export default function TalkBack() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
+          {/* Ligar o TalkBack no treinamento */}
+          <div className="flex items-center justify-between gap-4 bg-white border-2 border-blue-200 rounded-lg p-5 mb-6">
+            <div>
+              <p className="text-lg font-semibold text-gray-900">Ligar o TalkBack no treinamento</p>
+              <p className="text-sm text-gray-600">
+                {talkback
+                  ? "Ligado: cada passo do tutorial é falado devagar e bem claro."
+                  : "Toque para ligar: os tutoriais passam a falar cada passo bem devagar."}
+              </p>
+            </div>
+            <div className="relative inline-block w-16 h-9 flex-shrink-0">
+              <input
+                type="checkbox"
+                checked={talkback}
+                onChange={(e) => alternarTalkBack(e.target.checked)}
+                aria-label="Ligar o TalkBack no treinamento"
+                className="sr-only peer"
+              />
+              <div className={`w-16 h-9 rounded-full ${talkback ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-7 after:w-7 after:transition-all ${talkback ? 'after:translate-x-7' : ''}`}></div>
+            </div>
+          </div>
+
           {/* Info principal */}
           <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-6 mb-6 text-white">
             <div className="flex items-center gap-3 mb-4">

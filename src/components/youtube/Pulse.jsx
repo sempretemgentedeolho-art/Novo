@@ -1,7 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useAcessibilidade } from "@/lib/acessibilidade";
 
-// Destaque amarelo pulsante no elemento que a pessoa deve tocar naquele passo
+// Destaque no elemento que a pessoa deve tocar naquele passo.
+// Com "contraste elevado" o destaque fica mais forte e escuro;
+// com "menos animações" ele para de pulsar, mas continua bem visível.
 export default function Pulse({
   active,
   children,
@@ -9,18 +12,32 @@ export default function Pulse({
   ring = "rounded-full",
   onClick,
 }) {
+  const { contraste, reduzirAnimacoes } = useAcessibilidade();
+
+  const corDestaque = contraste ? "bg-yellow-300 border-4 border-black" : "bg-yellow-400";
+
   return (
     <div className={`relative ${className}`} onClick={onClick}>
       {active && (
         <motion.div
-          animate={{ scale: [1, 1.35, 1.35], opacity: [0.7, 0.25, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-          className={`absolute -inset-2 ${ring} bg-yellow-400 z-0 pointer-events-none`}
+          animate={
+            reduzirAnimacoes
+              ? { scale: 1.15, opacity: 0.95 }
+              : { scale: [1, 1.35, 1.35], opacity: [0.7, 0.25, 0] }
+          }
+          transition={
+            reduzirAnimacoes
+              ? { duration: 0 }
+              : { repeat: Infinity, duration: 1.5, ease: "easeOut" }
+          }
+          className={`absolute -inset-2 ${ring} ${corDestaque} z-0 pointer-events-none`}
         />
       )}
       <motion.div
-        animate={active ? { scale: [1, 1.07, 1] } : {}}
-        transition={active ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}}
+        animate={active && !reduzirAnimacoes ? { scale: [1, 1.07, 1] } : {}}
+        transition={
+          active && !reduzirAnimacoes ? { repeat: Infinity, duration: 1, ease: "easeInOut" } : {}
+        }
         className="relative z-10 w-full"
       >
         {children}

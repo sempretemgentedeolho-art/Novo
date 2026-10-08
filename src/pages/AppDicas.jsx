@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { motion, AnimatePresence } from 'framer-motion';
+import AvisoAcessibilidade from '@/components/AvisoAcessibilidade';
 
 const tutorials = {
   primeiros_passos: [
@@ -307,6 +308,7 @@ export default function AppDicas() {
     <PhoneFrame>
       <div className="h-full bg-gradient-to-br from-yellow-50 to-amber-50 overflow-hidden flex flex-col relative">
         <StatusBar variant="light" />
+        <AvisoAcessibilidade />
 
         {/* Header */}
         <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-6 py-4">

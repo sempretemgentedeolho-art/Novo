@@ -4,10 +4,11 @@ import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
 import { ArrowLeft } from "lucide-react";
+import { getAcessibilidade, setAcessibilidade } from "@/lib/acessibilidade";
 
 export default function ReduzirAnimacoes() {
   const navigate = useNavigate();
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(getAcessibilidade().reduzirAnimacoes);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -64,7 +65,10 @@ export default function ReduzirAnimacoes() {
                 <input
                   type="checkbox"
                   checked={reduced}
-                  onChange={(e) => setReduced(e.target.checked)}
+                  onChange={(e) => {
+                    setReduced(e.target.checked);
+                    setAcessibilidade({ reduzirAnimacoes: e.target.checked });
+                  }}
                   className="sr-only peer"
                 />
                 <div className={`w-16 h-9 rounded-full ${reduced ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-7 after:w-7 after:transition-all ${reduced ? 'after:translate-x-7' : ''}`}></div>

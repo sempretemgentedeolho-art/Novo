@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAcessibilidade, setAcessibilidade } from "@/lib/acessibilidade";
 import { createPageUrl } from "@/utils";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { StatusBar } from "@/components/StatusBar";
@@ -7,6 +8,12 @@ import { ArrowLeft, Hand, MoveLeft, MoveUp, Square } from "lucide-react";
 
 export default function NavegacaoGestos() {
   const navigate = useNavigate();
+  const [gestos, setGestos] = useState(getAcessibilidade().gestos);
+
+  const alternarGestos = (valor) => {
+    setGestos(valor);
+    setAcessibilidade({ gestos: valor });
+  };
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -37,6 +44,28 @@ export default function NavegacaoGestos() {
 
         {/* Conteúdo */}
         <div className="flex-1 overflow-y-auto p-4">
+          {/* Usar os gestos no treinamento */}
+          <div className="flex items-center justify-between gap-4 bg-white border-2 border-blue-200 rounded-lg p-5 mb-6">
+            <div>
+              <p className="text-lg font-semibold text-gray-900">Usar gestos no treinamento</p>
+              <p className="text-sm text-gray-600">
+                {gestos
+                  ? "Ligado: os tutoriais avisam que dá para voltar deslizando o dedo."
+                  : "Toque para ligar: os tutoriais passam a lembrar você dos gestos."}
+              </p>
+            </div>
+            <div className="relative inline-block w-16 h-9 flex-shrink-0">
+              <input
+                type="checkbox"
+                checked={gestos}
+                onChange={(e) => alternarGestos(e.target.checked)}
+                aria-label="Usar navegação por gestos no treinamento"
+                className="sr-only peer"
+              />
+              <div className={`w-16 h-9 rounded-full ${gestos ? 'bg-[#25D366]' : 'bg-gray-300'} after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-7 after:w-7 after:transition-all ${gestos ? 'after:translate-x-7' : ''}`}></div>
+            </div>
+          </div>
+
           <div className="mb-6">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
               <Hand className="w-8 h-8 text-blue-600" />
