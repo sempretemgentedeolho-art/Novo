@@ -55,6 +55,27 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
     onTap(id);
   };
 
+  // Passo do tutorial em que cada ferramenta precisa ser concluída
+  const PASSO_CONCLUIR = {
+    aa: "concluido",
+    efeitos: "efeitos_concluir",
+    filtros: "filtros_concluir",
+    adesivos: "adesivos_concluir",
+    legendas: "legendas_concluir",
+  };
+
+  // Tocar na ferramenta abre o painel. Se o tutorial já está pedindo para
+  // concluir aquele painel, tocar na mesma ferramenta também conclui o passo,
+  // para ninguém ficar preso tocando sempre no mesmo botão.
+  const clicarFerramenta = (id) => {
+    if (target === PASSO_CONCLUIR[id]) {
+      setPainel("none");
+      onTap(PASSO_CONCLUIR[id]);
+      return;
+    }
+    abrir(id);
+  };
+
   const fecharPainel = () => setPainel("none");
 
   // Fecha o painel do enfeite e avança o tutorial quando é a vez dele
@@ -242,7 +263,12 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
 
         <div className="absolute -right-1 top-4 z-20 w-14 flex flex-col items-center gap-2 py-3 rounded-full bg-neutral-800/60">
           {FERRAMENTAS.map((f) => (
-            <Pulse key={f.id} active={target === f.id} ring="rounded-xl" onClick={() => abrir(f.id)}>
+            <Pulse
+              key={f.id}
+              active={target === f.id}
+              ring="rounded-xl"
+              onClick={() => clicarFerramenta(f.id)}
+            >
               <button
                 type="button"
                 className={`flex flex-col items-center gap-0.5 w-11 py-2 rounded-xl ${
@@ -298,6 +324,11 @@ export default function ShortsEdit({ target, duracao, onTap, onNext, onClose }) 
             className="flex-1"
             active={target === "narracao"}
             onClick={() => {
+              if (target === "narracao_concluir") {
+                fecharPainel();
+                onTap("narracao_concluir");
+                return;
+              }
               abrir("narracao");
               if (target === "narracao") onTap("narracao");
             }}

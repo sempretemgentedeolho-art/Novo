@@ -389,12 +389,12 @@ export const STEPS = [
   {
     id: "camera_open",
     target: "record",
-    text: "A câmera do seu celular abriu. Vamos conhecer cada botão antes de gravar. No canto de cima do lado esquerdo tem o X, para fechar a câmera. No meio, o botão Adicionar música, para colocar uma música no seu vídeo. No canto de cima do lado direito, o número 15, que é o tempo máximo do vídeo em segundos: se você tocar nele, ele passa para 60 e te dá um minuto inteiro. Do lado direito ficam as ferramentas: as duas setas em círculo viram a câmera, entre a sua frente e o que está na frente do celular; o 1x muda a velocidade da gravação, mais lenta ou mais rápida; o relógio é o temporizador, para começar a gravar sozinho depois de alguns segundos; a estrela são os efeitos; a carinha é o retoque do rosto; e a varinha muda as cores e os filtros. A setinha para baixo mostra ainda mais opções. Embaixo, no canto esquerdo, a miniatura Adicionar pega um vídeo que já está na sua galeria. E no meio fica o botão vermelho, o botão principal. Agora mantenha o dedo apertado e segurado no botão vermelho, que está piscando. Enquanto você segura, a câmera grava a sua voz e a sua imagem. Se soltar o dedo, a gravação pausa.",
+    text: "A câmera do seu celular abriu. Vamos conhecer cada botão antes de gravar. No canto de cima do lado esquerdo tem o X, para fechar a câmera. No meio, o botão Adicionar música, para colocar uma música no seu vídeo. No canto de cima do lado direito, o número 15, que é o tempo máximo do vídeo em segundos: se você tocar nele, ele passa para 60 e te dá um minuto inteiro. Do lado direito ficam as ferramentas: as duas setas em círculo viram a câmera, entre a sua frente e o que está na frente do celular; o 1x muda a velocidade da gravação, mais lenta ou mais rápida; o relógio é o temporizador, para começar a gravar sozinho depois de alguns segundos; a estrela são os efeitos; a carinha é o retoque do rosto; e a varinha muda as cores e os filtros. A setinha para baixo mostra ainda mais opções. Embaixo, no canto esquerdo, a miniatura Adicionar pega um vídeo que já está na sua galeria. E no meio fica o botão vermelho, o botão principal. Agora toque no botão vermelho, que está piscando, para começar a gravar. Aponte a câmera para o que você quer mostrar e fale um pouquinho. Quando terminar, toque no mesmo botão de novo, que fica quadrado enquanto grava, para parar a gravação.",
   },
   {
     id: "recorded",
     target: "check",
-    text: "Muito bem, você gravou o seu vídeo! O aviso em cima mostra quanto tempo você gravou, e quando você solta o dedo a gravação para. Agora toque no visto, o sinal de certo no canto de baixo do lado direito, onde está piscando, para enfeitar o seu vídeo.",
+    text: "Muito bem, você gravou o seu vídeo! O aviso em cima mostra quanto tempo você gravou. Agora toque no visto, o sinal de certo no canto de baixo do lado direito, onde está piscando, para enfeitar o seu vídeo.",
   },
   {
     id: "edit_open",

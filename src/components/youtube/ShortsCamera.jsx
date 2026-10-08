@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   X,
   Check,
@@ -20,6 +20,9 @@ export default function ShortsCamera({ target, onTap, onRecorded, onCheck, onClo
   const [gravando, setGravando] = useState(false);
   const [tempo, setTempo] = useState(0);
   const [gravados, setGravados] = useState(0);
+  // Referências de gravação: não dependem do estado na hora de parar
+  const gravandoRef = useRef(false);
+  const inicioRef = useRef(0);
 
   useEffect(() => {
     if (!gravando) return;
@@ -27,28 +30,35 @@ export default function ShortsCamera({ target, onTap, onRecorded, onCheck, onClo
     return () => clearInterval(t);
   }, [gravando]);
 
-  // Quando o tempo máximo acaba, a gravação para sozinha
-  useEffect(() => {
-    if (!gravando || tempo < limite) return;
-    setGravando(false);
-    setGravados(limite);
-    onRecorded(limite);
-    onTap("record");
-  }, [tempo, gravando, limite]);
-
-  const iniciar = () => {
-    setTempo(0);
-    setGravando(true);
-  };
-
   const parar = () => {
-    if (!gravando) return;
-    const segundos = Math.max(tempo, 1);
+    if (!gravandoRef.current) return;
+    gravandoRef.current = false;
+    const segundos = Math.max(Math.round((Date.now() - inicioRef.current) / 1000), 1);
     setGravando(false);
     setGravados(segundos);
     onRecorded(segundos);
     onTap("record");
   };
+
+  const iniciar = () => {
+    if (gravandoRef.current) return;
+    gravandoRef.current = true;
+    inicioRef.current = Date.now();
+    setTempo(0);
+    setGravando(true);
+  };
+
+  // Toque no botão vermelho para começar a gravar e toque de novo para parar
+  const alternarGravacao = () => {
+    if (gravandoRef.current) parar();
+    else iniciar();
+  };
+
+  // Quando o tempo máximo acaba, a gravação para sozinha
+  useEffect(() => {
+    if (!gravando || tempo < limite) return;
+    parar();
+  }, [tempo, gravando, limite]);
 
   return (
     <div className="absolute inset-0 bg-gradient-to-b from-gray-200 via-gray-300 to-gray-500 flex flex-col">
@@ -127,9 +137,8 @@ export default function ShortsCamera({ target, onTap, onRecorded, onCheck, onClo
         <Pulse active={target === "record"} ring="rounded-full">
           <button
             type="button"
-            onPointerDown={iniciar}
-            onPointerUp={parar}
-            onPointerLeave={parar}
+            onClick={alternarGravacao}
+            aria-label={gravando ? "Parar a gravação" : "Começar a gravar"}
             className="w-20 h-20 rounded-full bg-white/30 flex items-center justify-center touch-none"
           >
             <div
