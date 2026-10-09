@@ -295,9 +295,9 @@ export default function AppFacebook() {
 
   // Ver as publicações do grupo: abre a aba Feeds já no filtro Grupos
   const handleVerGrupos = () => {
+    // Quem avisa o tutorial que a pessoa tocou aqui é a própria tela de Grupos
     setFiltro("grupos");
     setView("feeds");
-    if (target === "grupo_publicacoes") goNext();
   };
 
   // Seta de voltar: fecha o que estiver aberto e, no fim, volta para a tela inicial

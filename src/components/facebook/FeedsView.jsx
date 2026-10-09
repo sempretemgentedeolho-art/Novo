@@ -33,7 +33,7 @@ export default function FeedsView({
 
   return (
     <div className="flex-1 overflow-y-auto bg-gray-100">
-      <div className="flex gap-2 overflow-x-auto bg-white border-b border-gray-200 px-3 py-2">
+      <div className="flex flex-wrap gap-2 bg-white border-b border-gray-200 px-3 py-2">
         {FILTROS.map(({ id, rotulo, alvo }) => (
           <Pulse key={id} active={target === alvo} className="shrink-0" ring="rounded-full">
             <button

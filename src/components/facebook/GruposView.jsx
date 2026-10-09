@@ -5,10 +5,10 @@ import { GRUPOS } from "@/components/facebook/facebookData";
 
 // A aba Grupos: as rodinhas de amigos e da família
 export default function GruposView({ target, onAvancar, onAbrirPublicacoes }) {
-  // Abre as publicações do grupo já no filtro Grupos, e avisa o tutorial
+  // Abre as publicações do grupo já no filtro Grupos, e avisa o tutorial (uma vez só)
   const verPublicacoes = () => {
-    onAbrirPublicacoes();
     onAvancar("grupo_publicacoes");
+    onAbrirPublicacoes();
   };
 
   return (
