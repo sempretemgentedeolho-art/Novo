@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { StatusBar } from '@/components/StatusBar';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, Sun, Volume2, Wifi, Bluetooth, Settings as SettingsIcon, MessageCircle, Mail, Calendar, Heart, ShoppingBag, Music, Bell, Reply, ThumbsUp, Check, Phone as PhoneIcon, Calendar as CalendarIcon, Activity, Flashlight, Plane, Signal, MapPin, HelpCircle } from 'lucide-react';
+import { ChevronDown, X, Sun, Volume2, Wifi, Bluetooth, Settings as SettingsIcon, MessageCircle, Mail, Calendar, Heart, ShoppingBag, Music, Bell, Reply, ThumbsUp, Check, Phone as PhoneIcon, Calendar as CalendarIcon, Activity, Flashlight, Plane, Signal, MapPin, HelpCircle, CircleDollarSign } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import {
   Phone, MessageSquare, Camera, Image, Settings,
@@ -26,7 +26,7 @@ const apps = [
   { id: 'facebook', name: 'Facebook', icon: Facebook, page: 'AppFacebook', bgColor: 'bg-gradient-to-br from-blue-600 to-blue-800', iconColor: 'text-white' },
   { id: 'instagram', name: 'Instagram', icon: Instagram, page: 'Instagram', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500', iconColor: 'text-white' },
   { id: 'calculator', name: 'Calculadora', icon: Calculator, page: 'Calculadora', bgColor: 'bg-gradient-to-br from-orange-400 to-red-500', iconColor: 'text-white' },
-  { id: 'tiktok', name: 'TikTok', icon: TikTokIcon, page: 'TikTok', bgColor: 'bg-black', iconColor: 'text-white' },
+  { id: 'tiktok', name: 'TikTok', icon: TikTokIcon, page: 'AppTikTok', bgColor: 'bg-black', iconColor: 'text-white' },
   { id: 'youtube', name: 'YouTube', icon: Youtube, page: 'AppYouTube', bgColor: 'bg-white border border-gray-200', iconColor: 'text-red-600' },
   { id: 'tips', name: 'Dicas', icon: Lightbulb, page: 'AppDicas', bgColor: 'bg-gradient-to-br from-yellow-400 to-amber-500', iconColor: 'text-white' },
 ];
@@ -175,7 +175,7 @@ export default function Home() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Tela inicial. Toque no Facebook, onde está piscando, e vamos aprender juntos como usar."
+        "Tela inicial. Toque no TikTok, onde está piscando, e vamos aprender juntos como usar. Logo abaixo está o botão Configuração de Monetizar, para aprender a receber dinheiro pelos vídeos."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -215,14 +215,14 @@ export default function Home() {
     const synth = window.speechSynthesis;
     if (synth) synth.cancel();
 
-    // Abrem: YouTube, Dicas e Facebook (os treinamentos), Configurações (onde a
-    // pessoa liga contraste, menos animações, TalkBack e gestos) e Contatos
-    // (a agenda de verdade, para guardar telefones). Os outros apps ficam
-    // visíveis, mas só avisam em voz alta que fazem parte de outro treinamento.
-    if (!['youtube', 'tips', 'facebook', 'settings', 'contacts'].includes(app.id)) {
+    // Abre o TikTok (o treinamento de hoje), Configurações (onde a pessoa liga
+    // contraste, menos animações, TalkBack e gestos) e Contatos (a agenda de
+    // verdade, para guardar telefones). Os outros apps ficam visíveis, mas só
+    // avisam em voz alta que fazem parte de outro treinamento.
+    if (!['tiktok', 'settings', 'contacts'].includes(app.id)) {
       if (synth) {
         const aviso = new SpeechSynthesisUtterance(
-          `${app.name} faz parte de outro treinamento. Aqui a gente aprende o YouTube, o Dicas e o Facebook.`
+          `${app.name} faz parte de outro treinamento. Aqui a gente aprende o TikTok.`
         );
         aviso.lang = 'pt-BR';
         aviso.rate = 0.9;
@@ -240,6 +240,21 @@ export default function Home() {
     setTimeout(() => {
       navigate(createPageUrl(app.page));
     }, 500);
+  };
+
+  // Botão abaixo dos aplicativos: abre o TikTok já na configuração de monetizar
+  const handleMonetizar = () => {
+    window.speechSynthesis.cancel();
+    const synth = window.speechSynthesis;
+    if (synth) {
+      const utter = new SpeechSynthesisUtterance(
+        "Abrindo a configuração de monetizar do TikTok."
+      );
+      utter.lang = "pt-BR";
+      utter.rate = 0.9;
+      synth.speak(utter);
+    }
+    setTimeout(() => navigate(`${createPageUrl("AppTikTok")}?tela=monetizar`), 500);
   };
 
   const handleDismissNotification = (id) => {
@@ -425,7 +440,7 @@ export default function Home() {
                   className="flex flex-col items-center gap-2"
                 >
                   <div className="relative">
-                    {app.id === 'facebook' && (
+                    {app.id === 'tiktok' && (
                       <motion.div
                         animate={{ scale: [1, 1.5, 1.5], opacity: [0.75, 0.2, 0] }}
                         transition={{ repeat: Infinity, duration: 1.5, ease: 'easeOut' }}
@@ -443,6 +458,19 @@ export default function Home() {
               );
             })}
           </div>
+
+          {/* Botão abaixo dos aplicativos: vai direto para a monetização do TikTok */}
+          <motion.button
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={handleMonetizar}
+            className="mt-5 w-full flex items-center justify-center gap-3 rounded-2xl bg-black border-2 border-cyan-400 px-4 py-4 shadow-xl"
+          >
+            <CircleDollarSign className="w-6 h-6 text-cyan-300" />
+            <span className="text-sm font-bold text-white">Configuração de monetizar</span>
+          </motion.button>
         </div>
 
         {/* Bottom Navigation Dock */}

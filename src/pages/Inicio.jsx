@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { PhoneFrame } from '@/components/PhoneFrame';
 import { motion } from 'framer-motion';
-import { Heart, Facebook } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import { TikTokIcon } from '@/components/TikTokIcon';
 import logoForja from '@/assets/imagens/logo-forja.png';
 
 export default function Inicio() {
@@ -14,7 +15,7 @@ export default function Inicio() {
     if (synth) {
       synth.cancel();
       const utter = new SpeechSynthesisUtterance(
-        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. O treinamento de hoje é o Facebook. Antes de começar, uma dica rápida: para entrar e usar o Facebook você precisa de uma conta, feita com o seu nome, um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos, passo a passo. Toque na tela para começar."
+        "Seja bem-vindo ao tutorial da Forja da Consciência. Um aplicativo feito com muito carinho para você aprender a usar seu celular de forma fácil e segura. O treinamento de hoje é o TikTok. E hoje a gente vai aprender também a configuração de monetizar, que é como receber dinheiro pelos seus vídeos. Antes de começar, uma dica rápida: para usar o TikTok e participar do programa que paga pelos vídeos, você precisa de uma conta, feita com o seu nome, um número de celular ou e-mail e uma senha. É de graça, e a gente faz juntos, passo a passo. Toque na tela para começar."
       );
       utter.lang = "pt-BR";
       utter.rate = 0.9;
@@ -39,7 +40,7 @@ export default function Inicio() {
         tabIndex={0}
         aria-label="Toque na tela para começar o tutorial"
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleStart(); }}
-        className="h-full bg-gradient-to-br from-blue-100 via-sky-50 to-blue-100 flex flex-col items-center justify-center p-6 cursor-pointer relative overflow-y-auto"
+        className="h-full bg-gradient-to-br from-slate-900 via-slate-800 to-black flex flex-col items-center justify-center p-6 cursor-pointer relative overflow-y-auto"
       >
         {/* Logo Forja da Consciência */}
         <motion.div
@@ -68,14 +69,14 @@ export default function Inicio() {
           transition={{ delay: 0.6 }}
           className="text-center mb-5"
         >
-          <h1 className="text-3xl font-bold text-gray-800 mb-2 drop-shadow-sm">
+          <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-sm">
             Bem-vindo!
           </h1>
          
-          <h2 className="text-2xl font-bold text-[#1877F2] drop-shadow-sm mb-2">
+          <h2 className="text-2xl font-bold text-cyan-300 drop-shadow-sm mb-2">
             Forja da Consciência
           </h2>
-          <div className="flex items-center justify-center gap-2 text-gray-600">
+          <div className="flex items-center justify-center gap-2 text-gray-300">
             <Heart className="w-5 h-5 text-red-500" />
             <p className="text-sm">
               Feito com carinho para você
@@ -83,20 +84,22 @@ export default function Inicio() {
           </div>
         </motion.div>
 
-        {/* Dica rápida sobre o Facebook (treinamento principal) */}
+        {/* Dica rápida sobre o TikTok (treinamento principal) */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-blue-300 px-4 py-3 max-w-sm text-center mb-5"
+          className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-cyan-400 px-4 py-3 max-w-sm text-center mb-5"
         >
           <div className="flex items-center justify-center gap-2 mb-1.5">
-            <Facebook className="w-4 h-4 text-[#1877F2]" />
-            <h3 className="text-sm font-bold text-gray-800">Dica rápida sobre o Facebook</h3>
+            <TikTokIcon className="w-4 h-4 text-black" />
+            <h3 className="text-sm font-bold text-gray-800">Dica rápida sobre o TikTok</h3>
           </div>
           <p className="text-sm text-gray-700 leading-snug">
-            Para entrar e usar o Facebook você precisa de uma <strong>conta</strong>: seu nome,
-            um e-mail ou número de celular e uma senha. É de graça, e a gente faz juntos.
+            Para usar o TikTok e receber dinheiro pelos seus vídeos você precisa de uma{" "}
+            <strong>conta</strong>: seu nome, um número de celular ou e-mail e uma senha. É de graça,
+            e a gente faz juntos. Depois a gente abre a <strong>Configuração de Monetizar</strong>,
+            que é onde o TikTok pede o que precisa para pagar.
           </p>
         </motion.div>
 
@@ -107,8 +110,8 @@ export default function Inicio() {
           transition={{ delay: 0.9 }}
           className="text-center"
         >
-          <div className="bg-white/70 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border-2 border-blue-300">
-            <p className="text-blue-800 font-semibold text-base">
+          <div className="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border-2 border-cyan-400">
+            <p className="text-cyan-900 font-semibold text-base">
               Toque na tela para começar
             </p>
           </div>
@@ -118,7 +121,7 @@ export default function Inicio() {
             transition={{ repeat: Infinity, duration: 1.5 }}
             className="mt-3"
           >
-            <div className="text-[#1877F2] text-3xl">👇</div>
+            <div className="text-cyan-300 text-3xl">👇</div>
           </motion.div>
         </motion.div>
 
@@ -129,8 +132,8 @@ export default function Inicio() {
           transition={{ delay: 1.2 }}
           className="mt-6 text-center"
         >
-          <p className="text-gray-600 text-xs">
-            Aprenda o Facebook no seu celular<br />de forma fácil e segura
+          <p className="text-gray-300 text-xs">
+            Aprenda o TikTok no seu celular<br />de forma fácil e segura
           </p>
         </motion.div>
       </motion.div>

@@ -1,0 +1,76 @@
+============================================
+ EXPORTAR APENAS O TIKTOK (LEVE)
+============================================
+
+Use o arquivo "converter-tiktok.bat" quando quiser um
+aplicativo leve, com APENAS o treinamento do TikTok
+(inclusive o cadastro e a configuração de monetizar).
+
+PASSO A PASSO
+
+1. Baixe o projeto (More actions -> Export project as ZIP).
+
+2. Copie o arquivo "converter-tiktok.bat" para a PASTA RAIZ
+   do projeto, ou seja, a pasta onde está o package.json
+   (ele vem dentro da pasta "public", é só tirar de lá).
+
+3. Clique duas vezes no "converter-tiktok.bat".
+
+4. Aguarde de 2 a 5 minutos. No fim aparece "CONCLUIDO!".
+
+5. Para testar: abra o arquivo "dist\index.html" no navegador.
+
+6. Para distribuir: copie a pasta "dist" inteira.
+
+
+O QUE ELE FAZ
+
+- Guarda temporariamente as outras telas (YouTube, Facebook,
+  Dicas, WhatsApp, Instagram, câmera, etc.) fora da pasta src,
+  para que elas NÃO entrem no aplicativo exportado.
+
+- Deixa no aplicativo somente as telas que este treinamento
+  usa: a tela de boas-vindas, a tela de bloqueio, a tela
+  inicial, o TikTok e as telas de Configurações, Wi-Fi,
+  Bluetooth, Volume, Sobre o aparelho e Contatos, que a tela
+  inicial abre.
+
+- Compila e gera a pasta "dist", bem menor que a versão
+  completa.
+
+- No final devolve TODAS as telas para o projeto, exatamente
+  como estavam, para você continuar exportando outras versões.
+
+- Não muda nada no conteúdo das telas: o visual e o
+  funcionamento ficam iguais.
+
+
+O QUE A PESSOA APRENDE NESTA VERSÃO
+
+- Assistir aos vídeos, seguir, curtir, comentar e compartilhar.
+
+- Criar a conta do TikTok passo a passo (telefone, código,
+  nome de usuário e senha).
+
+- Publicar o primeiro vídeo, com legenda.
+
+- Configuração de Monetizar: os requisitos do TikTok, os
+  dados que ele pede (nome, CPF e data de nascimento), como
+  escolher a chave Pix para receber e como ativar. No fim,
+  um aviso para nunca passar a senha nem o código do celular
+  para ninguém.
+
+
+IMPORTANTE
+
+- Os ícones continuam todos na tela inicial, e o app fala em
+  voz alta o nome de cada um. Só o TikTok, as Configurações e
+  os Contatos abrem.
+
+- Nada é apagado do projeto em momento algum.
+
+- Se a compilação falhar, o projeto também é devolvido ao normal.
+
+- Precisa ter o Node.js instalado no computador.
+
+============================================

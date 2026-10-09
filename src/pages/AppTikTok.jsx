@@ -1,85 +1,285 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowLeft, Heart, MessageCircle, Share2, Music } from "lucide-react";
+import { TikTokIcon } from "@/components/TikTokIcon";
+import { PhoneFrame } from "@/components/PhoneFrame";
+import { StatusBar } from "@/components/StatusBar";
+import AvisoAcessibilidade from "@/components/AvisoAcessibilidade";
+import ChapterPicker from "@/components/youtube/ChapterPicker";
+import TikTokHeader from "@/components/tiktok/TikTokHeader";
+import TikTokTabs from "@/components/tiktok/TikTokTabs";
+import FeedTikTokView from "@/components/tiktok/FeedTikTokView";
+import PerfilTikTokView from "@/components/tiktok/PerfilTikTokView";
+import CadastroTikTokView from "@/components/tiktok/CadastroTikTokView";
+import PublicarTikTokView from "@/components/tiktok/PublicarTikTokView";
+import MonetizarTikTokView from "@/components/tiktok/MonetizarTikTokView";
+import { CHAPTERS, STEPS } from "@/components/tiktok/tiktokTutorial";
+import { VIDEOS, COMENTARIOS } from "@/components/tiktok/tiktokData";
+import { useAcessibilidade } from "@/lib/acessibilidade";
+
+// O caminho ?tela=monetizar abre o treino já na configuração de monetizar
+const parametros = new URLSearchParams(window.location.search);
+const capituloInicial = CHAPTERS.find((c) => c.id === parametros.get("tela")) || null;
 
 export default function AppTikTok() {
   const navigate = useNavigate();
+  const [chapter, setChapter] = useState(capituloInicial);
+  const [runKey, setRunKey] = useState(0);
+  const [stepIndex, setStepIndex] = useState(capituloInicial ? capituloInicial.stepIndex : 0);
+  const [view, setView] = useState(capituloInicial ? capituloInicial.view : "feed");
+  const [videoIndex, setVideoIndex] = useState(0);
+  const [curtido, setCurtido] = useState(false);
+  const [seguindo, setSeguindo] = useState(false);
+  const [comentarios, setComentarios] = useState(COMENTARIOS);
+  const [comentarioAberto, setComentarioAberto] = useState(false);
+  const [meuComentario, setMeuComentario] = useState("");
+  const [shareOpen, setShareOpen] = useState(false);
+  const [compartilhado, setCompartilhado] = useState(false);
+  const [contaCriada, setContaCriada] = useState(false);
+  const [monetizado, setMonetizado] = useState(false);
 
-  useEffect(() => {
+  const { talkback } = useAcessibilidade();
+  // Enquanto o menu de capítulos está aberto, nenhuma pista pisca por trás dele
+  const target = chapter ? STEPS[stepIndex].target : null;
+  const video = VIDEOS[videoIndex];
+
+  const falar = (texto) => {
     const synth = window.speechSynthesis;
     if (!synth) return;
-
-    const utter = new SpeechSynthesisUtterance(
-      "Este é o TikTok. Aqui você assiste vídeos curtos e divertidos. Toque na seta para voltar."
-    );
+    synth.cancel();
+    const utter = new SpeechSynthesisUtterance(texto);
     utter.lang = "pt-BR";
-    utter.rate = 0.95;
+    utter.rate = talkback ? 0.72 : 0.82;
     synth.speak(utter);
-  }, []);
+  };
+
+  // Cada passo do tutorial é falado em voz alta
+  useEffect(() => {
+    if (!chapter) return;
+    falar(STEPS[stepIndex].text);
+    return () => window.speechSynthesis.cancel();
+  }, [stepIndex, chapter, runKey, talkback]);
+
+  const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
+
+  // Só avança quando a pessoa toca no lugar certo do passo atual
+  const avancarSe = (alvo) => {
+    if (target !== alvo) return;
+    if (alvo === "cadastro_concluir") setContaCriada(true);
+    if (alvo === "monetizar_ativar") setMonetizado(true);
+    goNext();
+  };
+
+  // Começa o treino na parte escolhida no menu
+  const startChapter = (cap) => {
+    setChapter(cap);
+    setStepIndex(cap.stepIndex);
+    setView(cap.view || "feed");
+    setVideoIndex(0);
+    setCurtido(false);
+    setSeguindo(false);
+    setComentarios(COMENTARIOS);
+    setComentarioAberto(false);
+    setMeuComentario("");
+    setShareOpen(false);
+    setCompartilhado(false);
+    setContaCriada(false);
+    setMonetizado(false);
+    setRunKey((k) => k + 1);
+  };
+
+  // ---------- Assistir aos vídeos ----------
+  const proximoVideo = () => {
+    setVideoIndex((i) => (i + 1) % VIDEOS.length);
+    setCurtido(false);
+    setCompartilhado(false);
+    avancarSe("proximo_video");
+  };
+
+  const seguir = () => {
+    setSeguindo(true);
+    avancarSe("seguir");
+  };
+
+  const curtir = () => {
+    setCurtido((c) => !c);
+    avancarSe("curtir");
+  };
+
+  const abrirComentarios = () => {
+    setComentarioAberto(true);
+    avancarSe("comentar");
+  };
+
+  const enviarComentario = () => {
+    // Se a pessoa tocar em publicar sem escrever, o app escreve um recado simples por ela
+    const texto = meuComentario.trim() || "Que lindo, obrigado por compartilhar! 😊";
+    setComentarios((anteriores) => [...anteriores, { autor: "Você", texto }]);
+    setMeuComentario("");
+    setComentarioAberto(false);
+    avancarSe("enviar_comentario");
+  };
+
+  const abrirCompartilhar = () => {
+    setShareOpen(true);
+    avancarSe("compartilhar");
+  };
+
+  const escolherCompartilhar = (onde) => {
+    setShareOpen(false);
+    if (onde !== "whatsapp") {
+      setCompartilhado(true);
+      return;
+    }
+    setCompartilhado(true);
+    avancarSe("share_whats");
+  };
+
+  // ---------- Trocar de aba ----------
+  const abrirAba = (aba) => {
+    if (aba === "feed") {
+      setView("feed");
+      return;
+    }
+    if (aba === "perfil") {
+      setView("perfil");
+      avancarSe("aba_perfil");
+      return;
+    }
+    if (aba === "criar") {
+      setView("publicar");
+      return;
+    }
+    if (aba === "descobrir") {
+      falar("Descobrir: aqui você procura vídeos e assuntos de que gosta.");
+      return;
+    }
+    falar("Caixa: aqui chegam as mensagens dos seus amigos.");
+  };
+
+  const buscar = () =>
+    falar("Esta é a lupa do TikTok. Aqui você procura vídeos, pessoas e assuntos.");
+
+  // ---------- Perfil, cadastro, publicar e monetizar ----------
+  const criarConta = () => {
+    setView("cadastro");
+    avancarSe("criar_conta");
+  };
+
+  const irPublicar = () => {
+    setView("publicar");
+    avancarSe("ir_publicar");
+  };
+
+  const verNoPerfil = () => {
+    setView("perfil");
+    avancarSe("ver_no_perfil");
+  };
+
+  const abrirMonetizar = () => {
+    setView("monetizar");
+    avancarSe("monetizar_abrir");
+  };
+
+  // Seta de voltar: fecha o que estiver aberto e, no fim, volta para a tela inicial
+  const handleBack = () => {
+    if (target === "terminar") {
+      navigate(createPageUrl("Home"));
+      return;
+    }
+    if (comentarioAberto) {
+      setComentarioAberto(false);
+      return;
+    }
+    if (shareOpen) {
+      setShareOpen(false);
+      return;
+    }
+    if (view !== "feed") {
+      setView("feed");
+      return;
+    }
+    navigate(createPageUrl("Home"));
+  };
+
+  const abaAtiva =
+    view === "cadastro" || view === "monetizar" ? "perfil" : view === "publicar" ? "criar" : view;
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="relative w-full max-w-sm">
-        <div className="relative bg-black rounded-[50px] p-3 shadow-2xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-b-3xl z-10"></div>
-          
-          <div
-            className="relative rounded-[46px] overflow-hidden bg-black"
-            style={{ aspectRatio: "9/19.5" }}
-          >
-            {/* Vídeo Simulado */}
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-pink-800 to-blue-900">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Music className="w-32 h-32 text-white/20" />
-              </div>
-            </div>
+    <PhoneFrame>
+      <div className="h-full bg-black flex flex-col relative overflow-hidden">
+        <StatusBar variant="dark" />
+        <AvisoAcessibilidade />
 
-            {/* Header */}
-            <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10">
-              <button onClick={() => navigate(createPageUrl("TelaInicial"))}>
-                <ArrowLeft className="w-6 h-6 text-white" />
-              </button>
-              <div className="flex gap-6 text-sm text-white">
-                <span className="font-semibold border-b-2 border-white pb-1">Para você</span>
-                <span className="opacity-70">Seguindo</span>
-              </div>
-              <div className="w-6"></div>
-            </div>
+        <TikTokHeader target={target} onBack={handleBack} onBuscar={buscar} />
 
-            {/* Informações do Vídeo */}
-            <div className="absolute bottom-20 left-0 right-0 p-6 z-10">
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <h3 className="text-white font-semibold mb-2">@usuario_exemplo</h3>
-                  <p className="text-white text-sm mb-3">Vídeo exemplo no TikTok 🎵</p>
-                  <div className="flex items-center gap-2 text-white text-xs">
-                    <Music className="w-4 h-4" />
-                    <span>Som original - @usuario_exemplo</span>
-                  </div>
-                </div>
+        {view === "feed" && (
+          <FeedTikTokView
+            target={target}
+            video={video}
+            curtido={curtido}
+            seguindo={seguindo}
+            compartilhado={compartilhado}
+            comentarios={comentarios}
+            comentarioAberto={comentarioAberto}
+            meuComentario={meuComentario}
+            shareOpen={shareOpen}
+            onProximo={proximoVideo}
+            onSeguir={seguir}
+            onCurtir={curtir}
+            onComentar={abrirComentarios}
+            onFecharComentarios={() => setComentarioAberto(false)}
+            onMudarComentario={setMeuComentario}
+            onFocarComentario={() => avancarSe("campo_comentario")}
+            onEnviarComentario={enviarComentario}
+            onCompartilhar={abrirCompartilhar}
+            onEscolherCompartilhar={escolherCompartilhar}
+            onFecharCompartilhar={() => setShareOpen(false)}
+          />
+        )}
 
-                <div className="flex flex-col gap-4">
-                  <button className="flex flex-col items-center">
-                    <Heart className="w-8 h-8 text-white mb-1" />
-                    <span className="text-white text-xs">125k</span>
-                  </button>
+        {view === "perfil" && (
+          <PerfilTikTokView
+            target={target}
+            contaCriada={contaCriada}
+            monetizado={monetizado}
+            onCriarConta={criarConta}
+            onAbrirMonetizar={abrirMonetizar}
+          />
+        )}
 
-                  <button className="flex flex-col items-center">
-                    <MessageCircle className="w-8 h-8 text-white mb-1" />
-                    <span className="text-white text-xs">1.2k</span>
-                  </button>
+        {view === "cadastro" && (
+          <CadastroTikTokView target={target} onAvancar={avancarSe} onIrPublicar={irPublicar} />
+        )}
 
-                  <button className="flex flex-col items-center">
-                    <Share2 className="w-8 h-8 text-white mb-1" />
-                    <span className="text-white text-xs">890</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {view === "publicar" && (
+          <PublicarTikTokView target={target} onAvancar={avancarSe} onVerPerfil={verNoPerfil} />
+        )}
+
+        {view === "monetizar" && (
+          <MonetizarTikTokView
+            target={target}
+            onAvancar={avancarSe}
+            onFechar={() => navigate(createPageUrl("Home"))}
+          />
+        )}
+
+        <TikTokTabs target={target} aba={abaAtiva} onAbrir={abrirAba} />
+
+        {/* Menu de capítulos: escolher por onde começar */}
+        {!chapter && (
+          <ChapterPicker
+            chapters={CHAPTERS}
+            onSelect={startChapter}
+            marca="TikTok"
+            Icone={TikTokIcon}
+            corBarra="bg-black"
+            corIcone="text-black"
+            corIconeFundo="bg-gray-100"
+            fala="Por onde você quer começar? Toque na parte do TikTok que você quer aprender hoje. A primeira opção é o tutorial completo, do começo. A opção Configuração de Monetizar ensina como receber dinheiro pelos seus vídeos."
+          />
+        )}
       </div>
-    </div>
+    </PhoneFrame>
   );
 }
