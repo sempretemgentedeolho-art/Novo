@@ -18,16 +18,19 @@ import { CHAPTERS, STEPS } from "@/components/tiktok/tiktokTutorial";
 import { VIDEOS, COMENTARIOS } from "@/components/tiktok/tiktokData";
 import { useAcessibilidade } from "@/lib/acessibilidade";
 
-// O caminho ?tela=monetizar abre o treino já na configuração de monetizar
-const parametros = new URLSearchParams(window.location.search);
-const capituloInicial = CHAPTERS.find((c) => c.id === parametros.get("tela")) || null;
+// O caminho ?tela=monetizar abre o treino já na configuração de monetizar.
+// Lido na abertura da tela, para o ícone do TikTok sempre abrir no menu de capítulos.
+const capituloDaUrl = () => {
+  const tela = new URLSearchParams(window.location.search).get("tela");
+  return CHAPTERS.find((c) => c.id === tela) || null;
+};
 
 export default function AppTikTok() {
   const navigate = useNavigate();
-  const [chapter, setChapter] = useState(capituloInicial);
+  const [chapter, setChapter] = useState(capituloDaUrl);
   const [runKey, setRunKey] = useState(0);
-  const [stepIndex, setStepIndex] = useState(capituloInicial ? capituloInicial.stepIndex : 0);
-  const [view, setView] = useState(capituloInicial ? capituloInicial.view : "feed");
+  const [stepIndex, setStepIndex] = useState(chapter ? chapter.stepIndex : 0);
+  const [view, setView] = useState(chapter ? chapter.view : "feed");
   const [videoIndex, setVideoIndex] = useState(0);
   const [curtido, setCurtido] = useState(false);
   const [seguindo, setSeguindo] = useState(false);

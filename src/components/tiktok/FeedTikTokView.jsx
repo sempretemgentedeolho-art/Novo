@@ -29,18 +29,27 @@ export default function FeedTikTokView({
 }) {
   return (
     <div className="flex-1 relative overflow-hidden bg-black">
-      <img src={video.imagem} alt="" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/60" />
+      {/* A tela do vídeo inteira também troca de vídeo ao toque, como no TikTok */}
+      <button
+        type="button"
+        onClick={onProximo}
+        aria-label="Ver o próximo vídeo"
+        className="absolute inset-0 w-full h-full block"
+      >
+        <img src={video.imagem} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/60" />
+      </button>
 
       {/* Setinha do próximo vídeo */}
-      <div className="absolute right-3 bottom-52 z-20">
-        <Pulse active={target === "proximo_video"} ring="rounded-full">
+      <div className="absolute right-3 bottom-52 z-30">
+        <Pulse active={target === "proximo_video"} ring="rounded-2xl">
           <button
             onClick={onProximo}
             aria-label="Próximo vídeo"
-            className="w-11 h-11 rounded-full bg-white/20 backdrop-blur flex items-center justify-center"
+            className="flex flex-col items-center gap-1 rounded-2xl border-2 border-white/60 bg-white/30 backdrop-blur px-3 py-2"
           >
-            <ChevronDown className="w-6 h-6 text-white" />
+            <ChevronDown className="w-8 h-8 text-white" />
+            <span className="text-[10px] font-bold text-white leading-none">Próximo vídeo</span>
           </button>
         </Pulse>
       </div>
