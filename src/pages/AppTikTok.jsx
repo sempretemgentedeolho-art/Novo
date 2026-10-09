@@ -13,6 +13,7 @@ import PerfilTikTokView from "@/components/tiktok/PerfilTikTokView";
 import CadastroTikTokView from "@/components/tiktok/CadastroTikTokView";
 import PublicarTikTokView from "@/components/tiktok/PublicarTikTokView";
 import MonetizarTikTokView from "@/components/tiktok/MonetizarTikTokView";
+import VenderTikTokView from "@/components/tiktok/VenderTikTokView";
 import { CHAPTERS, STEPS } from "@/components/tiktok/tiktokTutorial";
 import { VIDEOS, COMENTARIOS } from "@/components/tiktok/tiktokData";
 import { useAcessibilidade } from "@/lib/acessibilidade";
@@ -181,6 +182,11 @@ export default function AppTikTok() {
     avancarSe("monetizar_abrir");
   };
 
+  const irVender = () => {
+    setView("vender");
+    avancarSe("ir_vender");
+  };
+
   // Seta de voltar: fecha o que estiver aberto e, no fim, volta para a tela inicial
   const handleBack = () => {
     if (target === "terminar") {
@@ -260,6 +266,15 @@ export default function AppTikTok() {
           <MonetizarTikTokView
             target={target}
             onAvancar={avancarSe}
+            onVender={irVender}
+            onFechar={() => navigate(createPageUrl("Home"))}
+          />
+        )}
+
+        {view === "vender" && (
+          <VenderTikTokView
+            target={target}
+            onAvancar={avancarSe}
             onFechar={() => navigate(createPageUrl("Home"))}
           />
         )}
@@ -276,7 +291,7 @@ export default function AppTikTok() {
             corBarra="bg-black"
             corIcone="text-black"
             corIconeFundo="bg-gray-100"
-            fala="Por onde você quer começar? Toque na parte do TikTok que você quer aprender hoje. A primeira opção é o tutorial completo, do começo. A opção Configuração de Monetizar ensina como receber dinheiro pelos seus vídeos."
+            fala="Por onde você quer começar? Toque na parte do TikTok que você quer aprender hoje. A primeira opção é o tutorial completo, do começo. A opção Configuração de Monetizar ensina como receber dinheiro pelos seus vídeos. A opção Vender no TikTok ensina a vender os seus produtos pela lojinha do TikTok."
           />
         )}
       </div>

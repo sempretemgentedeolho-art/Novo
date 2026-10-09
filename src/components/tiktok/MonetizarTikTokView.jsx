@@ -10,12 +10,13 @@ const ETAPAS = {
   monetizar_pagamento: "pagamento",
   monetizar_ativar: "pagamento",
   monetizar_pronto: "pronto",
+  ir_vender: "pronto",
 };
 
 const campo =
   "w-full rounded-2xl border-2 border-gray-300 px-4 py-4 text-base text-gray-900 outline-none focus:border-[#FE2C55]";
 
-export default function MonetizarTikTokView({ target, onAvancar, onFechar }) {
+export default function MonetizarTikTokView({ target, onAvancar, onFechar, onVender }) {
   const etapa = ETAPAS[target] || "requisitos";
   const [cpf, setCpf] = useState("");
   const [nascimento, setNascimento] = useState("");
@@ -161,6 +162,14 @@ export default function MonetizarTikTokView({ target, onAvancar, onFechar }) {
                 Entendi
               </button>
             </Pulse>
+
+            {onVender && (
+              <Pulse active={target === "ir_vender"} className="w-full" ring="rounded-2xl">
+                <button onClick={onVender} className="w-full rounded-2xl bg-[#FE2C55] px-4 py-4 text-sm font-bold text-white">
+                  Aprender a vender no TikTok
+                </button>
+              </Pulse>
+            )}
 
             <Pulse active={target === "terminar"} className="w-full" ring="rounded-2xl">
               <button

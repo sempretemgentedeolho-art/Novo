@@ -4,6 +4,7 @@ import {
   UserPlus,
   Video,
   CircleDollarSign,
+  ShoppingBag,
   LogOut,
 } from "lucide-react";
 
@@ -50,11 +51,19 @@ export const CHAPTERS = [
     view: "monetizar",
   },
   {
+    id: "vender",
+    label: "Vender no TikTok (TikTok Shop)",
+    description: "Como vender os seus produtos pela lojinha do TikTok",
+    icon: ShoppingBag,
+    stepIndex: 30,
+    view: "vender",
+  },
+  {
     id: "final",
     label: "Terminar o treino",
     description: "Voltar para a tela inicial do celular",
     icon: LogOut,
-    stepIndex: 29,
+    stepIndex: 40,
     view: "monetizar",
   },
 ];
@@ -210,6 +219,62 @@ export const STEPS = [
     id: "monetizar_pronto",
     target: "monetizar_pronto",
     text: "Parabéns! A sua monetização foi enviada e o TikTok responde em alguns dias. Quando for aprovada, você acompanha aqui quanto já rendeu. Um aviso importante: nunca passe a sua senha nem o código do celular para ninguém, nem por mensagem. Toque em ENTENDI, onde está piscando, para terminar este passo.",
+  },
+  // ---------- Vender no TikTok (TikTok Shop) ----------
+  {
+    id: "ir_vender",
+    target: "ir_vender",
+    text: "Parabéns! Além de ganhar pelos vídeos, o TikTok também tem uma lojinha, o TikTok Shop, onde você pode vender os seus produtos. Toque em APRENDER A VENDER, onde está piscando.",
+  },
+  {
+    id: "vender_conta",
+    target: "vender_conta",
+    text: "Primeiro passo para vender: a sua conta precisa virar uma conta comercial. Ela é de graça e não muda nada nos seus vídeos nem nos seus seguidores. Toque em VIRAR CONTA COMERCIAL, onde está piscando.",
+  },
+  {
+    id: "vender_seller",
+    target: "vender_seller",
+    text: "Agora vamos abrir a Central do Vendedor. É aqui que você cadastra produtos, acompanha os pedidos e vê quanto vendeu. O cadastro é gratuito e pede documentos: o CNPJ da empresa ou o seu CPF, se você vender como pessoa física, além dos dados do banco para receber. Toque em ABRIR A CENTRAL DO VENDEDOR, onde está piscando.",
+  },
+  {
+    id: "vender_catalogo",
+    target: "vender_catalogo",
+    text: "Vamos cadastrar o seu primeiro produto. Comece com um produto só, aquele que você conhece melhor. Toque no espaço que diz Nome do produto, onde está piscando, e escreva um nome bem claro, por exemplo: Panela de pressão 4 litros.",
+  },
+  {
+    id: "vender_preco",
+    target: "vender_preco",
+    text: "Agora toque no espaço do Preço, onde está piscando, e digite quanto você quer cobrar. Uma foto boa, com luz e mostrando o produto inteiro, ajuda muito a vender.",
+  },
+  {
+    id: "vender_salvar",
+    target: "vender_salvar",
+    text: "Toque em SALVAR PRODUTO, onde está piscando, para o produto entrar na sua lojinha.",
+  },
+  {
+    id: "vender_conteudo",
+    target: "vender_conteudo",
+    text: "Produto cadastrado! Agora o mais importante: gravar vídeos mostrando o produto sendo usado, contando para que serve e quanto custa. No TikTok, mostrar e vender andam juntos. Toque em GRAVAR VÍDEO DO PRODUTO, onde está piscando.",
+  },
+  {
+    id: "vender_live",
+    target: "vender_live",
+    text: "Você também pode vender ao vivo, numa live. Toque em FAZER UMA LIVE, onde está piscando. Numa live, um cupom de desconto ajuda a fechar a venda.",
+  },
+  {
+    id: "vender_afiliados",
+    target: "vender_afiliados",
+    text: "Existe também o programa de afiliados: outras pessoas gravam vídeos do seu produto e ganham uma comissão só quando a venda acontece. Você não paga nada adiantado. Toque em CONVIDAR AFILIADOS, onde está piscando.",
+  },
+  {
+    id: "vender_dados",
+    target: "vender_dados",
+    text: "Toque em VER MEUS RESULTADOS, onde está piscando. Aqui você vê quantas pessoas assistiram aos seus vídeos, quantas clicaram no produto e quantas compraram.",
+  },
+  {
+    id: "vender_pronto",
+    target: "vender_pronto",
+    text: "Pronto! Você já conhece o caminho para vender no TikTok. Comece devagar, com um produto só, e responda as perguntas dos clientes com paciência. Um aviso importante: nunca combine pagamento por fora do TikTok e nunca passe a sua senha para ninguém. Toque em TERMINEI, onde está piscando.",
   },
   {
     id: "terminar",
