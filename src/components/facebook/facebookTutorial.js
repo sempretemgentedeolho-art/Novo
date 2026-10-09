@@ -85,6 +85,14 @@ export const CHAPTERS = [
     stepIndex: 43,
     view: "feed",
   },
+  {
+    id: "grupos_videos",
+    label: "Grupos e vídeos",
+    description: "As rodinhas de gente e os vídeos para assistir",
+    icon: Users,
+    stepIndex: 52,
+    view: "feed",
+  },
 ];
 
 // Cada etapa: texto falado em voz alta + elemento que pisca em amarelo
@@ -350,8 +358,33 @@ export const STEPS = [
     text: "Toque em CENTRAL DE AJUDA, onde está piscando. Sempre que ficar com dúvida sobre qualquer coisa do Facebook, é por aqui que você procura a resposta.",
   },
   {
+    id: "abrir_grupos",
+    target: "aba_grupos",
+    text: "Falta pouco! Agora você vai conhecer os Grupos e os Vídeos. Lá em cima, no alto da tela, ao lado do jornalzinho, tem o desenho de duas pessoas: são os Grupos. Toque nele, onde está piscando.",
+  },
+  {
+    id: "grupo_publicacoes",
+    target: "grupo_publicacoes",
+    text: "Estes são os seus grupos. Grupo é uma roda de gente que fala do mesmo assunto: a família, a igreja, o clube do bairro. Só quem está no grupo vê o que é publicado ali. Toque em VER AS PUBLICAÇÕES, no primeiro grupo, onde está piscando, para ver o que escreveram.",
+  },
+  {
+    id: "aba_video",
+    target: "aba_video",
+    text: "Aqui aparecem só as publicações do grupo que você escolheu. Agora vamos ver os vídeos: toque no desenho do telão, o segundo lá em cima, onde está piscando.",
+  },
+  {
+    id: "video_abrir",
+    target: "video_abrir",
+    text: "Esta é a aba Vídeo, onde o Facebook junta os vídeos para você assistir. Dá para ver com calma, deitado no sofá. Toque no primeiro vídeo, onde está piscando.",
+  },
+  {
+    id: "video_fechar",
+    target: "video_fechar",
+    text: "Você está assistindo. O vídeo toca sozinho, sem precisar fazer nada. Quando quiser parar, toque em FECHAR O VÍDEO, onde está piscando. Se um vídeo não lhe interessar, é só fechar e escolher outro.",
+  },
+  {
     id: "terminar",
     target: "back",
-    text: "Muito bem, chegou ao fim do treino! Você aprendeu o principal do Facebook: curtir, comentar, compartilhar, publicar foto, ver histórias, a aba Feeds, amigos, mensagens, o seu perfil, o Mercado, os Reels, os Salvos, os Eventos, as Memórias, as Páginas, as Configurações e a Ajuda. Toque na seta de voltar, onde está piscando, para terminar.",
+    text: "Muito bem, chegou ao fim do treino! Você aprendeu o principal do Facebook: curtir, comentar, compartilhar, publicar foto, ver histórias, a aba Feeds, amigos, mensagens, o seu perfil, o Mercado, os Reels, os Salvos, os Eventos, as Memórias, as Páginas, os Grupos, os Vídeos, as Configurações e a Ajuda. Toque na seta de voltar, onde está piscando, para terminar.",
   },
 ];

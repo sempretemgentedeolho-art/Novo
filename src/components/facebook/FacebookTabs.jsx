@@ -5,9 +5,9 @@ import Pulse from "@/components/youtube/Pulse";
 // A fileira de desenhos que fica no alto da tela, como no Facebook de hoje
 const ABAS = [
   { id: "feed", rotulo: "Início", Icone: Home, alvo: null },
-  { id: "video", rotulo: "Vídeo", Icone: Clapperboard, alvo: null },
+  { id: "video", rotulo: "Vídeo", Icone: Clapperboard, alvo: "aba_video" },
   { id: "feeds", rotulo: "Feeds", Icone: Newspaper, alvo: "aba_feeds" },
-  { id: "grupos", rotulo: "Grupos", Icone: Users, alvo: null },
+  { id: "grupos", rotulo: "Grupos", Icone: Users, alvo: "aba_grupos" },
   { id: "avisos", rotulo: "Avisos", Icone: Bell, alvo: "aba_avisos" },
   { id: "menu", rotulo: "Menu", Icone: Menu, alvo: "aba_menu" },
 ];

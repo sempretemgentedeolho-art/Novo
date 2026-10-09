@@ -238,6 +238,8 @@ export default function AppFacebook() {
     if (aba === "feeds" && target === "aba_feeds") goNext();
     if (aba === "avisos" && target === "aba_avisos") goNext();
     if (aba === "menu" && target === "aba_menu") goNext();
+    if (aba === "video" && target === "aba_video") goNext();
+    if (aba === "grupos" && target === "aba_grupos") goNext();
   };
 
   // Filtros da aba Feeds
@@ -295,6 +297,7 @@ export default function AppFacebook() {
   const handleVerGrupos = () => {
     setFiltro("grupos");
     setView("feeds");
+    if (target === "grupo_publicacoes") goNext();
   };
 
   // Seta de voltar: fecha o que estiver aberto e, no fim, volta para a tela inicial
@@ -367,8 +370,14 @@ export default function AppFacebook() {
           />
         )}
 
-        {view === "video" && <VideoView />}
-        {view === "grupos" && <GruposView onAbrirPublicacoes={handleVerGrupos} />}
+        {view === "video" && <VideoView target={target} onAvancar={avancarSe} />}
+        {view === "grupos" && (
+          <GruposView
+            target={target}
+            onAvancar={avancarSe}
+            onAbrirPublicacoes={handleVerGrupos}
+          />
+        )}
 
         {view === "menu" && <MenuView target={target} onAbrir={handleAbrirMenu} />}
 
